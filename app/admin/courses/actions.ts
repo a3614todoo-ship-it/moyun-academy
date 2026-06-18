@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { CourseAccessType } from "@/generated/prisma/enums";
 import { requireAdmin } from "@/lib/admin/auth";
 import { prisma } from "@/lib/prisma";
 import { getYouTubeVideoId } from "@/lib/youtube";
@@ -36,6 +37,9 @@ export async function saveCourse(formData: FormData) {
   const durationText = text(formData, "durationText");
   const coverImageUrl = text(formData, "coverImageUrl");
   const previewVideoUrl = text(formData, "previewVideoUrl");
+  const fullVideoUrl = text(formData, "fullVideoUrl");
+  const accessType = text(formData, "accessType") as CourseAccessType;
+  const price = Number.parseInt(text(formData, "price"), 10);
   const sortOrder = Number.parseInt(text(formData, "sortOrder"), 10);
   const isPublished = formData.get("isPublished") === "on";
   const isFeatured = formData.get("isFeatured") === "on";
@@ -56,9 +60,16 @@ export async function saveCourse(formData: FormData) {
     !description ||
     !Number.isInteger(lessonCount) ||
     lessonCount < 0 ||
+    !Object.values(CourseAccessType).includes(accessType) ||
+    !Number.isInteger(price) ||
+    price < 0 ||
     !Number.isInteger(sortOrder)
   ) {
     redirect(`/admin/courses/${id || "new"}?error=required`);
+  }
+
+  if (accessType === CourseAccessType.PAID && price <= 0) {
+    redirect(`/admin/courses/${id || "new"}?error=paid_price`);
   }
 
   if (!validSlug(slug)) {
@@ -75,6 +86,15 @@ export async function saveCourse(formData: FormData) {
       if (!["http:", "https:"].includes(coverUrl.protocol)) throw new Error();
     } catch {
       redirect(`/admin/courses/${id || "new"}?error=cover`);
+    }
+  }
+
+  if (fullVideoUrl) {
+    try {
+      const fullUrl = new URL(fullVideoUrl);
+      if (!["http:", "https:"].includes(fullUrl.protocol)) throw new Error();
+    } catch {
+      redirect(`/admin/courses/${id || "new"}?error=full_video`);
     }
   }
 
@@ -99,6 +119,9 @@ export async function saveCourse(formData: FormData) {
     durationText: durationText || null,
     coverImageUrl: coverImageUrl || null,
     previewVideoUrl: previewVideoUrl || null,
+    fullVideoUrl: fullVideoUrl || null,
+    accessType,
+    price,
     isPublished,
     isFeatured,
     sortOrder,

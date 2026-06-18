@@ -102,6 +102,7 @@ model AdminUser {
   lastLoginAt      DateTime?
   sessions         AdminSession[]
   reviewedPayments PaymentReport[]
+  reviewedCoursePurchases CoursePurchase[]
   statusChanges    ApplicationStatusHistory[]
   updatedSettings  SystemSetting[]
   createdAt        DateTime                   @default(now())
@@ -161,15 +162,50 @@ model Course {
   durationText    String?
   coverImageUrl   String?
   previewVideoUrl String?
+  fullVideoUrl    String?
+  accessType      CourseAccessType @default(MEMBER_INCLUDED)
+  price           Int       @default(0)
   isPublished     Boolean   @default(false)
   isFeatured      Boolean   @default(false)
   sortOrder       Int       @default(0)
   publishedAt     DateTime?
+  purchases       CoursePurchase[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
   @@index([isPublished, sortOrder])
   @@index([category])
+  @@index([accessType])
+}
+
+model CoursePurchase {
+  id             String               @id @default(cuid())
+  purchaseNo     String               @unique
+  courseId       String
+  course         Course               @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  name           String
+  phone          String
+  email          String
+  amount         Int
+  bankLast5      String?
+  payerName      String?
+  paidAt         DateTime?
+  note           String?
+  status         CoursePurchaseStatus @default(PENDING_PAYMENT)
+  accessToken    String               @unique @default(cuid())
+  approvedAt     DateTime?
+  rejectedAt     DateTime?
+  reviewedAt     DateTime?
+  reviewedById   String?
+  reviewedBy     AdminUser?           @relation(fields: [reviewedById], references: [id], onDelete: SetNull)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  @@index([courseId, status])
+  @@index([status, createdAt])
+  @@index([email])
+  @@index([phone])
+  @@index([reviewedById])
 }
 
 model ContactMessage {
@@ -203,6 +239,20 @@ enum EmailType {
   PAYMENT_REPORTED_ADMIN
   APPLICATION_APPROVED
   FACEBOOK_GROUP_JOINED
+}
+
+enum CourseAccessType {
+  PUBLIC_FREE
+  MEMBER_INCLUDED
+  PAID
+}
+
+enum CoursePurchaseStatus {
+  PENDING_PAYMENT
+  PAYMENT_REPORTED
+  APPROVED
+  REJECTED
+  CANCELLED
 }
 
 enum EmailStatus {

@@ -294,6 +294,40 @@ export type EnumApplicationStatusNullableWithAggregatesFilter<$PrismaModel = nev
   _max?: Prisma.NestedEnumApplicationStatusNullableFilter<$PrismaModel>
 }
 
+export type EnumCourseAccessTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CourseAccessType | Prisma.EnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CourseAccessType[] | Prisma.ListEnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CourseAccessType[] | Prisma.ListEnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCourseAccessTypeFilter<$PrismaModel> | $Enums.CourseAccessType
+}
+
+export type EnumCourseAccessTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CourseAccessType | Prisma.EnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CourseAccessType[] | Prisma.ListEnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CourseAccessType[] | Prisma.ListEnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCourseAccessTypeWithAggregatesFilter<$PrismaModel> | $Enums.CourseAccessType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCourseAccessTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCourseAccessTypeFilter<$PrismaModel>
+}
+
+export type EnumCoursePurchaseStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoursePurchaseStatus | Prisma.EnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CoursePurchaseStatus[] | Prisma.ListEnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CoursePurchaseStatus[] | Prisma.ListEnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCoursePurchaseStatusFilter<$PrismaModel> | $Enums.CoursePurchaseStatus
+}
+
+export type EnumCoursePurchaseStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoursePurchaseStatus | Prisma.EnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CoursePurchaseStatus[] | Prisma.ListEnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CoursePurchaseStatus[] | Prisma.ListEnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCoursePurchaseStatusWithAggregatesFilter<$PrismaModel> | $Enums.CoursePurchaseStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCoursePurchaseStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCoursePurchaseStatusFilter<$PrismaModel>
+}
+
 export type EnumContactMessageTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.ContactMessageType | Prisma.EnumContactMessageTypeFieldRefInput<$PrismaModel>
   in?: $Enums.ContactMessageType[] | Prisma.ListEnumContactMessageTypeFieldRefInput<$PrismaModel>
@@ -592,6 +626,40 @@ export type NestedEnumApplicationStatusNullableWithAggregatesFilter<$PrismaModel
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumApplicationStatusNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumApplicationStatusNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumCourseAccessTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CourseAccessType | Prisma.EnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CourseAccessType[] | Prisma.ListEnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CourseAccessType[] | Prisma.ListEnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCourseAccessTypeFilter<$PrismaModel> | $Enums.CourseAccessType
+}
+
+export type NestedEnumCourseAccessTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CourseAccessType | Prisma.EnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CourseAccessType[] | Prisma.ListEnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CourseAccessType[] | Prisma.ListEnumCourseAccessTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCourseAccessTypeWithAggregatesFilter<$PrismaModel> | $Enums.CourseAccessType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCourseAccessTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCourseAccessTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumCoursePurchaseStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoursePurchaseStatus | Prisma.EnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CoursePurchaseStatus[] | Prisma.ListEnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CoursePurchaseStatus[] | Prisma.ListEnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCoursePurchaseStatusFilter<$PrismaModel> | $Enums.CoursePurchaseStatus
+}
+
+export type NestedEnumCoursePurchaseStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoursePurchaseStatus | Prisma.EnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CoursePurchaseStatus[] | Prisma.ListEnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CoursePurchaseStatus[] | Prisma.ListEnumCoursePurchaseStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCoursePurchaseStatusWithAggregatesFilter<$PrismaModel> | $Enums.CoursePurchaseStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCoursePurchaseStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCoursePurchaseStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumContactMessageTypeFilter<$PrismaModel = never> = {

@@ -32,6 +32,26 @@ export const EmailType = {
 export type EmailType = (typeof EmailType)[keyof typeof EmailType]
 
 
+export const CourseAccessType = {
+  PUBLIC_FREE: 'PUBLIC_FREE',
+  MEMBER_INCLUDED: 'MEMBER_INCLUDED',
+  PAID: 'PAID'
+} as const
+
+export type CourseAccessType = (typeof CourseAccessType)[keyof typeof CourseAccessType]
+
+
+export const CoursePurchaseStatus = {
+  PENDING_PAYMENT: 'PENDING_PAYMENT',
+  PAYMENT_REPORTED: 'PAYMENT_REPORTED',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type CoursePurchaseStatus = (typeof CoursePurchaseStatus)[keyof typeof CoursePurchaseStatus]
+
+
 export const EmailStatus = {
   PENDING: 'PENDING',
   SENT: 'SENT',

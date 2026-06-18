@@ -10,6 +10,12 @@ type Props = {
   searchParams: Promise<{ updated?: string }>;
 };
 
+function accessLabel(accessType: string, price: number) {
+  if (accessType === "PUBLIC_FREE") return "免費";
+  if (accessType === "PAID") return `付費 NT$ ${price.toLocaleString("zh-TW")}`;
+  return "會員免費";
+}
+
 export default async function AdminCoursesPage({ searchParams }: Props) {
   const [session, courses, params] = await Promise.all([
     requireAdmin(),
@@ -23,7 +29,7 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
     <AdminShell adminName={session.adminUser.name}>
       <div className="admin-page-heading">
         <div>
-          <span>內容與試看片管理</span>
+          <span>課程內容與權限設定</span>
           <h1>課程管理</h1>
         </div>
         <Link className="admin-primary-link" href="/admin/courses/new">
@@ -31,7 +37,7 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
         </Link>
       </div>
       {params.updated === "1" ? (
-        <div className="admin-success-message">課程上下架狀態已更新。</div>
+        <div className="admin-success-message">課程狀態已更新。</div>
       ) : null}
       <section className="admin-panel">
         <div className="admin-panel-heading">
@@ -44,8 +50,10 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
                 <th>排序</th>
                 <th>課程名稱</th>
                 <th>分類</th>
+                <th>權限</th>
                 <th>試看片</th>
-                <th>首頁精選</th>
+                <th>正式影片</th>
+                <th>首頁顯示</th>
                 <th>狀態</th>
                 <th>操作</th>
               </tr>
@@ -60,7 +68,9 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
                     </Link>
                   </td>
                   <td>{course.category}</td>
+                  <td>{accessLabel(course.accessType, course.price)}</td>
                   <td>{course.previewVideoUrl ? "已設定" : "未設定"}</td>
+                  <td>{course.fullVideoUrl ? "已設定" : "未設定"}</td>
                   <td>{course.isFeatured ? "是" : "否"}</td>
                   <td>
                     <span
@@ -82,6 +92,11 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
                   </td>
                 </tr>
               ))}
+              {!courses.length ? (
+                <tr>
+                  <td colSpan={9}>目前尚無課程。</td>
+                </tr>
+              ) : null}
             </tbody>
           </table>
         </div>

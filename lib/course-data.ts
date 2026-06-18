@@ -19,6 +19,11 @@ export type CourseView = {
   audiences: string[];
   coverImageUrl: string;
   previewVideoUrl: string;
+  fullVideoUrl: string;
+  accessType: string;
+  price: number;
+  isPaid: boolean;
+  accessLabel: string;
 };
 
 function stringArray(value: Prisma.JsonValue | null) {
@@ -30,6 +35,12 @@ function stringArray(value: Prisma.JsonValue | null) {
 function accentForCourse(slug: string, sortOrder: number) {
   const total = [...slug].reduce((sum, character) => sum + character.charCodeAt(0), 0);
   return accents[Math.abs(total + sortOrder) % accents.length];
+}
+
+function accessLabel(accessType: string, price: number) {
+  if (accessType === "PUBLIC_FREE") return "免費課程";
+  if (accessType === "PAID") return `付費課程 NT$ ${price.toLocaleString("zh-TW")}`;
+  return "會員免費";
 }
 
 export function toCourseView(course: {
@@ -46,6 +57,9 @@ export function toCourseView(course: {
   durationText: string | null;
   coverImageUrl: string | null;
   previewVideoUrl: string | null;
+  fullVideoUrl: string | null;
+  accessType: string;
+  price: number;
   isFeatured: boolean;
   sortOrder: number;
 }): CourseView {
@@ -65,6 +79,11 @@ export function toCourseView(course: {
     audiences: stringArray(course.audiences),
     coverImageUrl: course.coverImageUrl || "",
     previewVideoUrl: course.previewVideoUrl || "",
+    fullVideoUrl: course.fullVideoUrl || "",
+    accessType: course.accessType,
+    price: course.price,
+    isPaid: course.accessType === "PAID",
+    accessLabel: accessLabel(course.accessType, course.price),
   };
 }
 

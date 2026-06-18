@@ -63,6 +63,11 @@ export type ApplicationStatusHistory = Prisma.ApplicationStatusHistoryModel
  */
 export type Course = Prisma.CourseModel
 /**
+ * Model CoursePurchase
+ * 
+ */
+export type CoursePurchase = Prisma.CoursePurchaseModel
+/**
  * Model ContactMessage
  * 
  */

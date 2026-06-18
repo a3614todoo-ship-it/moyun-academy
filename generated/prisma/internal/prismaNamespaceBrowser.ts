@@ -60,6 +60,7 @@ export const ModelName = {
   AdminSession: 'AdminSession',
   ApplicationStatusHistory: 'ApplicationStatusHistory',
   Course: 'Course',
+  CoursePurchase: 'CoursePurchase',
   ContactMessage: 'ContactMessage'
 } as const
 
@@ -218,6 +219,9 @@ export const CourseScalarFieldEnum = {
   durationText: 'durationText',
   coverImageUrl: 'coverImageUrl',
   previewVideoUrl: 'previewVideoUrl',
+  fullVideoUrl: 'fullVideoUrl',
+  accessType: 'accessType',
+  price: 'price',
   isPublished: 'isPublished',
   isFeatured: 'isFeatured',
   sortOrder: 'sortOrder',
@@ -227,6 +231,31 @@ export const CourseScalarFieldEnum = {
 } as const
 
 export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
+
+
+export const CoursePurchaseScalarFieldEnum = {
+  id: 'id',
+  purchaseNo: 'purchaseNo',
+  courseId: 'courseId',
+  name: 'name',
+  phone: 'phone',
+  email: 'email',
+  amount: 'amount',
+  bankLast5: 'bankLast5',
+  payerName: 'payerName',
+  paidAt: 'paidAt',
+  note: 'note',
+  status: 'status',
+  accessToken: 'accessToken',
+  approvedAt: 'approvedAt',
+  rejectedAt: 'rejectedAt',
+  reviewedAt: 'reviewedAt',
+  reviewedById: 'reviewedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CoursePurchaseScalarFieldEnum = (typeof CoursePurchaseScalarFieldEnum)[keyof typeof CoursePurchaseScalarFieldEnum]
 
 
 export const ContactMessageScalarFieldEnum = {

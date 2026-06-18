@@ -20,12 +20,14 @@ export function CourseCard({ course }: { course: CourseView }) {
       </Link>
       <div className="course-card-body">
         <div className="eyebrow">{course.category}</div>
-        <h3><Link href={`/courses/${course.slug}`}>{course.title}</Link></h3>
+        <h3>
+          <Link href={`/courses/${course.slug}`}>{course.title}</Link>
+        </h3>
         <p>{course.excerpt}</p>
         <div className="course-meta">
           <span>{course.lessons} 單元</span>
-          <span>{course.duration}</span>
-          <span className="member-label">會員免費</span>
+          {course.duration ? <span>{course.duration}</span> : null}
+          <span className="member-label">{course.accessLabel}</span>
         </div>
       </div>
     </article>

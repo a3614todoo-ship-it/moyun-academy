@@ -14,6 +14,9 @@ type CourseFormValue = {
   durationText?: string | null;
   coverImageUrl?: string | null;
   previewVideoUrl?: string | null;
+  fullVideoUrl?: string | null;
+  accessType?: string;
+  price?: number;
   isPublished?: boolean;
   isFeatured?: boolean;
   sortOrder?: number;
@@ -26,6 +29,8 @@ function listText(value: unknown) {
 }
 
 export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
+  const accessType = course?.accessType || "MEMBER_INCLUDED";
+
   return (
     <form action={saveCourse} className="admin-course-form">
       {course?.id ? <input name="id" type="hidden" value={course.id} /> : null}
@@ -36,7 +41,7 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
           <input defaultValue={course?.title || ""} name="title" required />
         </label>
         <label>
-          網址代稱（英文）
+          網址代稱
           <input
             defaultValue={course?.slug || ""}
             name="slug"
@@ -54,10 +59,10 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
             required
           />
           <datalist id="course-category-options">
-            <option value="古典詩詞" />
-            <option value="古文選讀" />
-            <option value="文學史" />
-            <option value="寫作與賞析" />
+            <option value="古典文學" />
+            <option value="現代文學" />
+            <option value="閱讀寫作" />
+            <option value="生活美學" />
           </datalist>
         </label>
         <label>
@@ -75,11 +80,11 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
           />
         </label>
         <label>
-          課程時數
+          課程時長
           <input
             defaultValue={course?.durationText || ""}
             name="durationText"
-            placeholder="24 小時"
+            placeholder="約 12 小時"
           />
         </label>
         <label>
@@ -103,7 +108,7 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
         />
       </label>
       <label>
-        完整介紹
+        詳細介紹
         <textarea
           defaultValue={course?.description || ""}
           name="description"
@@ -113,7 +118,7 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
       </label>
       <div className="admin-course-grid">
         <label>
-          課程大綱（每行一項）
+          課程大綱，每行一項
           <textarea
             defaultValue={listText(course?.outline)}
             name="outline"
@@ -121,7 +126,7 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
           />
         </label>
         <label>
-          適合對象（每行一項）
+          適合對象，每行一項
           <textarea
             defaultValue={listText(course?.audiences)}
             name="audiences"
@@ -129,16 +134,51 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
           />
         </label>
       </div>
+
       <label>
-        YouTube 試看片網址
+        試看片網址（YouTube）
         <input
           defaultValue={course?.previewVideoUrl || ""}
           name="previewVideoUrl"
           placeholder="https://www.youtube.com/watch?v=..."
           type="url"
         />
-        <small>支援 YouTube 一般影片、短網址、Shorts 與直播網址。</small>
+        <small>試看片目前支援 YouTube 一般影片、短網址與 Shorts 網址。</small>
       </label>
+
+      <div className="admin-course-grid">
+        <label>
+          課程觀看權限
+          <select defaultValue={accessType} name="accessType">
+            <option value="PUBLIC_FREE">免費公開觀看</option>
+            <option value="MEMBER_INCLUDED">會員免費觀看</option>
+            <option value="PAID">需單獨付費購買</option>
+          </select>
+        </label>
+        <label>
+          課程售價
+          <input
+            defaultValue={course?.price ?? 0}
+            min="0"
+            name="price"
+            required
+            type="number"
+          />
+          <small>免費課程可填 0；付費課程請填實際匯款金額。</small>
+        </label>
+      </div>
+
+      <label>
+        正式課程影片網址（預留）
+        <input
+          defaultValue={course?.fullVideoUrl || ""}
+          name="fullVideoUrl"
+          placeholder="可放 YouTube、Vimeo 或其他影片網址"
+          type="url"
+        />
+        <small>正式影片不會直接公開在課程介紹頁；之後可依審核權限顯示。</small>
+      </label>
+
       <label>
         課程封面圖片網址
         <input
@@ -163,7 +203,7 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
             name="isFeatured"
             type="checkbox"
           />
-          首頁精選
+          首頁顯示
         </label>
       </div>
       <button className="admin-course-save" type="submit">

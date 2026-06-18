@@ -13,11 +13,13 @@ type Props = {
 };
 
 const errorMessages: Record<string, string> = {
-  required: "請完整填寫必填欄位，並確認單元數與排序為有效數字。",
-  slug: "網址代稱只能使用小寫英文字母、數字與連字號。",
-  youtube: "請輸入有效的 YouTube 影片網址。",
+  required: "請確認必填欄位、數字欄位與權限設定都正確。",
+  slug: "網址代稱只能使用小寫英文、數字與連字號。",
+  youtube: "請輸入有效的 YouTube 試看片網址。",
   cover: "請輸入有效的封面圖片網址。",
-  duplicate_slug: "此網址代稱已被其他課程使用。",
+  full_video: "請輸入有效的正式影片網址。",
+  paid_price: "付費課程的售價必須大於 0。",
+  duplicate_slug: "這個網址代稱已被其他課程使用。",
 };
 
 export default async function EditCoursePage({ params, searchParams }: Props) {
@@ -34,7 +36,7 @@ export default async function EditCoursePage({ params, searchParams }: Props) {
       <div className="admin-page-heading">
         <div>
           <Link className="admin-breadcrumb" href="/admin/courses">
-            ← 返回課程管理
+            返回課程管理
           </Link>
           <h1>編輯課程</h1>
           <span>{course.title}</span>

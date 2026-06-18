@@ -208,6 +208,7 @@ export type AdminUserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"AdminUser"> | Date | string
   sessions?: Prisma.AdminSessionListRelationFilter
   reviewedPayments?: Prisma.PaymentReportListRelationFilter
+  reviewedCoursePurchases?: Prisma.CoursePurchaseListRelationFilter
   statusChanges?: Prisma.ApplicationStatusHistoryListRelationFilter
   updatedSettings?: Prisma.SystemSettingListRelationFilter
 }
@@ -223,6 +224,7 @@ export type AdminUserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   sessions?: Prisma.AdminSessionOrderByRelationAggregateInput
   reviewedPayments?: Prisma.PaymentReportOrderByRelationAggregateInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseOrderByRelationAggregateInput
   statusChanges?: Prisma.ApplicationStatusHistoryOrderByRelationAggregateInput
   updatedSettings?: Prisma.SystemSettingOrderByRelationAggregateInput
 }
@@ -241,6 +243,7 @@ export type AdminUserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"AdminUser"> | Date | string
   sessions?: Prisma.AdminSessionListRelationFilter
   reviewedPayments?: Prisma.PaymentReportListRelationFilter
+  reviewedCoursePurchases?: Prisma.CoursePurchaseListRelationFilter
   statusChanges?: Prisma.ApplicationStatusHistoryListRelationFilter
   updatedSettings?: Prisma.SystemSettingListRelationFilter
 }, "id" | "email">
@@ -284,6 +287,7 @@ export type AdminUserCreateInput = {
   updatedAt?: Date | string
   sessions?: Prisma.AdminSessionCreateNestedManyWithoutAdminUserInput
   reviewedPayments?: Prisma.PaymentReportCreateNestedManyWithoutReviewedByInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutReviewedByInput
   statusChanges?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutChangedByInput
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
 }
@@ -299,6 +303,7 @@ export type AdminUserUncheckedCreateInput = {
   updatedAt?: Date | string
   sessions?: Prisma.AdminSessionUncheckedCreateNestedManyWithoutAdminUserInput
   reviewedPayments?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutReviewedByInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutReviewedByInput
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
 }
@@ -314,6 +319,7 @@ export type AdminUserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AdminSessionUpdateManyWithoutAdminUserNestedInput
   reviewedPayments?: Prisma.PaymentReportUpdateManyWithoutReviewedByNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutReviewedByNestedInput
   statusChanges?: Prisma.ApplicationStatusHistoryUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
 }
@@ -329,6 +335,7 @@ export type AdminUserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AdminSessionUncheckedUpdateManyWithoutAdminUserNestedInput
   reviewedPayments?: Prisma.PaymentReportUncheckedUpdateManyWithoutReviewedByNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutReviewedByNestedInput
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
@@ -471,6 +478,22 @@ export type AdminUserUpdateOneWithoutStatusChangesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AdminUserUpdateToOneWithWhereWithoutStatusChangesInput, Prisma.AdminUserUpdateWithoutStatusChangesInput>, Prisma.AdminUserUncheckedUpdateWithoutStatusChangesInput>
 }
 
+export type AdminUserCreateNestedOneWithoutReviewedCoursePurchasesInput = {
+  create?: Prisma.XOR<Prisma.AdminUserCreateWithoutReviewedCoursePurchasesInput, Prisma.AdminUserUncheckedCreateWithoutReviewedCoursePurchasesInput>
+  connectOrCreate?: Prisma.AdminUserCreateOrConnectWithoutReviewedCoursePurchasesInput
+  connect?: Prisma.AdminUserWhereUniqueInput
+}
+
+export type AdminUserUpdateOneWithoutReviewedCoursePurchasesNestedInput = {
+  create?: Prisma.XOR<Prisma.AdminUserCreateWithoutReviewedCoursePurchasesInput, Prisma.AdminUserUncheckedCreateWithoutReviewedCoursePurchasesInput>
+  connectOrCreate?: Prisma.AdminUserCreateOrConnectWithoutReviewedCoursePurchasesInput
+  upsert?: Prisma.AdminUserUpsertWithoutReviewedCoursePurchasesInput
+  disconnect?: Prisma.AdminUserWhereInput | boolean
+  delete?: Prisma.AdminUserWhereInput | boolean
+  connect?: Prisma.AdminUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AdminUserUpdateToOneWithWhereWithoutReviewedCoursePurchasesInput, Prisma.AdminUserUpdateWithoutReviewedCoursePurchasesInput>, Prisma.AdminUserUncheckedUpdateWithoutReviewedCoursePurchasesInput>
+}
+
 export type AdminUserCreateWithoutReviewedPaymentsInput = {
   id?: string
   email: string
@@ -481,6 +504,7 @@ export type AdminUserCreateWithoutReviewedPaymentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.AdminSessionCreateNestedManyWithoutAdminUserInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutReviewedByInput
   statusChanges?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutChangedByInput
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
 }
@@ -495,6 +519,7 @@ export type AdminUserUncheckedCreateWithoutReviewedPaymentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.AdminSessionUncheckedCreateNestedManyWithoutAdminUserInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutReviewedByInput
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
 }
@@ -525,6 +550,7 @@ export type AdminUserUpdateWithoutReviewedPaymentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AdminSessionUpdateManyWithoutAdminUserNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutReviewedByNestedInput
   statusChanges?: Prisma.ApplicationStatusHistoryUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
 }
@@ -539,6 +565,7 @@ export type AdminUserUncheckedUpdateWithoutReviewedPaymentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AdminSessionUncheckedUpdateManyWithoutAdminUserNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutReviewedByNestedInput
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
@@ -554,6 +581,7 @@ export type AdminUserCreateWithoutUpdatedSettingsInput = {
   updatedAt?: Date | string
   sessions?: Prisma.AdminSessionCreateNestedManyWithoutAdminUserInput
   reviewedPayments?: Prisma.PaymentReportCreateNestedManyWithoutReviewedByInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutReviewedByInput
   statusChanges?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutChangedByInput
 }
 
@@ -568,6 +596,7 @@ export type AdminUserUncheckedCreateWithoutUpdatedSettingsInput = {
   updatedAt?: Date | string
   sessions?: Prisma.AdminSessionUncheckedCreateNestedManyWithoutAdminUserInput
   reviewedPayments?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutReviewedByInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutReviewedByInput
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
 }
 
@@ -598,6 +627,7 @@ export type AdminUserUpdateWithoutUpdatedSettingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AdminSessionUpdateManyWithoutAdminUserNestedInput
   reviewedPayments?: Prisma.PaymentReportUpdateManyWithoutReviewedByNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutReviewedByNestedInput
   statusChanges?: Prisma.ApplicationStatusHistoryUpdateManyWithoutChangedByNestedInput
 }
 
@@ -612,6 +642,7 @@ export type AdminUserUncheckedUpdateWithoutUpdatedSettingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AdminSessionUncheckedUpdateManyWithoutAdminUserNestedInput
   reviewedPayments?: Prisma.PaymentReportUncheckedUpdateManyWithoutReviewedByNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutReviewedByNestedInput
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
@@ -625,6 +656,7 @@ export type AdminUserCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   reviewedPayments?: Prisma.PaymentReportCreateNestedManyWithoutReviewedByInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutReviewedByInput
   statusChanges?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutChangedByInput
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
 }
@@ -639,6 +671,7 @@ export type AdminUserUncheckedCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   reviewedPayments?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutReviewedByInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutReviewedByInput
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
 }
@@ -669,6 +702,7 @@ export type AdminUserUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviewedPayments?: Prisma.PaymentReportUpdateManyWithoutReviewedByNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutReviewedByNestedInput
   statusChanges?: Prisma.ApplicationStatusHistoryUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
 }
@@ -683,6 +717,7 @@ export type AdminUserUncheckedUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviewedPayments?: Prisma.PaymentReportUncheckedUpdateManyWithoutReviewedByNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutReviewedByNestedInput
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
@@ -698,6 +733,7 @@ export type AdminUserCreateWithoutStatusChangesInput = {
   updatedAt?: Date | string
   sessions?: Prisma.AdminSessionCreateNestedManyWithoutAdminUserInput
   reviewedPayments?: Prisma.PaymentReportCreateNestedManyWithoutReviewedByInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutReviewedByInput
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
 }
 
@@ -712,6 +748,7 @@ export type AdminUserUncheckedCreateWithoutStatusChangesInput = {
   updatedAt?: Date | string
   sessions?: Prisma.AdminSessionUncheckedCreateNestedManyWithoutAdminUserInput
   reviewedPayments?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutReviewedByInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutReviewedByInput
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
@@ -742,6 +779,7 @@ export type AdminUserUpdateWithoutStatusChangesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AdminSessionUpdateManyWithoutAdminUserNestedInput
   reviewedPayments?: Prisma.PaymentReportUpdateManyWithoutReviewedByNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutReviewedByNestedInput
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
 }
 
@@ -756,6 +794,83 @@ export type AdminUserUncheckedUpdateWithoutStatusChangesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AdminSessionUncheckedUpdateManyWithoutAdminUserNestedInput
   reviewedPayments?: Prisma.PaymentReportUncheckedUpdateManyWithoutReviewedByNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutReviewedByNestedInput
+  updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type AdminUserCreateWithoutReviewedCoursePurchasesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.AdminSessionCreateNestedManyWithoutAdminUserInput
+  reviewedPayments?: Prisma.PaymentReportCreateNestedManyWithoutReviewedByInput
+  statusChanges?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutChangedByInput
+  updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
+}
+
+export type AdminUserUncheckedCreateWithoutReviewedCoursePurchasesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.AdminSessionUncheckedCreateNestedManyWithoutAdminUserInput
+  reviewedPayments?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutReviewedByInput
+  statusChanges?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+}
+
+export type AdminUserCreateOrConnectWithoutReviewedCoursePurchasesInput = {
+  where: Prisma.AdminUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AdminUserCreateWithoutReviewedCoursePurchasesInput, Prisma.AdminUserUncheckedCreateWithoutReviewedCoursePurchasesInput>
+}
+
+export type AdminUserUpsertWithoutReviewedCoursePurchasesInput = {
+  update: Prisma.XOR<Prisma.AdminUserUpdateWithoutReviewedCoursePurchasesInput, Prisma.AdminUserUncheckedUpdateWithoutReviewedCoursePurchasesInput>
+  create: Prisma.XOR<Prisma.AdminUserCreateWithoutReviewedCoursePurchasesInput, Prisma.AdminUserUncheckedCreateWithoutReviewedCoursePurchasesInput>
+  where?: Prisma.AdminUserWhereInput
+}
+
+export type AdminUserUpdateToOneWithWhereWithoutReviewedCoursePurchasesInput = {
+  where?: Prisma.AdminUserWhereInput
+  data: Prisma.XOR<Prisma.AdminUserUpdateWithoutReviewedCoursePurchasesInput, Prisma.AdminUserUncheckedUpdateWithoutReviewedCoursePurchasesInput>
+}
+
+export type AdminUserUpdateWithoutReviewedCoursePurchasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.AdminSessionUpdateManyWithoutAdminUserNestedInput
+  reviewedPayments?: Prisma.PaymentReportUpdateManyWithoutReviewedByNestedInput
+  statusChanges?: Prisma.ApplicationStatusHistoryUpdateManyWithoutChangedByNestedInput
+  updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type AdminUserUncheckedUpdateWithoutReviewedCoursePurchasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.AdminSessionUncheckedUpdateManyWithoutAdminUserNestedInput
+  reviewedPayments?: Prisma.PaymentReportUncheckedUpdateManyWithoutReviewedByNestedInput
+  statusChanges?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
@@ -767,6 +882,7 @@ export type AdminUserUncheckedUpdateWithoutStatusChangesInput = {
 export type AdminUserCountOutputType = {
   sessions: number
   reviewedPayments: number
+  reviewedCoursePurchases: number
   statusChanges: number
   updatedSettings: number
 }
@@ -774,6 +890,7 @@ export type AdminUserCountOutputType = {
 export type AdminUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | AdminUserCountOutputTypeCountSessionsArgs
   reviewedPayments?: boolean | AdminUserCountOutputTypeCountReviewedPaymentsArgs
+  reviewedCoursePurchases?: boolean | AdminUserCountOutputTypeCountReviewedCoursePurchasesArgs
   statusChanges?: boolean | AdminUserCountOutputTypeCountStatusChangesArgs
   updatedSettings?: boolean | AdminUserCountOutputTypeCountUpdatedSettingsArgs
 }
@@ -805,6 +922,13 @@ export type AdminUserCountOutputTypeCountReviewedPaymentsArgs<ExtArgs extends ru
 /**
  * AdminUserCountOutputType without action
  */
+export type AdminUserCountOutputTypeCountReviewedCoursePurchasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CoursePurchaseWhereInput
+}
+
+/**
+ * AdminUserCountOutputType without action
+ */
 export type AdminUserCountOutputTypeCountStatusChangesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ApplicationStatusHistoryWhereInput
 }
@@ -828,6 +952,7 @@ export type AdminUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   updatedAt?: boolean
   sessions?: boolean | Prisma.AdminUser$sessionsArgs<ExtArgs>
   reviewedPayments?: boolean | Prisma.AdminUser$reviewedPaymentsArgs<ExtArgs>
+  reviewedCoursePurchases?: boolean | Prisma.AdminUser$reviewedCoursePurchasesArgs<ExtArgs>
   statusChanges?: boolean | Prisma.AdminUser$statusChangesArgs<ExtArgs>
   updatedSettings?: boolean | Prisma.AdminUser$updatedSettingsArgs<ExtArgs>
   _count?: boolean | Prisma.AdminUserCountOutputTypeDefaultArgs<ExtArgs>
@@ -870,6 +995,7 @@ export type AdminUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type AdminUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.AdminUser$sessionsArgs<ExtArgs>
   reviewedPayments?: boolean | Prisma.AdminUser$reviewedPaymentsArgs<ExtArgs>
+  reviewedCoursePurchases?: boolean | Prisma.AdminUser$reviewedCoursePurchasesArgs<ExtArgs>
   statusChanges?: boolean | Prisma.AdminUser$statusChangesArgs<ExtArgs>
   updatedSettings?: boolean | Prisma.AdminUser$updatedSettingsArgs<ExtArgs>
   _count?: boolean | Prisma.AdminUserCountOutputTypeDefaultArgs<ExtArgs>
@@ -882,6 +1008,7 @@ export type $AdminUserPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     sessions: Prisma.$AdminSessionPayload<ExtArgs>[]
     reviewedPayments: Prisma.$PaymentReportPayload<ExtArgs>[]
+    reviewedCoursePurchases: Prisma.$CoursePurchasePayload<ExtArgs>[]
     statusChanges: Prisma.$ApplicationStatusHistoryPayload<ExtArgs>[]
     updatedSettings: Prisma.$SystemSettingPayload<ExtArgs>[]
   }
@@ -1290,6 +1417,7 @@ export interface Prisma__AdminUserClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.AdminUser$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminUser$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviewedPayments<T extends Prisma.AdminUser$reviewedPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminUser$reviewedPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewedCoursePurchases<T extends Prisma.AdminUser$reviewedCoursePurchasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminUser$reviewedCoursePurchasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoursePurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   statusChanges<T extends Prisma.AdminUser$statusChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminUser$statusChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedSettings<T extends Prisma.AdminUser$updatedSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminUser$updatedSettingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1767,6 +1895,30 @@ export type AdminUser$reviewedPaymentsArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.PaymentReportScalarFieldEnum | Prisma.PaymentReportScalarFieldEnum[]
+}
+
+/**
+ * AdminUser.reviewedCoursePurchases
+ */
+export type AdminUser$reviewedCoursePurchasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CoursePurchase
+   */
+  select?: Prisma.CoursePurchaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CoursePurchase
+   */
+  omit?: Prisma.CoursePurchaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CoursePurchaseInclude<ExtArgs> | null
+  where?: Prisma.CoursePurchaseWhereInput
+  orderBy?: Prisma.CoursePurchaseOrderByWithRelationInput | Prisma.CoursePurchaseOrderByWithRelationInput[]
+  cursor?: Prisma.CoursePurchaseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CoursePurchaseScalarFieldEnum | Prisma.CoursePurchaseScalarFieldEnum[]
 }
 
 /**

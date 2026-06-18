@@ -34,7 +34,7 @@ export async function sendEmailLog(emailLogId: string) {
     include: {
       application: {
         include: {
-          plan: { select: { name: true, price: true } },
+          plan: { select: { name: true, price: true, durationDays: true } },
           paymentReports: {
             orderBy: { createdAt: "desc" },
             take: 1,
