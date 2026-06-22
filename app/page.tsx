@@ -4,19 +4,19 @@ import { getFeaturedCourses } from "@/lib/course-data";
 
 const beliefs = [
   {
-    icon: "書",
+    icon: "讀",
     title: "慢讀經典",
-    detail: "不追求速度，而是透過細讀、品味與思考，讓經典真正走進生命。",
+    detail: "不追求速度，而是透過細讀、品味與思考，讓經典真正進入生命。",
   },
   {
-    icon: "茶",
+    icon: "生",
     title: "回到生活",
-    detail: "將古人的智慧與情感帶回今日，陪伴他人面對日常的勇氣與溫柔。",
+    detail: "將古人的智慧與情感帶回今日，轉化為理解自己、陪伴他人、面對日常的勇氣與溫柔。",
   },
   {
-    icon: "筆",
+    icon: "眼",
     title: "形成自己的眼光",
-    detail: "閱讀不是為了標準答案，而是在對話與思索中養成獨立而溫潤的觀點。",
+    detail: "閱讀是為了思辨與選擇，在對話與反思中，養成獨立而溫暖的觀點。",
   },
 ];
 
@@ -37,7 +37,7 @@ export default async function HomePage() {
               重新理解自己、他人與世界。
             </p>
             <div className="button-row">
-              <Link className="button button-forest" href="#author-story">
+              <Link className="button button-forest" href="/author">
                 認識作家
                 <span>→</span>
               </Link>
@@ -102,8 +102,8 @@ export default async function HomePage() {
             <span className="eyebrow">閱讀路徑</span>
             <h2>從這些篇章開始</h2>
             <p>
-              每一條路徑，都是一次與古人相遇的旅程。
-              慢慢讀，慢慢懂，讓文字在今日重新發光。
+              每一條路徑，都是一場與古人相遇的旅程。
+              慢慢讀，慢慢懂。
             </p>
             <Link className="text-link" href="/courses">
               探索所有課程 →
@@ -120,14 +120,14 @@ export default async function HomePage() {
       <section className="membership-cta" id="events">
         <div className="container cta-inner">
           <div className="cta-copy">
-            <h2>加入我輩學堂，開啟你的閱讀之旅</h2>
-            <p>在張曼娟的帶領下，持續閱讀經典，也閱讀自己的生活。</p>
+            <h2>加入我輩學堂，持續走在閱讀路上</h2>
+            <p>在課程、直播與社群陪伴中，慢慢累積自己的文學眼光。</p>
           </div>
           <div className="cta-benefits">
-            <span><b>書</b> 無限次觀看<small>所有完整課程</small></span>
-            <span><b>眾</b> 專屬學習社群<small>與同好交流</small></span>
-            <span><b>箋</b> 課程更新通知<small>掌握最新內容</small></span>
-            <span><b>禮</b> 學員專屬優惠<small>活動與講座</small></span>
+            <span><b>讀</b> 經典課程<small>持續累積</small></span>
+            <span><b>問</b> 直播互動<small>與老師同行</small></span>
+            <span><b>聚</b> 學員社群<small>一起慢讀</small></span>
+            <span><b>藏</b> 課程紀錄<small>回看複習</small></span>
           </div>
           <Link className="button button-gold" href="/membership">加入學員</Link>
         </div>

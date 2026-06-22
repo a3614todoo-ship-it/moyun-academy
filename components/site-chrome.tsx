@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navigation = [
-  { href: "/#author", label: "關於作家" },
+  { href: "/author", label: "關於作家" },
   { href: "/#beliefs", label: "學堂理念" },
   { href: "/#path", label: "閱讀路徑" },
   { href: "/courses", label: "課程" },
@@ -46,13 +46,14 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <span className="brand-seal">我</span>
               <span>
                 <strong>我輩學堂</strong>
-                <small>慢讀、深思，回到生活</small>
+                <small>慢讀經典，回到生活</small>
               </span>
             </div>
             <p>跟著張曼娟慢讀經典，把古人的生命經驗帶回今日，重新理解自己、他人與世界。</p>
           </div>
           <div>
-            <strong>網站功能</strong>
+            <strong>網站導覽</strong>
+            <Link href="/author">認識作家</Link>
             <Link href="/courses">所有課程</Link>
             <Link href="/membership">會員方案</Link>
             <Link href="/payment-report">會員匯款回報</Link>
@@ -61,7 +62,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           <div>
             <strong>聯絡資訊</strong>
             <span>service@wobei-academy.tw</span>
-            <span>週一至週五 10:00－18:00</span>
+            <span>服務時間：週一至週五 10:00－18:00</span>
           </div>
         </div>
         <div className="container copyright">© 2026 我輩學堂</div>
