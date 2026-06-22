@@ -47,17 +47,38 @@ export async function sendEmailLog(emailLogId: string) {
           },
         },
       },
+      coursePurchase: {
+        include: {
+          course: {
+            select: {
+              title: true,
+              slug: true,
+              fullVideoUrl: true,
+              liveSession: {
+                select: {
+                  isEnabled: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
 
-  if (!emailLog?.application) {
-    throw new Error(`EmailLog ${emailLogId} 缺少報名資料。`);
+  if (!emailLog) {
+    throw new Error(`找不到 EmailLog：${emailLogId}`);
   }
 
-  const facebookGroupUrl = await getFacebookGroupUrl();
+  if (!emailLog.application && !emailLog.coursePurchase) {
+    throw new Error(`EmailLog ${emailLogId} 缺少關聯資料。`);
+  }
+
+  const facebookGroupUrl = emailLog.application ? await getFacebookGroupUrl() : "";
   const template = buildEmailTemplate({
     type: emailLog.type,
     application: emailLog.application,
+    coursePurchase: emailLog.coursePurchase,
     siteUrl: config.siteUrl,
     facebookGroupUrl,
   });

@@ -13,6 +13,9 @@ export type CourseView = {
   description: string;
   lessons: number;
   duration: string;
+  courseStartAt: Date | null;
+  courseFormatText: string;
+  viewingPolicyText: string;
   accent: string;
   featured: boolean;
   outline: string[];
@@ -55,6 +58,9 @@ export function toCourseView(course: {
   audiences: Prisma.JsonValue | null;
   lessonCount: number;
   durationText: string | null;
+  courseStartAt: Date | null;
+  courseFormatText: string | null;
+  viewingPolicyText: string | null;
   coverImageUrl: string | null;
   previewVideoUrl: string | null;
   fullVideoUrl: string | null;
@@ -73,6 +79,9 @@ export function toCourseView(course: {
     description: course.description,
     lessons: course.lessonCount,
     duration: course.durationText || "",
+    courseStartAt: course.courseStartAt,
+    courseFormatText: course.courseFormatText || "",
+    viewingPolicyText: course.viewingPolicyText || "",
     accent: accentForCourse(course.slug, course.sortOrder),
     featured: course.isFeatured,
     outline: stringArray(course.outline),

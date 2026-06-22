@@ -328,6 +328,40 @@ export type EnumCoursePurchaseStatusWithAggregatesFilter<$PrismaModel = never> =
   _max?: Prisma.NestedEnumCoursePurchaseStatusFilter<$PrismaModel>
 }
 
+export type EnumLivePlatformFilter<$PrismaModel = never> = {
+  equals?: $Enums.LivePlatform | Prisma.EnumLivePlatformFieldRefInput<$PrismaModel>
+  in?: $Enums.LivePlatform[] | Prisma.ListEnumLivePlatformFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LivePlatform[] | Prisma.ListEnumLivePlatformFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLivePlatformFilter<$PrismaModel> | $Enums.LivePlatform
+}
+
+export type EnumLivePlatformWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LivePlatform | Prisma.EnumLivePlatformFieldRefInput<$PrismaModel>
+  in?: $Enums.LivePlatform[] | Prisma.ListEnumLivePlatformFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LivePlatform[] | Prisma.ListEnumLivePlatformFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLivePlatformWithAggregatesFilter<$PrismaModel> | $Enums.LivePlatform
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLivePlatformFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLivePlatformFilter<$PrismaModel>
+}
+
+export type EnumLiveQuestionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LiveQuestionStatus | Prisma.EnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LiveQuestionStatus[] | Prisma.ListEnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LiveQuestionStatus[] | Prisma.ListEnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLiveQuestionStatusFilter<$PrismaModel> | $Enums.LiveQuestionStatus
+}
+
+export type EnumLiveQuestionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LiveQuestionStatus | Prisma.EnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LiveQuestionStatus[] | Prisma.ListEnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LiveQuestionStatus[] | Prisma.ListEnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLiveQuestionStatusWithAggregatesFilter<$PrismaModel> | $Enums.LiveQuestionStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLiveQuestionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLiveQuestionStatusFilter<$PrismaModel>
+}
+
 export type EnumContactMessageTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.ContactMessageType | Prisma.EnumContactMessageTypeFieldRefInput<$PrismaModel>
   in?: $Enums.ContactMessageType[] | Prisma.ListEnumContactMessageTypeFieldRefInput<$PrismaModel>
@@ -660,6 +694,40 @@ export type NestedEnumCoursePurchaseStatusWithAggregatesFilter<$PrismaModel = ne
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumCoursePurchaseStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumCoursePurchaseStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumLivePlatformFilter<$PrismaModel = never> = {
+  equals?: $Enums.LivePlatform | Prisma.EnumLivePlatformFieldRefInput<$PrismaModel>
+  in?: $Enums.LivePlatform[] | Prisma.ListEnumLivePlatformFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LivePlatform[] | Prisma.ListEnumLivePlatformFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLivePlatformFilter<$PrismaModel> | $Enums.LivePlatform
+}
+
+export type NestedEnumLivePlatformWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LivePlatform | Prisma.EnumLivePlatformFieldRefInput<$PrismaModel>
+  in?: $Enums.LivePlatform[] | Prisma.ListEnumLivePlatformFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LivePlatform[] | Prisma.ListEnumLivePlatformFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLivePlatformWithAggregatesFilter<$PrismaModel> | $Enums.LivePlatform
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLivePlatformFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLivePlatformFilter<$PrismaModel>
+}
+
+export type NestedEnumLiveQuestionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LiveQuestionStatus | Prisma.EnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LiveQuestionStatus[] | Prisma.ListEnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LiveQuestionStatus[] | Prisma.ListEnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLiveQuestionStatusFilter<$PrismaModel> | $Enums.LiveQuestionStatus
+}
+
+export type NestedEnumLiveQuestionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LiveQuestionStatus | Prisma.EnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LiveQuestionStatus[] | Prisma.ListEnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LiveQuestionStatus[] | Prisma.ListEnumLiveQuestionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLiveQuestionStatusWithAggregatesFilter<$PrismaModel> | $Enums.LiveQuestionStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLiveQuestionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLiveQuestionStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumContactMessageTypeFilter<$PrismaModel = never> = {

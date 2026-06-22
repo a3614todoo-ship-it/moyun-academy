@@ -29,7 +29,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <small>張曼娟的古典文學學堂</small>
             </span>
           </Link>
-          <nav className="main-nav" aria-label="主要選單">
+          <nav className="main-nav" aria-label="主要導覽">
             {navigation.map((item) => (
               <Link href={item.href} key={item.href}>{item.label}</Link>
             ))}
@@ -44,23 +44,27 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           <div>
             <div className="brand footer-brand">
               <span className="brand-seal">我</span>
-              <span><strong>我輩學堂</strong><small>以經典照見這一輩的生活</small></span>
+              <span>
+                <strong>我輩學堂</strong>
+                <small>慢讀、深思，回到生活</small>
+              </span>
             </div>
-            <p>跟著張曼娟慢讀經典，把古人的生命經驗帶回今日。</p>
+            <p>跟著張曼娟慢讀經典，把古人的生命經驗帶回今日，重新理解自己、他人與世界。</p>
           </div>
           <div>
-            <strong>快速連結</strong>
+            <strong>網站功能</strong>
             <Link href="/courses">所有課程</Link>
-            <Link href="/membership">學員方案</Link>
-            <Link href="/payment-report">匯款回報</Link>
+            <Link href="/membership">會員方案</Link>
+            <Link href="/payment-report">會員匯款回報</Link>
+            <Link href="/course-payment-report">課程匯款回報</Link>
           </div>
           <div>
-            <strong>聯絡我們</strong>
+            <strong>聯絡資訊</strong>
             <span>service@wobei-academy.tw</span>
-            <span>週一至週五 10:00–18:00</span>
+            <span>週一至週五 10:00－18:00</span>
           </div>
         </div>
-        <div className="container copyright">© 2026 我輩學堂。保留所有權利。</div>
+        <div className="container copyright">© 2026 我輩學堂</div>
       </footer>
     </>
   );

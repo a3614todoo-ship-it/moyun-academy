@@ -27,6 +27,7 @@ export type AggregateEmailLog = {
 export type EmailLogMinAggregateOutputType = {
   id: string | null
   applicationId: string | null
+  coursePurchaseId: string | null
   type: $Enums.EmailType | null
   recipient: string | null
   subject: string | null
@@ -41,6 +42,7 @@ export type EmailLogMinAggregateOutputType = {
 export type EmailLogMaxAggregateOutputType = {
   id: string | null
   applicationId: string | null
+  coursePurchaseId: string | null
   type: $Enums.EmailType | null
   recipient: string | null
   subject: string | null
@@ -55,6 +57,7 @@ export type EmailLogMaxAggregateOutputType = {
 export type EmailLogCountAggregateOutputType = {
   id: number
   applicationId: number
+  coursePurchaseId: number
   type: number
   recipient: number
   subject: number
@@ -71,6 +74,7 @@ export type EmailLogCountAggregateOutputType = {
 export type EmailLogMinAggregateInputType = {
   id?: true
   applicationId?: true
+  coursePurchaseId?: true
   type?: true
   recipient?: true
   subject?: true
@@ -85,6 +89,7 @@ export type EmailLogMinAggregateInputType = {
 export type EmailLogMaxAggregateInputType = {
   id?: true
   applicationId?: true
+  coursePurchaseId?: true
   type?: true
   recipient?: true
   subject?: true
@@ -99,6 +104,7 @@ export type EmailLogMaxAggregateInputType = {
 export type EmailLogCountAggregateInputType = {
   id?: true
   applicationId?: true
+  coursePurchaseId?: true
   type?: true
   recipient?: true
   subject?: true
@@ -186,6 +192,7 @@ export type EmailLogGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type EmailLogGroupByOutputType = {
   id: string
   applicationId: string | null
+  coursePurchaseId: string | null
   type: $Enums.EmailType
   recipient: string
   subject: string
@@ -221,6 +228,7 @@ export type EmailLogWhereInput = {
   NOT?: Prisma.EmailLogWhereInput | Prisma.EmailLogWhereInput[]
   id?: Prisma.StringFilter<"EmailLog"> | string
   applicationId?: Prisma.StringNullableFilter<"EmailLog"> | string | null
+  coursePurchaseId?: Prisma.StringNullableFilter<"EmailLog"> | string | null
   type?: Prisma.EnumEmailTypeFilter<"EmailLog"> | $Enums.EmailType
   recipient?: Prisma.StringFilter<"EmailLog"> | string
   subject?: Prisma.StringFilter<"EmailLog"> | string
@@ -231,11 +239,13 @@ export type EmailLogWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"EmailLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EmailLog"> | Date | string
   application?: Prisma.XOR<Prisma.ApplicationNullableScalarRelationFilter, Prisma.ApplicationWhereInput> | null
+  coursePurchase?: Prisma.XOR<Prisma.CoursePurchaseNullableScalarRelationFilter, Prisma.CoursePurchaseWhereInput> | null
 }
 
 export type EmailLogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  coursePurchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
   subject?: Prisma.SortOrder
@@ -246,6 +256,7 @@ export type EmailLogOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   application?: Prisma.ApplicationOrderByWithRelationInput
+  coursePurchase?: Prisma.CoursePurchaseOrderByWithRelationInput
 }
 
 export type EmailLogWhereUniqueInput = Prisma.AtLeast<{
@@ -254,6 +265,7 @@ export type EmailLogWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.EmailLogWhereInput[]
   NOT?: Prisma.EmailLogWhereInput | Prisma.EmailLogWhereInput[]
   applicationId?: Prisma.StringNullableFilter<"EmailLog"> | string | null
+  coursePurchaseId?: Prisma.StringNullableFilter<"EmailLog"> | string | null
   type?: Prisma.EnumEmailTypeFilter<"EmailLog"> | $Enums.EmailType
   recipient?: Prisma.StringFilter<"EmailLog"> | string
   subject?: Prisma.StringFilter<"EmailLog"> | string
@@ -264,11 +276,13 @@ export type EmailLogWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"EmailLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EmailLog"> | Date | string
   application?: Prisma.XOR<Prisma.ApplicationNullableScalarRelationFilter, Prisma.ApplicationWhereInput> | null
+  coursePurchase?: Prisma.XOR<Prisma.CoursePurchaseNullableScalarRelationFilter, Prisma.CoursePurchaseWhereInput> | null
 }, "id">
 
 export type EmailLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  coursePurchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
   subject?: Prisma.SortOrder
@@ -289,6 +303,7 @@ export type EmailLogScalarWhereWithAggregatesInput = {
   NOT?: Prisma.EmailLogScalarWhereWithAggregatesInput | Prisma.EmailLogScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"EmailLog"> | string
   applicationId?: Prisma.StringNullableWithAggregatesFilter<"EmailLog"> | string | null
+  coursePurchaseId?: Prisma.StringNullableWithAggregatesFilter<"EmailLog"> | string | null
   type?: Prisma.EnumEmailTypeWithAggregatesFilter<"EmailLog"> | $Enums.EmailType
   recipient?: Prisma.StringWithAggregatesFilter<"EmailLog"> | string
   subject?: Prisma.StringWithAggregatesFilter<"EmailLog"> | string
@@ -312,11 +327,13 @@ export type EmailLogCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   application?: Prisma.ApplicationCreateNestedOneWithoutEmailLogsInput
+  coursePurchase?: Prisma.CoursePurchaseCreateNestedOneWithoutEmailLogsInput
 }
 
 export type EmailLogUncheckedCreateInput = {
   id?: string
   applicationId?: string | null
+  coursePurchaseId?: string | null
   type: $Enums.EmailType
   recipient: string
   subject: string
@@ -340,11 +357,13 @@ export type EmailLogUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   application?: Prisma.ApplicationUpdateOneWithoutEmailLogsNestedInput
+  coursePurchase?: Prisma.CoursePurchaseUpdateOneWithoutEmailLogsNestedInput
 }
 
 export type EmailLogUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coursePurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -359,6 +378,7 @@ export type EmailLogUncheckedUpdateInput = {
 export type EmailLogCreateManyInput = {
   id?: string
   applicationId?: string | null
+  coursePurchaseId?: string | null
   type: $Enums.EmailType
   recipient: string
   subject: string
@@ -386,6 +406,7 @@ export type EmailLogUpdateManyMutationInput = {
 export type EmailLogUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coursePurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -410,6 +431,7 @@ export type EmailLogOrderByRelationAggregateInput = {
 export type EmailLogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
+  coursePurchaseId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
   subject?: Prisma.SortOrder
@@ -424,6 +446,7 @@ export type EmailLogCountOrderByAggregateInput = {
 export type EmailLogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
+  coursePurchaseId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
   subject?: Prisma.SortOrder
@@ -438,6 +461,7 @@ export type EmailLogMaxOrderByAggregateInput = {
 export type EmailLogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
+  coursePurchaseId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
   subject?: Prisma.SortOrder
@@ -499,6 +523,48 @@ export type EnumEmailStatusFieldUpdateOperationsInput = {
   set?: $Enums.EmailStatus
 }
 
+export type EmailLogCreateNestedManyWithoutCoursePurchaseInput = {
+  create?: Prisma.XOR<Prisma.EmailLogCreateWithoutCoursePurchaseInput, Prisma.EmailLogUncheckedCreateWithoutCoursePurchaseInput> | Prisma.EmailLogCreateWithoutCoursePurchaseInput[] | Prisma.EmailLogUncheckedCreateWithoutCoursePurchaseInput[]
+  connectOrCreate?: Prisma.EmailLogCreateOrConnectWithoutCoursePurchaseInput | Prisma.EmailLogCreateOrConnectWithoutCoursePurchaseInput[]
+  createMany?: Prisma.EmailLogCreateManyCoursePurchaseInputEnvelope
+  connect?: Prisma.EmailLogWhereUniqueInput | Prisma.EmailLogWhereUniqueInput[]
+}
+
+export type EmailLogUncheckedCreateNestedManyWithoutCoursePurchaseInput = {
+  create?: Prisma.XOR<Prisma.EmailLogCreateWithoutCoursePurchaseInput, Prisma.EmailLogUncheckedCreateWithoutCoursePurchaseInput> | Prisma.EmailLogCreateWithoutCoursePurchaseInput[] | Prisma.EmailLogUncheckedCreateWithoutCoursePurchaseInput[]
+  connectOrCreate?: Prisma.EmailLogCreateOrConnectWithoutCoursePurchaseInput | Prisma.EmailLogCreateOrConnectWithoutCoursePurchaseInput[]
+  createMany?: Prisma.EmailLogCreateManyCoursePurchaseInputEnvelope
+  connect?: Prisma.EmailLogWhereUniqueInput | Prisma.EmailLogWhereUniqueInput[]
+}
+
+export type EmailLogUpdateManyWithoutCoursePurchaseNestedInput = {
+  create?: Prisma.XOR<Prisma.EmailLogCreateWithoutCoursePurchaseInput, Prisma.EmailLogUncheckedCreateWithoutCoursePurchaseInput> | Prisma.EmailLogCreateWithoutCoursePurchaseInput[] | Prisma.EmailLogUncheckedCreateWithoutCoursePurchaseInput[]
+  connectOrCreate?: Prisma.EmailLogCreateOrConnectWithoutCoursePurchaseInput | Prisma.EmailLogCreateOrConnectWithoutCoursePurchaseInput[]
+  upsert?: Prisma.EmailLogUpsertWithWhereUniqueWithoutCoursePurchaseInput | Prisma.EmailLogUpsertWithWhereUniqueWithoutCoursePurchaseInput[]
+  createMany?: Prisma.EmailLogCreateManyCoursePurchaseInputEnvelope
+  set?: Prisma.EmailLogWhereUniqueInput | Prisma.EmailLogWhereUniqueInput[]
+  disconnect?: Prisma.EmailLogWhereUniqueInput | Prisma.EmailLogWhereUniqueInput[]
+  delete?: Prisma.EmailLogWhereUniqueInput | Prisma.EmailLogWhereUniqueInput[]
+  connect?: Prisma.EmailLogWhereUniqueInput | Prisma.EmailLogWhereUniqueInput[]
+  update?: Prisma.EmailLogUpdateWithWhereUniqueWithoutCoursePurchaseInput | Prisma.EmailLogUpdateWithWhereUniqueWithoutCoursePurchaseInput[]
+  updateMany?: Prisma.EmailLogUpdateManyWithWhereWithoutCoursePurchaseInput | Prisma.EmailLogUpdateManyWithWhereWithoutCoursePurchaseInput[]
+  deleteMany?: Prisma.EmailLogScalarWhereInput | Prisma.EmailLogScalarWhereInput[]
+}
+
+export type EmailLogUncheckedUpdateManyWithoutCoursePurchaseNestedInput = {
+  create?: Prisma.XOR<Prisma.EmailLogCreateWithoutCoursePurchaseInput, Prisma.EmailLogUncheckedCreateWithoutCoursePurchaseInput> | Prisma.EmailLogCreateWithoutCoursePurchaseInput[] | Prisma.EmailLogUncheckedCreateWithoutCoursePurchaseInput[]
+  connectOrCreate?: Prisma.EmailLogCreateOrConnectWithoutCoursePurchaseInput | Prisma.EmailLogCreateOrConnectWithoutCoursePurchaseInput[]
+  upsert?: Prisma.EmailLogUpsertWithWhereUniqueWithoutCoursePurchaseInput | Prisma.EmailLogUpsertWithWhereUniqueWithoutCoursePurchaseInput[]
+  createMany?: Prisma.EmailLogCreateManyCoursePurchaseInputEnvelope
+  set?: Prisma.EmailLogWhereUniqueInput | Prisma.EmailLogWhereUniqueInput[]
+  disconnect?: Prisma.EmailLogWhereUniqueInput | Prisma.EmailLogWhereUniqueInput[]
+  delete?: Prisma.EmailLogWhereUniqueInput | Prisma.EmailLogWhereUniqueInput[]
+  connect?: Prisma.EmailLogWhereUniqueInput | Prisma.EmailLogWhereUniqueInput[]
+  update?: Prisma.EmailLogUpdateWithWhereUniqueWithoutCoursePurchaseInput | Prisma.EmailLogUpdateWithWhereUniqueWithoutCoursePurchaseInput[]
+  updateMany?: Prisma.EmailLogUpdateManyWithWhereWithoutCoursePurchaseInput | Prisma.EmailLogUpdateManyWithWhereWithoutCoursePurchaseInput[]
+  deleteMany?: Prisma.EmailLogScalarWhereInput | Prisma.EmailLogScalarWhereInput[]
+}
+
 export type EmailLogCreateWithoutApplicationInput = {
   id?: string
   type: $Enums.EmailType
@@ -510,10 +576,12 @@ export type EmailLogCreateWithoutApplicationInput = {
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  coursePurchase?: Prisma.CoursePurchaseCreateNestedOneWithoutEmailLogsInput
 }
 
 export type EmailLogUncheckedCreateWithoutApplicationInput = {
   id?: string
+  coursePurchaseId?: string | null
   type: $Enums.EmailType
   recipient: string
   subject: string
@@ -557,6 +625,7 @@ export type EmailLogScalarWhereInput = {
   NOT?: Prisma.EmailLogScalarWhereInput | Prisma.EmailLogScalarWhereInput[]
   id?: Prisma.StringFilter<"EmailLog"> | string
   applicationId?: Prisma.StringNullableFilter<"EmailLog"> | string | null
+  coursePurchaseId?: Prisma.StringNullableFilter<"EmailLog"> | string | null
   type?: Prisma.EnumEmailTypeFilter<"EmailLog"> | $Enums.EmailType
   recipient?: Prisma.StringFilter<"EmailLog"> | string
   subject?: Prisma.StringFilter<"EmailLog"> | string
@@ -568,8 +637,63 @@ export type EmailLogScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"EmailLog"> | Date | string
 }
 
+export type EmailLogCreateWithoutCoursePurchaseInput = {
+  id?: string
+  type: $Enums.EmailType
+  recipient: string
+  subject: string
+  status?: $Enums.EmailStatus
+  providerId?: string | null
+  errorMessage?: string | null
+  sentAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  application?: Prisma.ApplicationCreateNestedOneWithoutEmailLogsInput
+}
+
+export type EmailLogUncheckedCreateWithoutCoursePurchaseInput = {
+  id?: string
+  applicationId?: string | null
+  type: $Enums.EmailType
+  recipient: string
+  subject: string
+  status?: $Enums.EmailStatus
+  providerId?: string | null
+  errorMessage?: string | null
+  sentAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type EmailLogCreateOrConnectWithoutCoursePurchaseInput = {
+  where: Prisma.EmailLogWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmailLogCreateWithoutCoursePurchaseInput, Prisma.EmailLogUncheckedCreateWithoutCoursePurchaseInput>
+}
+
+export type EmailLogCreateManyCoursePurchaseInputEnvelope = {
+  data: Prisma.EmailLogCreateManyCoursePurchaseInput | Prisma.EmailLogCreateManyCoursePurchaseInput[]
+  skipDuplicates?: boolean
+}
+
+export type EmailLogUpsertWithWhereUniqueWithoutCoursePurchaseInput = {
+  where: Prisma.EmailLogWhereUniqueInput
+  update: Prisma.XOR<Prisma.EmailLogUpdateWithoutCoursePurchaseInput, Prisma.EmailLogUncheckedUpdateWithoutCoursePurchaseInput>
+  create: Prisma.XOR<Prisma.EmailLogCreateWithoutCoursePurchaseInput, Prisma.EmailLogUncheckedCreateWithoutCoursePurchaseInput>
+}
+
+export type EmailLogUpdateWithWhereUniqueWithoutCoursePurchaseInput = {
+  where: Prisma.EmailLogWhereUniqueInput
+  data: Prisma.XOR<Prisma.EmailLogUpdateWithoutCoursePurchaseInput, Prisma.EmailLogUncheckedUpdateWithoutCoursePurchaseInput>
+}
+
+export type EmailLogUpdateManyWithWhereWithoutCoursePurchaseInput = {
+  where: Prisma.EmailLogScalarWhereInput
+  data: Prisma.XOR<Prisma.EmailLogUpdateManyMutationInput, Prisma.EmailLogUncheckedUpdateManyWithoutCoursePurchaseInput>
+}
+
 export type EmailLogCreateManyApplicationInput = {
   id?: string
+  coursePurchaseId?: string | null
   type: $Enums.EmailType
   recipient: string
   subject: string
@@ -592,10 +716,12 @@ export type EmailLogUpdateWithoutApplicationInput = {
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coursePurchase?: Prisma.CoursePurchaseUpdateOneWithoutEmailLogsNestedInput
 }
 
 export type EmailLogUncheckedUpdateWithoutApplicationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  coursePurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -609,6 +735,63 @@ export type EmailLogUncheckedUpdateWithoutApplicationInput = {
 
 export type EmailLogUncheckedUpdateManyWithoutApplicationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  coursePurchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
+  recipient?: Prisma.StringFieldUpdateOperationsInput | string
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
+  providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type EmailLogCreateManyCoursePurchaseInput = {
+  id?: string
+  applicationId?: string | null
+  type: $Enums.EmailType
+  recipient: string
+  subject: string
+  status?: $Enums.EmailStatus
+  providerId?: string | null
+  errorMessage?: string | null
+  sentAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type EmailLogUpdateWithoutCoursePurchaseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
+  recipient?: Prisma.StringFieldUpdateOperationsInput | string
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
+  providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  application?: Prisma.ApplicationUpdateOneWithoutEmailLogsNestedInput
+}
+
+export type EmailLogUncheckedUpdateWithoutCoursePurchaseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
+  recipient?: Prisma.StringFieldUpdateOperationsInput | string
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
+  providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type EmailLogUncheckedUpdateManyWithoutCoursePurchaseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -625,6 +808,7 @@ export type EmailLogUncheckedUpdateManyWithoutApplicationInput = {
 export type EmailLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   applicationId?: boolean
+  coursePurchaseId?: boolean
   type?: boolean
   recipient?: boolean
   subject?: boolean
@@ -635,11 +819,13 @@ export type EmailLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   application?: boolean | Prisma.EmailLog$applicationArgs<ExtArgs>
+  coursePurchase?: boolean | Prisma.EmailLog$coursePurchaseArgs<ExtArgs>
 }, ExtArgs["result"]["emailLog"]>
 
 export type EmailLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   applicationId?: boolean
+  coursePurchaseId?: boolean
   type?: boolean
   recipient?: boolean
   subject?: boolean
@@ -650,11 +836,13 @@ export type EmailLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   createdAt?: boolean
   updatedAt?: boolean
   application?: boolean | Prisma.EmailLog$applicationArgs<ExtArgs>
+  coursePurchase?: boolean | Prisma.EmailLog$coursePurchaseArgs<ExtArgs>
 }, ExtArgs["result"]["emailLog"]>
 
 export type EmailLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   applicationId?: boolean
+  coursePurchaseId?: boolean
   type?: boolean
   recipient?: boolean
   subject?: boolean
@@ -665,11 +853,13 @@ export type EmailLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   createdAt?: boolean
   updatedAt?: boolean
   application?: boolean | Prisma.EmailLog$applicationArgs<ExtArgs>
+  coursePurchase?: boolean | Prisma.EmailLog$coursePurchaseArgs<ExtArgs>
 }, ExtArgs["result"]["emailLog"]>
 
 export type EmailLogSelectScalar = {
   id?: boolean
   applicationId?: boolean
+  coursePurchaseId?: boolean
   type?: boolean
   recipient?: boolean
   subject?: boolean
@@ -681,25 +871,30 @@ export type EmailLogSelectScalar = {
   updatedAt?: boolean
 }
 
-export type EmailLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationId" | "type" | "recipient" | "subject" | "status" | "providerId" | "errorMessage" | "sentAt" | "createdAt" | "updatedAt", ExtArgs["result"]["emailLog"]>
+export type EmailLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationId" | "coursePurchaseId" | "type" | "recipient" | "subject" | "status" | "providerId" | "errorMessage" | "sentAt" | "createdAt" | "updatedAt", ExtArgs["result"]["emailLog"]>
 export type EmailLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   application?: boolean | Prisma.EmailLog$applicationArgs<ExtArgs>
+  coursePurchase?: boolean | Prisma.EmailLog$coursePurchaseArgs<ExtArgs>
 }
 export type EmailLogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   application?: boolean | Prisma.EmailLog$applicationArgs<ExtArgs>
+  coursePurchase?: boolean | Prisma.EmailLog$coursePurchaseArgs<ExtArgs>
 }
 export type EmailLogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   application?: boolean | Prisma.EmailLog$applicationArgs<ExtArgs>
+  coursePurchase?: boolean | Prisma.EmailLog$coursePurchaseArgs<ExtArgs>
 }
 
 export type $EmailLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EmailLog"
   objects: {
     application: Prisma.$ApplicationPayload<ExtArgs> | null
+    coursePurchase: Prisma.$CoursePurchasePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     applicationId: string | null
+    coursePurchaseId: string | null
     type: $Enums.EmailType
     recipient: string
     subject: string
@@ -1104,6 +1299,7 @@ readonly fields: EmailLogFieldRefs;
 export interface Prisma__EmailLogClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   application<T extends Prisma.EmailLog$applicationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmailLog$applicationArgs<ExtArgs>>): Prisma.Prisma__ApplicationClient<runtime.Types.Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  coursePurchase<T extends Prisma.EmailLog$coursePurchaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmailLog$coursePurchaseArgs<ExtArgs>>): Prisma.Prisma__CoursePurchaseClient<runtime.Types.Result.GetResult<Prisma.$CoursePurchasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1135,6 +1331,7 @@ export interface Prisma__EmailLogClient<T, Null = never, ExtArgs extends runtime
 export interface EmailLogFieldRefs {
   readonly id: Prisma.FieldRef<"EmailLog", 'String'>
   readonly applicationId: Prisma.FieldRef<"EmailLog", 'String'>
+  readonly coursePurchaseId: Prisma.FieldRef<"EmailLog", 'String'>
   readonly type: Prisma.FieldRef<"EmailLog", 'EmailType'>
   readonly recipient: Prisma.FieldRef<"EmailLog", 'String'>
   readonly subject: Prisma.FieldRef<"EmailLog", 'String'>
@@ -1561,6 +1758,25 @@ export type EmailLog$applicationArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.ApplicationInclude<ExtArgs> | null
   where?: Prisma.ApplicationWhereInput
+}
+
+/**
+ * EmailLog.coursePurchase
+ */
+export type EmailLog$coursePurchaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CoursePurchase
+   */
+  select?: Prisma.CoursePurchaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CoursePurchase
+   */
+  omit?: Prisma.CoursePurchaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CoursePurchaseInclude<ExtArgs> | null
+  where?: Prisma.CoursePurchaseWhereInput
 }
 
 /**

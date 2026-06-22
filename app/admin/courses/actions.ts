@@ -2,8 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { CourseAccessType } from "@/generated/prisma/enums";
+import { CourseAccessType, LivePlatform } from "@/generated/prisma/enums";
 import { requireAdmin } from "@/lib/admin/auth";
+import { isVimeoUrl } from "@/lib/live";
 import { prisma } from "@/lib/prisma";
 import { getYouTubeVideoId } from "@/lib/youtube";
 
@@ -22,6 +23,23 @@ function validSlug(value: string) {
   return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 }
 
+function optionalDate(formData: FormData, name: string) {
+  const value = text(formData, name);
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+function validHttpUrl(value: string) {
+  if (!value) return true;
+  try {
+    const url = new URL(value);
+    return ["http:", "https:"].includes(url.protocol);
+  } catch {
+    return false;
+  }
+}
+
 export async function saveCourse(formData: FormData) {
   await requireAdmin();
   const id = text(formData, "id");
@@ -35,6 +53,9 @@ export async function saveCourse(formData: FormData) {
   const audiences = lines(formData, "audiences");
   const lessonCount = Number.parseInt(text(formData, "lessonCount"), 10);
   const durationText = text(formData, "durationText");
+  const courseStartAt = optionalDate(formData, "courseStartAt");
+  const courseFormatText = text(formData, "courseFormatText");
+  const viewingPolicyText = text(formData, "viewingPolicyText");
   const coverImageUrl = text(formData, "coverImageUrl");
   const previewVideoUrl = text(formData, "previewVideoUrl");
   const fullVideoUrl = text(formData, "fullVideoUrl");
@@ -43,6 +64,19 @@ export async function saveCourse(formData: FormData) {
   const sortOrder = Number.parseInt(text(formData, "sortOrder"), 10);
   const isPublished = formData.get("isPublished") === "on";
   const isFeatured = formData.get("isFeatured") === "on";
+  const liveIsEnabled = formData.get("liveIsEnabled") === "on";
+  const liveEnableQuestions = formData.get("liveEnableQuestions") === "on";
+  const liveEnableYoutubeChat = formData.get("liveEnableYoutubeChat") === "on";
+  const liveShowWatermark = formData.get("liveShowWatermark") === "on";
+  const liveTitle = text(formData, "liveTitle");
+  const livePlatform = text(formData, "livePlatform") as LivePlatform;
+  const liveYoutubeVideoId = text(formData, "liveYoutubeVideoId");
+  const liveYoutubeChatEmbedUrl = text(formData, "liveYoutubeChatEmbedUrl");
+  const liveExternalUrl = text(formData, "liveExternalUrl");
+  const liveStartsAt = optionalDate(formData, "liveStartsAt");
+  const liveEndsAt = optionalDate(formData, "liveEndsAt");
+  const livePlayerOpenAt = optionalDate(formData, "livePlayerOpenAt");
+  const livePlayerCloseAt = optionalDate(formData, "livePlayerCloseAt");
   const existingCourse = id
     ? await prisma.course.findUnique({
         where: { id },
@@ -63,7 +97,13 @@ export async function saveCourse(formData: FormData) {
     !Object.values(CourseAccessType).includes(accessType) ||
     !Number.isInteger(price) ||
     price < 0 ||
-    !Number.isInteger(sortOrder)
+    !Number.isInteger(sortOrder) ||
+    !Object.values(LivePlatform).includes(livePlatform) ||
+    courseStartAt === undefined ||
+    liveStartsAt === undefined ||
+    liveEndsAt === undefined ||
+    livePlayerOpenAt === undefined ||
+    livePlayerCloseAt === undefined
   ) {
     redirect(`/admin/courses/${id || "new"}?error=required`);
   }
@@ -81,20 +121,44 @@ export async function saveCourse(formData: FormData) {
   }
 
   if (coverImageUrl) {
-    try {
-      const coverUrl = new URL(coverImageUrl);
-      if (!["http:", "https:"].includes(coverUrl.protocol)) throw new Error();
-    } catch {
+    if (!validHttpUrl(coverImageUrl)) {
       redirect(`/admin/courses/${id || "new"}?error=cover`);
     }
   }
 
   if (fullVideoUrl) {
-    try {
-      const fullUrl = new URL(fullVideoUrl);
-      if (!["http:", "https:"].includes(fullUrl.protocol)) throw new Error();
-    } catch {
+    if (!validHttpUrl(fullVideoUrl)) {
       redirect(`/admin/courses/${id || "new"}?error=full_video`);
+    }
+  }
+
+  if (liveIsEnabled) {
+    const isExternalPlatform =
+      livePlatform === LivePlatform.ZOOM_WEBINAR ||
+      livePlatform === LivePlatform.ZOOM_MEETING ||
+      livePlatform === LivePlatform.EXTERNAL_URL;
+
+    if (!liveTitle) redirect(`/admin/courses/${id || "new"}?error=live_required`);
+    if (livePlatform === LivePlatform.YOUTUBE_LIVE && !/^[a-zA-Z0-9_-]{6,}$/.test(liveYoutubeVideoId)) {
+      redirect(`/admin/courses/${id || "new"}?error=live_youtube`);
+    }
+    if (livePlatform === LivePlatform.VIMEO_LIVE && !isVimeoUrl(liveExternalUrl)) {
+      redirect(`/admin/courses/${id || "new"}?error=live_vimeo`);
+    }
+    if (isExternalPlatform && (!liveExternalUrl || !validHttpUrl(liveExternalUrl))) {
+      redirect(`/admin/courses/${id || "new"}?error=live_external`);
+    }
+    if (
+      liveEnableYoutubeChat &&
+      (livePlatform !== LivePlatform.YOUTUBE_LIVE || !liveYoutubeChatEmbedUrl || !validHttpUrl(liveYoutubeChatEmbedUrl))
+    ) {
+      redirect(`/admin/courses/${id || "new"}?error=live_chat`);
+    }
+    if (liveExternalUrl && !validHttpUrl(liveExternalUrl)) {
+      redirect(`/admin/courses/${id || "new"}?error=live_external`);
+    }
+    if (livePlayerOpenAt && livePlayerCloseAt && livePlayerOpenAt >= livePlayerCloseAt) {
+      redirect(`/admin/courses/${id || "new"}?error=live_window`);
     }
   }
 
@@ -117,6 +181,9 @@ export async function saveCourse(formData: FormData) {
     audiences,
     lessonCount,
     durationText: durationText || null,
+    courseStartAt,
+    courseFormatText: courseFormatText || null,
+    viewingPolicyText: viewingPolicyText || null,
     coverImageUrl: coverImageUrl || null,
     previewVideoUrl: previewVideoUrl || null,
     fullVideoUrl: fullVideoUrl || null,
@@ -134,12 +201,35 @@ export async function saveCourse(formData: FormData) {
     ? await prisma.course.update({ where: { id }, data })
     : await prisma.course.create({ data });
 
+  const liveData = {
+    title: liveTitle || title,
+    platform: livePlatform,
+    isEnabled: liveIsEnabled,
+    startsAt: liveStartsAt,
+    endsAt: liveEndsAt,
+    playerOpenAt: livePlayerOpenAt,
+    playerCloseAt: livePlayerCloseAt,
+    youtubeVideoId: liveYoutubeVideoId || null,
+    youtubeChatEmbedUrl: liveYoutubeChatEmbedUrl || null,
+    enableYoutubeChat: liveEnableYoutubeChat,
+    enableQuestions: liveEnableQuestions,
+    showWatermark: liveShowWatermark,
+    externalUrl: liveExternalUrl || null,
+  };
+
+  await prisma.liveSession.upsert({
+    where: { courseId: course.id },
+    create: { courseId: course.id, ...liveData },
+    update: liveData,
+  });
+
   revalidatePath("/");
   revalidatePath("/courses");
   if (existingCourse?.slug && existingCourse.slug !== course.slug) {
     revalidatePath(`/courses/${existingCourse.slug}`);
   }
   revalidatePath(`/courses/${course.slug}`);
+  revalidatePath(`/courses/${course.slug}/live`);
   revalidatePath("/admin/courses");
   redirect(`/admin/courses/${course.id}?saved=1`);
 }

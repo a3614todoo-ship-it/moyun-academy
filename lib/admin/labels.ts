@@ -1,20 +1,37 @@
-import { ApplicationStatus, EmailStatus, EmailType } from "@/generated/prisma/enums";
+import {
+  ApplicationStatus,
+  CoursePurchaseStatus,
+  EmailStatus,
+  EmailType,
+} from "@/generated/prisma/enums";
 
 export const applicationStatusLabels: Record<ApplicationStatus, string> = {
   PENDING_PAYMENT: "待匯款",
-  PAYMENT_REPORTED: "已回報，待審核",
+  PAYMENT_REPORTED: "已回報匯款",
   APPROVED: "審核通過",
   JOINED_FACEBOOK_GROUP: "已加入社團",
-  REJECTED: "未通過",
+  REJECTED: "已拒絕",
+  CANCELLED: "已取消",
+};
+
+export const coursePurchaseStatusLabels: Record<CoursePurchaseStatus, string> = {
+  PENDING_PAYMENT: "待匯款",
+  PAYMENT_REPORTED: "已回報匯款",
+  APPROVED: "審核通過",
+  REJECTED: "已拒絕",
   CANCELLED: "已取消",
 };
 
 export const emailTypeLabels: Record<EmailType, string> = {
-  APPLICATION_CREATED: "報名成功",
-  PAYMENT_REPORTED_USER: "匯款回報確認",
-  PAYMENT_REPORTED_ADMIN: "管理員待審核",
-  APPLICATION_APPROVED: "審核通過",
-  FACEBOOK_GROUP_JOINED: "已加入社團",
+  APPLICATION_CREATED: "會員申請建立",
+  PAYMENT_REPORTED_USER: "會員匯款回報通知",
+  PAYMENT_REPORTED_ADMIN: "會員匯款待審核",
+  APPLICATION_APPROVED: "會員審核通過",
+  FACEBOOK_GROUP_JOINED: "已加入 Facebook 社團",
+  COURSE_PURCHASE_CREATED: "課程購買申請建立",
+  COURSE_PAYMENT_REPORTED_USER: "課程匯款回報通知",
+  COURSE_PAYMENT_REPORTED_ADMIN: "課程匯款待審核",
+  COURSE_PURCHASE_APPROVED: "課程購買審核通過",
 };
 
 export const emailStatusLabels: Record<EmailStatus, string> = {
@@ -23,7 +40,7 @@ export const emailStatusLabels: Record<EmailStatus, string> = {
   FAILED: "寄送失敗",
 };
 
-export function statusClass(status: ApplicationStatus) {
+export function statusClass(status: ApplicationStatus | CoursePurchaseStatus) {
   return `admin-status status-${status.toLowerCase().replaceAll("_", "-")}`;
 }
 

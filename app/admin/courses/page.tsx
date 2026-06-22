@@ -16,10 +16,23 @@ function accessLabel(accessType: string, price: number) {
   return "會員免費";
 }
 
+function formatDate(value: Date | null) {
+  if (!value) return "未設定";
+  return new Intl.DateTimeFormat("zh-TW", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(value);
+}
+
 export default async function AdminCoursesPage({ searchParams }: Props) {
   const [session, courses, params] = await Promise.all([
     requireAdmin(),
     prisma.course.findMany({
+      include: { liveSession: true },
       orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
     }),
     searchParams,
@@ -29,7 +42,7 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
     <AdminShell adminName={session.adminUser.name}>
       <div className="admin-page-heading">
         <div>
-          <span>課程內容與權限設定</span>
+          <span>課程、付費權限與直播設定</span>
           <h1>課程管理</h1>
         </div>
         <Link className="admin-primary-link" href="/admin/courses/new">
@@ -51,9 +64,11 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
                 <th>課程名稱</th>
                 <th>分類</th>
                 <th>權限</th>
-                <th>試看片</th>
-                <th>正式影片</th>
-                <th>首頁顯示</th>
+                <th>開課時間</th>
+                <th>課程時長</th>
+                <th>上課方式</th>
+                <th>觀看權限</th>
+                <th>直播</th>
                 <th>狀態</th>
                 <th>操作</th>
               </tr>
@@ -62,20 +77,16 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
               {courses.map((course) => (
                 <tr key={course.id}>
                   <td>{course.sortOrder}</td>
-                  <td>
-                    <Link href={`/admin/courses/${course.id}`}>
-                      {course.title}
-                    </Link>
-                  </td>
+                  <td><Link href={`/admin/courses/${course.id}`}>{course.title}</Link></td>
                   <td>{course.category}</td>
                   <td>{accessLabel(course.accessType, course.price)}</td>
-                  <td>{course.previewVideoUrl ? "已設定" : "未設定"}</td>
-                  <td>{course.fullVideoUrl ? "已設定" : "未設定"}</td>
-                  <td>{course.isFeatured ? "是" : "否"}</td>
+                  <td>{formatDate(course.courseStartAt)}</td>
+                  <td>{course.durationText || "未設定"}</td>
+                  <td>{course.courseFormatText || "未設定"}</td>
+                  <td>{course.viewingPolicyText || "未設定"}</td>
+                  <td>{course.liveSession?.isEnabled ? "已啟用" : "未啟用"}</td>
                   <td>
-                    <span
-                      className={`admin-publish-state ${course.isPublished ? "is-published" : ""}`}
-                    >
+                    <span className={`admin-publish-state ${course.isPublished ? "is-published" : ""}`}>
                       {course.isPublished ? "已上架" : "草稿"}
                     </span>
                   </td>
@@ -84,18 +95,14 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
                       <Link href={`/admin/courses/${course.id}`}>編輯</Link>
                       <form action={toggleCoursePublished}>
                         <input name="id" type="hidden" value={course.id} />
-                        <button type="submit">
-                          {course.isPublished ? "下架" : "上架"}
-                        </button>
+                        <button type="submit">{course.isPublished ? "下架" : "上架"}</button>
                       </form>
                     </div>
                   </td>
                 </tr>
               ))}
               {!courses.length ? (
-                <tr>
-                  <td colSpan={9}>目前尚無課程。</td>
-                </tr>
+                <tr><td colSpan={11}>目前還沒有課程。</td></tr>
               ) : null}
             </tbody>
           </table>

@@ -7,10 +7,12 @@ type Props = {
 };
 
 const navItems = [
-  { href: "/admin", label: "營運總覽" },
+  { href: "/admin", label: "總覽" },
   { href: "/admin/courses", label: "課程管理" },
-  { href: "/admin/applications", label: "報名名單" },
-  { href: "/admin/applications?status=PAYMENT_REPORTED", label: "匯款審核" },
+  { href: "/admin/course-purchases", label: "課程購買" },
+  { href: "/admin/course-purchases?status=PAYMENT_REPORTED", label: "課程匯款審核" },
+  { href: "/admin/applications", label: "會員申請" },
+  { href: "/admin/applications?status=PAYMENT_REPORTED", label: "會員匯款審核" },
   { href: "/admin/settings", label: "系統設定" },
 ];
 
@@ -20,17 +22,24 @@ export function AdminShell({ adminName, children }: Props) {
       <aside className="admin-sidebar">
         <Link className="admin-brand" href="/admin">
           <span>我</span>
-          <div><strong>我輩學堂</strong><small>管理後台</small></div>
+          <div>
+            <strong>我輩學堂</strong>
+            <small>管理後台</small>
+          </div>
         </Link>
         <nav>
-          {navItems.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}
+          {navItems.map((item) => (
+            <Link href={item.href} key={item.href}>{item.label}</Link>
+          ))}
         </nav>
-        <Link className="admin-back-site" href="/">← 返回前台網站</Link>
+        <Link className="admin-back-site" href="/">返回前台網站</Link>
       </aside>
       <div className="admin-workspace">
         <header className="admin-topbar">
           <span>管理員：{adminName}</span>
-          <form action={logoutAdmin}><button type="submit">登出</button></form>
+          <form action={logoutAdmin}>
+            <button type="submit">登出</button>
+          </form>
         </header>
         <main className="admin-page">{children}</main>
       </div>

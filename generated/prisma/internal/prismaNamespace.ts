@@ -394,6 +394,8 @@ export const ModelName = {
   ApplicationStatusHistory: 'ApplicationStatusHistory',
   Course: 'Course',
   CoursePurchase: 'CoursePurchase',
+  LiveSession: 'LiveSession',
+  LiveQuestion: 'LiveQuestion',
   ContactMessage: 'ContactMessage'
 } as const
 
@@ -410,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "application" | "membershipPlan" | "paymentReport" | "emailLog" | "adminUser" | "systemSetting" | "adminSession" | "applicationStatusHistory" | "course" | "coursePurchase" | "contactMessage"
+    modelProps: "application" | "membershipPlan" | "paymentReport" | "emailLog" | "adminUser" | "systemSetting" | "adminSession" | "applicationStatusHistory" | "course" | "coursePurchase" | "liveSession" | "liveQuestion" | "contactMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1154,6 +1156,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LiveSession: {
+      payload: Prisma.$LiveSessionPayload<ExtArgs>
+      fields: Prisma.LiveSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LiveSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LiveSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.LiveSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LiveSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        findMany: {
+          args: Prisma.LiveSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>[]
+        }
+        create: {
+          args: Prisma.LiveSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        createMany: {
+          args: Prisma.LiveSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LiveSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.LiveSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        update: {
+          args: Prisma.LiveSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.LiveSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LiveSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LiveSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.LiveSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.LiveSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLiveSession>
+        }
+        groupBy: {
+          args: Prisma.LiveSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LiveSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LiveSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LiveSessionCountAggregateOutputType> | number
+        }
+      }
+    }
+    LiveQuestion: {
+      payload: Prisma.$LiveQuestionPayload<ExtArgs>
+      fields: Prisma.LiveQuestionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LiveQuestionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LiveQuestionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload>
+        }
+        findFirst: {
+          args: Prisma.LiveQuestionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LiveQuestionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload>
+        }
+        findMany: {
+          args: Prisma.LiveQuestionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload>[]
+        }
+        create: {
+          args: Prisma.LiveQuestionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload>
+        }
+        createMany: {
+          args: Prisma.LiveQuestionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LiveQuestionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload>[]
+        }
+        delete: {
+          args: Prisma.LiveQuestionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload>
+        }
+        update: {
+          args: Prisma.LiveQuestionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload>
+        }
+        deleteMany: {
+          args: Prisma.LiveQuestionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LiveQuestionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LiveQuestionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload>[]
+        }
+        upsert: {
+          args: Prisma.LiveQuestionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionPayload>
+        }
+        aggregate: {
+          args: Prisma.LiveQuestionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLiveQuestion>
+        }
+        groupBy: {
+          args: Prisma.LiveQuestionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LiveQuestionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LiveQuestionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LiveQuestionCountAggregateOutputType> | number
+        }
+      }
+    }
     ContactMessage: {
       payload: Prisma.$ContactMessagePayload<ExtArgs>
       fields: Prisma.ContactMessageFieldRefs
@@ -1328,6 +1478,7 @@ export type PaymentReportScalarFieldEnum = (typeof PaymentReportScalarFieldEnum)
 export const EmailLogScalarFieldEnum = {
   id: 'id',
   applicationId: 'applicationId',
+  coursePurchaseId: 'coursePurchaseId',
   type: 'type',
   recipient: 'recipient',
   subject: 'subject',
@@ -1404,6 +1555,9 @@ export const CourseScalarFieldEnum = {
   audiences: 'audiences',
   lessonCount: 'lessonCount',
   durationText: 'durationText',
+  courseStartAt: 'courseStartAt',
+  courseFormatText: 'courseFormatText',
+  viewingPolicyText: 'viewingPolicyText',
   coverImageUrl: 'coverImageUrl',
   previewVideoUrl: 'previewVideoUrl',
   fullVideoUrl: 'fullVideoUrl',
@@ -1443,6 +1597,47 @@ export const CoursePurchaseScalarFieldEnum = {
 } as const
 
 export type CoursePurchaseScalarFieldEnum = (typeof CoursePurchaseScalarFieldEnum)[keyof typeof CoursePurchaseScalarFieldEnum]
+
+
+export const LiveSessionScalarFieldEnum = {
+  id: 'id',
+  courseId: 'courseId',
+  title: 'title',
+  platform: 'platform',
+  isEnabled: 'isEnabled',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  playerOpenAt: 'playerOpenAt',
+  playerCloseAt: 'playerCloseAt',
+  youtubeVideoId: 'youtubeVideoId',
+  youtubeChatEmbedUrl: 'youtubeChatEmbedUrl',
+  enableYoutubeChat: 'enableYoutubeChat',
+  enableQuestions: 'enableQuestions',
+  showWatermark: 'showWatermark',
+  externalUrl: 'externalUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LiveSessionScalarFieldEnum = (typeof LiveSessionScalarFieldEnum)[keyof typeof LiveSessionScalarFieldEnum]
+
+
+export const LiveQuestionScalarFieldEnum = {
+  id: 'id',
+  liveSessionId: 'liveSessionId',
+  coursePurchaseId: 'coursePurchaseId',
+  displayName: 'displayName',
+  emailMasked: 'emailMasked',
+  body: 'body',
+  status: 'status',
+  upvoteCount: 'upvoteCount',
+  answeredAt: 'answeredAt',
+  answer: 'answer',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LiveQuestionScalarFieldEnum = (typeof LiveQuestionScalarFieldEnum)[keyof typeof LiveQuestionScalarFieldEnum]
 
 
 export const ContactMessageScalarFieldEnum = {
@@ -1642,6 +1837,34 @@ export type ListEnumCoursePurchaseStatusFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
+ * Reference to a field of type 'LivePlatform'
+ */
+export type EnumLivePlatformFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LivePlatform'>
+    
+
+
+/**
+ * Reference to a field of type 'LivePlatform[]'
+ */
+export type ListEnumLivePlatformFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LivePlatform[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LiveQuestionStatus'
+ */
+export type EnumLiveQuestionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LiveQuestionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'LiveQuestionStatus[]'
+ */
+export type ListEnumLiveQuestionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LiveQuestionStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'ContactMessageType'
  */
 export type EnumContactMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContactMessageType'>
@@ -1802,6 +2025,8 @@ export type GlobalOmitConfig = {
   applicationStatusHistory?: Prisma.ApplicationStatusHistoryOmit
   course?: Prisma.CourseOmit
   coursePurchase?: Prisma.CoursePurchaseOmit
+  liveSession?: Prisma.LiveSessionOmit
+  liveQuestion?: Prisma.LiveQuestionOmit
   contactMessage?: Prisma.ContactMessageOmit
 }
 

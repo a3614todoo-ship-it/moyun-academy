@@ -23,6 +23,18 @@ function accessTitle(accessType: string) {
   return "會員免費課程";
 }
 
+function formatDateTime(value: Date | null) {
+  if (!value) return "時間另行公告";
+  return new Intl.DateTimeFormat("zh-TW", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(value);
+}
+
 export default async function CourseDetailPage({ params }: Props) {
   const course = await getPublishedCourse((await params).slug);
   if (!course) notFound();
@@ -34,6 +46,33 @@ export default async function CourseDetailPage({ params }: Props) {
       : "";
   const canShowPublicFullVideo =
     course.accessType === "PUBLIC_FREE" && Boolean(course.fullVideoUrl);
+
+  const courseInfoItems = [
+    {
+      icon: "日",
+      label: "開課時間",
+      value: formatDateTime(course.courseStartAt),
+    },
+    {
+      icon: "章",
+      label: "課程時長",
+      value: course.duration || `${course.lessons} 單元`,
+    },
+    {
+      icon: "播",
+      label: "上課方式",
+      value: course.courseFormatText || "線上課程・可於網站內觀看",
+    },
+    {
+      icon: "看",
+      label: "觀看權限",
+      value:
+        course.viewingPolicyText ||
+        (course.accessType === "PAID"
+          ? "審核通過後可使用專屬連結觀看"
+          : "依課程權限開放觀看"),
+    },
+  ];
 
   return (
     <main>
@@ -63,10 +102,27 @@ export default async function CourseDetailPage({ params }: Props) {
           ) : (
             <div className={`preview-player cover-${course.accent}`}>
               <span className="preview-placeholder-play">▶</span>
-              <strong>課程試看片</strong>
-              <small>後台尚未設定 YouTube 試看片。</small>
+              <strong>課程試看</strong>
+              <small>可在後台設定 YouTube 試看片網址</small>
             </div>
           )}
+        </div>
+      </section>
+
+      <section className="section course-info-section">
+        <div className="container course-info-card">
+          <h2>課程資訊</h2>
+          <div className="course-info-grid">
+            {courseInfoItems.map((item) => (
+              <article className="course-info-item" key={item.label}>
+                <span>{item.icon}</span>
+                <div>
+                  <small>{item.label}</small>
+                  <strong>{item.value}</strong>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -74,13 +130,13 @@ export default async function CourseDetailPage({ params }: Props) {
         <div className="container detail-content">
           <article className="prose">
             <span className="eyebrow">課程介紹</span>
-            <h2>從作品進入生命，也從生命重新理解作品</h2>
+            <h2>從一堂課開始，慢慢讀進文字與生命裡</h2>
             <p>{course.description}</p>
 
             {canShowPublicFullVideo ? (
               <div className="course-access-panel">
                 <span className="eyebrow">正式課程</span>
-                <h2>立即觀看完整課程</h2>
+                <h2>此課程可直接觀看</h2>
                 {fullVideoEmbedUrl ? (
                   <div className="youtube-preview">
                     <iframe
@@ -92,21 +148,19 @@ export default async function CourseDetailPage({ params }: Props) {
                     />
                   </div>
                 ) : (
-                  <p>
-                    這門課已設定為免費公開課程，可透過下方連結前往觀看。
-                  </p>
+                  <p>此課程已開放外部影片連結，可點擊下方按鈕前往觀看。</p>
                 )}
                 {!fullVideoEmbedUrl ? (
                   <p>
                     <a className="button button-gold" href={course.fullVideoUrl}>
-                      開啟正式課程影片
+                      前往正式課程影片
                     </a>
                   </p>
                 ) : null}
               </div>
             ) : null}
 
-            <h2>課程大綱</h2>
+            <h2>課程章節</h2>
             <ol className="outline-list">
               {course.outline.map((item, index) => (
                 <li key={item}>
@@ -126,43 +180,37 @@ export default async function CourseDetailPage({ params }: Props) {
             <h3>{course.title}</h3>
             {course.accessType === "PUBLIC_FREE" ? (
               <>
-                <p>
-                  這門課目前設定為免費公開觀看。若後台已填正式影片網址，會直接顯示在課程介紹中。
-                </p>
+                <p>這門課程目前開放免費觀看，適合想先認識我輩學堂閱讀方式的學員。</p>
                 <Link className="button button-gold button-block" href="/courses">
-                  繼續探索課程
+                  瀏覽更多課程
                 </Link>
               </>
             ) : null}
             {course.accessType === "MEMBER_INCLUDED" ? (
               <>
-                <p>
-                  這門課加入學員後即可免費觀看。等學員登入功能完成後，系統會依會員資格開放正式影片。
-                </p>
+                <p>這門課程包含在會員方案中。完成會員申請與審核後，即可依會員權限觀看。</p>
                 <Link className="button button-gold button-block" href="/membership">
-                  了解會員方案
+                  加入學員
                 </Link>
               </>
             ) : null}
             {course.accessType === "PAID" ? (
               <>
-                <p>
-                  這門課需要單獨報名與匯款審核，審核通過後才會開放正式影片。
-                </p>
+                <p>這門課程需單獨購買。送出報名後，請依匯款資訊付款並等待後台審核。</p>
                 <ul>
                   <li>課程售價：{money(course.price)}</li>
-                  <li>付款方式：銀行匯款</li>
-                  <li>狀態流程：報名、回報匯款、後台審核</li>
+                  <li>購買流程：報名、匯款、回報、審核</li>
+                  <li>審核通過後會寄送專屬觀看連結</li>
                 </ul>
                 <Link
                   className="button button-gold button-block"
-                  href={`/courses/${course.slug}`}
+                  href={`/courses/${course.slug}/purchase`}
                 >
-                  報名購買功能建置中
+                  購買這門課程
                 </Link>
               </>
             ) : null}
-            <small>正式影片網址不會在未取得權限前公開顯示。</small>
+            <small>正式課程影片與直播教室都會依照課程權限開放。</small>
           </aside>
         </div>
       </section>

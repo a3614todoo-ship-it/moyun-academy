@@ -48,6 +48,9 @@ export type CourseMinAggregateOutputType = {
   description: string | null
   lessonCount: number | null
   durationText: string | null
+  courseStartAt: Date | null
+  courseFormatText: string | null
+  viewingPolicyText: string | null
   coverImageUrl: string | null
   previewVideoUrl: string | null
   fullVideoUrl: string | null
@@ -71,6 +74,9 @@ export type CourseMaxAggregateOutputType = {
   description: string | null
   lessonCount: number | null
   durationText: string | null
+  courseStartAt: Date | null
+  courseFormatText: string | null
+  viewingPolicyText: string | null
   coverImageUrl: string | null
   previewVideoUrl: string | null
   fullVideoUrl: string | null
@@ -96,6 +102,9 @@ export type CourseCountAggregateOutputType = {
   audiences: number
   lessonCount: number
   durationText: number
+  courseStartAt: number
+  courseFormatText: number
+  viewingPolicyText: number
   coverImageUrl: number
   previewVideoUrl: number
   fullVideoUrl: number
@@ -133,6 +142,9 @@ export type CourseMinAggregateInputType = {
   description?: true
   lessonCount?: true
   durationText?: true
+  courseStartAt?: true
+  courseFormatText?: true
+  viewingPolicyText?: true
   coverImageUrl?: true
   previewVideoUrl?: true
   fullVideoUrl?: true
@@ -156,6 +168,9 @@ export type CourseMaxAggregateInputType = {
   description?: true
   lessonCount?: true
   durationText?: true
+  courseStartAt?: true
+  courseFormatText?: true
+  viewingPolicyText?: true
   coverImageUrl?: true
   previewVideoUrl?: true
   fullVideoUrl?: true
@@ -181,6 +196,9 @@ export type CourseCountAggregateInputType = {
   audiences?: true
   lessonCount?: true
   durationText?: true
+  courseStartAt?: true
+  courseFormatText?: true
+  viewingPolicyText?: true
   coverImageUrl?: true
   previewVideoUrl?: true
   fullVideoUrl?: true
@@ -293,6 +311,9 @@ export type CourseGroupByOutputType = {
   audiences: runtime.JsonValue | null
   lessonCount: number
   durationText: string | null
+  courseStartAt: Date | null
+  courseFormatText: string | null
+  viewingPolicyText: string | null
   coverImageUrl: string | null
   previewVideoUrl: string | null
   fullVideoUrl: string | null
@@ -341,6 +362,9 @@ export type CourseWhereInput = {
   audiences?: Prisma.JsonNullableFilter<"Course">
   lessonCount?: Prisma.IntFilter<"Course"> | number
   durationText?: Prisma.StringNullableFilter<"Course"> | string | null
+  courseStartAt?: Prisma.DateTimeNullableFilter<"Course"> | Date | string | null
+  courseFormatText?: Prisma.StringNullableFilter<"Course"> | string | null
+  viewingPolicyText?: Prisma.StringNullableFilter<"Course"> | string | null
   coverImageUrl?: Prisma.StringNullableFilter<"Course"> | string | null
   previewVideoUrl?: Prisma.StringNullableFilter<"Course"> | string | null
   fullVideoUrl?: Prisma.StringNullableFilter<"Course"> | string | null
@@ -353,6 +377,7 @@ export type CourseWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Course"> | Date | string
   purchases?: Prisma.CoursePurchaseListRelationFilter
+  liveSession?: Prisma.XOR<Prisma.LiveSessionNullableScalarRelationFilter, Prisma.LiveSessionWhereInput> | null
 }
 
 export type CourseOrderByWithRelationInput = {
@@ -367,6 +392,9 @@ export type CourseOrderByWithRelationInput = {
   audiences?: Prisma.SortOrderInput | Prisma.SortOrder
   lessonCount?: Prisma.SortOrder
   durationText?: Prisma.SortOrderInput | Prisma.SortOrder
+  courseStartAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  courseFormatText?: Prisma.SortOrderInput | Prisma.SortOrder
+  viewingPolicyText?: Prisma.SortOrderInput | Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   previewVideoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   fullVideoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -379,6 +407,7 @@ export type CourseOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   purchases?: Prisma.CoursePurchaseOrderByRelationAggregateInput
+  liveSession?: Prisma.LiveSessionOrderByWithRelationInput
 }
 
 export type CourseWhereUniqueInput = Prisma.AtLeast<{
@@ -396,6 +425,9 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   audiences?: Prisma.JsonNullableFilter<"Course">
   lessonCount?: Prisma.IntFilter<"Course"> | number
   durationText?: Prisma.StringNullableFilter<"Course"> | string | null
+  courseStartAt?: Prisma.DateTimeNullableFilter<"Course"> | Date | string | null
+  courseFormatText?: Prisma.StringNullableFilter<"Course"> | string | null
+  viewingPolicyText?: Prisma.StringNullableFilter<"Course"> | string | null
   coverImageUrl?: Prisma.StringNullableFilter<"Course"> | string | null
   previewVideoUrl?: Prisma.StringNullableFilter<"Course"> | string | null
   fullVideoUrl?: Prisma.StringNullableFilter<"Course"> | string | null
@@ -408,6 +440,7 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Course"> | Date | string
   purchases?: Prisma.CoursePurchaseListRelationFilter
+  liveSession?: Prisma.XOR<Prisma.LiveSessionNullableScalarRelationFilter, Prisma.LiveSessionWhereInput> | null
 }, "id" | "slug">
 
 export type CourseOrderByWithAggregationInput = {
@@ -422,6 +455,9 @@ export type CourseOrderByWithAggregationInput = {
   audiences?: Prisma.SortOrderInput | Prisma.SortOrder
   lessonCount?: Prisma.SortOrder
   durationText?: Prisma.SortOrderInput | Prisma.SortOrder
+  courseStartAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  courseFormatText?: Prisma.SortOrderInput | Prisma.SortOrder
+  viewingPolicyText?: Prisma.SortOrderInput | Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   previewVideoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   fullVideoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -455,6 +491,9 @@ export type CourseScalarWhereWithAggregatesInput = {
   audiences?: Prisma.JsonNullableWithAggregatesFilter<"Course">
   lessonCount?: Prisma.IntWithAggregatesFilter<"Course"> | number
   durationText?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null
+  courseStartAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Course"> | Date | string | null
+  courseFormatText?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null
+  viewingPolicyText?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null
   coverImageUrl?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null
   previewVideoUrl?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null
   fullVideoUrl?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null
@@ -480,6 +519,9 @@ export type CourseCreateInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: number
   durationText?: string | null
+  courseStartAt?: Date | string | null
+  courseFormatText?: string | null
+  viewingPolicyText?: string | null
   coverImageUrl?: string | null
   previewVideoUrl?: string | null
   fullVideoUrl?: string | null
@@ -492,6 +534,7 @@ export type CourseCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   purchases?: Prisma.CoursePurchaseCreateNestedManyWithoutCourseInput
+  liveSession?: Prisma.LiveSessionCreateNestedOneWithoutCourseInput
 }
 
 export type CourseUncheckedCreateInput = {
@@ -506,6 +549,9 @@ export type CourseUncheckedCreateInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: number
   durationText?: string | null
+  courseStartAt?: Date | string | null
+  courseFormatText?: string | null
+  viewingPolicyText?: string | null
   coverImageUrl?: string | null
   previewVideoUrl?: string | null
   fullVideoUrl?: string | null
@@ -518,6 +564,7 @@ export type CourseUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   purchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutCourseInput
+  liveSession?: Prisma.LiveSessionUncheckedCreateNestedOneWithoutCourseInput
 }
 
 export type CourseUpdateInput = {
@@ -532,6 +579,9 @@ export type CourseUpdateInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  courseFormatText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viewingPolicyText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previewVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -544,6 +594,7 @@ export type CourseUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   purchases?: Prisma.CoursePurchaseUpdateManyWithoutCourseNestedInput
+  liveSession?: Prisma.LiveSessionUpdateOneWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateInput = {
@@ -558,6 +609,9 @@ export type CourseUncheckedUpdateInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  courseFormatText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viewingPolicyText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previewVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -570,6 +624,7 @@ export type CourseUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   purchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutCourseNestedInput
+  liveSession?: Prisma.LiveSessionUncheckedUpdateOneWithoutCourseNestedInput
 }
 
 export type CourseCreateManyInput = {
@@ -584,6 +639,9 @@ export type CourseCreateManyInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: number
   durationText?: string | null
+  courseStartAt?: Date | string | null
+  courseFormatText?: string | null
+  viewingPolicyText?: string | null
   coverImageUrl?: string | null
   previewVideoUrl?: string | null
   fullVideoUrl?: string | null
@@ -609,6 +667,9 @@ export type CourseUpdateManyMutationInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  courseFormatText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viewingPolicyText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previewVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -634,6 +695,9 @@ export type CourseUncheckedUpdateManyInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  courseFormatText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viewingPolicyText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previewVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -659,6 +723,9 @@ export type CourseCountOrderByAggregateInput = {
   audiences?: Prisma.SortOrder
   lessonCount?: Prisma.SortOrder
   durationText?: Prisma.SortOrder
+  courseStartAt?: Prisma.SortOrder
+  courseFormatText?: Prisma.SortOrder
+  viewingPolicyText?: Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrder
   previewVideoUrl?: Prisma.SortOrder
   fullVideoUrl?: Prisma.SortOrder
@@ -688,6 +755,9 @@ export type CourseMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   lessonCount?: Prisma.SortOrder
   durationText?: Prisma.SortOrder
+  courseStartAt?: Prisma.SortOrder
+  courseFormatText?: Prisma.SortOrder
+  viewingPolicyText?: Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrder
   previewVideoUrl?: Prisma.SortOrder
   fullVideoUrl?: Prisma.SortOrder
@@ -711,6 +781,9 @@ export type CourseMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   lessonCount?: Prisma.SortOrder
   durationText?: Prisma.SortOrder
+  courseStartAt?: Prisma.SortOrder
+  courseFormatText?: Prisma.SortOrder
+  viewingPolicyText?: Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrder
   previewVideoUrl?: Prisma.SortOrder
   fullVideoUrl?: Prisma.SortOrder
@@ -753,6 +826,20 @@ export type CourseUpdateOneRequiredWithoutPurchasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutPurchasesInput, Prisma.CourseUpdateWithoutPurchasesInput>, Prisma.CourseUncheckedUpdateWithoutPurchasesInput>
 }
 
+export type CourseCreateNestedOneWithoutLiveSessionInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutLiveSessionInput, Prisma.CourseUncheckedCreateWithoutLiveSessionInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutLiveSessionInput
+  connect?: Prisma.CourseWhereUniqueInput
+}
+
+export type CourseUpdateOneRequiredWithoutLiveSessionNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutLiveSessionInput, Prisma.CourseUncheckedCreateWithoutLiveSessionInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutLiveSessionInput
+  upsert?: Prisma.CourseUpsertWithoutLiveSessionInput
+  connect?: Prisma.CourseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutLiveSessionInput, Prisma.CourseUpdateWithoutLiveSessionInput>, Prisma.CourseUncheckedUpdateWithoutLiveSessionInput>
+}
+
 export type CourseCreateWithoutPurchasesInput = {
   id?: string
   slug: string
@@ -765,6 +852,9 @@ export type CourseCreateWithoutPurchasesInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: number
   durationText?: string | null
+  courseStartAt?: Date | string | null
+  courseFormatText?: string | null
+  viewingPolicyText?: string | null
   coverImageUrl?: string | null
   previewVideoUrl?: string | null
   fullVideoUrl?: string | null
@@ -776,6 +866,7 @@ export type CourseCreateWithoutPurchasesInput = {
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  liveSession?: Prisma.LiveSessionCreateNestedOneWithoutCourseInput
 }
 
 export type CourseUncheckedCreateWithoutPurchasesInput = {
@@ -790,6 +881,9 @@ export type CourseUncheckedCreateWithoutPurchasesInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: number
   durationText?: string | null
+  courseStartAt?: Date | string | null
+  courseFormatText?: string | null
+  viewingPolicyText?: string | null
   coverImageUrl?: string | null
   previewVideoUrl?: string | null
   fullVideoUrl?: string | null
@@ -801,6 +895,7 @@ export type CourseUncheckedCreateWithoutPurchasesInput = {
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  liveSession?: Prisma.LiveSessionUncheckedCreateNestedOneWithoutCourseInput
 }
 
 export type CourseCreateOrConnectWithoutPurchasesInput = {
@@ -831,6 +926,9 @@ export type CourseUpdateWithoutPurchasesInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  courseFormatText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viewingPolicyText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previewVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -842,6 +940,7 @@ export type CourseUpdateWithoutPurchasesInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  liveSession?: Prisma.LiveSessionUpdateOneWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateWithoutPurchasesInput = {
@@ -856,6 +955,9 @@ export type CourseUncheckedUpdateWithoutPurchasesInput = {
   audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   lessonCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  courseFormatText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viewingPolicyText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previewVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -867,6 +969,139 @@ export type CourseUncheckedUpdateWithoutPurchasesInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  liveSession?: Prisma.LiveSessionUncheckedUpdateOneWithoutCourseNestedInput
+}
+
+export type CourseCreateWithoutLiveSessionInput = {
+  id?: string
+  slug: string
+  title: string
+  subtitle?: string | null
+  category: string
+  excerpt: string
+  description: string
+  outline?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  lessonCount?: number
+  durationText?: string | null
+  courseStartAt?: Date | string | null
+  courseFormatText?: string | null
+  viewingPolicyText?: string | null
+  coverImageUrl?: string | null
+  previewVideoUrl?: string | null
+  fullVideoUrl?: string | null
+  accessType?: $Enums.CourseAccessType
+  price?: number
+  isPublished?: boolean
+  isFeatured?: boolean
+  sortOrder?: number
+  publishedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  purchases?: Prisma.CoursePurchaseCreateNestedManyWithoutCourseInput
+}
+
+export type CourseUncheckedCreateWithoutLiveSessionInput = {
+  id?: string
+  slug: string
+  title: string
+  subtitle?: string | null
+  category: string
+  excerpt: string
+  description: string
+  outline?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  lessonCount?: number
+  durationText?: string | null
+  courseStartAt?: Date | string | null
+  courseFormatText?: string | null
+  viewingPolicyText?: string | null
+  coverImageUrl?: string | null
+  previewVideoUrl?: string | null
+  fullVideoUrl?: string | null
+  accessType?: $Enums.CourseAccessType
+  price?: number
+  isPublished?: boolean
+  isFeatured?: boolean
+  sortOrder?: number
+  publishedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  purchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutCourseInput
+}
+
+export type CourseCreateOrConnectWithoutLiveSessionInput = {
+  where: Prisma.CourseWhereUniqueInput
+  create: Prisma.XOR<Prisma.CourseCreateWithoutLiveSessionInput, Prisma.CourseUncheckedCreateWithoutLiveSessionInput>
+}
+
+export type CourseUpsertWithoutLiveSessionInput = {
+  update: Prisma.XOR<Prisma.CourseUpdateWithoutLiveSessionInput, Prisma.CourseUncheckedUpdateWithoutLiveSessionInput>
+  create: Prisma.XOR<Prisma.CourseCreateWithoutLiveSessionInput, Prisma.CourseUncheckedCreateWithoutLiveSessionInput>
+  where?: Prisma.CourseWhereInput
+}
+
+export type CourseUpdateToOneWithWhereWithoutLiveSessionInput = {
+  where?: Prisma.CourseWhereInput
+  data: Prisma.XOR<Prisma.CourseUpdateWithoutLiveSessionInput, Prisma.CourseUncheckedUpdateWithoutLiveSessionInput>
+}
+
+export type CourseUpdateWithoutLiveSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  excerpt?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  outline?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  lessonCount?: Prisma.IntFieldUpdateOperationsInput | number
+  durationText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  courseFormatText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viewingPolicyText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previewVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchases?: Prisma.CoursePurchaseUpdateManyWithoutCourseNestedInput
+}
+
+export type CourseUncheckedUpdateWithoutLiveSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  subtitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  excerpt?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  outline?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  audiences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  lessonCount?: Prisma.IntFieldUpdateOperationsInput | number
+  durationText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  courseFormatText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viewingPolicyText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previewVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutCourseNestedInput
 }
 
 
@@ -912,6 +1147,9 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   audiences?: boolean
   lessonCount?: boolean
   durationText?: boolean
+  courseStartAt?: boolean
+  courseFormatText?: boolean
+  viewingPolicyText?: boolean
   coverImageUrl?: boolean
   previewVideoUrl?: boolean
   fullVideoUrl?: boolean
@@ -924,6 +1162,7 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdAt?: boolean
   updatedAt?: boolean
   purchases?: boolean | Prisma.Course$purchasesArgs<ExtArgs>
+  liveSession?: boolean | Prisma.Course$liveSessionArgs<ExtArgs>
   _count?: boolean | Prisma.CourseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course"]>
 
@@ -939,6 +1178,9 @@ export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   audiences?: boolean
   lessonCount?: boolean
   durationText?: boolean
+  courseStartAt?: boolean
+  courseFormatText?: boolean
+  viewingPolicyText?: boolean
   coverImageUrl?: boolean
   previewVideoUrl?: boolean
   fullVideoUrl?: boolean
@@ -964,6 +1206,9 @@ export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   audiences?: boolean
   lessonCount?: boolean
   durationText?: boolean
+  courseStartAt?: boolean
+  courseFormatText?: boolean
+  viewingPolicyText?: boolean
   coverImageUrl?: boolean
   previewVideoUrl?: boolean
   fullVideoUrl?: boolean
@@ -989,6 +1234,9 @@ export type CourseSelectScalar = {
   audiences?: boolean
   lessonCount?: boolean
   durationText?: boolean
+  courseStartAt?: boolean
+  courseFormatText?: boolean
+  viewingPolicyText?: boolean
   coverImageUrl?: boolean
   previewVideoUrl?: boolean
   fullVideoUrl?: boolean
@@ -1002,9 +1250,10 @@ export type CourseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "subtitle" | "category" | "excerpt" | "description" | "outline" | "audiences" | "lessonCount" | "durationText" | "coverImageUrl" | "previewVideoUrl" | "fullVideoUrl" | "accessType" | "price" | "isPublished" | "isFeatured" | "sortOrder" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
+export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "subtitle" | "category" | "excerpt" | "description" | "outline" | "audiences" | "lessonCount" | "durationText" | "courseStartAt" | "courseFormatText" | "viewingPolicyText" | "coverImageUrl" | "previewVideoUrl" | "fullVideoUrl" | "accessType" | "price" | "isPublished" | "isFeatured" | "sortOrder" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
 export type CourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   purchases?: boolean | Prisma.Course$purchasesArgs<ExtArgs>
+  liveSession?: boolean | Prisma.Course$liveSessionArgs<ExtArgs>
   _count?: boolean | Prisma.CourseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CourseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1014,6 +1263,7 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Course"
   objects: {
     purchases: Prisma.$CoursePurchasePayload<ExtArgs>[]
+    liveSession: Prisma.$LiveSessionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1027,6 +1277,9 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     audiences: runtime.JsonValue | null
     lessonCount: number
     durationText: string | null
+    courseStartAt: Date | null
+    courseFormatText: string | null
+    viewingPolicyText: string | null
     coverImageUrl: string | null
     previewVideoUrl: string | null
     fullVideoUrl: string | null
@@ -1433,6 +1686,7 @@ readonly fields: CourseFieldRefs;
 export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   purchases<T extends Prisma.Course$purchasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$purchasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoursePurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  liveSession<T extends Prisma.Course$liveSessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$liveSessionArgs<ExtArgs>>): Prisma.Prisma__LiveSessionClient<runtime.Types.Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1473,6 +1727,9 @@ export interface CourseFieldRefs {
   readonly audiences: Prisma.FieldRef<"Course", 'Json'>
   readonly lessonCount: Prisma.FieldRef<"Course", 'Int'>
   readonly durationText: Prisma.FieldRef<"Course", 'String'>
+  readonly courseStartAt: Prisma.FieldRef<"Course", 'DateTime'>
+  readonly courseFormatText: Prisma.FieldRef<"Course", 'String'>
+  readonly viewingPolicyText: Prisma.FieldRef<"Course", 'String'>
   readonly coverImageUrl: Prisma.FieldRef<"Course", 'String'>
   readonly previewVideoUrl: Prisma.FieldRef<"Course", 'String'>
   readonly fullVideoUrl: Prisma.FieldRef<"Course", 'String'>
@@ -1898,6 +2155,25 @@ export type Course$purchasesArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.CoursePurchaseScalarFieldEnum | Prisma.CoursePurchaseScalarFieldEnum[]
+}
+
+/**
+ * Course.liveSession
+ */
+export type Course$liveSessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LiveSession
+   */
+  select?: Prisma.LiveSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LiveSession
+   */
+  omit?: Prisma.LiveSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LiveSessionInclude<ExtArgs> | null
+  where?: Prisma.LiveSessionWhereInput
 }
 
 /**

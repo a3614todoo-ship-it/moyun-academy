@@ -61,6 +61,8 @@ export const ModelName = {
   ApplicationStatusHistory: 'ApplicationStatusHistory',
   Course: 'Course',
   CoursePurchase: 'CoursePurchase',
+  LiveSession: 'LiveSession',
+  LiveQuestion: 'LiveQuestion',
   ContactMessage: 'ContactMessage'
 } as const
 
@@ -141,6 +143,7 @@ export type PaymentReportScalarFieldEnum = (typeof PaymentReportScalarFieldEnum)
 export const EmailLogScalarFieldEnum = {
   id: 'id',
   applicationId: 'applicationId',
+  coursePurchaseId: 'coursePurchaseId',
   type: 'type',
   recipient: 'recipient',
   subject: 'subject',
@@ -217,6 +220,9 @@ export const CourseScalarFieldEnum = {
   audiences: 'audiences',
   lessonCount: 'lessonCount',
   durationText: 'durationText',
+  courseStartAt: 'courseStartAt',
+  courseFormatText: 'courseFormatText',
+  viewingPolicyText: 'viewingPolicyText',
   coverImageUrl: 'coverImageUrl',
   previewVideoUrl: 'previewVideoUrl',
   fullVideoUrl: 'fullVideoUrl',
@@ -256,6 +262,47 @@ export const CoursePurchaseScalarFieldEnum = {
 } as const
 
 export type CoursePurchaseScalarFieldEnum = (typeof CoursePurchaseScalarFieldEnum)[keyof typeof CoursePurchaseScalarFieldEnum]
+
+
+export const LiveSessionScalarFieldEnum = {
+  id: 'id',
+  courseId: 'courseId',
+  title: 'title',
+  platform: 'platform',
+  isEnabled: 'isEnabled',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  playerOpenAt: 'playerOpenAt',
+  playerCloseAt: 'playerCloseAt',
+  youtubeVideoId: 'youtubeVideoId',
+  youtubeChatEmbedUrl: 'youtubeChatEmbedUrl',
+  enableYoutubeChat: 'enableYoutubeChat',
+  enableQuestions: 'enableQuestions',
+  showWatermark: 'showWatermark',
+  externalUrl: 'externalUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LiveSessionScalarFieldEnum = (typeof LiveSessionScalarFieldEnum)[keyof typeof LiveSessionScalarFieldEnum]
+
+
+export const LiveQuestionScalarFieldEnum = {
+  id: 'id',
+  liveSessionId: 'liveSessionId',
+  coursePurchaseId: 'coursePurchaseId',
+  displayName: 'displayName',
+  emailMasked: 'emailMasked',
+  body: 'body',
+  status: 'status',
+  upvoteCount: 'upvoteCount',
+  answeredAt: 'answeredAt',
+  answer: 'answer',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LiveQuestionScalarFieldEnum = (typeof LiveQuestionScalarFieldEnum)[keyof typeof LiveQuestionScalarFieldEnum]
 
 
 export const ContactMessageScalarFieldEnum = {

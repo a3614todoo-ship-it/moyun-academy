@@ -68,6 +68,16 @@ export type Course = Prisma.CourseModel
  */
 export type CoursePurchase = Prisma.CoursePurchaseModel
 /**
+ * Model LiveSession
+ * 
+ */
+export type LiveSession = Prisma.LiveSessionModel
+/**
+ * Model LiveQuestion
+ * 
+ */
+export type LiveQuestion = Prisma.LiveQuestionModel
+/**
  * Model ContactMessage
  * 
  */

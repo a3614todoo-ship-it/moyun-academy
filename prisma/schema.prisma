@@ -75,20 +75,23 @@ model PaymentReport {
 }
 
 model EmailLog {
-  id            String       @id @default(cuid())
-  applicationId String?
-  application   Application? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
-  type          EmailType
-  recipient     String
-  subject       String
-  status        EmailStatus  @default(PENDING)
-  providerId    String?
-  errorMessage  String?
-  sentAt        DateTime?
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  id               String          @id @default(cuid())
+  applicationId    String?
+  application      Application?    @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+  coursePurchaseId String?
+  coursePurchase   CoursePurchase? @relation(fields: [coursePurchaseId], references: [id], onDelete: SetNull)
+  type             EmailType
+  recipient        String
+  subject          String
+  status           EmailStatus     @default(PENDING)
+  providerId       String?
+  errorMessage     String?
+  sentAt           DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
 
   @@index([applicationId, createdAt])
+  @@index([coursePurchaseId, createdAt])
   @@index([status, createdAt])
   @@index([recipient])
 }
@@ -160,6 +163,9 @@ model Course {
   audiences       Json?
   lessonCount     Int       @default(0)
   durationText    String?
+  courseStartAt   DateTime?
+  courseFormatText String?
+  viewingPolicyText String?
   coverImageUrl   String?
   previewVideoUrl String?
   fullVideoUrl    String?
@@ -170,6 +176,7 @@ model Course {
   sortOrder       Int       @default(0)
   publishedAt     DateTime?
   purchases       CoursePurchase[]
+  liveSession      LiveSession?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
@@ -198,6 +205,8 @@ model CoursePurchase {
   reviewedAt     DateTime?
   reviewedById   String?
   reviewedBy     AdminUser?           @relation(fields: [reviewedById], references: [id], onDelete: SetNull)
+  emailLogs      EmailLog[]
+  liveQuestions  LiveQuestion[]
   createdAt      DateTime             @default(now())
   updatedAt      DateTime             @updatedAt
 
@@ -206,6 +215,51 @@ model CoursePurchase {
   @@index([email])
   @@index([phone])
   @@index([reviewedById])
+}
+
+model LiveSession {
+  id                    String         @id @default(cuid())
+  courseId              String         @unique
+  course                Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title                 String
+  platform              LivePlatform   @default(YOUTUBE_LIVE)
+  isEnabled             Boolean        @default(false)
+  startsAt              DateTime?
+  endsAt                DateTime?
+  playerOpenAt          DateTime?
+  playerCloseAt         DateTime?
+  youtubeVideoId        String?
+  youtubeChatEmbedUrl   String?
+  enableYoutubeChat     Boolean        @default(false)
+  enableQuestions       Boolean        @default(true)
+  showWatermark         Boolean        @default(true)
+  externalUrl           String?
+  questions             LiveQuestion[]
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  @@index([isEnabled, playerOpenAt, playerCloseAt])
+  @@index([platform])
+}
+
+model LiveQuestion {
+  id               String             @id @default(cuid())
+  liveSessionId    String
+  liveSession      LiveSession        @relation(fields: [liveSessionId], references: [id], onDelete: Cascade)
+  coursePurchaseId String
+  coursePurchase   CoursePurchase     @relation(fields: [coursePurchaseId], references: [id], onDelete: Cascade)
+  displayName      String
+  emailMasked      String
+  body             String
+  status           LiveQuestionStatus @default(OPEN)
+  upvoteCount      Int                @default(0)
+  answeredAt       DateTime?
+  answer           String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@index([liveSessionId, status, createdAt])
+  @@index([coursePurchaseId, createdAt])
 }
 
 model ContactMessage {
@@ -239,6 +293,10 @@ enum EmailType {
   PAYMENT_REPORTED_ADMIN
   APPLICATION_APPROVED
   FACEBOOK_GROUP_JOINED
+  COURSE_PURCHASE_CREATED
+  COURSE_PAYMENT_REPORTED_USER
+  COURSE_PAYMENT_REPORTED_ADMIN
+  COURSE_PURCHASE_APPROVED
 }
 
 enum CourseAccessType {
@@ -253,6 +311,21 @@ enum CoursePurchaseStatus {
   APPROVED
   REJECTED
   CANCELLED
+}
+
+enum LivePlatform {
+  YOUTUBE_LIVE
+  VIMEO_LIVE
+  ZOOM_WEBINAR
+  ZOOM_MEETING
+  EXTERNAL_URL
+}
+
+enum LiveQuestionStatus {
+  OPEN
+  ANSWERED
+  PINNED
+  HIDDEN
 }
 
 enum EmailStatus {

@@ -26,7 +26,11 @@ export const EmailType = {
   PAYMENT_REPORTED_USER: 'PAYMENT_REPORTED_USER',
   PAYMENT_REPORTED_ADMIN: 'PAYMENT_REPORTED_ADMIN',
   APPLICATION_APPROVED: 'APPLICATION_APPROVED',
-  FACEBOOK_GROUP_JOINED: 'FACEBOOK_GROUP_JOINED'
+  FACEBOOK_GROUP_JOINED: 'FACEBOOK_GROUP_JOINED',
+  COURSE_PURCHASE_CREATED: 'COURSE_PURCHASE_CREATED',
+  COURSE_PAYMENT_REPORTED_USER: 'COURSE_PAYMENT_REPORTED_USER',
+  COURSE_PAYMENT_REPORTED_ADMIN: 'COURSE_PAYMENT_REPORTED_ADMIN',
+  COURSE_PURCHASE_APPROVED: 'COURSE_PURCHASE_APPROVED'
 } as const
 
 export type EmailType = (typeof EmailType)[keyof typeof EmailType]
@@ -50,6 +54,27 @@ export const CoursePurchaseStatus = {
 } as const
 
 export type CoursePurchaseStatus = (typeof CoursePurchaseStatus)[keyof typeof CoursePurchaseStatus]
+
+
+export const LivePlatform = {
+  YOUTUBE_LIVE: 'YOUTUBE_LIVE',
+  VIMEO_LIVE: 'VIMEO_LIVE',
+  ZOOM_WEBINAR: 'ZOOM_WEBINAR',
+  ZOOM_MEETING: 'ZOOM_MEETING',
+  EXTERNAL_URL: 'EXTERNAL_URL'
+} as const
+
+export type LivePlatform = (typeof LivePlatform)[keyof typeof LivePlatform]
+
+
+export const LiveQuestionStatus = {
+  OPEN: 'OPEN',
+  ANSWERED: 'ANSWERED',
+  PINNED: 'PINNED',
+  HIDDEN: 'HIDDEN'
+} as const
+
+export type LiveQuestionStatus = (typeof LiveQuestionStatus)[keyof typeof LiveQuestionStatus]
 
 
 export const EmailStatus = {
