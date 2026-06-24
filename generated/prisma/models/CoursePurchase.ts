@@ -332,6 +332,7 @@ export type CoursePurchaseWhereInput = {
   reviewedBy?: Prisma.XOR<Prisma.AdminUserNullableScalarRelationFilter, Prisma.AdminUserWhereInput> | null
   emailLogs?: Prisma.EmailLogListRelationFilter
   liveQuestions?: Prisma.LiveQuestionListRelationFilter
+  questionUpvotes?: Prisma.LiveQuestionUpvoteListRelationFilter
 }
 
 export type CoursePurchaseOrderByWithRelationInput = {
@@ -358,6 +359,7 @@ export type CoursePurchaseOrderByWithRelationInput = {
   reviewedBy?: Prisma.AdminUserOrderByWithRelationInput
   emailLogs?: Prisma.EmailLogOrderByRelationAggregateInput
   liveQuestions?: Prisma.LiveQuestionOrderByRelationAggregateInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteOrderByRelationAggregateInput
 }
 
 export type CoursePurchaseWhereUniqueInput = Prisma.AtLeast<{
@@ -387,6 +389,7 @@ export type CoursePurchaseWhereUniqueInput = Prisma.AtLeast<{
   reviewedBy?: Prisma.XOR<Prisma.AdminUserNullableScalarRelationFilter, Prisma.AdminUserWhereInput> | null
   emailLogs?: Prisma.EmailLogListRelationFilter
   liveQuestions?: Prisma.LiveQuestionListRelationFilter
+  questionUpvotes?: Prisma.LiveQuestionUpvoteListRelationFilter
 }, "id" | "purchaseNo" | "accessToken">
 
 export type CoursePurchaseOrderByWithAggregationInput = {
@@ -463,6 +466,7 @@ export type CoursePurchaseCreateInput = {
   reviewedBy?: Prisma.AdminUserCreateNestedOneWithoutReviewedCoursePurchasesInput
   emailLogs?: Prisma.EmailLogCreateNestedManyWithoutCoursePurchaseInput
   liveQuestions?: Prisma.LiveQuestionCreateNestedManyWithoutCoursePurchaseInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteCreateNestedManyWithoutCoursePurchaseInput
 }
 
 export type CoursePurchaseUncheckedCreateInput = {
@@ -487,6 +491,7 @@ export type CoursePurchaseUncheckedCreateInput = {
   updatedAt?: Date | string
   emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutCoursePurchaseInput
   liveQuestions?: Prisma.LiveQuestionUncheckedCreateNestedManyWithoutCoursePurchaseInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUncheckedCreateNestedManyWithoutCoursePurchaseInput
 }
 
 export type CoursePurchaseUpdateInput = {
@@ -511,6 +516,7 @@ export type CoursePurchaseUpdateInput = {
   reviewedBy?: Prisma.AdminUserUpdateOneWithoutReviewedCoursePurchasesNestedInput
   emailLogs?: Prisma.EmailLogUpdateManyWithoutCoursePurchaseNestedInput
   liveQuestions?: Prisma.LiveQuestionUpdateManyWithoutCoursePurchaseNestedInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUpdateManyWithoutCoursePurchaseNestedInput
 }
 
 export type CoursePurchaseUncheckedUpdateInput = {
@@ -535,6 +541,7 @@ export type CoursePurchaseUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutCoursePurchaseNestedInput
   liveQuestions?: Prisma.LiveQuestionUncheckedUpdateManyWithoutCoursePurchaseNestedInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUncheckedUpdateManyWithoutCoursePurchaseNestedInput
 }
 
 export type CoursePurchaseCreateManyInput = {
@@ -813,6 +820,20 @@ export type CoursePurchaseUpdateOneRequiredWithoutLiveQuestionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CoursePurchaseUpdateToOneWithWhereWithoutLiveQuestionsInput, Prisma.CoursePurchaseUpdateWithoutLiveQuestionsInput>, Prisma.CoursePurchaseUncheckedUpdateWithoutLiveQuestionsInput>
 }
 
+export type CoursePurchaseCreateNestedOneWithoutQuestionUpvotesInput = {
+  create?: Prisma.XOR<Prisma.CoursePurchaseCreateWithoutQuestionUpvotesInput, Prisma.CoursePurchaseUncheckedCreateWithoutQuestionUpvotesInput>
+  connectOrCreate?: Prisma.CoursePurchaseCreateOrConnectWithoutQuestionUpvotesInput
+  connect?: Prisma.CoursePurchaseWhereUniqueInput
+}
+
+export type CoursePurchaseUpdateOneRequiredWithoutQuestionUpvotesNestedInput = {
+  create?: Prisma.XOR<Prisma.CoursePurchaseCreateWithoutQuestionUpvotesInput, Prisma.CoursePurchaseUncheckedCreateWithoutQuestionUpvotesInput>
+  connectOrCreate?: Prisma.CoursePurchaseCreateOrConnectWithoutQuestionUpvotesInput
+  upsert?: Prisma.CoursePurchaseUpsertWithoutQuestionUpvotesInput
+  connect?: Prisma.CoursePurchaseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CoursePurchaseUpdateToOneWithWhereWithoutQuestionUpvotesInput, Prisma.CoursePurchaseUpdateWithoutQuestionUpvotesInput>, Prisma.CoursePurchaseUncheckedUpdateWithoutQuestionUpvotesInput>
+}
+
 export type CoursePurchaseCreateWithoutEmailLogsInput = {
   id?: string
   purchaseNo: string
@@ -834,6 +855,7 @@ export type CoursePurchaseCreateWithoutEmailLogsInput = {
   course: Prisma.CourseCreateNestedOneWithoutPurchasesInput
   reviewedBy?: Prisma.AdminUserCreateNestedOneWithoutReviewedCoursePurchasesInput
   liveQuestions?: Prisma.LiveQuestionCreateNestedManyWithoutCoursePurchaseInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteCreateNestedManyWithoutCoursePurchaseInput
 }
 
 export type CoursePurchaseUncheckedCreateWithoutEmailLogsInput = {
@@ -857,6 +879,7 @@ export type CoursePurchaseUncheckedCreateWithoutEmailLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   liveQuestions?: Prisma.LiveQuestionUncheckedCreateNestedManyWithoutCoursePurchaseInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUncheckedCreateNestedManyWithoutCoursePurchaseInput
 }
 
 export type CoursePurchaseCreateOrConnectWithoutEmailLogsInput = {
@@ -896,6 +919,7 @@ export type CoursePurchaseUpdateWithoutEmailLogsInput = {
   course?: Prisma.CourseUpdateOneRequiredWithoutPurchasesNestedInput
   reviewedBy?: Prisma.AdminUserUpdateOneWithoutReviewedCoursePurchasesNestedInput
   liveQuestions?: Prisma.LiveQuestionUpdateManyWithoutCoursePurchaseNestedInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUpdateManyWithoutCoursePurchaseNestedInput
 }
 
 export type CoursePurchaseUncheckedUpdateWithoutEmailLogsInput = {
@@ -919,6 +943,7 @@ export type CoursePurchaseUncheckedUpdateWithoutEmailLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   liveQuestions?: Prisma.LiveQuestionUncheckedUpdateManyWithoutCoursePurchaseNestedInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUncheckedUpdateManyWithoutCoursePurchaseNestedInput
 }
 
 export type CoursePurchaseCreateWithoutReviewedByInput = {
@@ -942,6 +967,7 @@ export type CoursePurchaseCreateWithoutReviewedByInput = {
   course: Prisma.CourseCreateNestedOneWithoutPurchasesInput
   emailLogs?: Prisma.EmailLogCreateNestedManyWithoutCoursePurchaseInput
   liveQuestions?: Prisma.LiveQuestionCreateNestedManyWithoutCoursePurchaseInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteCreateNestedManyWithoutCoursePurchaseInput
 }
 
 export type CoursePurchaseUncheckedCreateWithoutReviewedByInput = {
@@ -965,6 +991,7 @@ export type CoursePurchaseUncheckedCreateWithoutReviewedByInput = {
   updatedAt?: Date | string
   emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutCoursePurchaseInput
   liveQuestions?: Prisma.LiveQuestionUncheckedCreateNestedManyWithoutCoursePurchaseInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUncheckedCreateNestedManyWithoutCoursePurchaseInput
 }
 
 export type CoursePurchaseCreateOrConnectWithoutReviewedByInput = {
@@ -1039,6 +1066,7 @@ export type CoursePurchaseCreateWithoutCourseInput = {
   reviewedBy?: Prisma.AdminUserCreateNestedOneWithoutReviewedCoursePurchasesInput
   emailLogs?: Prisma.EmailLogCreateNestedManyWithoutCoursePurchaseInput
   liveQuestions?: Prisma.LiveQuestionCreateNestedManyWithoutCoursePurchaseInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteCreateNestedManyWithoutCoursePurchaseInput
 }
 
 export type CoursePurchaseUncheckedCreateWithoutCourseInput = {
@@ -1062,6 +1090,7 @@ export type CoursePurchaseUncheckedCreateWithoutCourseInput = {
   updatedAt?: Date | string
   emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutCoursePurchaseInput
   liveQuestions?: Prisma.LiveQuestionUncheckedCreateNestedManyWithoutCoursePurchaseInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUncheckedCreateNestedManyWithoutCoursePurchaseInput
 }
 
 export type CoursePurchaseCreateOrConnectWithoutCourseInput = {
@@ -1111,6 +1140,7 @@ export type CoursePurchaseCreateWithoutLiveQuestionsInput = {
   course: Prisma.CourseCreateNestedOneWithoutPurchasesInput
   reviewedBy?: Prisma.AdminUserCreateNestedOneWithoutReviewedCoursePurchasesInput
   emailLogs?: Prisma.EmailLogCreateNestedManyWithoutCoursePurchaseInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteCreateNestedManyWithoutCoursePurchaseInput
 }
 
 export type CoursePurchaseUncheckedCreateWithoutLiveQuestionsInput = {
@@ -1134,6 +1164,7 @@ export type CoursePurchaseUncheckedCreateWithoutLiveQuestionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutCoursePurchaseInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUncheckedCreateNestedManyWithoutCoursePurchaseInput
 }
 
 export type CoursePurchaseCreateOrConnectWithoutLiveQuestionsInput = {
@@ -1173,6 +1204,7 @@ export type CoursePurchaseUpdateWithoutLiveQuestionsInput = {
   course?: Prisma.CourseUpdateOneRequiredWithoutPurchasesNestedInput
   reviewedBy?: Prisma.AdminUserUpdateOneWithoutReviewedCoursePurchasesNestedInput
   emailLogs?: Prisma.EmailLogUpdateManyWithoutCoursePurchaseNestedInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUpdateManyWithoutCoursePurchaseNestedInput
 }
 
 export type CoursePurchaseUncheckedUpdateWithoutLiveQuestionsInput = {
@@ -1196,6 +1228,119 @@ export type CoursePurchaseUncheckedUpdateWithoutLiveQuestionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutCoursePurchaseNestedInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUncheckedUpdateManyWithoutCoursePurchaseNestedInput
+}
+
+export type CoursePurchaseCreateWithoutQuestionUpvotesInput = {
+  id?: string
+  purchaseNo: string
+  name: string
+  phone: string
+  email: string
+  amount: number
+  bankLast5?: string | null
+  payerName?: string | null
+  paidAt?: Date | string | null
+  note?: string | null
+  status?: $Enums.CoursePurchaseStatus
+  accessToken?: string
+  approvedAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  reviewedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  course: Prisma.CourseCreateNestedOneWithoutPurchasesInput
+  reviewedBy?: Prisma.AdminUserCreateNestedOneWithoutReviewedCoursePurchasesInput
+  emailLogs?: Prisma.EmailLogCreateNestedManyWithoutCoursePurchaseInput
+  liveQuestions?: Prisma.LiveQuestionCreateNestedManyWithoutCoursePurchaseInput
+}
+
+export type CoursePurchaseUncheckedCreateWithoutQuestionUpvotesInput = {
+  id?: string
+  purchaseNo: string
+  courseId: string
+  name: string
+  phone: string
+  email: string
+  amount: number
+  bankLast5?: string | null
+  payerName?: string | null
+  paidAt?: Date | string | null
+  note?: string | null
+  status?: $Enums.CoursePurchaseStatus
+  accessToken?: string
+  approvedAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  reviewedAt?: Date | string | null
+  reviewedById?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutCoursePurchaseInput
+  liveQuestions?: Prisma.LiveQuestionUncheckedCreateNestedManyWithoutCoursePurchaseInput
+}
+
+export type CoursePurchaseCreateOrConnectWithoutQuestionUpvotesInput = {
+  where: Prisma.CoursePurchaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.CoursePurchaseCreateWithoutQuestionUpvotesInput, Prisma.CoursePurchaseUncheckedCreateWithoutQuestionUpvotesInput>
+}
+
+export type CoursePurchaseUpsertWithoutQuestionUpvotesInput = {
+  update: Prisma.XOR<Prisma.CoursePurchaseUpdateWithoutQuestionUpvotesInput, Prisma.CoursePurchaseUncheckedUpdateWithoutQuestionUpvotesInput>
+  create: Prisma.XOR<Prisma.CoursePurchaseCreateWithoutQuestionUpvotesInput, Prisma.CoursePurchaseUncheckedCreateWithoutQuestionUpvotesInput>
+  where?: Prisma.CoursePurchaseWhereInput
+}
+
+export type CoursePurchaseUpdateToOneWithWhereWithoutQuestionUpvotesInput = {
+  where?: Prisma.CoursePurchaseWhereInput
+  data: Prisma.XOR<Prisma.CoursePurchaseUpdateWithoutQuestionUpvotesInput, Prisma.CoursePurchaseUncheckedUpdateWithoutQuestionUpvotesInput>
+}
+
+export type CoursePurchaseUpdateWithoutQuestionUpvotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseNo?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  bankLast5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
+  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  course?: Prisma.CourseUpdateOneRequiredWithoutPurchasesNestedInput
+  reviewedBy?: Prisma.AdminUserUpdateOneWithoutReviewedCoursePurchasesNestedInput
+  emailLogs?: Prisma.EmailLogUpdateManyWithoutCoursePurchaseNestedInput
+  liveQuestions?: Prisma.LiveQuestionUpdateManyWithoutCoursePurchaseNestedInput
+}
+
+export type CoursePurchaseUncheckedUpdateWithoutQuestionUpvotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseNo?: Prisma.StringFieldUpdateOperationsInput | string
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  bankLast5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
+  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutCoursePurchaseNestedInput
+  liveQuestions?: Prisma.LiveQuestionUncheckedUpdateManyWithoutCoursePurchaseNestedInput
 }
 
 export type CoursePurchaseCreateManyReviewedByInput = {
@@ -1240,6 +1385,7 @@ export type CoursePurchaseUpdateWithoutReviewedByInput = {
   course?: Prisma.CourseUpdateOneRequiredWithoutPurchasesNestedInput
   emailLogs?: Prisma.EmailLogUpdateManyWithoutCoursePurchaseNestedInput
   liveQuestions?: Prisma.LiveQuestionUpdateManyWithoutCoursePurchaseNestedInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUpdateManyWithoutCoursePurchaseNestedInput
 }
 
 export type CoursePurchaseUncheckedUpdateWithoutReviewedByInput = {
@@ -1263,6 +1409,7 @@ export type CoursePurchaseUncheckedUpdateWithoutReviewedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutCoursePurchaseNestedInput
   liveQuestions?: Prisma.LiveQuestionUncheckedUpdateManyWithoutCoursePurchaseNestedInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUncheckedUpdateManyWithoutCoursePurchaseNestedInput
 }
 
 export type CoursePurchaseUncheckedUpdateManyWithoutReviewedByInput = {
@@ -1328,6 +1475,7 @@ export type CoursePurchaseUpdateWithoutCourseInput = {
   reviewedBy?: Prisma.AdminUserUpdateOneWithoutReviewedCoursePurchasesNestedInput
   emailLogs?: Prisma.EmailLogUpdateManyWithoutCoursePurchaseNestedInput
   liveQuestions?: Prisma.LiveQuestionUpdateManyWithoutCoursePurchaseNestedInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUpdateManyWithoutCoursePurchaseNestedInput
 }
 
 export type CoursePurchaseUncheckedUpdateWithoutCourseInput = {
@@ -1351,6 +1499,7 @@ export type CoursePurchaseUncheckedUpdateWithoutCourseInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutCoursePurchaseNestedInput
   liveQuestions?: Prisma.LiveQuestionUncheckedUpdateManyWithoutCoursePurchaseNestedInput
+  questionUpvotes?: Prisma.LiveQuestionUpvoteUncheckedUpdateManyWithoutCoursePurchaseNestedInput
 }
 
 export type CoursePurchaseUncheckedUpdateManyWithoutCourseInput = {
@@ -1382,11 +1531,13 @@ export type CoursePurchaseUncheckedUpdateManyWithoutCourseInput = {
 export type CoursePurchaseCountOutputType = {
   emailLogs: number
   liveQuestions: number
+  questionUpvotes: number
 }
 
 export type CoursePurchaseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   emailLogs?: boolean | CoursePurchaseCountOutputTypeCountEmailLogsArgs
   liveQuestions?: boolean | CoursePurchaseCountOutputTypeCountLiveQuestionsArgs
+  questionUpvotes?: boolean | CoursePurchaseCountOutputTypeCountQuestionUpvotesArgs
 }
 
 /**
@@ -1411,6 +1562,13 @@ export type CoursePurchaseCountOutputTypeCountEmailLogsArgs<ExtArgs extends runt
  */
 export type CoursePurchaseCountOutputTypeCountLiveQuestionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LiveQuestionWhereInput
+}
+
+/**
+ * CoursePurchaseCountOutputType without action
+ */
+export type CoursePurchaseCountOutputTypeCountQuestionUpvotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LiveQuestionUpvoteWhereInput
 }
 
 
@@ -1438,6 +1596,7 @@ export type CoursePurchaseSelect<ExtArgs extends runtime.Types.Extensions.Intern
   reviewedBy?: boolean | Prisma.CoursePurchase$reviewedByArgs<ExtArgs>
   emailLogs?: boolean | Prisma.CoursePurchase$emailLogsArgs<ExtArgs>
   liveQuestions?: boolean | Prisma.CoursePurchase$liveQuestionsArgs<ExtArgs>
+  questionUpvotes?: boolean | Prisma.CoursePurchase$questionUpvotesArgs<ExtArgs>
   _count?: boolean | Prisma.CoursePurchaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["coursePurchase"]>
 
@@ -1517,6 +1676,7 @@ export type CoursePurchaseInclude<ExtArgs extends runtime.Types.Extensions.Inter
   reviewedBy?: boolean | Prisma.CoursePurchase$reviewedByArgs<ExtArgs>
   emailLogs?: boolean | Prisma.CoursePurchase$emailLogsArgs<ExtArgs>
   liveQuestions?: boolean | Prisma.CoursePurchase$liveQuestionsArgs<ExtArgs>
+  questionUpvotes?: boolean | Prisma.CoursePurchase$questionUpvotesArgs<ExtArgs>
   _count?: boolean | Prisma.CoursePurchaseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CoursePurchaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1535,6 +1695,7 @@ export type $CoursePurchasePayload<ExtArgs extends runtime.Types.Extensions.Inte
     reviewedBy: Prisma.$AdminUserPayload<ExtArgs> | null
     emailLogs: Prisma.$EmailLogPayload<ExtArgs>[]
     liveQuestions: Prisma.$LiveQuestionPayload<ExtArgs>[]
+    questionUpvotes: Prisma.$LiveQuestionUpvotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1954,6 +2115,7 @@ export interface Prisma__CoursePurchaseClient<T, Null = never, ExtArgs extends r
   reviewedBy<T extends Prisma.CoursePurchase$reviewedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CoursePurchase$reviewedByArgs<ExtArgs>>): Prisma.Prisma__AdminUserClient<runtime.Types.Result.GetResult<Prisma.$AdminUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   emailLogs<T extends Prisma.CoursePurchase$emailLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CoursePurchase$emailLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmailLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   liveQuestions<T extends Prisma.CoursePurchase$liveQuestionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CoursePurchase$liveQuestionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiveQuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  questionUpvotes<T extends Prisma.CoursePurchase$questionUpvotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CoursePurchase$questionUpvotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiveQuestionUpvotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2467,6 +2629,30 @@ export type CoursePurchase$liveQuestionsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.LiveQuestionScalarFieldEnum | Prisma.LiveQuestionScalarFieldEnum[]
+}
+
+/**
+ * CoursePurchase.questionUpvotes
+ */
+export type CoursePurchase$questionUpvotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LiveQuestionUpvote
+   */
+  select?: Prisma.LiveQuestionUpvoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LiveQuestionUpvote
+   */
+  omit?: Prisma.LiveQuestionUpvoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LiveQuestionUpvoteInclude<ExtArgs> | null
+  where?: Prisma.LiveQuestionUpvoteWhereInput
+  orderBy?: Prisma.LiveQuestionUpvoteOrderByWithRelationInput | Prisma.LiveQuestionUpvoteOrderByWithRelationInput[]
+  cursor?: Prisma.LiveQuestionUpvoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LiveQuestionUpvoteScalarFieldEnum | Prisma.LiveQuestionUpvoteScalarFieldEnum[]
 }
 
 /**

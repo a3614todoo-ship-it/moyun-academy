@@ -102,6 +102,16 @@ export type LiveSession = Prisma.LiveSessionModel
  */
 export type LiveQuestion = Prisma.LiveQuestionModel
 /**
+ * Model LiveQuestionUpvote
+ * 
+ */
+export type LiveQuestionUpvote = Prisma.LiveQuestionUpvoteModel
+/**
+ * Model CourseLesson
+ * 
+ */
+export type CourseLesson = Prisma.CourseLessonModel
+/**
  * Model ContactMessage
  * 
  */

@@ -177,6 +177,7 @@ model Course {
   publishedAt     DateTime?
   purchases       CoursePurchase[]
   liveSession      LiveSession?
+  lessonUnits      CourseLesson[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
@@ -207,6 +208,7 @@ model CoursePurchase {
   reviewedBy     AdminUser?           @relation(fields: [reviewedById], references: [id], onDelete: SetNull)
   emailLogs      EmailLog[]
   liveQuestions  LiveQuestion[]
+  questionUpvotes LiveQuestionUpvote[]
   createdAt      DateTime             @default(now())
   updatedAt      DateTime             @updatedAt
 
@@ -253,6 +255,7 @@ model LiveQuestion {
   body             String
   status           LiveQuestionStatus @default(OPEN)
   upvoteCount      Int                @default(0)
+  upvotes          LiveQuestionUpvote[]
   answeredAt       DateTime?
   answer           String?
   createdAt        DateTime           @default(now())
@@ -260,6 +263,42 @@ model LiveQuestion {
 
   @@index([liveSessionId, status, createdAt])
   @@index([coursePurchaseId, createdAt])
+}
+
+model LiveQuestionUpvote {
+  id               String         @id @default(cuid())
+  liveQuestionId   String
+  liveQuestion     LiveQuestion   @relation(fields: [liveQuestionId], references: [id], onDelete: Cascade)
+  coursePurchaseId String
+  coursePurchase   CoursePurchase @relation(fields: [coursePurchaseId], references: [id], onDelete: Cascade)
+  createdAt        DateTime       @default(now())
+
+  @@unique([liveQuestionId, coursePurchaseId])
+  @@index([coursePurchaseId, createdAt])
+}
+
+model CourseLesson {
+  id               String   @id @default(cuid())
+  courseId         String
+  course           Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title            String
+  summary          String?
+  startsAt         DateTime?
+  durationText     String?
+  originalText     String?
+  translation      String?
+  annotation       String?
+  teacherNote      String?
+  reflectionPrompt String?
+  handoutUrl       String?
+  replayVideoUrl   String?
+  sortOrder        Int      @default(0)
+  isPublished      Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([courseId, sortOrder])
+  @@index([isPublished, startsAt])
 }
 
 model ContactMessage {

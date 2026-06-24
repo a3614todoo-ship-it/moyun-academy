@@ -396,6 +396,8 @@ export const ModelName = {
   CoursePurchase: 'CoursePurchase',
   LiveSession: 'LiveSession',
   LiveQuestion: 'LiveQuestion',
+  LiveQuestionUpvote: 'LiveQuestionUpvote',
+  CourseLesson: 'CourseLesson',
   ContactMessage: 'ContactMessage'
 } as const
 
@@ -412,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "application" | "membershipPlan" | "paymentReport" | "emailLog" | "adminUser" | "systemSetting" | "adminSession" | "applicationStatusHistory" | "course" | "coursePurchase" | "liveSession" | "liveQuestion" | "contactMessage"
+    modelProps: "application" | "membershipPlan" | "paymentReport" | "emailLog" | "adminUser" | "systemSetting" | "adminSession" | "applicationStatusHistory" | "course" | "coursePurchase" | "liveSession" | "liveQuestion" | "liveQuestionUpvote" | "courseLesson" | "contactMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1304,6 +1306,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LiveQuestionUpvote: {
+      payload: Prisma.$LiveQuestionUpvotePayload<ExtArgs>
+      fields: Prisma.LiveQuestionUpvoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LiveQuestionUpvoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LiveQuestionUpvoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload>
+        }
+        findFirst: {
+          args: Prisma.LiveQuestionUpvoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LiveQuestionUpvoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload>
+        }
+        findMany: {
+          args: Prisma.LiveQuestionUpvoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload>[]
+        }
+        create: {
+          args: Prisma.LiveQuestionUpvoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload>
+        }
+        createMany: {
+          args: Prisma.LiveQuestionUpvoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LiveQuestionUpvoteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload>[]
+        }
+        delete: {
+          args: Prisma.LiveQuestionUpvoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload>
+        }
+        update: {
+          args: Prisma.LiveQuestionUpvoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload>
+        }
+        deleteMany: {
+          args: Prisma.LiveQuestionUpvoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LiveQuestionUpvoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LiveQuestionUpvoteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload>[]
+        }
+        upsert: {
+          args: Prisma.LiveQuestionUpvoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LiveQuestionUpvotePayload>
+        }
+        aggregate: {
+          args: Prisma.LiveQuestionUpvoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLiveQuestionUpvote>
+        }
+        groupBy: {
+          args: Prisma.LiveQuestionUpvoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LiveQuestionUpvoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LiveQuestionUpvoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LiveQuestionUpvoteCountAggregateOutputType> | number
+        }
+      }
+    }
+    CourseLesson: {
+      payload: Prisma.$CourseLessonPayload<ExtArgs>
+      fields: Prisma.CourseLessonFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CourseLessonFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CourseLessonFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload>
+        }
+        findFirst: {
+          args: Prisma.CourseLessonFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CourseLessonFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload>
+        }
+        findMany: {
+          args: Prisma.CourseLessonFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload>[]
+        }
+        create: {
+          args: Prisma.CourseLessonCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload>
+        }
+        createMany: {
+          args: Prisma.CourseLessonCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CourseLessonCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload>[]
+        }
+        delete: {
+          args: Prisma.CourseLessonDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload>
+        }
+        update: {
+          args: Prisma.CourseLessonUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload>
+        }
+        deleteMany: {
+          args: Prisma.CourseLessonDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CourseLessonUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CourseLessonUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload>[]
+        }
+        upsert: {
+          args: Prisma.CourseLessonUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseLessonPayload>
+        }
+        aggregate: {
+          args: Prisma.CourseLessonAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCourseLesson>
+        }
+        groupBy: {
+          args: Prisma.CourseLessonGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseLessonGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CourseLessonCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseLessonCountAggregateOutputType> | number
+        }
+      }
+    }
     ContactMessage: {
       payload: Prisma.$ContactMessagePayload<ExtArgs>
       fields: Prisma.ContactMessageFieldRefs
@@ -1638,6 +1788,39 @@ export const LiveQuestionScalarFieldEnum = {
 } as const
 
 export type LiveQuestionScalarFieldEnum = (typeof LiveQuestionScalarFieldEnum)[keyof typeof LiveQuestionScalarFieldEnum]
+
+
+export const LiveQuestionUpvoteScalarFieldEnum = {
+  id: 'id',
+  liveQuestionId: 'liveQuestionId',
+  coursePurchaseId: 'coursePurchaseId',
+  createdAt: 'createdAt'
+} as const
+
+export type LiveQuestionUpvoteScalarFieldEnum = (typeof LiveQuestionUpvoteScalarFieldEnum)[keyof typeof LiveQuestionUpvoteScalarFieldEnum]
+
+
+export const CourseLessonScalarFieldEnum = {
+  id: 'id',
+  courseId: 'courseId',
+  title: 'title',
+  summary: 'summary',
+  startsAt: 'startsAt',
+  durationText: 'durationText',
+  originalText: 'originalText',
+  translation: 'translation',
+  annotation: 'annotation',
+  teacherNote: 'teacherNote',
+  reflectionPrompt: 'reflectionPrompt',
+  handoutUrl: 'handoutUrl',
+  replayVideoUrl: 'replayVideoUrl',
+  sortOrder: 'sortOrder',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CourseLessonScalarFieldEnum = (typeof CourseLessonScalarFieldEnum)[keyof typeof CourseLessonScalarFieldEnum]
 
 
 export const ContactMessageScalarFieldEnum = {
@@ -2027,6 +2210,8 @@ export type GlobalOmitConfig = {
   coursePurchase?: Prisma.CoursePurchaseOmit
   liveSession?: Prisma.LiveSessionOmit
   liveQuestion?: Prisma.LiveQuestionOmit
+  liveQuestionUpvote?: Prisma.LiveQuestionUpvoteOmit
+  courseLesson?: Prisma.CourseLessonOmit
   contactMessage?: Prisma.ContactMessageOmit
 }
 

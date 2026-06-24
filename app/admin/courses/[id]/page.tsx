@@ -13,19 +13,20 @@ type Props = {
 };
 
 const errorMessages: Record<string, string> = {
-  required: "請確認必填欄位、數字欄位、日期欄位與平台設定都已正確填寫。",
-  slug: "課程網址代稱格式不正確，請使用小寫英文、數字與連字號。",
-  youtube: "請輸入有效的 YouTube 試看片網址。",
-  cover: "請輸入有效的課程封面圖片網址。",
-  full_video: "請輸入有效的正式課程影片網址。",
-  paid_price: "付費課程的售價必須大於 0。",
-  duplicate_slug: "這個網址代稱已經被其他課程使用。",
+  required: "請確認必填欄位與日期格式是否正確。",
+  slug: "課程網址代稱只能使用小寫英文、數字與連字號。",
+  youtube: "請填寫有效的 YouTube 試看片網址。",
+  cover: "請填寫有效的課程封面圖片網址。",
+  full_video: "請填寫有效的完整課程影片網址。",
+  lesson_url: "請確認單元講義或回放網址格式正確。",
+  paid_price: "付費課程的價格必須大於 0。",
+  duplicate_slug: "這個課程網址代稱已經被其他課程使用。",
   live_required: "啟用直播教室時，請填寫直播標題。",
-  live_youtube: "YouTube Live 模式請填寫有效的 Video ID。",
-  live_vimeo: "Vimeo Live 模式請填寫有效的 Vimeo 影片、活動或 embed 網址。",
+  live_youtube: "YouTube Live 請填寫有效的 Video ID。",
+  live_vimeo: "Vimeo Live 請填寫有效的 Vimeo 影片、活動或 embed 網址。",
   live_chat: "YouTube Chat 只能搭配 YouTube Live，並且需要有效的 Chat Embed URL。",
-  live_external: "Zoom 或外部直播模式請填寫有效的直播網址。",
-  live_window: "播放器開放時間不可晚於或等於關閉時間。",
+  live_external: "Zoom 或外部直播平台請填寫有效連結。",
+  live_window: "播放器開放時間必須早於關閉時間。",
 };
 
 export default async function EditCoursePage({ params, searchParams }: Props) {
@@ -36,7 +37,10 @@ export default async function EditCoursePage({ params, searchParams }: Props) {
   ]);
   const course = await prisma.course.findUnique({
     where: { id },
-    include: { liveSession: true },
+    include: {
+      liveSession: true,
+      lessonUnits: { orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] },
+    },
   });
   if (!course) notFound();
 
@@ -45,7 +49,7 @@ export default async function EditCoursePage({ params, searchParams }: Props) {
       <div className="admin-page-heading">
         <div>
           <Link className="admin-breadcrumb" href="/admin/courses">
-            返回課程管理
+            回到課程管理
           </Link>
           <h1>編輯課程</h1>
           <span>{course.title}</span>
@@ -58,7 +62,7 @@ export default async function EditCoursePage({ params, searchParams }: Props) {
           ) : null}
           {course.liveSession?.isEnabled ? (
             <Link className="admin-primary-link" href={`/courses/${course.slug}/live`} target="_blank">
-              查看直播頁
+              查看直播教室
             </Link>
           ) : null}
         </div>
@@ -68,7 +72,7 @@ export default async function EditCoursePage({ params, searchParams }: Props) {
       ) : null}
       {query.error ? (
         <div className="admin-form-error admin-course-message">
-          {errorMessages[query.error] || "課程資料無法儲存，請再檢查一次。"}
+          {errorMessages[query.error] || "課程資料儲存失敗，請再檢查一次。"}
         </div>
       ) : null}
       <section className="admin-panel admin-course-panel">

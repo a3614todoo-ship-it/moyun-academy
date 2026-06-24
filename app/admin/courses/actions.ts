@@ -40,6 +40,33 @@ function validHttpUrl(value: string) {
   }
 }
 
+function lessonDataFromForm(formData: FormData) {
+  return Array.from({ length: 4 }, (_, index) => {
+    const prefix = `lesson${index}`;
+    const title = text(formData, `${prefix}Title`);
+    const handoutUrl = text(formData, `${prefix}HandoutUrl`);
+    const replayVideoUrl = text(formData, `${prefix}ReplayVideoUrl`);
+
+    if (!title) return null;
+
+    return {
+      title,
+      summary: text(formData, `${prefix}Summary`) || null,
+      startsAt: optionalDate(formData, `${prefix}StartsAt`),
+      durationText: text(formData, `${prefix}DurationText`) || null,
+      originalText: text(formData, `${prefix}OriginalText`) || null,
+      translation: text(formData, `${prefix}Translation`) || null,
+      annotation: text(formData, `${prefix}Annotation`) || null,
+      teacherNote: text(formData, `${prefix}TeacherNote`) || null,
+      reflectionPrompt: text(formData, `${prefix}ReflectionPrompt`) || null,
+      handoutUrl: handoutUrl || null,
+      replayVideoUrl: replayVideoUrl || null,
+      sortOrder: index,
+      isPublished: formData.get(`${prefix}IsPublished`) !== "off",
+    };
+  }).filter((item): item is NonNullable<typeof item> => Boolean(item));
+}
+
 export async function saveCourse(formData: FormData) {
   await requireAdmin();
   const id = text(formData, "id");
@@ -77,6 +104,7 @@ export async function saveCourse(formData: FormData) {
   const liveEndsAt = optionalDate(formData, "liveEndsAt");
   const livePlayerOpenAt = optionalDate(formData, "livePlayerOpenAt");
   const livePlayerCloseAt = optionalDate(formData, "livePlayerCloseAt");
+  const lessonUnits = lessonDataFromForm(formData);
   const existingCourse = id
     ? await prisma.course.findUnique({
         where: { id },
@@ -103,7 +131,8 @@ export async function saveCourse(formData: FormData) {
     liveStartsAt === undefined ||
     liveEndsAt === undefined ||
     livePlayerOpenAt === undefined ||
-    livePlayerCloseAt === undefined
+    livePlayerCloseAt === undefined ||
+    lessonUnits.some((lesson) => lesson.startsAt === undefined)
   ) {
     redirect(`/admin/courses/${id || "new"}?error=required`);
   }
@@ -130,6 +159,10 @@ export async function saveCourse(formData: FormData) {
     if (!validHttpUrl(fullVideoUrl)) {
       redirect(`/admin/courses/${id || "new"}?error=full_video`);
     }
+  }
+
+  if (lessonUnits.some((lesson) => (lesson.handoutUrl && !validHttpUrl(lesson.handoutUrl)) || (lesson.replayVideoUrl && !validHttpUrl(lesson.replayVideoUrl)))) {
+    redirect(`/admin/courses/${id || "new"}?error=lesson_url`);
   }
 
   if (liveIsEnabled) {
@@ -222,6 +255,17 @@ export async function saveCourse(formData: FormData) {
     create: { courseId: course.id, ...liveData },
     update: liveData,
   });
+
+  await prisma.courseLesson.deleteMany({ where: { courseId: course.id } });
+  if (lessonUnits.length) {
+    await prisma.courseLesson.createMany({
+      data: lessonUnits.map((lesson) => ({
+        courseId: course.id,
+        ...lesson,
+        startsAt: lesson.startsAt ?? null,
+      })),
+    });
+  }
 
   revalidatePath("/");
   revalidatePath("/courses");

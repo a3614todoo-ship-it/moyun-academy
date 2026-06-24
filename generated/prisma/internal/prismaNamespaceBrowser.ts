@@ -63,6 +63,8 @@ export const ModelName = {
   CoursePurchase: 'CoursePurchase',
   LiveSession: 'LiveSession',
   LiveQuestion: 'LiveQuestion',
+  LiveQuestionUpvote: 'LiveQuestionUpvote',
+  CourseLesson: 'CourseLesson',
   ContactMessage: 'ContactMessage'
 } as const
 
@@ -303,6 +305,39 @@ export const LiveQuestionScalarFieldEnum = {
 } as const
 
 export type LiveQuestionScalarFieldEnum = (typeof LiveQuestionScalarFieldEnum)[keyof typeof LiveQuestionScalarFieldEnum]
+
+
+export const LiveQuestionUpvoteScalarFieldEnum = {
+  id: 'id',
+  liveQuestionId: 'liveQuestionId',
+  coursePurchaseId: 'coursePurchaseId',
+  createdAt: 'createdAt'
+} as const
+
+export type LiveQuestionUpvoteScalarFieldEnum = (typeof LiveQuestionUpvoteScalarFieldEnum)[keyof typeof LiveQuestionUpvoteScalarFieldEnum]
+
+
+export const CourseLessonScalarFieldEnum = {
+  id: 'id',
+  courseId: 'courseId',
+  title: 'title',
+  summary: 'summary',
+  startsAt: 'startsAt',
+  durationText: 'durationText',
+  originalText: 'originalText',
+  translation: 'translation',
+  annotation: 'annotation',
+  teacherNote: 'teacherNote',
+  reflectionPrompt: 'reflectionPrompt',
+  handoutUrl: 'handoutUrl',
+  replayVideoUrl: 'replayVideoUrl',
+  sortOrder: 'sortOrder',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CourseLessonScalarFieldEnum = (typeof CourseLessonScalarFieldEnum)[keyof typeof CourseLessonScalarFieldEnum]
 
 
 export const ContactMessageScalarFieldEnum = {

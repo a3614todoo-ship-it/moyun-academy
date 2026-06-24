@@ -28,11 +28,11 @@ export function LiveQuestionForm({ slug, token }: Props) {
       <input name="slug" type="hidden" value={slug} />
       <input name="token" type="hidden" value={token} />
       <label>
-        <span>我要提問</span>
+        <span>提出你的問題</span>
         <textarea
           maxLength={500}
           name="body"
-          placeholder="把想問老師的問題寫在這裡..."
+          placeholder="可以問文本、典故、人生處境，或想請老師延伸說明的地方..."
           required
           rows={4}
         />

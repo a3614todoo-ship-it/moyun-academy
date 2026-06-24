@@ -54,9 +54,9 @@ export function externalPlatformActionLabel(platform: LivePlatform | string) {
     case LivePlatform.ZOOM_MEETING:
       return "進入 Zoom Meeting";
     case LivePlatform.EXTERNAL_URL:
-      return "前往外部直播";
+      return "開啟外部直播";
     default:
-      return "前往直播";
+      return "開啟直播";
   }
 }
 
