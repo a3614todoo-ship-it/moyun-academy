@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CourseAccessLookupForm } from "@/components/course-access-lookup-form";
 import { getPublishedCourse } from "@/lib/course-data";
 import { prisma } from "@/lib/prisma";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
@@ -244,6 +245,7 @@ export default async function CourseDetailPage({ params }: Props) {
                 <Link className="button button-gold button-block" href={`/courses/${course.slug}/purchase`}>
                   報名這堂課
                 </Link>
+                <CourseAccessLookupForm slug={course.slug} />
               </>
             ) : null}
             <small>付費內容、講義下載與回放連結，只會在審核通過後的學習教室中顯示。</small>
