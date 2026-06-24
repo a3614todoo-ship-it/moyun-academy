@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CourseAccessLookupForm } from "@/components/course-access-lookup-form";
+import { MemberCourseAccessLookupForm } from "@/components/member-course-access-lookup-form";
 import { getPublishedCourse } from "@/lib/course-data";
 import { prisma } from "@/lib/prisma";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
@@ -232,6 +233,7 @@ export default async function CourseDetailPage({ params }: Props) {
                 <Link className="button button-gold button-block" href="/membership">
                   加入會員
                 </Link>
+                <MemberCourseAccessLookupForm slug={course.slug} />
               </>
             ) : null}
             {course.accessType === "PAID" ? (
