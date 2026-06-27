@@ -346,8 +346,7 @@ ${adminUrl}`,
   if (type === EmailType.COURSE_PURCHASE_APPROVED) {
     const item = requireCoursePurchase(coursePurchase);
     const subject = `您的課程已審核通過：${item.course.title}`;
-    const watchUrl = `${siteUrl}/courses/${item.course.slug}/watch?token=${item.accessToken}`;
-    const liveUrl = `${siteUrl}/courses/${item.course.slug}/live?token=${item.accessToken}`;
+    const courseUrl = `${siteUrl}/courses/${item.course.slug}`;
     const hasLive = Boolean(item.course.liveSession?.isEnabled);
     return {
       subject,
@@ -358,9 +357,9 @@ ${adminUrl}`,
 課程名稱：${item.course.title}
 審核日期：${item.approvedAt ? formatDate(item.approvedAt) : formatDate(new Date())}
 
-請由以下連結觀看正式課程：
-${watchUrl}
-${hasLive ? `\n直播教室連結：\n${liveUrl}` : ""}`,
+請由以下課程頁輸入購買編號與 Email 後進入學習教室：
+${courseUrl}
+${hasLive ? "\n課程若有直播，也會在學習教室中顯示。" : ""}`,
       html: emailShell(
         subject,
         `<p>${escapeHtml(item.name)} 您好，您的課程購買已審核通過。</p>
@@ -369,9 +368,8 @@ ${hasLive ? `\n直播教室連結：\n${liveUrl}` : ""}`,
           ["課程名稱", item.course.title],
           ["審核日期", item.approvedAt ? formatDate(item.approvedAt) : formatDate(new Date())],
         ])}</table>
-        ${button(watchUrl, "觀看正式課程")}
-        ${hasLive ? button(liveUrl, "進入直播教室", "#aa751d") : ""}
-        <p style="margin:18px 0 0;color:#69726d;font-size:14px;line-height:1.8;">請勿任意轉傳觀看連結；若系統日後啟用學員登入，觀看權限會改由帳號控管。</p>`,
+        ${button(courseUrl, "前往課程頁驗證")}
+        <p style="margin:18px 0 0;color:#69726d;font-size:14px;line-height:1.8;">為了保護付費內容，請在課程頁輸入購買編號與報名 Email 後進入學習教室。請勿任意轉傳學習教室網址。</p>`,
       ),
     };
   }

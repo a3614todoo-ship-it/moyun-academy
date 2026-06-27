@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { CoursePurchaseStatus } from "@/generated/prisma/enums";
+import { createCourseAccessSession } from "@/lib/course-access-session";
 import { prisma } from "@/lib/prisma";
 
 export type CourseAccessLookupState = {
@@ -60,6 +61,7 @@ export async function lookupCourseAccess(
       course: { slug, isPublished: true },
     },
     select: {
+      id: true,
       email: true,
       status: true,
       accessToken: true,
@@ -74,5 +76,6 @@ export async function lookupCourseAccess(
     return { message: statusMessage(purchase.status) };
   }
 
+  await createCourseAccessSession(slug, purchase);
   redirect(`/courses/${slug}/live?token=${purchase.accessToken}`);
 }

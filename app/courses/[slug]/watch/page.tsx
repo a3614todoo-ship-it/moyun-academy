@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CoursePurchaseStatus } from "@/generated/prisma/enums";
+import { hasCourseAccessSession } from "@/lib/course-access-session";
 import { getVimeoEmbedUrl } from "@/lib/live";
 import { prisma } from "@/lib/prisma";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
@@ -20,6 +21,21 @@ export const metadata: Metadata = {
 function embedUrl(rawUrl: string | null) {
   if (!rawUrl) return "";
   return getYouTubeEmbedUrl(rawUrl) || getVimeoEmbedUrl(rawUrl);
+}
+
+function AccessRequired({ slug }: { slug: string }) {
+  return (
+    <main className="result-page">
+      <section className="container result-card">
+        <span className="result-mark">!</span>
+        <h1>請重新驗證課程權限</h1>
+        <p>為了保護課程內容，回放頁需要先從課程頁完成購買編號或會員資格驗證。</p>
+        <Link className="button button-forest" href={`/courses/${slug}`}>
+          回到課程頁
+        </Link>
+      </section>
+    </main>
+  );
 }
 
 export default async function CourseWatchPage({ params, searchParams }: Props) {
@@ -47,6 +63,9 @@ export default async function CourseWatchPage({ params, searchParams }: Props) {
   });
 
   if (!purchase) notFound();
+  if (!(await hasCourseAccessSession(purchase))) {
+    return <AccessRequired slug={slug} />;
+  }
 
   const courseEmbedUrl = embedUrl(purchase.course.fullVideoUrl);
 

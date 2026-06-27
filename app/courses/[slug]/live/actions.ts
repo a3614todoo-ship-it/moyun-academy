@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { CoursePurchaseStatus, LiveQuestionStatus } from "@/generated/prisma/enums";
+import { hasCourseAccessSession } from "@/lib/course-access-session";
 import { maskEmail } from "@/lib/live";
 import { prisma } from "@/lib/prisma";
 
@@ -42,6 +43,9 @@ export async function createLiveQuestion(
   if (body.length > 500) return { message: "提問內容請控制在 500 字以內。" };
 
   const purchase = await findApprovedPurchase(slug, token);
+  if (purchase && !(await hasCourseAccessSession(purchase))) {
+    return { message: "請先回課程頁重新驗證課程權限，再送出提問。" };
+  }
   const liveSession = purchase?.course.liveSession;
   if (!purchase || !liveSession?.isEnabled || !liveSession.enableQuestions) {
     return { message: "這堂課目前尚未開放站內 Q&A。" };
@@ -69,6 +73,7 @@ export async function upvoteLiveQuestion(formData: FormData) {
   if (!slug || !token || !questionId) return;
 
   const purchase = await findApprovedPurchase(slug, token);
+  if (purchase && !(await hasCourseAccessSession(purchase))) return;
   const liveSession = purchase?.course.liveSession;
   if (!purchase || !liveSession?.isEnabled) return;
 

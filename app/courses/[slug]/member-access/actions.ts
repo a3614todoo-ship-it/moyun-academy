@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { ApplicationStatus, CourseAccessType, CoursePurchaseStatus } from "@/generated/prisma/enums";
+import { createCourseAccessSession } from "@/lib/course-access-session";
 import { generateCoursePurchaseNumber } from "@/lib/course-purchase-number";
 import { prisma } from "@/lib/prisma";
 
@@ -80,11 +81,12 @@ export async function lookupMemberCourseAccess(
       status: CoursePurchaseStatus.APPROVED,
       amount: 0,
     },
-    select: { accessToken: true },
+    select: { id: true, email: true, accessToken: true },
     orderBy: { createdAt: "desc" },
   });
 
   if (existingAccess) {
+    await createCourseAccessSession(slug, existingAccess);
     redirect(`/courses/${slug}/live?token=${existingAccess.accessToken}`);
   }
 
@@ -102,8 +104,9 @@ export async function lookupMemberCourseAccess(
       reviewedAt: new Date(),
       note: `會員免費課程入口；會員申請編號：${application.applicationNo}`,
     },
-    select: { accessToken: true },
+    select: { id: true, email: true, accessToken: true },
   });
 
+  await createCourseAccessSession(slug, access);
   redirect(`/courses/${slug}/live?token=${access.accessToken}`);
 }

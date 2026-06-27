@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { upvoteLiveQuestion } from "@/app/courses/[slug]/live/actions";
 import { LiveQuestionForm } from "@/components/live-question-form";
 import { CoursePurchaseStatus, LivePlatform, LiveQuestionStatus } from "@/generated/prisma/enums";
+import { hasCourseAccessSession } from "@/lib/course-access-session";
 import {
   externalPlatformActionLabel,
   getVimeoEmbedUrl,
@@ -44,6 +45,24 @@ function materialEmbedUrl(rawUrl: string | null) {
   return getYouTubeEmbedUrl(rawUrl) || getVimeoEmbedUrl(rawUrl);
 }
 
+function AccessRequired({ slug }: { slug: string }) {
+  return (
+    <main className="result-page">
+      <section className="container result-card">
+        <span className="result-mark">!</span>
+        <h1>請重新驗證課程權限</h1>
+        <p>
+          為了避免學習教室網址被轉傳後直接觀看，請回到課程頁輸入購買編號與 Email，
+          或使用會員申請編號與 Email 重新進入。
+        </p>
+        <Link className="button button-forest" href={`/courses/${slug}`}>
+          回到課程頁
+        </Link>
+      </section>
+    </main>
+  );
+}
+
 export default async function CourseLivePage({ params, searchParams }: Props) {
   const [{ slug }, query] = await Promise.all([params, searchParams]);
   const token = query.token?.trim();
@@ -81,6 +100,9 @@ export default async function CourseLivePage({ params, searchParams }: Props) {
   });
 
   if (!purchase) notFound();
+  if (!(await hasCourseAccessSession(purchase))) {
+    return <AccessRequired slug={slug} />;
+  }
 
   const liveSession = purchase.course.liveSession;
   const upvotes = liveSession
