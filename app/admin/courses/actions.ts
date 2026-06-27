@@ -6,6 +6,7 @@ import { CourseAccessType, LivePlatform } from "@/generated/prisma/enums";
 import { requireAdmin } from "@/lib/admin/auth";
 import { isVimeoUrl } from "@/lib/live";
 import { prisma } from "@/lib/prisma";
+import { parseTaipeiDateTimeLocal } from "@/lib/taipei-time";
 import { getYouTubeVideoId } from "@/lib/youtube";
 
 function text(formData: FormData, name: string) {
@@ -26,8 +27,7 @@ function validSlug(value: string) {
 function optionalDate(formData: FormData, name: string) {
   const value = text(formData, name);
   if (!value) return null;
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? undefined : date;
+  return parseTaipeiDateTimeLocal(value);
 }
 
 function validHttpUrl(value: string) {

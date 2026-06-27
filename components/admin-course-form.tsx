@@ -1,4 +1,5 @@
 import { saveCourse } from "@/app/admin/courses/actions";
+import { formatTaipeiDateTimeLocal } from "@/lib/taipei-time";
 
 type LiveSessionValue = {
   title?: string;
@@ -64,14 +65,6 @@ function listText(value: unknown) {
     : "";
 }
 
-function datetimeValue(value?: Date | string | null) {
-  if (!value) return "";
-  const date = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(date.getTime())) return "";
-  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-  return local.toISOString().slice(0, 16);
-}
-
 export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
   const accessType = course?.accessType || "MEMBER_INCLUDED";
   const live = course?.liveSession;
@@ -129,7 +122,7 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
           </label>
           <label>
             開課時間
-            <input defaultValue={datetimeValue(course?.courseStartAt)} name="courseStartAt" type="datetime-local" />
+            <input defaultValue={formatTaipeiDateTimeLocal(course?.courseStartAt)} name="courseStartAt" type="datetime-local" />
             <small>顯示在前台課程資訊卡；若每堂課時間不同，請在下方單元資料填寫。</small>
           </label>
           <label>
@@ -202,7 +195,7 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
                   </label>
                   <label>
                     單元時間
-                    <input defaultValue={datetimeValue(lesson?.startsAt)} name={`${prefix}StartsAt`} type="datetime-local" />
+                    <input defaultValue={formatTaipeiDateTimeLocal(lesson?.startsAt)} name={`${prefix}StartsAt`} type="datetime-local" />
                   </label>
                   <label>
                     單元時長
@@ -371,19 +364,19 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
         <div className="admin-course-grid">
           <label>
             直播開始時間
-            <input defaultValue={datetimeValue(live?.startsAt)} name="liveStartsAt" type="datetime-local" />
+            <input defaultValue={formatTaipeiDateTimeLocal(live?.startsAt)} name="liveStartsAt" type="datetime-local" />
           </label>
           <label>
             直播結束時間
-            <input defaultValue={datetimeValue(live?.endsAt)} name="liveEndsAt" type="datetime-local" />
+            <input defaultValue={formatTaipeiDateTimeLocal(live?.endsAt)} name="liveEndsAt" type="datetime-local" />
           </label>
           <label>
             播放器開放時間
-            <input defaultValue={datetimeValue(live?.playerOpenAt)} name="livePlayerOpenAt" type="datetime-local" />
+            <input defaultValue={formatTaipeiDateTimeLocal(live?.playerOpenAt)} name="livePlayerOpenAt" type="datetime-local" />
           </label>
           <label>
             播放器關閉時間
-            <input defaultValue={datetimeValue(live?.playerCloseAt)} name="livePlayerCloseAt" type="datetime-local" />
+            <input defaultValue={formatTaipeiDateTimeLocal(live?.playerCloseAt)} name="livePlayerCloseAt" type="datetime-local" />
           </label>
         </div>
       </section>
