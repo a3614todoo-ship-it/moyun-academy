@@ -135,6 +135,7 @@ export default async function CourseLivePage({ params, searchParams }: Props) {
       ? getVimeoEmbedUrl(liveSession.externalUrl)
       : "";
   const isExternalPlatform =
+    platform === LivePlatform.GOOGLE_MEET ||
     platform === LivePlatform.ZOOM_WEBINAR ||
     platform === LivePlatform.ZOOM_MEETING ||
     platform === LivePlatform.EXTERNAL_URL;

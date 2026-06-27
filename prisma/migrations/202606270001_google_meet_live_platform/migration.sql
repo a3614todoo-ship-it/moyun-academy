@@ -1,0 +1,1 @@
+ALTER TYPE "LivePlatform" ADD VALUE 'GOOGLE_MEET';

@@ -388,6 +388,7 @@ enum：`CoursePurchaseStatus`
 
 - `YOUTUBE_LIVE`
 - `VIMEO_LIVE`
+- `GOOGLE_MEET`
 - `ZOOM_WEBINAR`
 - `ZOOM_MEETING`
 - `EXTERNAL_URL`
@@ -395,7 +396,7 @@ enum：`CoursePurchaseStatus`
 播放邏輯：
 - YouTube Live 使用 video ID 產生 iframe。
 - Vimeo Live 支援 Vimeo event、Vimeo video 或 player embed URL。
-- Zoom / 外部平台顯示外部連結按鈕。
+- Google Meet / Zoom / 外部平台顯示外部連結按鈕，學員仍需先通過課程權限驗證與播放器開放時間檢查，才會看到進入教室的連結。
 - 播放器只在開放時間內顯示。
 - 若啟用浮水印，播放器上顯示購買者姓名與遮罩 Email。
 
@@ -636,7 +637,7 @@ npx.cmd prisma migrate deploy
 - 課程購買編號 + Email 找回學習教室入口
 - 會員申請編號 + Email 進入會員免費課程
 - 直播教室
-- YouTube Live / Vimeo Live / Zoom / 外部連結預留與實作
+- YouTube Live / Vimeo Live / Google Meet / Zoom / 外部連結預留與實作
 - YouTube Chat 顯示
 - 站內 Q&A
 - Q&A 按讚

@@ -35,6 +35,8 @@ export function platformLabel(platform: LivePlatform | string) {
   switch (platform) {
     case LivePlatform.VIMEO_LIVE:
       return "Vimeo Live";
+    case LivePlatform.GOOGLE_MEET:
+      return "Google Meet";
     case LivePlatform.ZOOM_WEBINAR:
       return "Zoom Webinar";
     case LivePlatform.ZOOM_MEETING:
@@ -49,6 +51,8 @@ export function platformLabel(platform: LivePlatform | string) {
 
 export function externalPlatformActionLabel(platform: LivePlatform | string) {
   switch (platform) {
+    case LivePlatform.GOOGLE_MEET:
+      return "進入 Google Meet 教室";
     case LivePlatform.ZOOM_WEBINAR:
       return "進入 Zoom Webinar";
     case LivePlatform.ZOOM_MEETING:

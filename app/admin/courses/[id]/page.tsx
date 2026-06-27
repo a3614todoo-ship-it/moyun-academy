@@ -25,7 +25,7 @@ const errorMessages: Record<string, string> = {
   live_youtube: "YouTube Live 請填寫有效的 Video ID。",
   live_vimeo: "Vimeo Live 請填寫有效的 Vimeo 影片、活動或 embed 網址。",
   live_chat: "YouTube Chat 只能搭配 YouTube Live，並且需要有效的 Chat Embed URL。",
-  live_external: "Zoom 或外部直播平台請填寫有效連結。",
+  live_external: "Google Meet、Zoom 或外部直播平台請填寫有效連結。",
   live_window: "播放器開放時間必須早於關閉時間。",
 };
 

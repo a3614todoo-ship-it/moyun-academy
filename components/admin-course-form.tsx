@@ -331,6 +331,7 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
             <select defaultValue={live?.platform || "YOUTUBE_LIVE"} name="livePlatform">
               <option value="YOUTUBE_LIVE">YouTube Live</option>
               <option value="VIMEO_LIVE">Vimeo Live</option>
+              <option value="GOOGLE_MEET">Google Meet</option>
               <option value="ZOOM_WEBINAR">Zoom Webinar</option>
               <option value="ZOOM_MEETING">Zoom Meeting</option>
               <option value="EXTERNAL_URL">外部直播連結</option>
@@ -352,11 +353,11 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
         </div>
 
         <label>
-          Vimeo / Zoom / 外部直播連結
+          Vimeo / Google Meet / Zoom / 外部直播連結
           <input
             defaultValue={live?.externalUrl || ""}
             name="liveExternalUrl"
-            placeholder="Vimeo event、Zoom 會議連結，或其他直播平台網址"
+            placeholder="Vimeo event、Google Meet、Zoom 會議連結，或其他直播平台網址"
             type="url"
           />
         </label>

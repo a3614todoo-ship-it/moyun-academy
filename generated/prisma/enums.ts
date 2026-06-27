@@ -59,6 +59,7 @@ export type CoursePurchaseStatus = (typeof CoursePurchaseStatus)[keyof typeof Co
 export const LivePlatform = {
   YOUTUBE_LIVE: 'YOUTUBE_LIVE',
   VIMEO_LIVE: 'VIMEO_LIVE',
+  GOOGLE_MEET: 'GOOGLE_MEET',
   ZOOM_WEBINAR: 'ZOOM_WEBINAR',
   ZOOM_MEETING: 'ZOOM_MEETING',
   EXTERNAL_URL: 'EXTERNAL_URL'

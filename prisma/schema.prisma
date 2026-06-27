@@ -355,6 +355,7 @@ enum CoursePurchaseStatus {
 enum LivePlatform {
   YOUTUBE_LIVE
   VIMEO_LIVE
+  GOOGLE_MEET
   ZOOM_WEBINAR
   ZOOM_MEETING
   EXTERNAL_URL

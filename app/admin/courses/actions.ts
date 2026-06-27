@@ -167,6 +167,7 @@ export async function saveCourse(formData: FormData) {
 
   if (liveIsEnabled) {
     const isExternalPlatform =
+      livePlatform === LivePlatform.GOOGLE_MEET ||
       livePlatform === LivePlatform.ZOOM_WEBINAR ||
       livePlatform === LivePlatform.ZOOM_MEETING ||
       livePlatform === LivePlatform.EXTERNAL_URL;
