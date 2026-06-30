@@ -80,7 +80,8 @@ button, input, select, textarea { font: inherit; }
   content: ""; position: absolute; right: 0; bottom: -17px; left: 0;
   height: 2px; background: var(--gold);
 }
-.login-link { font-size: 14px; }
+.header-auth { display: inline-flex; align-items: center; gap: 18px; }
+.login-link { font-size: 14px; white-space: nowrap; }
 
 .button {
   display: inline-flex; min-height: 44px; padding: 0 22px; align-items: center;

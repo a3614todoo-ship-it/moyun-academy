@@ -34,7 +34,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <Link href={item.href} key={item.href}>{item.label}</Link>
             ))}
           </nav>
-          <Link className="login-link" href="/login">會員登入</Link>
+          <div className="header-auth">
+            <Link className="login-link" href="/login">會員登入</Link>
+            <Link className="login-link" href="/admin/login">管理員登入</Link>
+          </div>
           <Link className="button button-gold header-cta" href="/membership">立即加入</Link>
         </div>
       </header>
