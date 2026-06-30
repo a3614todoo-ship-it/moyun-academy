@@ -58,6 +58,9 @@ export const ModelName = {
   AdminUser: 'AdminUser',
   SystemSetting: 'SystemSetting',
   AdminSession: 'AdminSession',
+  MemberUser: 'MemberUser',
+  MemberSession: 'MemberSession',
+  MembershipSubscription: 'MembershipSubscription',
   ApplicationStatusHistory: 'ApplicationStatusHistory',
   Course: 'Course',
   CoursePurchase: 'CoursePurchase',
@@ -94,6 +97,7 @@ export const ApplicationScalarFieldEnum = {
   facebookName: 'facebookName',
   facebookProfileUrl: 'facebookProfileUrl',
   planId: 'planId',
+  memberUserId: 'memberUserId',
   status: 'status',
   agreedToTermsAt: 'agreedToTermsAt',
   approvedAt: 'approvedAt',
@@ -197,6 +201,50 @@ export const AdminSessionScalarFieldEnum = {
 export type AdminSessionScalarFieldEnum = (typeof AdminSessionScalarFieldEnum)[keyof typeof AdminSessionScalarFieldEnum]
 
 
+export const MemberUserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  passwordHash: 'passwordHash',
+  name: 'name',
+  phone: 'phone',
+  status: 'status',
+  passwordSetAt: 'passwordSetAt',
+  lastLoginAt: 'lastLoginAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MemberUserScalarFieldEnum = (typeof MemberUserScalarFieldEnum)[keyof typeof MemberUserScalarFieldEnum]
+
+
+export const MemberSessionScalarFieldEnum = {
+  id: 'id',
+  tokenHash: 'tokenHash',
+  memberUserId: 'memberUserId',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type MemberSessionScalarFieldEnum = (typeof MemberSessionScalarFieldEnum)[keyof typeof MemberSessionScalarFieldEnum]
+
+
+export const MembershipSubscriptionScalarFieldEnum = {
+  id: 'id',
+  memberUserId: 'memberUserId',
+  applicationId: 'applicationId',
+  planName: 'planName',
+  planPrice: 'planPrice',
+  durationDays: 'durationDays',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MembershipSubscriptionScalarFieldEnum = (typeof MembershipSubscriptionScalarFieldEnum)[keyof typeof MembershipSubscriptionScalarFieldEnum]
+
+
 export const ApplicationStatusHistoryScalarFieldEnum = {
   id: 'id',
   applicationId: 'applicationId',
@@ -249,6 +297,7 @@ export const CoursePurchaseScalarFieldEnum = {
   phone: 'phone',
   email: 'email',
   amount: 'amount',
+  memberUserId: 'memberUserId',
   bankLast5: 'bankLast5',
   payerName: 'payerName',
   paidAt: 'paidAt',

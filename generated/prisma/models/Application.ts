@@ -34,6 +34,7 @@ export type ApplicationMinAggregateOutputType = {
   facebookName: string | null
   facebookProfileUrl: string | null
   planId: string | null
+  memberUserId: string | null
   status: $Enums.ApplicationStatus | null
   agreedToTermsAt: Date | null
   approvedAt: Date | null
@@ -54,6 +55,7 @@ export type ApplicationMaxAggregateOutputType = {
   facebookName: string | null
   facebookProfileUrl: string | null
   planId: string | null
+  memberUserId: string | null
   status: $Enums.ApplicationStatus | null
   agreedToTermsAt: Date | null
   approvedAt: Date | null
@@ -74,6 +76,7 @@ export type ApplicationCountAggregateOutputType = {
   facebookName: number
   facebookProfileUrl: number
   planId: number
+  memberUserId: number
   status: number
   agreedToTermsAt: number
   approvedAt: number
@@ -96,6 +99,7 @@ export type ApplicationMinAggregateInputType = {
   facebookName?: true
   facebookProfileUrl?: true
   planId?: true
+  memberUserId?: true
   status?: true
   agreedToTermsAt?: true
   approvedAt?: true
@@ -116,6 +120,7 @@ export type ApplicationMaxAggregateInputType = {
   facebookName?: true
   facebookProfileUrl?: true
   planId?: true
+  memberUserId?: true
   status?: true
   agreedToTermsAt?: true
   approvedAt?: true
@@ -136,6 +141,7 @@ export type ApplicationCountAggregateInputType = {
   facebookName?: true
   facebookProfileUrl?: true
   planId?: true
+  memberUserId?: true
   status?: true
   agreedToTermsAt?: true
   approvedAt?: true
@@ -229,6 +235,7 @@ export type ApplicationGroupByOutputType = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  memberUserId: string | null
   status: $Enums.ApplicationStatus
   agreedToTermsAt: Date
   approvedAt: Date | null
@@ -270,6 +277,7 @@ export type ApplicationWhereInput = {
   facebookName?: Prisma.StringFilter<"Application"> | string
   facebookProfileUrl?: Prisma.StringFilter<"Application"> | string
   planId?: Prisma.StringFilter<"Application"> | string
+  memberUserId?: Prisma.StringNullableFilter<"Application"> | string | null
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   approvedAt?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -279,9 +287,11 @@ export type ApplicationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   plan?: Prisma.XOR<Prisma.MembershipPlanScalarRelationFilter, Prisma.MembershipPlanWhereInput>
+  memberUser?: Prisma.XOR<Prisma.MemberUserNullableScalarRelationFilter, Prisma.MemberUserWhereInput> | null
   paymentReports?: Prisma.PaymentReportListRelationFilter
   emailLogs?: Prisma.EmailLogListRelationFilter
   statusHistory?: Prisma.ApplicationStatusHistoryListRelationFilter
+  membershipSubscription?: Prisma.XOR<Prisma.MembershipSubscriptionNullableScalarRelationFilter, Prisma.MembershipSubscriptionWhereInput> | null
 }
 
 export type ApplicationOrderByWithRelationInput = {
@@ -294,6 +304,7 @@ export type ApplicationOrderByWithRelationInput = {
   facebookName?: Prisma.SortOrder
   facebookProfileUrl?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  memberUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   agreedToTermsAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -303,9 +314,11 @@ export type ApplicationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   plan?: Prisma.MembershipPlanOrderByWithRelationInput
+  memberUser?: Prisma.MemberUserOrderByWithRelationInput
   paymentReports?: Prisma.PaymentReportOrderByRelationAggregateInput
   emailLogs?: Prisma.EmailLogOrderByRelationAggregateInput
   statusHistory?: Prisma.ApplicationStatusHistoryOrderByRelationAggregateInput
+  membershipSubscription?: Prisma.MembershipSubscriptionOrderByWithRelationInput
 }
 
 export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -321,6 +334,7 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   facebookName?: Prisma.StringFilter<"Application"> | string
   facebookProfileUrl?: Prisma.StringFilter<"Application"> | string
   planId?: Prisma.StringFilter<"Application"> | string
+  memberUserId?: Prisma.StringNullableFilter<"Application"> | string | null
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   approvedAt?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -330,9 +344,11 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   plan?: Prisma.XOR<Prisma.MembershipPlanScalarRelationFilter, Prisma.MembershipPlanWhereInput>
+  memberUser?: Prisma.XOR<Prisma.MemberUserNullableScalarRelationFilter, Prisma.MemberUserWhereInput> | null
   paymentReports?: Prisma.PaymentReportListRelationFilter
   emailLogs?: Prisma.EmailLogListRelationFilter
   statusHistory?: Prisma.ApplicationStatusHistoryListRelationFilter
+  membershipSubscription?: Prisma.XOR<Prisma.MembershipSubscriptionNullableScalarRelationFilter, Prisma.MembershipSubscriptionWhereInput> | null
 }, "id" | "applicationNo">
 
 export type ApplicationOrderByWithAggregationInput = {
@@ -345,6 +361,7 @@ export type ApplicationOrderByWithAggregationInput = {
   facebookName?: Prisma.SortOrder
   facebookProfileUrl?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  memberUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   agreedToTermsAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -371,6 +388,7 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   facebookName?: Prisma.StringWithAggregatesFilter<"Application"> | string
   facebookProfileUrl?: Prisma.StringWithAggregatesFilter<"Application"> | string
   planId?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  memberUserId?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   status?: Prisma.EnumApplicationStatusWithAggregatesFilter<"Application"> | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
   approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
@@ -399,9 +417,11 @@ export type ApplicationCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   plan: Prisma.MembershipPlanCreateNestedOneWithoutApplicationsInput
+  memberUser?: Prisma.MemberUserCreateNestedOneWithoutApplicationsInput
   paymentReports?: Prisma.PaymentReportCreateNestedManyWithoutApplicationInput
   emailLogs?: Prisma.EmailLogCreateNestedManyWithoutApplicationInput
   statusHistory?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateInput = {
@@ -414,6 +434,7 @@ export type ApplicationUncheckedCreateInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -425,6 +446,7 @@ export type ApplicationUncheckedCreateInput = {
   paymentReports?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutApplicationInput
   emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutApplicationInput
   statusHistory?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUpdateInput = {
@@ -445,9 +467,11 @@ export type ApplicationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   plan?: Prisma.MembershipPlanUpdateOneRequiredWithoutApplicationsNestedInput
+  memberUser?: Prisma.MemberUserUpdateOneWithoutApplicationsNestedInput
   paymentReports?: Prisma.PaymentReportUpdateManyWithoutApplicationNestedInput
   emailLogs?: Prisma.EmailLogUpdateManyWithoutApplicationNestedInput
   statusHistory?: Prisma.ApplicationStatusHistoryUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateInput = {
@@ -460,6 +484,7 @@ export type ApplicationUncheckedUpdateInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -471,6 +496,7 @@ export type ApplicationUncheckedUpdateInput = {
   paymentReports?: Prisma.PaymentReportUncheckedUpdateManyWithoutApplicationNestedInput
   emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutApplicationNestedInput
   statusHistory?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationCreateManyInput = {
@@ -483,6 +509,7 @@ export type ApplicationCreateManyInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -522,6 +549,7 @@ export type ApplicationUncheckedUpdateManyInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -542,6 +570,7 @@ export type ApplicationCountOrderByAggregateInput = {
   facebookName?: Prisma.SortOrder
   facebookProfileUrl?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  memberUserId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   agreedToTermsAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
@@ -562,6 +591,7 @@ export type ApplicationMaxOrderByAggregateInput = {
   facebookName?: Prisma.SortOrder
   facebookProfileUrl?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  memberUserId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   agreedToTermsAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
@@ -582,6 +612,7 @@ export type ApplicationMinOrderByAggregateInput = {
   facebookName?: Prisma.SortOrder
   facebookProfileUrl?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  memberUserId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   agreedToTermsAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
@@ -626,6 +657,10 @@ export type DateTimeFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type ApplicationCreateNestedManyWithoutPlanInput = {
@@ -700,6 +735,62 @@ export type ApplicationUpdateOneWithoutEmailLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ApplicationUpdateToOneWithWhereWithoutEmailLogsInput, Prisma.ApplicationUpdateWithoutEmailLogsInput>, Prisma.ApplicationUncheckedUpdateWithoutEmailLogsInput>
 }
 
+export type ApplicationCreateNestedManyWithoutMemberUserInput = {
+  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutMemberUserInput, Prisma.ApplicationUncheckedCreateWithoutMemberUserInput> | Prisma.ApplicationCreateWithoutMemberUserInput[] | Prisma.ApplicationUncheckedCreateWithoutMemberUserInput[]
+  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutMemberUserInput | Prisma.ApplicationCreateOrConnectWithoutMemberUserInput[]
+  createMany?: Prisma.ApplicationCreateManyMemberUserInputEnvelope
+  connect?: Prisma.ApplicationWhereUniqueInput | Prisma.ApplicationWhereUniqueInput[]
+}
+
+export type ApplicationUncheckedCreateNestedManyWithoutMemberUserInput = {
+  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutMemberUserInput, Prisma.ApplicationUncheckedCreateWithoutMemberUserInput> | Prisma.ApplicationCreateWithoutMemberUserInput[] | Prisma.ApplicationUncheckedCreateWithoutMemberUserInput[]
+  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutMemberUserInput | Prisma.ApplicationCreateOrConnectWithoutMemberUserInput[]
+  createMany?: Prisma.ApplicationCreateManyMemberUserInputEnvelope
+  connect?: Prisma.ApplicationWhereUniqueInput | Prisma.ApplicationWhereUniqueInput[]
+}
+
+export type ApplicationUpdateManyWithoutMemberUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutMemberUserInput, Prisma.ApplicationUncheckedCreateWithoutMemberUserInput> | Prisma.ApplicationCreateWithoutMemberUserInput[] | Prisma.ApplicationUncheckedCreateWithoutMemberUserInput[]
+  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutMemberUserInput | Prisma.ApplicationCreateOrConnectWithoutMemberUserInput[]
+  upsert?: Prisma.ApplicationUpsertWithWhereUniqueWithoutMemberUserInput | Prisma.ApplicationUpsertWithWhereUniqueWithoutMemberUserInput[]
+  createMany?: Prisma.ApplicationCreateManyMemberUserInputEnvelope
+  set?: Prisma.ApplicationWhereUniqueInput | Prisma.ApplicationWhereUniqueInput[]
+  disconnect?: Prisma.ApplicationWhereUniqueInput | Prisma.ApplicationWhereUniqueInput[]
+  delete?: Prisma.ApplicationWhereUniqueInput | Prisma.ApplicationWhereUniqueInput[]
+  connect?: Prisma.ApplicationWhereUniqueInput | Prisma.ApplicationWhereUniqueInput[]
+  update?: Prisma.ApplicationUpdateWithWhereUniqueWithoutMemberUserInput | Prisma.ApplicationUpdateWithWhereUniqueWithoutMemberUserInput[]
+  updateMany?: Prisma.ApplicationUpdateManyWithWhereWithoutMemberUserInput | Prisma.ApplicationUpdateManyWithWhereWithoutMemberUserInput[]
+  deleteMany?: Prisma.ApplicationScalarWhereInput | Prisma.ApplicationScalarWhereInput[]
+}
+
+export type ApplicationUncheckedUpdateManyWithoutMemberUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutMemberUserInput, Prisma.ApplicationUncheckedCreateWithoutMemberUserInput> | Prisma.ApplicationCreateWithoutMemberUserInput[] | Prisma.ApplicationUncheckedCreateWithoutMemberUserInput[]
+  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutMemberUserInput | Prisma.ApplicationCreateOrConnectWithoutMemberUserInput[]
+  upsert?: Prisma.ApplicationUpsertWithWhereUniqueWithoutMemberUserInput | Prisma.ApplicationUpsertWithWhereUniqueWithoutMemberUserInput[]
+  createMany?: Prisma.ApplicationCreateManyMemberUserInputEnvelope
+  set?: Prisma.ApplicationWhereUniqueInput | Prisma.ApplicationWhereUniqueInput[]
+  disconnect?: Prisma.ApplicationWhereUniqueInput | Prisma.ApplicationWhereUniqueInput[]
+  delete?: Prisma.ApplicationWhereUniqueInput | Prisma.ApplicationWhereUniqueInput[]
+  connect?: Prisma.ApplicationWhereUniqueInput | Prisma.ApplicationWhereUniqueInput[]
+  update?: Prisma.ApplicationUpdateWithWhereUniqueWithoutMemberUserInput | Prisma.ApplicationUpdateWithWhereUniqueWithoutMemberUserInput[]
+  updateMany?: Prisma.ApplicationUpdateManyWithWhereWithoutMemberUserInput | Prisma.ApplicationUpdateManyWithWhereWithoutMemberUserInput[]
+  deleteMany?: Prisma.ApplicationScalarWhereInput | Prisma.ApplicationScalarWhereInput[]
+}
+
+export type ApplicationCreateNestedOneWithoutMembershipSubscriptionInput = {
+  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutMembershipSubscriptionInput, Prisma.ApplicationUncheckedCreateWithoutMembershipSubscriptionInput>
+  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutMembershipSubscriptionInput
+  connect?: Prisma.ApplicationWhereUniqueInput
+}
+
+export type ApplicationUpdateOneRequiredWithoutMembershipSubscriptionNestedInput = {
+  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutMembershipSubscriptionInput, Prisma.ApplicationUncheckedCreateWithoutMembershipSubscriptionInput>
+  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutMembershipSubscriptionInput
+  upsert?: Prisma.ApplicationUpsertWithoutMembershipSubscriptionInput
+  connect?: Prisma.ApplicationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ApplicationUpdateToOneWithWhereWithoutMembershipSubscriptionInput, Prisma.ApplicationUpdateWithoutMembershipSubscriptionInput>, Prisma.ApplicationUncheckedUpdateWithoutMembershipSubscriptionInput>
+}
+
 export type ApplicationCreateNestedOneWithoutStatusHistoryInput = {
   create?: Prisma.XOR<Prisma.ApplicationCreateWithoutStatusHistoryInput, Prisma.ApplicationUncheckedCreateWithoutStatusHistoryInput>
   connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutStatusHistoryInput
@@ -731,9 +822,11 @@ export type ApplicationCreateWithoutPlanInput = {
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  memberUser?: Prisma.MemberUserCreateNestedOneWithoutApplicationsInput
   paymentReports?: Prisma.PaymentReportCreateNestedManyWithoutApplicationInput
   emailLogs?: Prisma.EmailLogCreateNestedManyWithoutApplicationInput
   statusHistory?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutPlanInput = {
@@ -745,6 +838,7 @@ export type ApplicationUncheckedCreateWithoutPlanInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -756,6 +850,7 @@ export type ApplicationUncheckedCreateWithoutPlanInput = {
   paymentReports?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutApplicationInput
   emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutApplicationInput
   statusHistory?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutPlanInput = {
@@ -797,6 +892,7 @@ export type ApplicationScalarWhereInput = {
   facebookName?: Prisma.StringFilter<"Application"> | string
   facebookProfileUrl?: Prisma.StringFilter<"Application"> | string
   planId?: Prisma.StringFilter<"Application"> | string
+  memberUserId?: Prisma.StringNullableFilter<"Application"> | string | null
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   approvedAt?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -825,8 +921,10 @@ export type ApplicationCreateWithoutPaymentReportsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   plan: Prisma.MembershipPlanCreateNestedOneWithoutApplicationsInput
+  memberUser?: Prisma.MemberUserCreateNestedOneWithoutApplicationsInput
   emailLogs?: Prisma.EmailLogCreateNestedManyWithoutApplicationInput
   statusHistory?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutPaymentReportsInput = {
@@ -839,6 +937,7 @@ export type ApplicationUncheckedCreateWithoutPaymentReportsInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -849,6 +948,7 @@ export type ApplicationUncheckedCreateWithoutPaymentReportsInput = {
   updatedAt?: Date | string
   emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutApplicationInput
   statusHistory?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutPaymentReportsInput = {
@@ -885,8 +985,10 @@ export type ApplicationUpdateWithoutPaymentReportsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   plan?: Prisma.MembershipPlanUpdateOneRequiredWithoutApplicationsNestedInput
+  memberUser?: Prisma.MemberUserUpdateOneWithoutApplicationsNestedInput
   emailLogs?: Prisma.EmailLogUpdateManyWithoutApplicationNestedInput
   statusHistory?: Prisma.ApplicationStatusHistoryUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutPaymentReportsInput = {
@@ -899,6 +1001,7 @@ export type ApplicationUncheckedUpdateWithoutPaymentReportsInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -909,6 +1012,7 @@ export type ApplicationUncheckedUpdateWithoutPaymentReportsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutApplicationNestedInput
   statusHistory?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationCreateWithoutEmailLogsInput = {
@@ -929,8 +1033,10 @@ export type ApplicationCreateWithoutEmailLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   plan: Prisma.MembershipPlanCreateNestedOneWithoutApplicationsInput
+  memberUser?: Prisma.MemberUserCreateNestedOneWithoutApplicationsInput
   paymentReports?: Prisma.PaymentReportCreateNestedManyWithoutApplicationInput
   statusHistory?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutEmailLogsInput = {
@@ -943,6 +1049,7 @@ export type ApplicationUncheckedCreateWithoutEmailLogsInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -953,6 +1060,7 @@ export type ApplicationUncheckedCreateWithoutEmailLogsInput = {
   updatedAt?: Date | string
   paymentReports?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutApplicationInput
   statusHistory?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutEmailLogsInput = {
@@ -989,8 +1097,10 @@ export type ApplicationUpdateWithoutEmailLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   plan?: Prisma.MembershipPlanUpdateOneRequiredWithoutApplicationsNestedInput
+  memberUser?: Prisma.MemberUserUpdateOneWithoutApplicationsNestedInput
   paymentReports?: Prisma.PaymentReportUpdateManyWithoutApplicationNestedInput
   statusHistory?: Prisma.ApplicationStatusHistoryUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutEmailLogsInput = {
@@ -1003,6 +1113,7 @@ export type ApplicationUncheckedUpdateWithoutEmailLogsInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1012,6 +1123,193 @@ export type ApplicationUncheckedUpdateWithoutEmailLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentReports?: Prisma.PaymentReportUncheckedUpdateManyWithoutApplicationNestedInput
+  statusHistory?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedUpdateOneWithoutApplicationNestedInput
+}
+
+export type ApplicationCreateWithoutMemberUserInput = {
+  id?: string
+  applicationNo: string
+  name: string
+  phone: string
+  email: string
+  address: string
+  facebookName: string
+  facebookProfileUrl: string
+  status?: $Enums.ApplicationStatus
+  agreedToTermsAt: Date | string
+  approvedAt?: Date | string | null
+  joinedFacebookAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  plan: Prisma.MembershipPlanCreateNestedOneWithoutApplicationsInput
+  paymentReports?: Prisma.PaymentReportCreateNestedManyWithoutApplicationInput
+  emailLogs?: Prisma.EmailLogCreateNestedManyWithoutApplicationInput
+  statusHistory?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionCreateNestedOneWithoutApplicationInput
+}
+
+export type ApplicationUncheckedCreateWithoutMemberUserInput = {
+  id?: string
+  applicationNo: string
+  name: string
+  phone: string
+  email: string
+  address: string
+  facebookName: string
+  facebookProfileUrl: string
+  planId: string
+  status?: $Enums.ApplicationStatus
+  agreedToTermsAt: Date | string
+  approvedAt?: Date | string | null
+  joinedFacebookAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  paymentReports?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutApplicationInput
+  emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutApplicationInput
+  statusHistory?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedCreateNestedOneWithoutApplicationInput
+}
+
+export type ApplicationCreateOrConnectWithoutMemberUserInput = {
+  where: Prisma.ApplicationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ApplicationCreateWithoutMemberUserInput, Prisma.ApplicationUncheckedCreateWithoutMemberUserInput>
+}
+
+export type ApplicationCreateManyMemberUserInputEnvelope = {
+  data: Prisma.ApplicationCreateManyMemberUserInput | Prisma.ApplicationCreateManyMemberUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type ApplicationUpsertWithWhereUniqueWithoutMemberUserInput = {
+  where: Prisma.ApplicationWhereUniqueInput
+  update: Prisma.XOR<Prisma.ApplicationUpdateWithoutMemberUserInput, Prisma.ApplicationUncheckedUpdateWithoutMemberUserInput>
+  create: Prisma.XOR<Prisma.ApplicationCreateWithoutMemberUserInput, Prisma.ApplicationUncheckedCreateWithoutMemberUserInput>
+}
+
+export type ApplicationUpdateWithWhereUniqueWithoutMemberUserInput = {
+  where: Prisma.ApplicationWhereUniqueInput
+  data: Prisma.XOR<Prisma.ApplicationUpdateWithoutMemberUserInput, Prisma.ApplicationUncheckedUpdateWithoutMemberUserInput>
+}
+
+export type ApplicationUpdateManyWithWhereWithoutMemberUserInput = {
+  where: Prisma.ApplicationScalarWhereInput
+  data: Prisma.XOR<Prisma.ApplicationUpdateManyMutationInput, Prisma.ApplicationUncheckedUpdateManyWithoutMemberUserInput>
+}
+
+export type ApplicationCreateWithoutMembershipSubscriptionInput = {
+  id?: string
+  applicationNo: string
+  name: string
+  phone: string
+  email: string
+  address: string
+  facebookName: string
+  facebookProfileUrl: string
+  status?: $Enums.ApplicationStatus
+  agreedToTermsAt: Date | string
+  approvedAt?: Date | string | null
+  joinedFacebookAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  plan: Prisma.MembershipPlanCreateNestedOneWithoutApplicationsInput
+  memberUser?: Prisma.MemberUserCreateNestedOneWithoutApplicationsInput
+  paymentReports?: Prisma.PaymentReportCreateNestedManyWithoutApplicationInput
+  emailLogs?: Prisma.EmailLogCreateNestedManyWithoutApplicationInput
+  statusHistory?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutApplicationInput
+}
+
+export type ApplicationUncheckedCreateWithoutMembershipSubscriptionInput = {
+  id?: string
+  applicationNo: string
+  name: string
+  phone: string
+  email: string
+  address: string
+  facebookName: string
+  facebookProfileUrl: string
+  planId: string
+  memberUserId?: string | null
+  status?: $Enums.ApplicationStatus
+  agreedToTermsAt: Date | string
+  approvedAt?: Date | string | null
+  joinedFacebookAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  paymentReports?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutApplicationInput
+  emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutApplicationInput
+  statusHistory?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutApplicationInput
+}
+
+export type ApplicationCreateOrConnectWithoutMembershipSubscriptionInput = {
+  where: Prisma.ApplicationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ApplicationCreateWithoutMembershipSubscriptionInput, Prisma.ApplicationUncheckedCreateWithoutMembershipSubscriptionInput>
+}
+
+export type ApplicationUpsertWithoutMembershipSubscriptionInput = {
+  update: Prisma.XOR<Prisma.ApplicationUpdateWithoutMembershipSubscriptionInput, Prisma.ApplicationUncheckedUpdateWithoutMembershipSubscriptionInput>
+  create: Prisma.XOR<Prisma.ApplicationCreateWithoutMembershipSubscriptionInput, Prisma.ApplicationUncheckedCreateWithoutMembershipSubscriptionInput>
+  where?: Prisma.ApplicationWhereInput
+}
+
+export type ApplicationUpdateToOneWithWhereWithoutMembershipSubscriptionInput = {
+  where?: Prisma.ApplicationWhereInput
+  data: Prisma.XOR<Prisma.ApplicationUpdateWithoutMembershipSubscriptionInput, Prisma.ApplicationUncheckedUpdateWithoutMembershipSubscriptionInput>
+}
+
+export type ApplicationUpdateWithoutMembershipSubscriptionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookName?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  joinedFacebookAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.MembershipPlanUpdateOneRequiredWithoutApplicationsNestedInput
+  memberUser?: Prisma.MemberUserUpdateOneWithoutApplicationsNestedInput
+  paymentReports?: Prisma.PaymentReportUpdateManyWithoutApplicationNestedInput
+  emailLogs?: Prisma.EmailLogUpdateManyWithoutApplicationNestedInput
+  statusHistory?: Prisma.ApplicationStatusHistoryUpdateManyWithoutApplicationNestedInput
+}
+
+export type ApplicationUncheckedUpdateWithoutMembershipSubscriptionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookName?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  joinedFacebookAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paymentReports?: Prisma.PaymentReportUncheckedUpdateManyWithoutApplicationNestedInput
+  emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutApplicationNestedInput
   statusHistory?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
@@ -1033,8 +1331,10 @@ export type ApplicationCreateWithoutStatusHistoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   plan: Prisma.MembershipPlanCreateNestedOneWithoutApplicationsInput
+  memberUser?: Prisma.MemberUserCreateNestedOneWithoutApplicationsInput
   paymentReports?: Prisma.PaymentReportCreateNestedManyWithoutApplicationInput
   emailLogs?: Prisma.EmailLogCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutStatusHistoryInput = {
@@ -1047,6 +1347,7 @@ export type ApplicationUncheckedCreateWithoutStatusHistoryInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -1057,6 +1358,7 @@ export type ApplicationUncheckedCreateWithoutStatusHistoryInput = {
   updatedAt?: Date | string
   paymentReports?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutApplicationInput
   emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutApplicationInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutStatusHistoryInput = {
@@ -1093,8 +1395,10 @@ export type ApplicationUpdateWithoutStatusHistoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   plan?: Prisma.MembershipPlanUpdateOneRequiredWithoutApplicationsNestedInput
+  memberUser?: Prisma.MemberUserUpdateOneWithoutApplicationsNestedInput
   paymentReports?: Prisma.PaymentReportUpdateManyWithoutApplicationNestedInput
   emailLogs?: Prisma.EmailLogUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutStatusHistoryInput = {
@@ -1107,6 +1411,7 @@ export type ApplicationUncheckedUpdateWithoutStatusHistoryInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1117,6 +1422,7 @@ export type ApplicationUncheckedUpdateWithoutStatusHistoryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentReports?: Prisma.PaymentReportUncheckedUpdateManyWithoutApplicationNestedInput
   emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationCreateManyPlanInput = {
@@ -1128,6 +1434,7 @@ export type ApplicationCreateManyPlanInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -1155,12 +1462,78 @@ export type ApplicationUpdateWithoutPlanInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberUser?: Prisma.MemberUserUpdateOneWithoutApplicationsNestedInput
   paymentReports?: Prisma.PaymentReportUpdateManyWithoutApplicationNestedInput
   emailLogs?: Prisma.EmailLogUpdateManyWithoutApplicationNestedInput
   statusHistory?: Prisma.ApplicationStatusHistoryUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutPlanInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookName?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  joinedFacebookAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paymentReports?: Prisma.PaymentReportUncheckedUpdateManyWithoutApplicationNestedInput
+  emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutApplicationNestedInput
+  statusHistory?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedUpdateOneWithoutApplicationNestedInput
+}
+
+export type ApplicationUncheckedUpdateManyWithoutPlanInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookName?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  joinedFacebookAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ApplicationCreateManyMemberUserInput = {
+  id?: string
+  applicationNo: string
+  name: string
+  phone: string
+  email: string
+  address: string
+  facebookName: string
+  facebookProfileUrl: string
+  planId: string
+  status?: $Enums.ApplicationStatus
+  agreedToTermsAt: Date | string
+  approvedAt?: Date | string | null
+  joinedFacebookAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ApplicationUpdateWithoutMemberUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1177,12 +1550,14 @@ export type ApplicationUncheckedUpdateWithoutPlanInput = {
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  paymentReports?: Prisma.PaymentReportUncheckedUpdateManyWithoutApplicationNestedInput
-  emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutApplicationNestedInput
-  statusHistory?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutApplicationNestedInput
+  plan?: Prisma.MembershipPlanUpdateOneRequiredWithoutApplicationsNestedInput
+  paymentReports?: Prisma.PaymentReportUpdateManyWithoutApplicationNestedInput
+  emailLogs?: Prisma.EmailLogUpdateManyWithoutApplicationNestedInput
+  statusHistory?: Prisma.ApplicationStatusHistoryUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUpdateOneWithoutApplicationNestedInput
 }
 
-export type ApplicationUncheckedUpdateManyWithoutPlanInput = {
+export type ApplicationUncheckedUpdateWithoutMemberUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1191,6 +1566,31 @@ export type ApplicationUncheckedUpdateManyWithoutPlanInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  joinedFacebookAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paymentReports?: Prisma.PaymentReportUncheckedUpdateManyWithoutApplicationNestedInput
+  emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutApplicationNestedInput
+  statusHistory?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutApplicationNestedInput
+  membershipSubscription?: Prisma.MembershipSubscriptionUncheckedUpdateOneWithoutApplicationNestedInput
+}
+
+export type ApplicationUncheckedUpdateManyWithoutMemberUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookName?: Prisma.StringFieldUpdateOperationsInput | string
+  facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1260,6 +1660,7 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   facebookName?: boolean
   facebookProfileUrl?: boolean
   planId?: boolean
+  memberUserId?: boolean
   status?: boolean
   agreedToTermsAt?: boolean
   approvedAt?: boolean
@@ -1269,9 +1670,11 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   createdAt?: boolean
   updatedAt?: boolean
   plan?: boolean | Prisma.MembershipPlanDefaultArgs<ExtArgs>
+  memberUser?: boolean | Prisma.Application$memberUserArgs<ExtArgs>
   paymentReports?: boolean | Prisma.Application$paymentReportsArgs<ExtArgs>
   emailLogs?: boolean | Prisma.Application$emailLogsArgs<ExtArgs>
   statusHistory?: boolean | Prisma.Application$statusHistoryArgs<ExtArgs>
+  membershipSubscription?: boolean | Prisma.Application$membershipSubscriptionArgs<ExtArgs>
   _count?: boolean | Prisma.ApplicationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
@@ -1285,6 +1688,7 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   facebookName?: boolean
   facebookProfileUrl?: boolean
   planId?: boolean
+  memberUserId?: boolean
   status?: boolean
   agreedToTermsAt?: boolean
   approvedAt?: boolean
@@ -1294,6 +1698,7 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   updatedAt?: boolean
   plan?: boolean | Prisma.MembershipPlanDefaultArgs<ExtArgs>
+  memberUser?: boolean | Prisma.Application$memberUserArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
 export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1306,6 +1711,7 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   facebookName?: boolean
   facebookProfileUrl?: boolean
   planId?: boolean
+  memberUserId?: boolean
   status?: boolean
   agreedToTermsAt?: boolean
   approvedAt?: boolean
@@ -1315,6 +1721,7 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   updatedAt?: boolean
   plan?: boolean | Prisma.MembershipPlanDefaultArgs<ExtArgs>
+  memberUser?: boolean | Prisma.Application$memberUserArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
 export type ApplicationSelectScalar = {
@@ -1327,6 +1734,7 @@ export type ApplicationSelectScalar = {
   facebookName?: boolean
   facebookProfileUrl?: boolean
   planId?: boolean
+  memberUserId?: boolean
   status?: boolean
   agreedToTermsAt?: boolean
   approvedAt?: boolean
@@ -1337,28 +1745,34 @@ export type ApplicationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationNo" | "name" | "phone" | "email" | "address" | "facebookName" | "facebookProfileUrl" | "planId" | "status" | "agreedToTermsAt" | "approvedAt" | "joinedFacebookAt" | "rejectedAt" | "cancelledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationNo" | "name" | "phone" | "email" | "address" | "facebookName" | "facebookProfileUrl" | "planId" | "memberUserId" | "status" | "agreedToTermsAt" | "approvedAt" | "joinedFacebookAt" | "rejectedAt" | "cancelledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.MembershipPlanDefaultArgs<ExtArgs>
+  memberUser?: boolean | Prisma.Application$memberUserArgs<ExtArgs>
   paymentReports?: boolean | Prisma.Application$paymentReportsArgs<ExtArgs>
   emailLogs?: boolean | Prisma.Application$emailLogsArgs<ExtArgs>
   statusHistory?: boolean | Prisma.Application$statusHistoryArgs<ExtArgs>
+  membershipSubscription?: boolean | Prisma.Application$membershipSubscriptionArgs<ExtArgs>
   _count?: boolean | Prisma.ApplicationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.MembershipPlanDefaultArgs<ExtArgs>
+  memberUser?: boolean | Prisma.Application$memberUserArgs<ExtArgs>
 }
 export type ApplicationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.MembershipPlanDefaultArgs<ExtArgs>
+  memberUser?: boolean | Prisma.Application$memberUserArgs<ExtArgs>
 }
 
 export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Application"
   objects: {
     plan: Prisma.$MembershipPlanPayload<ExtArgs>
+    memberUser: Prisma.$MemberUserPayload<ExtArgs> | null
     paymentReports: Prisma.$PaymentReportPayload<ExtArgs>[]
     emailLogs: Prisma.$EmailLogPayload<ExtArgs>[]
     statusHistory: Prisma.$ApplicationStatusHistoryPayload<ExtArgs>[]
+    membershipSubscription: Prisma.$MembershipSubscriptionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1370,6 +1784,7 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     facebookName: string
     facebookProfileUrl: string
     planId: string
+    memberUserId: string | null
     status: $Enums.ApplicationStatus
     agreedToTermsAt: Date
     approvedAt: Date | null
@@ -1773,9 +2188,11 @@ readonly fields: ApplicationFieldRefs;
 export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   plan<T extends Prisma.MembershipPlanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MembershipPlanDefaultArgs<ExtArgs>>): Prisma.Prisma__MembershipPlanClient<runtime.Types.Result.GetResult<Prisma.$MembershipPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  memberUser<T extends Prisma.Application$memberUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$memberUserArgs<ExtArgs>>): Prisma.Prisma__MemberUserClient<runtime.Types.Result.GetResult<Prisma.$MemberUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   paymentReports<T extends Prisma.Application$paymentReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$paymentReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   emailLogs<T extends Prisma.Application$emailLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$emailLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmailLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   statusHistory<T extends Prisma.Application$statusHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$statusHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  membershipSubscription<T extends Prisma.Application$membershipSubscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$membershipSubscriptionArgs<ExtArgs>>): Prisma.Prisma__MembershipSubscriptionClient<runtime.Types.Result.GetResult<Prisma.$MembershipSubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1814,6 +2231,7 @@ export interface ApplicationFieldRefs {
   readonly facebookName: Prisma.FieldRef<"Application", 'String'>
   readonly facebookProfileUrl: Prisma.FieldRef<"Application", 'String'>
   readonly planId: Prisma.FieldRef<"Application", 'String'>
+  readonly memberUserId: Prisma.FieldRef<"Application", 'String'>
   readonly status: Prisma.FieldRef<"Application", 'ApplicationStatus'>
   readonly agreedToTermsAt: Prisma.FieldRef<"Application", 'DateTime'>
   readonly approvedAt: Prisma.FieldRef<"Application", 'DateTime'>
@@ -2223,6 +2641,25 @@ export type ApplicationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
+ * Application.memberUser
+ */
+export type Application$memberUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MemberUser
+   */
+  select?: Prisma.MemberUserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MemberUser
+   */
+  omit?: Prisma.MemberUserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MemberUserInclude<ExtArgs> | null
+  where?: Prisma.MemberUserWhereInput
+}
+
+/**
  * Application.paymentReports
  */
 export type Application$paymentReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2292,6 +2729,25 @@ export type Application$statusHistoryArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.ApplicationStatusHistoryScalarFieldEnum | Prisma.ApplicationStatusHistoryScalarFieldEnum[]
+}
+
+/**
+ * Application.membershipSubscription
+ */
+export type Application$membershipSubscriptionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MembershipSubscription
+   */
+  select?: Prisma.MembershipSubscriptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MembershipSubscription
+   */
+  omit?: Prisma.MembershipSubscriptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MembershipSubscriptionInclude<ExtArgs> | null
+  where?: Prisma.MembershipSubscriptionWhereInput
 }
 
 /**

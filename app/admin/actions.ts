@@ -3,7 +3,7 @@
 import { compare } from "bcryptjs";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { ApplicationStatus, EmailStatus, EmailType } from "@/generated/prisma/enums";
+import { ApplicationStatus, EmailStatus, EmailType, MembershipSubscriptionStatus, MemberUserStatus } from "@/generated/prisma/enums";
 import {
   createAdminSession,
   destroyAdminSession,
@@ -18,6 +18,12 @@ import {
 } from "@/lib/settings";
 
 export type LoginActionState = { message: string };
+
+function addDays(value: Date, days: number) {
+  const date = new Date(value);
+  date.setDate(date.getDate() + days);
+  return date;
+}
 
 export async function loginAdmin(
   _previousState: LoginActionState,
@@ -73,6 +79,9 @@ export async function updateApplicationStatus(formData: FormData) {
       id: true,
       status: true,
       email: true,
+      name: true,
+      phone: true,
+      plan: { select: { name: true, price: true, durationDays: true } },
     },
   });
 
@@ -86,13 +95,75 @@ export async function updateApplicationStatus(formData: FormData) {
         ? EmailType.FACEBOOK_GROUP_JOINED
         : null;
 
+  const approvedAt = nextStatus === ApplicationStatus.APPROVED ? new Date() : undefined;
   const emailLogId = await prisma.$transaction(async (transaction) => {
+    let memberUserId: string | undefined;
+
+    if (approvedAt) {
+      const memberUser = await transaction.memberUser.upsert({
+        where: { email: application.email },
+        update: {
+          name: application.name,
+          phone: application.phone,
+        },
+        create: {
+          email: application.email,
+          name: application.name,
+          phone: application.phone,
+          status: MemberUserStatus.PENDING_PASSWORD,
+        },
+        select: { id: true, passwordHash: true, status: true },
+      });
+
+      memberUserId = memberUser.id;
+
+      if (memberUser.passwordHash && memberUser.status !== MemberUserStatus.DISABLED) {
+        await transaction.memberUser.update({
+          where: { id: memberUser.id },
+          data: { status: MemberUserStatus.ACTIVE },
+        });
+      } else if (!memberUser.passwordHash && memberUser.status !== MemberUserStatus.DISABLED) {
+        await transaction.memberUser.update({
+          where: { id: memberUser.id },
+          data: { status: MemberUserStatus.PENDING_PASSWORD },
+        });
+      }
+
+      await transaction.membershipSubscription.upsert({
+        where: { applicationId },
+        update: {
+          memberUserId: memberUser.id,
+          planName: application.plan.name,
+          planPrice: application.plan.price,
+          durationDays: application.plan.durationDays,
+          startsAt: approvedAt,
+          endsAt: addDays(approvedAt, application.plan.durationDays),
+          status: MembershipSubscriptionStatus.ACTIVE,
+        },
+        create: {
+          applicationId,
+          memberUserId: memberUser.id,
+          planName: application.plan.name,
+          planPrice: application.plan.price,
+          durationDays: application.plan.durationDays,
+          startsAt: approvedAt,
+          endsAt: addDays(approvedAt, application.plan.durationDays),
+          status: MembershipSubscriptionStatus.ACTIVE,
+        },
+      });
+
+      await transaction.coursePurchase.updateMany({
+        where: { email: application.email, memberUserId: null },
+        data: { memberUserId: memberUser.id },
+      });
+    }
+
     await transaction.application.update({
       where: { id: applicationId },
       data: {
         status: nextStatus,
-        approvedAt:
-          nextStatus === ApplicationStatus.APPROVED ? new Date() : undefined,
+        memberUserId,
+        approvedAt,
         joinedFacebookAt:
           nextStatus === ApplicationStatus.JOINED_FACEBOOK_GROUP
             ? new Date()

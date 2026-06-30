@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import { EmailStatus } from "@/generated/prisma/enums";
 import { getEmailConfig } from "@/lib/email/config";
 import { buildEmailTemplate } from "@/lib/email/templates";
+import { buildSetPasswordToken } from "@/lib/member/auth";
 import { prisma } from "@/lib/prisma";
 import { getFacebookGroupUrl } from "@/lib/settings";
 
@@ -34,6 +35,7 @@ export async function sendEmailLog(emailLogId: string) {
     include: {
       application: {
         include: {
+          memberUser: { select: { id: true, passwordSetAt: true } },
           plan: { select: { name: true, price: true, durationDays: true } },
           paymentReports: {
             orderBy: { createdAt: "desc" },
@@ -49,6 +51,7 @@ export async function sendEmailLog(emailLogId: string) {
       },
       coursePurchase: {
         include: {
+          memberUser: { select: { id: true, passwordSetAt: true } },
           course: {
             select: {
               title: true,
@@ -75,12 +78,23 @@ export async function sendEmailLog(emailLogId: string) {
   }
 
   const facebookGroupUrl = emailLog.application ? await getFacebookGroupUrl() : "";
+  const memberSetPasswordUrl =
+    emailLog.type === "APPLICATION_APPROVED" && emailLog.application?.memberUser && !emailLog.application.memberUser.passwordSetAt
+      ? `${config.siteUrl}/set-password?token=${encodeURIComponent(
+          buildSetPasswordToken(emailLog.application.memberUser.id, emailLog.application.memberUser.passwordSetAt),
+        )}`
+      : emailLog.type === "COURSE_PURCHASE_APPROVED" && emailLog.coursePurchase?.memberUser && !emailLog.coursePurchase.memberUser.passwordSetAt
+        ? `${config.siteUrl}/set-password?token=${encodeURIComponent(
+            buildSetPasswordToken(emailLog.coursePurchase.memberUser.id, emailLog.coursePurchase.memberUser.passwordSetAt),
+          )}`
+      : "";
   const template = buildEmailTemplate({
     type: emailLog.type,
     application: emailLog.application,
     coursePurchase: emailLog.coursePurchase,
     siteUrl: config.siteUrl,
     facebookGroupUrl,
+    memberSetPasswordUrl,
   });
 
   try {

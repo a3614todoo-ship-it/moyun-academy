@@ -957,6 +957,67 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
   background: #fffdf8;
   box-shadow: var(--shadow);
 }
+
+.member-auth-layout { display: grid; place-items: center; }
+.member-auth-card {
+  width: min(100%, 520px);
+  padding: 34px;
+  border: 1px solid rgba(21,63,53,.14);
+  border-radius: 22px;
+  background: rgba(255,252,245,.9);
+  box-shadow: var(--shadow);
+}
+.member-auth-card h2 { margin-top: 0; color: var(--forest-deep); }
+.member-auth-card p { color: var(--muted); line-height: 1.8; }
+.member-auth-form { display: grid; gap: 16px; }
+.member-auth-form label { display: grid; gap: 7px; color: #23483e; font-weight: 800; }
+.member-auth-form input {
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5d0;
+  border-radius: 3px;
+  color: #25312c;
+  background: white;
+  outline: none;
+}
+.member-auth-form input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(170,117,29,.12); }
+.member-auth-form small { color: #75817b; }
+.account-hero { display: flex; justify-content: space-between; gap: 24px; align-items: center; }
+.account-layout { display: grid; gap: 24px; }
+.account-panel {
+  padding: 28px;
+  border: 1px solid rgba(21,63,53,.14);
+  border-radius: 24px;
+  background: rgba(255,252,245,.86);
+  box-shadow: 0 16px 42px rgba(34,26,16,.07);
+}
+.account-status-card {
+  padding: 22px;
+  border-radius: 18px;
+  color: #153f35;
+  background: linear-gradient(135deg, rgba(232,244,235,.96), rgba(255,252,245,.88));
+}
+.account-status-card.is-expiring { background: linear-gradient(135deg, rgba(255,244,216,.96), rgba(255,252,245,.9)); }
+.account-status-card.is-expired { background: linear-gradient(135deg, rgba(250,234,232,.92), rgba(255,252,245,.9)); }
+.account-status-card strong { display: inline-flex; margin-bottom: 8px; color: var(--forest-deep); font-size: 22px; }
+.account-status-card dl { display: grid; gap: 10px; margin: 16px 0 0; }
+.account-status-card dl div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; }
+.account-status-card dt { color: #7d7466; font-weight: 800; }
+.account-status-card dd { margin: 0; color: #25312c; }
+.account-reminder { margin-top: 16px; color: #7b5a19; }
+.account-course-list { display: grid; gap: 14px; }
+.account-course-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid rgba(21,63,53,.12);
+  border-radius: 18px;
+  background: rgba(255,255,255,.58);
+}
+.account-course-card h3 { margin: 0 0 6px; color: var(--forest-deep); }
+.account-course-card p { margin: 0; color: var(--muted); }
 .application-summary h2 { font-size: 29px; }
 .summary-price { margin: 13px 0; color: var(--forest); font-size: 38px; font-weight: 800; }
 .summary-price small { color: var(--muted); font-size: 14px; }
@@ -1136,6 +1197,8 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
   .author-profile-card { position: static; }
   .application-layout { grid-template-columns: 1fr; }
   .application-summary { position: static; }
+  .account-hero, .account-course-card { align-items: flex-start; flex-direction: column; }
+  .account-status-card dl div { grid-template-columns: 1fr; gap: 2px; }
   .join-card { position: static; }
   .cta-inner { grid-template-columns: 1fr; }
   .admin-app { grid-template-columns: 1fr; }

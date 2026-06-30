@@ -86,6 +86,12 @@ export async function lookupMemberCourseAccess(
   });
 
   if (existingAccess) {
+    if (application.memberUserId) {
+      await prisma.coursePurchase.update({
+        where: { id: existingAccess.id },
+        data: { memberUserId: application.memberUserId },
+      });
+    }
     await createCourseAccessSession(slug, existingAccess);
     redirect(`/courses/${slug}/live?token=${existingAccess.accessToken}`);
   }
@@ -95,6 +101,7 @@ export async function lookupMemberCourseAccess(
     data: {
       purchaseNo,
       courseId: course.id,
+      memberUserId: application.memberUserId,
       name: application.name,
       phone: application.phone,
       email: application.email,

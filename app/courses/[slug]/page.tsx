@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { enterMemberIncludedCourse } from "@/app/account/actions";
 import { CourseAccessLookupForm } from "@/components/course-access-lookup-form";
 import { MemberCourseAccessLookupForm } from "@/components/member-course-access-lookup-form";
+import { MembershipSubscriptionStatus } from "@/generated/prisma/enums";
 import { getPublishedCourse } from "@/lib/course-data";
+import { getMemberSession } from "@/lib/member/auth";
 import { prisma } from "@/lib/prisma";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
 
@@ -42,11 +45,25 @@ function formatDateTime(value: Date | null) {
 export default async function CourseDetailPage({ params }: Props) {
   const course = await getPublishedCourse((await params).slug);
   if (!course) notFound();
+  const memberSession = await getMemberSession();
 
-  const lessonUnits = await prisma.courseLesson.findMany({
-    where: { courseId: course.id, isPublished: true },
-    orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
-  });
+  const [lessonUnits, activeSubscription] = await Promise.all([
+    prisma.courseLesson.findMany({
+      where: { courseId: course.id, isPublished: true },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+    }),
+    memberSession
+      ? prisma.membershipSubscription.findFirst({
+          where: {
+            memberUserId: memberSession.memberUser.id,
+            status: MembershipSubscriptionStatus.ACTIVE,
+            startsAt: { lte: new Date() },
+            endsAt: { gte: new Date() },
+          },
+          select: { id: true },
+        })
+      : null,
+  ]);
 
   const previewEmbedUrl = getYouTubeEmbedUrl(course.previewVideoUrl);
   const fullVideoEmbedUrl =
@@ -230,9 +247,18 @@ export default async function CourseDetailPage({ params }: Props) {
             {course.accessType === "MEMBER_INCLUDED" ? (
               <>
                 <p>這堂課包含在會員權益中。加入學堂後，即可依會員期間進入課程內容。</p>
-                <Link className="button button-gold button-block" href="/membership">
-                  加入會員
-                </Link>
+                {activeSubscription ? (
+                  <form action={enterMemberIncludedCourse}>
+                    <input name="courseId" type="hidden" value={course.id} />
+                    <button className="button button-gold button-block" type="submit">
+                      以會員帳號進入
+                    </button>
+                  </form>
+                ) : (
+                  <Link className="button button-gold button-block" href="/membership">
+                    加入會員
+                  </Link>
+                )}
                 <MemberCourseAccessLookupForm slug={course.slug} />
               </>
             ) : null}

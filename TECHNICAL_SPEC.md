@@ -167,21 +167,28 @@
 
 ### 4.2 會員
 
-目前尚未實作完整帳號密碼登入。會員權限目前依照：
+會員帳號已支援 Email + 密碼登入。會員權限目前可由兩種方式進入：
 
 - `Application.applicationNo`
 - `Application.email`
 - `Application.status`
 - `Application.approvedAt`
 - `MembershipPlan.durationDays`
+- `MemberUser`
+- `MembershipSubscription`
 
 會員免費課程入口流程：
 
-1. 學員在會員免費課程頁輸入會員申請編號與 Email。
-2. 系統確認申請狀態為 `APPROVED` 或 `JOINED_FACEBOOK_GROUP`。
-3. 系統確認會員期間尚未過期。
+1. 已登入會員可直接從會員中心或會員免費課程頁進入。
+2. 系統確認會員帳號為 `ACTIVE`。
+3. 系統確認存在有效 `MembershipSubscription`。
 4. 系統建立或重用一筆金額 0、狀態 `APPROVED` 的 `CoursePurchase`。
-5. 導向 `/courses/[slug]/live?token=...`。
+5. 系統建立短效課程通行 cookie。
+6. 導向 `/courses/[slug]/live?token=...`。
+
+過渡入口：
+- 會員仍可在課程頁輸入會員申請編號與 Email。
+- 驗證通過後，同樣會建立或重用 0 元 `CoursePurchase`，並建立短效課程通行 cookie。
 
 ### 4.3 付費課程學員
 
@@ -280,6 +287,43 @@ enum：`ApplicationStatus`
 - 截圖網址
 - 備註
 - 審核人與審核時間
+
+### 6.4 會員帳號
+
+資料表：`MemberUser`
+
+審核通過後，系統會依 Email 建立或連結會員帳號：
+- 若帳號尚未設定密碼，狀態為 `PENDING_PASSWORD`。
+- 通知信附上 `/set-password?token=...` 設定密碼連結。
+- 學員設定密碼後，帳號狀態改為 `ACTIVE`。
+- 停用帳號狀態為 `DISABLED`，不可登入。
+
+資料表：`MemberSession`
+
+- 會員登入後建立 session。
+- session cookie 為 HttpOnly、SameSite=Lax。
+- session token 僅儲存 hash。
+
+### 6.5 會員資格
+
+資料表：`MembershipSubscription`
+
+會員申請審核通過時建立一筆會員資格紀錄：
+- `memberUserId`
+- `applicationId`
+- `planName`
+- `planPrice`
+- `durationDays`
+- `startsAt`
+- `endsAt`
+- `status`
+
+會員中心會依有效的 `MembershipSubscription` 顯示：
+- 有效中
+- 即將到期
+- 已過期
+
+目前即將到期以剩餘 30 天內顯示提示；續約通知排程將於後續階段實作。
 
 ### 6.4 狀態歷史
 
@@ -515,6 +559,9 @@ FB 私密社團網址會用於會員審核通過後的 Email。
 - 更新狀態。
 - 紀錄狀態歷史。
 - 重寄 Email。
+- 審核通過時建立或連結會員帳號。
+- 審核通過時建立會員資格紀錄。
+- 審核通過信附上設定網站密碼連結。
 
 ### 14.2.1 會員方案管理
 

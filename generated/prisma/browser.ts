@@ -53,6 +53,21 @@ export type SystemSetting = Prisma.SystemSettingModel
  */
 export type AdminSession = Prisma.AdminSessionModel
 /**
+ * Model MemberUser
+ * 
+ */
+export type MemberUser = Prisma.MemberUserModel
+/**
+ * Model MemberSession
+ * 
+ */
+export type MemberSession = Prisma.MemberSessionModel
+/**
+ * Model MembershipSubscription
+ * 
+ */
+export type MembershipSubscription = Prisma.MembershipSubscriptionModel
+/**
  * Model ApplicationStatusHistory
  * 
  */

@@ -56,6 +56,24 @@ export const CoursePurchaseStatus = {
 export type CoursePurchaseStatus = (typeof CoursePurchaseStatus)[keyof typeof CoursePurchaseStatus]
 
 
+export const MemberUserStatus = {
+  PENDING_PASSWORD: 'PENDING_PASSWORD',
+  ACTIVE: 'ACTIVE',
+  DISABLED: 'DISABLED'
+} as const
+
+export type MemberUserStatus = (typeof MemberUserStatus)[keyof typeof MemberUserStatus]
+
+
+export const MembershipSubscriptionStatus = {
+  ACTIVE: 'ACTIVE',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type MembershipSubscriptionStatus = (typeof MembershipSubscriptionStatus)[keyof typeof MembershipSubscriptionStatus]
+
+
 export const LivePlatform = {
   YOUTUBE_LIVE: 'YOUTUBE_LIVE',
   VIMEO_LIVE: 'VIMEO_LIVE',

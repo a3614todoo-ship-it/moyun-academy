@@ -34,7 +34,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <Link href={item.href} key={item.href}>{item.label}</Link>
             ))}
           </nav>
-          <Link className="login-link" href="/admin/login">管理員登入</Link>
+          <Link className="login-link" href="/login">會員登入</Link>
           <Link className="button button-gold header-cta" href="/membership">立即加入</Link>
         </div>
       </header>
@@ -56,8 +56,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             <Link href="/author">認識作家</Link>
             <Link href="/courses">所有課程</Link>
             <Link href="/membership">會員方案</Link>
+            <Link href="/login">會員登入</Link>
             <Link href="/payment-report">會員匯款回報</Link>
             <Link href="/course-payment-report">課程匯款回報</Link>
+            <Link href="/admin/login">管理員登入</Link>
           </div>
           <div>
             <strong>聯絡資訊</strong>

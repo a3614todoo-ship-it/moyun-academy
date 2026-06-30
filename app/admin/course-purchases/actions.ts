@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { CoursePurchaseStatus, EmailStatus, EmailType } from "@/generated/prisma/enums";
+import { CoursePurchaseStatus, EmailStatus, EmailType, MemberUserStatus } from "@/generated/prisma/enums";
 import { requireAdmin } from "@/lib/admin/auth";
 import { sendEmailLog } from "@/lib/email/mailer";
 import { prisma } from "@/lib/prisma";
@@ -37,10 +37,44 @@ export async function updateCoursePurchaseStatus(formData: FormData) {
   }
 
   const emailLogId = await prisma.$transaction(async (transaction) => {
+    let memberUserId: string | undefined;
+
+    if (nextStatus === CoursePurchaseStatus.APPROVED) {
+      const memberUser = await transaction.memberUser.upsert({
+        where: { email: purchase.email },
+        update: {
+          name: purchase.name,
+          phone: purchase.phone,
+        },
+        create: {
+          email: purchase.email,
+          name: purchase.name,
+          phone: purchase.phone,
+          status: MemberUserStatus.PENDING_PASSWORD,
+        },
+        select: { id: true, passwordHash: true, status: true },
+      });
+
+      memberUserId = memberUser.id;
+
+      if (memberUser.passwordHash && memberUser.status !== MemberUserStatus.DISABLED) {
+        await transaction.memberUser.update({
+          where: { id: memberUser.id },
+          data: { status: MemberUserStatus.ACTIVE },
+        });
+      } else if (!memberUser.passwordHash && memberUser.status !== MemberUserStatus.DISABLED) {
+        await transaction.memberUser.update({
+          where: { id: memberUser.id },
+          data: { status: MemberUserStatus.PENDING_PASSWORD },
+        });
+      }
+    }
+
     await transaction.coursePurchase.update({
       where: { id: purchaseId },
       data: {
         status: nextStatus,
+        memberUserId,
         reviewedAt: new Date(),
         reviewedById: session.adminUser.id,
         approvedAt: nextStatus === CoursePurchaseStatus.APPROVED ? new Date() : undefined,
