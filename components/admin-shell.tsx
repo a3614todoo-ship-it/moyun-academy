@@ -18,6 +18,8 @@ const navItems = [
 ];
 
 export function AdminShell({ adminName, children }: Props) {
+  const displayAdminName = adminName || "我輩學堂管理員";
+
   return (
     <div className="admin-app">
       <aside className="admin-sidebar">
@@ -37,7 +39,7 @@ export function AdminShell({ adminName, children }: Props) {
       </aside>
       <div className="admin-workspace">
         <header className="admin-topbar">
-          <span>管理員：{adminName}</span>
+          <span>管理員：{displayAdminName === "墨韻學堂管理員" ? "我輩學堂管理員" : displayAdminName}</span>
           <form action={logoutAdmin}>
             <button type="submit">登出</button>
           </form>
