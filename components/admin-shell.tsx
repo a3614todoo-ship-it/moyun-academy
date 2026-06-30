@@ -11,6 +11,7 @@ const navItems = [
   { href: "/admin/courses", label: "課程管理" },
   { href: "/admin/course-purchases", label: "課程購買" },
   { href: "/admin/course-purchases?status=PAYMENT_REPORTED", label: "課程匯款審核" },
+  { href: "/admin/membership-plans", label: "會員方案" },
   { href: "/admin/applications", label: "會員申請" },
   { href: "/admin/applications?status=PAYMENT_REPORTED", label: "會員匯款審核" },
   { href: "/admin/settings", label: "系統設定" },

@@ -9,9 +9,15 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function ApplyPage() {
+type Props = {
+  searchParams: Promise<{ plan?: string }>;
+};
+
+export default async function ApplyPage({ searchParams }: Props) {
+  const params = await searchParams;
+  const planCode = params.plan?.trim().toLowerCase();
   const plan = await prisma.membershipPlan.findFirst({
-    where: { code: "annual", isActive: true },
+    where: planCode ? { code: planCode, isActive: true } : { isActive: true },
     select: {
       code: true,
       name: true,
@@ -20,6 +26,7 @@ export default async function ApplyPage() {
       description: true,
       benefits: true,
     },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
   });
 
   if (!plan) {
