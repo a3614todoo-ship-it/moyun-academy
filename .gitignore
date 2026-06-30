@@ -4,6 +4,10 @@ out
 .env
 .env.local
 !.env.example
+.env*
+!.env.example
 npm-debug.log*
 backups/
 log/
+
+.vercel/
