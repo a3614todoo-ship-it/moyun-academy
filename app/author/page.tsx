@@ -55,7 +55,7 @@ export default function AuthorPage() {
           </div>
 
           <figure className="author-detail-photo-card">
-            <img alt="張曼娟老師" src="/images/author-zhang-manjuan.jpg" />
+            <img alt="張曼娟老師" src="/images/author-zhang-manjuan.webp" />
             <figcaption>慢讀，不急著抵達</figcaption>
           </figure>
         </div>

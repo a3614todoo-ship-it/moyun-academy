@@ -54,7 +54,7 @@ export default async function HomePage() {
                 <img
                   alt="作家張曼娟"
                   className="author-photo"
-                  src="/images/author-zhang-manjuan.jpg"
+                  src="/images/author-zhang-manjuan.webp"
                 />
               </div>
             </div>
