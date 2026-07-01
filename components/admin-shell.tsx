@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { logoutAdmin } from "@/app/admin/actions";
+import { AdminScrollToTop } from "@/components/admin-scroll-to-top";
 
 type Props = {
   adminName: string;
@@ -22,6 +23,7 @@ export function AdminShell({ adminName, children }: Props) {
 
   return (
     <div className="admin-app">
+      <AdminScrollToTop />
       <aside className="admin-sidebar">
         <Link className="admin-brand" href="/admin">
           <span>我</span>
