@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { CoursePurchaseStatus } from "@/generated/prisma/enums";
-import { hasCourseAccessSession } from "@/lib/course-access-session";
+import { getAuthorizedCoursePurchase } from "@/lib/course-access-session";
 import { getVimeoEmbedUrl } from "@/lib/live";
-import { prisma } from "@/lib/prisma";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ token?: string }>;
 };
 
 export const dynamic = "force-dynamic";
@@ -38,34 +34,10 @@ function AccessRequired({ slug }: { slug: string }) {
   );
 }
 
-export default async function CourseWatchPage({ params, searchParams }: Props) {
-  const [{ slug }, query] = await Promise.all([params, searchParams]);
-  const token = query.token?.trim();
-
-  if (!token) notFound();
-
-  const purchase = await prisma.coursePurchase.findFirst({
-    where: {
-      accessToken: token,
-      status: CoursePurchaseStatus.APPROVED,
-      course: { slug, isPublished: true },
-    },
-    include: {
-      course: {
-        include: {
-          lessonUnits: {
-            where: { isPublished: true },
-            orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
-          },
-        },
-      },
-    },
-  });
-
-  if (!purchase) notFound();
-  if (!(await hasCourseAccessSession(purchase))) {
-    return <AccessRequired slug={slug} />;
-  }
+export default async function CourseWatchPage({ params }: Props) {
+  const { slug } = await params;
+  const purchase = await getAuthorizedCoursePurchase(slug);
+  if (!purchase) return <AccessRequired slug={slug} />;
 
   const courseEmbedUrl = embedUrl(purchase.course.fullVideoUrl);
 
@@ -73,7 +45,7 @@ export default async function CourseWatchPage({ params, searchParams }: Props) {
     <main>
       <section className="section">
         <div className="container">
-          <Link className="back-link" href={`/courses/${purchase.course.slug}/live?token=${token}`}>
+          <Link className="back-link" href={`/courses/${purchase.course.slug}/live`}>
             回到學習教室
           </Link>
           <span className="eyebrow">課程回放</span>

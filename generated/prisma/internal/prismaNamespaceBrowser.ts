@@ -56,6 +56,7 @@ export const ModelName = {
   PaymentReport: 'PaymentReport',
   EmailLog: 'EmailLog',
   AdminUser: 'AdminUser',
+  AdminAuditLog: 'AdminAuditLog',
   SystemSetting: 'SystemSetting',
   AdminSession: 'AdminSession',
   MemberUser: 'MemberUser',
@@ -68,7 +69,8 @@ export const ModelName = {
   LiveQuestion: 'LiveQuestion',
   LiveQuestionUpvote: 'LiveQuestionUpvote',
   CourseLesson: 'CourseLesson',
-  ContactMessage: 'ContactMessage'
+  ContactMessage: 'ContactMessage',
+  SecurityRateLimitBucket: 'SecurityRateLimitBucket'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -176,6 +178,20 @@ export const AdminUserScalarFieldEnum = {
 } as const
 
 export type AdminUserScalarFieldEnum = (typeof AdminUserScalarFieldEnum)[keyof typeof AdminUserScalarFieldEnum]
+
+
+export const AdminAuditLogScalarFieldEnum = {
+  id: 'id',
+  adminUserId: 'adminUserId',
+  action: 'action',
+  targetType: 'targetType',
+  targetId: 'targetId',
+  metadata: 'metadata',
+  ipHash: 'ipHash',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminAuditLogScalarFieldEnum = (typeof AdminAuditLogScalarFieldEnum)[keyof typeof AdminAuditLogScalarFieldEnum]
 
 
 export const SystemSettingScalarFieldEnum = {
@@ -403,6 +419,17 @@ export const ContactMessageScalarFieldEnum = {
 } as const
 
 export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnum)[keyof typeof ContactMessageScalarFieldEnum]
+
+
+export const SecurityRateLimitBucketScalarFieldEnum = {
+  id: 'id',
+  count: 'count',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SecurityRateLimitBucketScalarFieldEnum = (typeof SecurityRateLimitBucketScalarFieldEnum)[keyof typeof SecurityRateLimitBucketScalarFieldEnum]
 
 
 export const SortOrder = {

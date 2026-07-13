@@ -283,7 +283,7 @@ export type CoursePurchaseGroupByOutputType = {
   paidAt: Date | null
   note: string | null
   status: $Enums.CoursePurchaseStatus
-  accessToken: string
+  accessToken: string | null
   approvedAt: Date | null
   rejectedAt: Date | null
   reviewedAt: Date | null
@@ -329,7 +329,7 @@ export type CoursePurchaseWhereInput = {
   paidAt?: Prisma.DateTimeNullableFilter<"CoursePurchase"> | Date | string | null
   note?: Prisma.StringNullableFilter<"CoursePurchase"> | string | null
   status?: Prisma.EnumCoursePurchaseStatusFilter<"CoursePurchase"> | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFilter<"CoursePurchase"> | string
+  accessToken?: Prisma.StringNullableFilter<"CoursePurchase"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"CoursePurchase"> | Date | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"CoursePurchase"> | Date | string | null
   reviewedAt?: Prisma.DateTimeNullableFilter<"CoursePurchase"> | Date | string | null
@@ -358,7 +358,7 @@ export type CoursePurchaseOrderByWithRelationInput = {
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  accessToken?: Prisma.SortOrder
+  accessToken?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -419,7 +419,7 @@ export type CoursePurchaseOrderByWithAggregationInput = {
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  accessToken?: Prisma.SortOrder
+  accessToken?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -450,7 +450,7 @@ export type CoursePurchaseScalarWhereWithAggregatesInput = {
   paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CoursePurchase"> | Date | string | null
   note?: Prisma.StringNullableWithAggregatesFilter<"CoursePurchase"> | string | null
   status?: Prisma.EnumCoursePurchaseStatusWithAggregatesFilter<"CoursePurchase"> | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringWithAggregatesFilter<"CoursePurchase"> | string
+  accessToken?: Prisma.StringNullableWithAggregatesFilter<"CoursePurchase"> | string | null
   approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CoursePurchase"> | Date | string | null
   rejectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CoursePurchase"> | Date | string | null
   reviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CoursePurchase"> | Date | string | null
@@ -471,7 +471,7 @@ export type CoursePurchaseCreateInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -499,7 +499,7 @@ export type CoursePurchaseUncheckedCreateInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -523,7 +523,7 @@ export type CoursePurchaseUpdateInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -551,7 +551,7 @@ export type CoursePurchaseUncheckedUpdateInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -577,7 +577,7 @@ export type CoursePurchaseCreateManyInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -598,7 +598,7 @@ export type CoursePurchaseUpdateManyMutationInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -620,7 +620,7 @@ export type CoursePurchaseUncheckedUpdateManyInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -912,7 +912,7 @@ export type CoursePurchaseCreateWithoutEmailLogsInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -939,7 +939,7 @@ export type CoursePurchaseUncheckedCreateWithoutEmailLogsInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -978,7 +978,7 @@ export type CoursePurchaseUpdateWithoutEmailLogsInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1005,7 +1005,7 @@ export type CoursePurchaseUncheckedUpdateWithoutEmailLogsInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1028,7 +1028,7 @@ export type CoursePurchaseCreateWithoutReviewedByInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1055,7 +1055,7 @@ export type CoursePurchaseUncheckedCreateWithoutReviewedByInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1109,7 +1109,7 @@ export type CoursePurchaseScalarWhereInput = {
   paidAt?: Prisma.DateTimeNullableFilter<"CoursePurchase"> | Date | string | null
   note?: Prisma.StringNullableFilter<"CoursePurchase"> | string | null
   status?: Prisma.EnumCoursePurchaseStatusFilter<"CoursePurchase"> | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFilter<"CoursePurchase"> | string
+  accessToken?: Prisma.StringNullableFilter<"CoursePurchase"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"CoursePurchase"> | Date | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"CoursePurchase"> | Date | string | null
   reviewedAt?: Prisma.DateTimeNullableFilter<"CoursePurchase"> | Date | string | null
@@ -1130,7 +1130,7 @@ export type CoursePurchaseCreateWithoutMemberUserInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1156,7 +1156,7 @@ export type CoursePurchaseUncheckedCreateWithoutMemberUserInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1206,7 +1206,7 @@ export type CoursePurchaseCreateWithoutCourseInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1232,7 +1232,7 @@ export type CoursePurchaseUncheckedCreateWithoutCourseInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1282,7 +1282,7 @@ export type CoursePurchaseCreateWithoutLiveQuestionsInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1309,7 +1309,7 @@ export type CoursePurchaseUncheckedCreateWithoutLiveQuestionsInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1348,7 +1348,7 @@ export type CoursePurchaseUpdateWithoutLiveQuestionsInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1375,7 +1375,7 @@ export type CoursePurchaseUncheckedUpdateWithoutLiveQuestionsInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1398,7 +1398,7 @@ export type CoursePurchaseCreateWithoutQuestionUpvotesInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1425,7 +1425,7 @@ export type CoursePurchaseUncheckedCreateWithoutQuestionUpvotesInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1464,7 +1464,7 @@ export type CoursePurchaseUpdateWithoutQuestionUpvotesInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1491,7 +1491,7 @@ export type CoursePurchaseUncheckedUpdateWithoutQuestionUpvotesInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1516,7 +1516,7 @@ export type CoursePurchaseCreateManyReviewedByInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1536,7 +1536,7 @@ export type CoursePurchaseUpdateWithoutReviewedByInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1563,7 +1563,7 @@ export type CoursePurchaseUncheckedUpdateWithoutReviewedByInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1588,7 +1588,7 @@ export type CoursePurchaseUncheckedUpdateManyWithoutReviewedByInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1609,7 +1609,7 @@ export type CoursePurchaseCreateManyMemberUserInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1630,7 +1630,7 @@ export type CoursePurchaseUpdateWithoutMemberUserInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1656,7 +1656,7 @@ export type CoursePurchaseUncheckedUpdateWithoutMemberUserInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1681,7 +1681,7 @@ export type CoursePurchaseUncheckedUpdateManyWithoutMemberUserInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1703,7 +1703,7 @@ export type CoursePurchaseCreateManyCourseInput = {
   paidAt?: Date | string | null
   note?: string | null
   status?: $Enums.CoursePurchaseStatus
-  accessToken?: string
+  accessToken?: string | null
   approvedAt?: Date | string | null
   rejectedAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -1724,7 +1724,7 @@ export type CoursePurchaseUpdateWithoutCourseInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1750,7 +1750,7 @@ export type CoursePurchaseUncheckedUpdateWithoutCourseInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1775,7 +1775,7 @@ export type CoursePurchaseUncheckedUpdateManyWithoutCourseInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCoursePurchaseStatusFieldUpdateOperationsInput | $Enums.CoursePurchaseStatus
-  accessToken?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1983,7 +1983,7 @@ export type $CoursePurchasePayload<ExtArgs extends runtime.Types.Extensions.Inte
     paidAt: Date | null
     note: string | null
     status: $Enums.CoursePurchaseStatus
-    accessToken: string
+    accessToken: string | null
     approvedAt: Date | null
     rejectedAt: Date | null
     reviewedAt: Date | null

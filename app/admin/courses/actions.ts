@@ -34,7 +34,7 @@ function validHttpUrl(value: string) {
   if (!value) return true;
   try {
     const url = new URL(value);
-    return ["http:", "https:"].includes(url.protocol);
+    return url.protocol === "https:";
   } catch {
     return false;
   }

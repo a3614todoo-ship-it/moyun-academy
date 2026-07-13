@@ -31,8 +31,8 @@ export async function enterOwnedCourse(formData: FormData) {
 
   if (!purchase) redirect("/account?error=course_access");
 
-  await createCourseAccessSession(purchase.course.slug, purchase);
-  redirect(`/courses/${purchase.course.slug}/live?token=${purchase.accessToken}`);
+  await createCourseAccessSession(purchase.course.slug, purchase.id);
+  redirect(`/courses/${purchase.course.slug}/live`);
 }
 
 export async function enterMemberIncludedCourse(formData: FormData) {
@@ -70,8 +70,8 @@ export async function enterMemberIncludedCourse(formData: FormData) {
   });
 
   if (existingAccess) {
-    await createCourseAccessSession(course.slug, existingAccess);
-    redirect(`/courses/${course.slug}/live?token=${existingAccess.accessToken}`);
+    await createCourseAccessSession(course.slug, existingAccess.id);
+    redirect(`/courses/${course.slug}/live`);
   }
 
   const purchaseNo = await generateCoursePurchaseNumber();
@@ -91,6 +91,6 @@ export async function enterMemberIncludedCourse(formData: FormData) {
     },
   });
 
-  await createCourseAccessSession(course.slug, access);
-  redirect(`/courses/${course.slug}/live?token=${access.accessToken}`);
+  await createCourseAccessSession(course.slug, access.id);
+  redirect(`/courses/${course.slug}/live`);
 }

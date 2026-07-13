@@ -1,10 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { CoursePurchaseStatus, LiveQuestionStatus } from "@/generated/prisma/enums";
-import { hasCourseAccessSession } from "@/lib/course-access-session";
+import { LiveQuestionStatus } from "@/generated/prisma/enums";
+import { getAuthorizedCoursePurchase } from "@/lib/course-access-session";
 import { maskEmail } from "@/lib/live";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit } from "@/lib/security/rate-limit";
 
 export type LiveQuestionActionState = {
   message: string;
@@ -15,40 +16,29 @@ function text(formData: FormData, name: string) {
   return String(formData.get(name) || "").trim();
 }
 
-async function findApprovedPurchase(slug: string, token: string) {
-  return prisma.coursePurchase.findFirst({
-    where: {
-      accessToken: token,
-      status: CoursePurchaseStatus.APPROVED,
-      course: { slug, isPublished: true },
-    },
-    include: {
-      course: {
-        include: { liveSession: true },
-      },
-    },
-  });
-}
-
 export async function createLiveQuestion(
   _previousState: LiveQuestionActionState,
   formData: FormData,
 ): Promise<LiveQuestionActionState> {
   const slug = text(formData, "slug");
-  const token = text(formData, "token");
   const body = text(formData, "body");
 
-  if (!slug || !token) return { message: "缺少課程或權限資料。" };
-  if (body.length < 2) return { message: "提問內容至少需要 2 個字。" };
-  if (body.length > 500) return { message: "提問內容請控制在 500 字以內。" };
+  if (!slug) return { message: "缺少課程資料。" };
+  if (body.length < 2) return { message: "問題至少需要 2 個字。" };
+  if (body.length > 500) return { message: "問題不可超過 500 個字。" };
 
-  const purchase = await findApprovedPurchase(slug, token);
-  if (purchase && !(await hasCourseAccessSession(purchase))) {
-    return { message: "請先回課程頁重新驗證課程權限，再送出提問。" };
-  }
+  const rateLimit = await checkRateLimit({
+    scope: "live-question",
+    limit: 20,
+    windowSeconds: 60,
+    identifiers: [slug],
+  });
+  if (!rateLimit.allowed) return { message: "送出問題過於頻繁，請稍後再試。" };
+
+  const purchase = await getAuthorizedCoursePurchase(slug);
   const liveSession = purchase?.course.liveSession;
   if (!purchase || !liveSession?.isEnabled || !liveSession.enableQuestions) {
-    return { message: "這堂課目前尚未開放站內 Q&A。" };
+    return { message: "目前無法使用課程問答。" };
   }
 
   await prisma.liveQuestion.create({
@@ -62,18 +52,23 @@ export async function createLiveQuestion(
   });
 
   revalidatePath(`/courses/${slug}/live`);
-  return { message: "提問已送出。", ok: true };
+  return { message: "問題已送出。", ok: true };
 }
 
 export async function upvoteLiveQuestion(formData: FormData) {
   const slug = text(formData, "slug");
-  const token = text(formData, "token");
   const questionId = text(formData, "questionId");
+  if (!slug || !questionId) return;
 
-  if (!slug || !token || !questionId) return;
+  const rateLimit = await checkRateLimit({
+    scope: "live-question-upvote",
+    limit: 60,
+    windowSeconds: 60,
+    identifiers: [slug],
+  });
+  if (!rateLimit.allowed) return;
 
-  const purchase = await findApprovedPurchase(slug, token);
-  if (purchase && !(await hasCourseAccessSession(purchase))) return;
+  const purchase = await getAuthorizedCoursePurchase(slug);
   const liveSession = purchase?.course.liveSession;
   if (!purchase || !liveSession?.isEnabled) return;
 

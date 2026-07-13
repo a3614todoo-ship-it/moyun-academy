@@ -6,11 +6,15 @@ import { getEmailConfig } from "@/lib/email/config";
 import { sendEmailLogs } from "@/lib/email/mailer";
 import { paymentReportSchema } from "@/lib/payment-report-validation";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit } from "@/lib/security/rate-limit";
+import { publicReferenceQuery } from "@/lib/security/public-reference";
 
 export type PaymentReportActionState = {
   message: string;
   fieldErrors?: Record<string, string[] | undefined>;
 };
+
+class ExistingPaymentReportError extends Error {}
 
 export async function createPaymentReport(
   _previousState: PaymentReportActionState,
@@ -35,6 +39,13 @@ export async function createPaymentReport(
   }
 
   const values = parsed.data;
+  const rateLimit = await checkRateLimit({
+    scope: "membership-payment-report",
+    limit: 5,
+    windowSeconds: 10 * 60,
+    identifiers: [values.applicationNo, values.phone],
+  });
+  if (!rateLimit.allowed) return { message: "送出次數過多，請稍後再試。" };
   const application = await prisma.application.findFirst({
     where: {
       applicationNo: values.applicationNo,
@@ -52,7 +63,7 @@ export async function createPaymentReport(
   }
 
   if (application.paymentReports.length > 0) {
-    redirect(`/payment-report/success?application_no=${application.applicationNo}`);
+    redirect(`/payment-report/success?${publicReferenceQuery("application", application.applicationNo)}`);
   }
 
   if (values.amount !== application.plan.price) {
@@ -66,6 +77,14 @@ export async function createPaymentReport(
 
   try {
     emailLogIds = await prisma.$transaction(async (transaction) => {
+      // 同一份申請序列化處理，避免兩個並行請求建立重複付款回報。
+      await transaction.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${application.id}))`;
+      const existingReport = await transaction.paymentReport.findFirst({
+        where: { applicationId: application.id },
+        select: { id: true },
+      });
+      if (existingReport) throw new ExistingPaymentReportError();
+
       await transaction.paymentReport.create({
         data: {
           applicationId: application.id,
@@ -114,10 +133,13 @@ export async function createPaymentReport(
       return [userEmailLog.id, adminEmailLog.id];
     });
   } catch (error) {
+    if (error instanceof ExistingPaymentReportError) {
+      redirect(`/payment-report/success?${publicReferenceQuery("application", application.applicationNo)}`);
+    }
     console.error("建立匯款回報失敗", error);
     return { message: "系統暫時無法送出匯款回報，請稍後再試。" };
   }
 
   await sendEmailLogs(emailLogIds);
-  redirect(`/payment-report/success?application_no=${application.applicationNo}`);
+  redirect(`/payment-report/success?${publicReferenceQuery("application", application.applicationNo)}`);
 }

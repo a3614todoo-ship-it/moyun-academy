@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { CoursePurchaseStatus } from "@/generated/prisma/enums";
 import { createCourseAccessSession } from "@/lib/course-access-session";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit } from "@/lib/security/rate-limit";
 
 export type CourseAccessLookupState = {
   message: string;
@@ -55,6 +56,14 @@ export async function lookupCourseAccess(
     return { message: "請確認欄位是否正確。", fieldErrors };
   }
 
+  const rateLimit = await checkRateLimit({
+    scope: "course-access-lookup",
+    limit: 5,
+    windowSeconds: 10 * 60,
+    identifiers: [purchaseNo, email],
+  });
+  if (!rateLimit.allowed) return { message: "查詢次數過多，請稍後再試。" };
+
   const purchase = await prisma.coursePurchase.findFirst({
     where: {
       purchaseNo,
@@ -64,7 +73,6 @@ export async function lookupCourseAccess(
       id: true,
       email: true,
       status: true,
-      accessToken: true,
     },
   });
 
@@ -76,6 +84,6 @@ export async function lookupCourseAccess(
     return { message: statusMessage(purchase.status) };
   }
 
-  await createCourseAccessSession(slug, purchase);
-  redirect(`/courses/${slug}/live?token=${purchase.accessToken}`);
+  await createCourseAccessSession(slug, purchase.id);
+  redirect(`/courses/${slug}/live`);
 }

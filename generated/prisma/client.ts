@@ -67,6 +67,11 @@ export type EmailLog = Prisma.EmailLogModel
  */
 export type AdminUser = Prisma.AdminUserModel
 /**
+ * Model AdminAuditLog
+ * 
+ */
+export type AdminAuditLog = Prisma.AdminAuditLogModel
+/**
  * Model SystemSetting
  * 
  */
@@ -131,3 +136,8 @@ export type CourseLesson = Prisma.CourseLessonModel
  * 
  */
 export type ContactMessage = Prisma.ContactMessageModel
+/**
+ * Model SecurityRateLimitBucket
+ * 
+ */
+export type SecurityRateLimitBucket = Prisma.SecurityRateLimitBucketModel

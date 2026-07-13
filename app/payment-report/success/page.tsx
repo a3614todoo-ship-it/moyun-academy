@@ -1,17 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { verifyPublicReferenceSignature } from "@/lib/security/public-reference";
 
 export const metadata: Metadata = { title: "匯款回報完成" };
 export const dynamic = "force-dynamic";
 
 type Props = {
-  searchParams: Promise<{ application_no?: string }>;
+  searchParams: Promise<{ application_no?: string; sig?: string }>;
 };
 
 export default async function PaymentReportSuccessPage({ searchParams }: Props) {
-  const applicationNo = (await searchParams).application_no?.trim();
-  const application = applicationNo
+  const query = await searchParams;
+  const applicationNo = query.application_no?.trim();
+  const validReference = Boolean(
+    applicationNo && verifyPublicReferenceSignature("application", applicationNo, query.sig),
+  );
+  const application = validReference && applicationNo
     ? await prisma.application.findUnique({
         where: { applicationNo },
         select: {

@@ -1,6 +1,5 @@
 "use server";
 
-import { compare } from "bcryptjs";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { ApplicationStatus, EmailStatus, EmailType, MembershipSubscriptionStatus, MemberUserStatus } from "@/generated/prisma/enums";
@@ -11,6 +10,9 @@ import {
 } from "@/lib/admin/auth";
 import { sendEmailLog } from "@/lib/email/mailer";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit } from "@/lib/security/rate-limit";
+import { verifyPassword } from "@/lib/security/password";
+import { recordAdminAudit } from "@/lib/security/admin-audit";
 import {
   BANK_SETTING_KEYS,
   FACEBOOK_GROUP_URL_KEY,
@@ -36,10 +38,18 @@ export async function loginAdmin(
     return { message: "請輸入管理員 Email 與密碼。" };
   }
 
+  const rateLimit = await checkRateLimit({
+    scope: "admin-login",
+    limit: 5,
+    windowSeconds: 15 * 60,
+    identifiers: [email],
+  });
+  if (!rateLimit.allowed) {
+    return { message: "登入嘗試次數過多，請稍後再試。" };
+  }
+
   const admin = await prisma.adminUser.findUnique({ where: { email } });
-  const valid = admin?.isActive
-    ? await compare(password, admin.passwordHash)
-    : false;
+  const valid = await verifyPassword(password, admin?.isActive ? admin.passwordHash : null);
 
   if (!admin || !valid) {
     return { message: "Email 或密碼錯誤。" };
@@ -55,6 +65,7 @@ export async function loginAdmin(
     }),
   ]);
   await createAdminSession(admin.id);
+  await recordAdminAudit({ adminUserId: admin.id, action: "ADMIN_LOGIN_SUCCEEDED" });
   redirect("/admin");
 }
 
@@ -203,6 +214,13 @@ export async function updateApplicationStatus(formData: FormData) {
   });
 
   if (emailLogId) await sendEmailLog(emailLogId);
+  await recordAdminAudit({
+    adminUserId: session.adminUser.id,
+    action: "APPLICATION_STATUS_CHANGED",
+    targetType: "Application",
+    targetId: applicationId,
+    metadata: { fromStatus: application.status, toStatus: nextStatus },
+  });
   revalidatePath("/admin");
   revalidatePath("/admin/applications");
   revalidatePath(`/admin/applications/${applicationId}`);
@@ -251,6 +269,13 @@ export async function saveFacebookGroupSetting(formData: FormData) {
     },
   });
 
+  await recordAdminAudit({
+    adminUserId: session.adminUser.id,
+    action: "FACEBOOK_GROUP_SETTING_CHANGED",
+    targetType: "SystemSetting",
+    targetId: FACEBOOK_GROUP_URL_KEY,
+  });
+
   revalidatePath("/admin/settings");
   redirect("/admin/settings?saved=1");
 }
@@ -295,6 +320,12 @@ export async function saveBankTransferSettings(formData: FormData) {
       });
     }),
   );
+
+  await recordAdminAudit({
+    adminUserId: session.adminUser.id,
+    action: "BANK_TRANSFER_SETTINGS_CHANGED",
+    targetType: "SystemSetting",
+  });
 
   revalidatePath("/admin/settings");
   revalidatePath("/apply/success");

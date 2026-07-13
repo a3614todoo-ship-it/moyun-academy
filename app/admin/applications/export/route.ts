@@ -3,13 +3,18 @@ import { ApplicationStatus } from "@/generated/prisma/enums";
 import { applicationStatusLabels, formatTaipeiDateTime } from "@/lib/admin/labels";
 import { getAdminSession } from "@/lib/admin/auth";
 import { prisma } from "@/lib/prisma";
+import { recordAdminAudit } from "@/lib/security/admin-audit";
 
 function csvCell(value: string | number) {
-  return `"${String(value).replaceAll('"', '""')}"`;
+  const text = String(value);
+  // 避免 Excel、LibreOffice 將使用者輸入當成公式執行。
+  const safeText = /^[=+\-@]/.test(text) ? `'${text}` : text;
+  return `"${safeText.replaceAll('"', '""')}"`;
 }
 
 export async function GET(request: Request) {
-  if (!(await getAdminSession())) return new NextResponse("Unauthorized", { status: 401 });
+  const session = await getAdminSession();
+  if (!session) return new NextResponse("Unauthorized", { status: 401 });
   const url = new URL(request.url);
   const q = url.searchParams.get("q")?.trim() || "";
   const rawStatus = url.searchParams.get("status");
@@ -45,10 +50,19 @@ export async function GET(request: Request) {
     ),
   ].join("\r\n");
 
+  await recordAdminAudit({
+    adminUserId: session.adminUser.id,
+    action: "APPLICATIONS_EXPORTED",
+    targetType: "Application",
+    metadata: { rowCount: rows.length, filtered: Boolean(q || status) },
+  });
+
   return new NextResponse(`\uFEFF${csv}`, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
       "Content-Disposition": `attachment; filename="applications-${new Date().toISOString().slice(0, 10)}.csv"`,
+      "Cache-Control": "private, no-store, max-age=0",
+      "X-Content-Type-Options": "nosniff",
     },
   });
 }

@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getBankTransferSettings } from "@/lib/settings";
+import { verifyPublicReferenceSignature } from "@/lib/security/public-reference";
 
 export const metadata: Metadata = { title: "報名完成" };
 export const dynamic = "force-dynamic";
 
 type Props = {
-  searchParams: Promise<{ application_no?: string }>;
+  searchParams: Promise<{ application_no?: string; sig?: string }>;
 };
 
 function BankValue({
@@ -21,9 +22,13 @@ function BankValue({
 }
 
 export default async function ApplySuccessPage({ searchParams }: Props) {
-  const applicationNo = (await searchParams).application_no?.trim();
+  const query = await searchParams;
+  const applicationNo = query.application_no?.trim();
+  const validReference = Boolean(
+    applicationNo && verifyPublicReferenceSignature("application", applicationNo, query.sig),
+  );
   const [application, bankSettings] = await Promise.all([
-    applicationNo
+    validReference && applicationNo
       ? prisma.application.findUnique({
           where: { applicationNo },
           select: {

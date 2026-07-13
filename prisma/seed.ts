@@ -127,7 +127,8 @@ async function seedAdmin() {
 
   await prisma.adminUser.upsert({
     where: { email },
-    update: { name, passwordHash, isActive: true },
+    // 已存在的帳號不可被 seed 重設密碼或重新啟用。
+    update: { name },
     create: { email, name, passwordHash },
   });
 }
