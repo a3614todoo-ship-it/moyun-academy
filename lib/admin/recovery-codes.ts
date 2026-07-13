@@ -1,23 +1,16 @@
-import { createHmac, randomInt } from "node:crypto";
+import { createHash, randomInt } from "node:crypto";
 
 const RECOVERY_CODE_COUNT = 10;
 const RECOVERY_CODE_LENGTH = 20;
 const RECOVERY_CODE_ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
-
-function recoveryCodeSecret() {
-  const value = process.env.AUDIT_LOG_SECRET || process.env.MEMBER_AUTH_SECRET;
-  if (!value || value.length < 32) {
-    throw new Error("缺少至少 32 字元的 AUDIT_LOG_SECRET 或 MEMBER_AUTH_SECRET。");
-  }
-  return value;
-}
 
 export function normalizeRecoveryCode(code: string) {
   return code.toUpperCase().replace(/[^A-Z0-9]/g, "");
 }
 
 export function hashRecoveryCode(code: string) {
-  return createHmac("sha256", recoveryCodeSecret())
+  // 每組碼具有約 100-bit 隨機熵，使用用途隔離雜湊可避免跨環境秘密不同步。
+  return createHash("sha256")
     .update(`admin-recovery-code:${normalizeRecoveryCode(code)}`)
     .digest("hex");
 }
@@ -33,4 +26,3 @@ function generateRecoveryCode() {
 export function generateRecoveryCodes() {
   return Array.from({ length: RECOVERY_CODE_COUNT }, generateRecoveryCode);
 }
-
