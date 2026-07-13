@@ -389,6 +389,7 @@ export const ModelName = {
   PaymentReport: 'PaymentReport',
   EmailLog: 'EmailLog',
   AdminUser: 'AdminUser',
+  AdminRecoveryCode: 'AdminRecoveryCode',
   AdminAuditLog: 'AdminAuditLog',
   SystemSetting: 'SystemSetting',
   AdminSession: 'AdminSession',
@@ -419,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "application" | "membershipPlan" | "paymentReport" | "emailLog" | "adminUser" | "adminAuditLog" | "systemSetting" | "adminSession" | "memberUser" | "memberSession" | "membershipSubscription" | "applicationStatusHistory" | "course" | "coursePurchase" | "liveSession" | "liveQuestion" | "liveQuestionUpvote" | "courseLesson" | "contactMessage" | "securityRateLimitBucket"
+    modelProps: "application" | "membershipPlan" | "paymentReport" | "emailLog" | "adminUser" | "adminRecoveryCode" | "adminAuditLog" | "systemSetting" | "adminSession" | "memberUser" | "memberSession" | "membershipSubscription" | "applicationStatusHistory" | "course" | "coursePurchase" | "liveSession" | "liveQuestion" | "liveQuestionUpvote" | "courseLesson" | "contactMessage" | "securityRateLimitBucket"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -790,6 +791,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AdminUserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AdminUserCountAggregateOutputType> | number
+        }
+      }
+    }
+    AdminRecoveryCode: {
+      payload: Prisma.$AdminRecoveryCodePayload<ExtArgs>
+      fields: Prisma.AdminRecoveryCodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdminRecoveryCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdminRecoveryCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload>
+        }
+        findFirst: {
+          args: Prisma.AdminRecoveryCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdminRecoveryCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload>
+        }
+        findMany: {
+          args: Prisma.AdminRecoveryCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload>[]
+        }
+        create: {
+          args: Prisma.AdminRecoveryCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload>
+        }
+        createMany: {
+          args: Prisma.AdminRecoveryCodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AdminRecoveryCodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload>[]
+        }
+        delete: {
+          args: Prisma.AdminRecoveryCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload>
+        }
+        update: {
+          args: Prisma.AdminRecoveryCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload>
+        }
+        deleteMany: {
+          args: Prisma.AdminRecoveryCodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdminRecoveryCodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AdminRecoveryCodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload>[]
+        }
+        upsert: {
+          args: Prisma.AdminRecoveryCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminRecoveryCodePayload>
+        }
+        aggregate: {
+          args: Prisma.AdminRecoveryCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdminRecoveryCode>
+        }
+        groupBy: {
+          args: Prisma.AdminRecoveryCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminRecoveryCodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdminRecoveryCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminRecoveryCodeCountAggregateOutputType> | number
         }
       }
     }
@@ -2033,6 +2108,17 @@ export const AdminUserScalarFieldEnum = {
 export type AdminUserScalarFieldEnum = (typeof AdminUserScalarFieldEnum)[keyof typeof AdminUserScalarFieldEnum]
 
 
+export const AdminRecoveryCodeScalarFieldEnum = {
+  id: 'id',
+  adminUserId: 'adminUserId',
+  codeHash: 'codeHash',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminRecoveryCodeScalarFieldEnum = (typeof AdminRecoveryCodeScalarFieldEnum)[keyof typeof AdminRecoveryCodeScalarFieldEnum]
+
+
 export const AdminAuditLogScalarFieldEnum = {
   id: 'id',
   adminUserId: 'adminUserId',
@@ -2677,6 +2763,7 @@ export type GlobalOmitConfig = {
   paymentReport?: Prisma.PaymentReportOmit
   emailLog?: Prisma.EmailLogOmit
   adminUser?: Prisma.AdminUserOmit
+  adminRecoveryCode?: Prisma.AdminRecoveryCodeOmit
   adminAuditLog?: Prisma.AdminAuditLogOmit
   systemSetting?: Prisma.SystemSettingOmit
   adminSession?: Prisma.AdminSessionOmit

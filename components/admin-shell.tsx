@@ -16,6 +16,7 @@ const navItems = [
   { href: "/admin/applications", label: "會員申請" },
   { href: "/admin/applications?status=PAYMENT_REPORTED", label: "會員匯款審核" },
   { href: "/admin/settings", label: "系統設定" },
+  { href: "/admin/security", label: "安全設定" },
 ];
 
 export function AdminShell({ adminName, children }: Props) {

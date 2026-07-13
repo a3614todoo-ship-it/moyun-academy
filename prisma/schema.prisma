@@ -113,8 +113,20 @@ model AdminUser {
   statusChanges    ApplicationStatusHistory[]
   updatedSettings  SystemSetting[]
   auditLogs        AdminAuditLog[]
+  recoveryCodes    AdminRecoveryCode[]
   createdAt        DateTime                   @default(now())
   updatedAt        DateTime                   @updatedAt
+}
+
+model AdminRecoveryCode {
+  id          String     @id @default(cuid())
+  adminUserId String
+  adminUser   AdminUser  @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+  codeHash    String     @unique
+  usedAt      DateTime?
+  createdAt   DateTime   @default(now())
+
+  @@index([adminUserId, usedAt])
 }
 
 model AdminAuditLog {

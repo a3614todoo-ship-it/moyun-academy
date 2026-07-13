@@ -11,6 +11,7 @@ type RateLimitOptions = {
 
 export type RateLimitResult = {
   allowed: boolean;
+  currentCount: number;
   retryAfterSeconds: number;
 };
 
@@ -65,6 +66,7 @@ export async function checkRateLimit({
 
   return {
     allowed: bucket.count <= limit,
+    currentCount: bucket.count,
     retryAfterSeconds: Math.max(1, Math.ceil((expiresAt.getTime() - now) / 1000)),
   };
 }

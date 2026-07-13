@@ -1086,6 +1086,15 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
 .admin-login-form label { display: grid; gap: 7px; color: var(--forest); font-size: 14px; font-weight: 700; }
 .admin-login-form input { min-height: 48px; padding: 10px 12px; border: 1px solid var(--line); background: white; }
 .admin-form-error { padding: 11px; color: #8d3028; background: #fff0ee; font-size: 13px; }
+.admin-login-back { color: #526b63; text-align: center; font-size: 13px; }
+.admin-security-card { overflow: visible; }
+.admin-security-content { display: grid; gap: 14px; padding: 22px; }
+.admin-security-content p { margin: 0; }
+.admin-security-note { color: #69766f; font-size: 13px; }
+.admin-recovery-code-result { padding: 20px; border: 1px solid #d5bd82; background: #fff9e9; }
+.admin-recovery-code-result h3 { margin: 0 0 12px; color: #694c12; }
+.admin-recovery-code-result ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 30px; margin: 0 0 14px; padding-left: 28px; }
+.admin-recovery-code-result code { color: #183c33; font-size: 15px; font-weight: 800; letter-spacing: .04em; }
 
 .admin-app { display: grid; grid-template-columns: 238px minmax(0, 1fr); min-height: 100vh; color: #25312c; background: #f1f4f2; font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
 .admin-sidebar { position: sticky; top: 0; display: flex; height: 100vh; padding: 24px 18px; flex-direction: column; color: #dbe5e1; background: #102e28; }

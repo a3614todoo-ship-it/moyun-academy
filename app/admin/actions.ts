@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { ApplicationStatus, EmailStatus, EmailType, MembershipSubscriptionStatus, MemberUserStatus } from "@/generated/prisma/enums";
 import {
-  createAdminSession,
+  createAdminMfaChallenge,
   destroyAdminSession,
   requireAdmin,
 } from "@/lib/admin/auth";
@@ -39,12 +39,18 @@ export async function loginAdmin(
   }
 
   const rateLimit = await checkRateLimit({
-    scope: "admin-login",
+    scope: "admin-login-password",
     limit: 5,
     windowSeconds: 15 * 60,
     identifiers: [email],
   });
   if (!rateLimit.allowed) {
+    if (rateLimit.currentCount === 6) {
+      await recordAdminAudit({
+        action: "ADMIN_LOGIN_PASSWORD_RATE_LIMITED",
+        metadata: { reason: "rate_limited" },
+      });
+    }
     return { message: "登入嘗試次數過多，請稍後再試。" };
   }
 
@@ -52,21 +58,32 @@ export async function loginAdmin(
   const valid = await verifyPassword(password, admin?.isActive ? admin.passwordHash : null);
 
   if (!admin || !valid) {
+    await recordAdminAudit({
+      adminUserId: admin?.id,
+      action: "ADMIN_LOGIN_PASSWORD_FAILED",
+      metadata: { reason: "invalid_credentials" },
+    });
     return { message: "Email 或密碼錯誤。" };
   }
 
-  await prisma.$transaction([
-    prisma.adminSession.deleteMany({
-      where: { adminUserId: admin.id, expiresAt: { lte: new Date() } },
-    }),
-    prisma.adminUser.update({
-      where: { id: admin.id },
-      data: { lastLoginAt: new Date() },
-    }),
-  ]);
-  await createAdminSession(admin.id);
-  await recordAdminAudit({ adminUserId: admin.id, action: "ADMIN_LOGIN_SUCCEEDED" });
-  redirect("/admin");
+  const availableCodes = await prisma.adminRecoveryCode.count({
+    where: { adminUserId: admin.id, usedAt: null },
+  });
+  if (availableCodes === 0) {
+    await recordAdminAudit({
+      adminUserId: admin.id,
+      action: "ADMIN_LOGIN_RECOVERY_CODES_UNAVAILABLE",
+      metadata: { reason: "no_unused_codes" },
+    });
+    return { message: "此帳號尚未設定可用的救援碼，請聯絡系統管理者重新產生。" };
+  }
+
+  await createAdminMfaChallenge(admin.id);
+  await recordAdminAudit({
+    adminUserId: admin.id,
+    action: "ADMIN_LOGIN_PASSWORD_VERIFIED",
+  });
+  redirect("/admin/login/verify");
 }
 
 export async function logoutAdmin() {
