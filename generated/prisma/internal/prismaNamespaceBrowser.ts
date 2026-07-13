@@ -56,6 +56,7 @@ export const ModelName = {
   PaymentReport: 'PaymentReport',
   EmailLog: 'EmailLog',
   AdminUser: 'AdminUser',
+  AdminEmailOtp: 'AdminEmailOtp',
   AdminRecoveryCode: 'AdminRecoveryCode',
   AdminAuditLog: 'AdminAuditLog',
   SystemSetting: 'SystemSetting',
@@ -179,6 +180,19 @@ export const AdminUserScalarFieldEnum = {
 } as const
 
 export type AdminUserScalarFieldEnum = (typeof AdminUserScalarFieldEnum)[keyof typeof AdminUserScalarFieldEnum]
+
+
+export const AdminEmailOtpScalarFieldEnum = {
+  id: 'id',
+  adminUserId: 'adminUserId',
+  codeHash: 'codeHash',
+  attempts: 'attempts',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminEmailOtpScalarFieldEnum = (typeof AdminEmailOtpScalarFieldEnum)[keyof typeof AdminEmailOtpScalarFieldEnum]
 
 
 export const AdminRecoveryCodeScalarFieldEnum = {

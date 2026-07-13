@@ -1087,6 +1087,12 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
 .admin-login-form input { min-height: 48px; padding: 10px 12px; border: 1px solid var(--line); background: white; }
 .admin-form-error { padding: 11px; color: #8d3028; background: #fff0ee; font-size: 13px; }
 .admin-login-back { color: #526b63; text-align: center; font-size: 13px; }
+.admin-email-code-box { display: grid; gap: 16px; }
+.admin-masked-email { margin: 4px 0 0; color: #526b63; font-size: 14px; }
+.admin-login-secondary-actions { display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 13px; }
+.admin-login-secondary-actions form { margin: 0; }
+.admin-login-secondary-actions button { border: 0; padding: 0; color: #526b63; background: transparent; cursor: pointer; }
+.admin-login-secondary-actions a { color: #8d621a; font-weight: 700; }
 .admin-security-card { overflow: visible; }
 .admin-security-content { display: grid; gap: 14px; padding: 22px; }
 .admin-security-content p { margin: 0; }

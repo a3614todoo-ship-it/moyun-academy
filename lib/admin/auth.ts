@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 const SESSION_COOKIE = "wobei_admin_session";
 const MFA_CHALLENGE_COOKIE = "wobei_admin_mfa_challenge";
 const SESSION_DAYS = 7;
-const MFA_CHALLENGE_MINUTES = 5;
+const MFA_CHALLENGE_MINUTES = 10;
 
 function hashToken(token: string) {
   return createHash("sha256").update(token).digest("hex");

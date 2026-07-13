@@ -213,6 +213,7 @@ export type AdminUserWhereInput = {
   updatedSettings?: Prisma.SystemSettingListRelationFilter
   auditLogs?: Prisma.AdminAuditLogListRelationFilter
   recoveryCodes?: Prisma.AdminRecoveryCodeListRelationFilter
+  emailOtps?: Prisma.AdminEmailOtpListRelationFilter
 }
 
 export type AdminUserOrderByWithRelationInput = {
@@ -231,6 +232,7 @@ export type AdminUserOrderByWithRelationInput = {
   updatedSettings?: Prisma.SystemSettingOrderByRelationAggregateInput
   auditLogs?: Prisma.AdminAuditLogOrderByRelationAggregateInput
   recoveryCodes?: Prisma.AdminRecoveryCodeOrderByRelationAggregateInput
+  emailOtps?: Prisma.AdminEmailOtpOrderByRelationAggregateInput
 }
 
 export type AdminUserWhereUniqueInput = Prisma.AtLeast<{
@@ -252,6 +254,7 @@ export type AdminUserWhereUniqueInput = Prisma.AtLeast<{
   updatedSettings?: Prisma.SystemSettingListRelationFilter
   auditLogs?: Prisma.AdminAuditLogListRelationFilter
   recoveryCodes?: Prisma.AdminRecoveryCodeListRelationFilter
+  emailOtps?: Prisma.AdminEmailOtpListRelationFilter
 }, "id" | "email">
 
 export type AdminUserOrderByWithAggregationInput = {
@@ -298,6 +301,7 @@ export type AdminUserCreateInput = {
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserUncheckedCreateInput = {
@@ -316,6 +320,7 @@ export type AdminUserUncheckedCreateInput = {
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserUpdateInput = {
@@ -334,6 +339,7 @@ export type AdminUserUpdateInput = {
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserUncheckedUpdateInput = {
@@ -352,6 +358,7 @@ export type AdminUserUncheckedUpdateInput = {
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserCreateManyInput = {
@@ -444,6 +451,20 @@ export type AdminUserUpdateOneWithoutReviewedPaymentsNestedInput = {
   delete?: Prisma.AdminUserWhereInput | boolean
   connect?: Prisma.AdminUserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.AdminUserUpdateToOneWithWhereWithoutReviewedPaymentsInput, Prisma.AdminUserUpdateWithoutReviewedPaymentsInput>, Prisma.AdminUserUncheckedUpdateWithoutReviewedPaymentsInput>
+}
+
+export type AdminUserCreateNestedOneWithoutEmailOtpsInput = {
+  create?: Prisma.XOR<Prisma.AdminUserCreateWithoutEmailOtpsInput, Prisma.AdminUserUncheckedCreateWithoutEmailOtpsInput>
+  connectOrCreate?: Prisma.AdminUserCreateOrConnectWithoutEmailOtpsInput
+  connect?: Prisma.AdminUserWhereUniqueInput
+}
+
+export type AdminUserUpdateOneRequiredWithoutEmailOtpsNestedInput = {
+  create?: Prisma.XOR<Prisma.AdminUserCreateWithoutEmailOtpsInput, Prisma.AdminUserUncheckedCreateWithoutEmailOtpsInput>
+  connectOrCreate?: Prisma.AdminUserCreateOrConnectWithoutEmailOtpsInput
+  upsert?: Prisma.AdminUserUpsertWithoutEmailOtpsInput
+  connect?: Prisma.AdminUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AdminUserUpdateToOneWithWhereWithoutEmailOtpsInput, Prisma.AdminUserUpdateWithoutEmailOtpsInput>, Prisma.AdminUserUncheckedUpdateWithoutEmailOtpsInput>
 }
 
 export type AdminUserCreateNestedOneWithoutRecoveryCodesInput = {
@@ -553,6 +574,7 @@ export type AdminUserCreateWithoutReviewedPaymentsInput = {
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserUncheckedCreateWithoutReviewedPaymentsInput = {
@@ -570,6 +592,7 @@ export type AdminUserUncheckedCreateWithoutReviewedPaymentsInput = {
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserCreateOrConnectWithoutReviewedPaymentsInput = {
@@ -603,6 +626,7 @@ export type AdminUserUpdateWithoutReviewedPaymentsInput = {
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserUncheckedUpdateWithoutReviewedPaymentsInput = {
@@ -615,6 +639,95 @@ export type AdminUserUncheckedUpdateWithoutReviewedPaymentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AdminSessionUncheckedUpdateManyWithoutAdminUserNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutReviewedByNestedInput
+  statusChanges?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutAdminUserNestedInput
+  recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedUpdateManyWithoutAdminUserNestedInput
+}
+
+export type AdminUserCreateWithoutEmailOtpsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.AdminSessionCreateNestedManyWithoutAdminUserInput
+  reviewedPayments?: Prisma.PaymentReportCreateNestedManyWithoutReviewedByInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutReviewedByInput
+  statusChanges?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutChangedByInput
+  updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutAdminUserInput
+  recoveryCodes?: Prisma.AdminRecoveryCodeCreateNestedManyWithoutAdminUserInput
+}
+
+export type AdminUserUncheckedCreateWithoutEmailOtpsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name: string
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.AdminSessionUncheckedCreateNestedManyWithoutAdminUserInput
+  reviewedPayments?: Prisma.PaymentReportUncheckedCreateNestedManyWithoutReviewedByInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutReviewedByInput
+  statusChanges?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  auditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutAdminUserInput
+  recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedCreateNestedManyWithoutAdminUserInput
+}
+
+export type AdminUserCreateOrConnectWithoutEmailOtpsInput = {
+  where: Prisma.AdminUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AdminUserCreateWithoutEmailOtpsInput, Prisma.AdminUserUncheckedCreateWithoutEmailOtpsInput>
+}
+
+export type AdminUserUpsertWithoutEmailOtpsInput = {
+  update: Prisma.XOR<Prisma.AdminUserUpdateWithoutEmailOtpsInput, Prisma.AdminUserUncheckedUpdateWithoutEmailOtpsInput>
+  create: Prisma.XOR<Prisma.AdminUserCreateWithoutEmailOtpsInput, Prisma.AdminUserUncheckedCreateWithoutEmailOtpsInput>
+  where?: Prisma.AdminUserWhereInput
+}
+
+export type AdminUserUpdateToOneWithWhereWithoutEmailOtpsInput = {
+  where?: Prisma.AdminUserWhereInput
+  data: Prisma.XOR<Prisma.AdminUserUpdateWithoutEmailOtpsInput, Prisma.AdminUserUncheckedUpdateWithoutEmailOtpsInput>
+}
+
+export type AdminUserUpdateWithoutEmailOtpsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.AdminSessionUpdateManyWithoutAdminUserNestedInput
+  reviewedPayments?: Prisma.PaymentReportUpdateManyWithoutReviewedByNestedInput
+  reviewedCoursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutReviewedByNestedInput
+  statusChanges?: Prisma.ApplicationStatusHistoryUpdateManyWithoutChangedByNestedInput
+  updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
+  auditLogs?: Prisma.AdminAuditLogUpdateManyWithoutAdminUserNestedInput
+  recoveryCodes?: Prisma.AdminRecoveryCodeUpdateManyWithoutAdminUserNestedInput
+}
+
+export type AdminUserUncheckedUpdateWithoutEmailOtpsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.AdminSessionUncheckedUpdateManyWithoutAdminUserNestedInput
+  reviewedPayments?: Prisma.PaymentReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviewedCoursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutReviewedByNestedInput
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -637,6 +750,7 @@ export type AdminUserCreateWithoutRecoveryCodesInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutChangedByInput
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserUncheckedCreateWithoutRecoveryCodesInput = {
@@ -654,6 +768,7 @@ export type AdminUserUncheckedCreateWithoutRecoveryCodesInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserCreateOrConnectWithoutRecoveryCodesInput = {
@@ -687,6 +802,7 @@ export type AdminUserUpdateWithoutRecoveryCodesInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserUncheckedUpdateWithoutRecoveryCodesInput = {
@@ -704,6 +820,7 @@ export type AdminUserUncheckedUpdateWithoutRecoveryCodesInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserCreateWithoutAuditLogsInput = {
@@ -721,6 +838,7 @@ export type AdminUserCreateWithoutAuditLogsInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutChangedByInput
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
   recoveryCodes?: Prisma.AdminRecoveryCodeCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserUncheckedCreateWithoutAuditLogsInput = {
@@ -738,6 +856,7 @@ export type AdminUserUncheckedCreateWithoutAuditLogsInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserCreateOrConnectWithoutAuditLogsInput = {
@@ -771,6 +890,7 @@ export type AdminUserUpdateWithoutAuditLogsInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserUncheckedUpdateWithoutAuditLogsInput = {
@@ -788,6 +908,7 @@ export type AdminUserUncheckedUpdateWithoutAuditLogsInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserCreateWithoutUpdatedSettingsInput = {
@@ -805,6 +926,7 @@ export type AdminUserCreateWithoutUpdatedSettingsInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryCreateNestedManyWithoutChangedByInput
   auditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserUncheckedCreateWithoutUpdatedSettingsInput = {
@@ -822,6 +944,7 @@ export type AdminUserUncheckedCreateWithoutUpdatedSettingsInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   auditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserCreateOrConnectWithoutUpdatedSettingsInput = {
@@ -855,6 +978,7 @@ export type AdminUserUpdateWithoutUpdatedSettingsInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryUpdateManyWithoutChangedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserUncheckedUpdateWithoutUpdatedSettingsInput = {
@@ -872,6 +996,7 @@ export type AdminUserUncheckedUpdateWithoutUpdatedSettingsInput = {
   statusChanges?: Prisma.ApplicationStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserCreateWithoutSessionsInput = {
@@ -889,6 +1014,7 @@ export type AdminUserCreateWithoutSessionsInput = {
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserUncheckedCreateWithoutSessionsInput = {
@@ -906,6 +1032,7 @@ export type AdminUserUncheckedCreateWithoutSessionsInput = {
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserCreateOrConnectWithoutSessionsInput = {
@@ -939,6 +1066,7 @@ export type AdminUserUpdateWithoutSessionsInput = {
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserUncheckedUpdateWithoutSessionsInput = {
@@ -956,6 +1084,7 @@ export type AdminUserUncheckedUpdateWithoutSessionsInput = {
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserCreateWithoutStatusChangesInput = {
@@ -973,6 +1102,7 @@ export type AdminUserCreateWithoutStatusChangesInput = {
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserUncheckedCreateWithoutStatusChangesInput = {
@@ -990,6 +1120,7 @@ export type AdminUserUncheckedCreateWithoutStatusChangesInput = {
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserCreateOrConnectWithoutStatusChangesInput = {
@@ -1023,6 +1154,7 @@ export type AdminUserUpdateWithoutStatusChangesInput = {
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserUncheckedUpdateWithoutStatusChangesInput = {
@@ -1040,6 +1172,7 @@ export type AdminUserUncheckedUpdateWithoutStatusChangesInput = {
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserCreateWithoutReviewedCoursePurchasesInput = {
@@ -1057,6 +1190,7 @@ export type AdminUserCreateWithoutReviewedCoursePurchasesInput = {
   updatedSettings?: Prisma.SystemSettingCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserUncheckedCreateWithoutReviewedCoursePurchasesInput = {
@@ -1074,6 +1208,7 @@ export type AdminUserUncheckedCreateWithoutReviewedCoursePurchasesInput = {
   updatedSettings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   auditLogs?: Prisma.AdminAuditLogUncheckedCreateNestedManyWithoutAdminUserInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedCreateNestedManyWithoutAdminUserInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedCreateNestedManyWithoutAdminUserInput
 }
 
 export type AdminUserCreateOrConnectWithoutReviewedCoursePurchasesInput = {
@@ -1107,6 +1242,7 @@ export type AdminUserUpdateWithoutReviewedCoursePurchasesInput = {
   updatedSettings?: Prisma.SystemSettingUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUpdateManyWithoutAdminUserNestedInput
 }
 
 export type AdminUserUncheckedUpdateWithoutReviewedCoursePurchasesInput = {
@@ -1124,6 +1260,7 @@ export type AdminUserUncheckedUpdateWithoutReviewedCoursePurchasesInput = {
   updatedSettings?: Prisma.SystemSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   auditLogs?: Prisma.AdminAuditLogUncheckedUpdateManyWithoutAdminUserNestedInput
   recoveryCodes?: Prisma.AdminRecoveryCodeUncheckedUpdateManyWithoutAdminUserNestedInput
+  emailOtps?: Prisma.AdminEmailOtpUncheckedUpdateManyWithoutAdminUserNestedInput
 }
 
 
@@ -1139,6 +1276,7 @@ export type AdminUserCountOutputType = {
   updatedSettings: number
   auditLogs: number
   recoveryCodes: number
+  emailOtps: number
 }
 
 export type AdminUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1149,6 +1287,7 @@ export type AdminUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensi
   updatedSettings?: boolean | AdminUserCountOutputTypeCountUpdatedSettingsArgs
   auditLogs?: boolean | AdminUserCountOutputTypeCountAuditLogsArgs
   recoveryCodes?: boolean | AdminUserCountOutputTypeCountRecoveryCodesArgs
+  emailOtps?: boolean | AdminUserCountOutputTypeCountEmailOtpsArgs
 }
 
 /**
@@ -1210,6 +1349,13 @@ export type AdminUserCountOutputTypeCountRecoveryCodesArgs<ExtArgs extends runti
   where?: Prisma.AdminRecoveryCodeWhereInput
 }
 
+/**
+ * AdminUserCountOutputType without action
+ */
+export type AdminUserCountOutputTypeCountEmailOtpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AdminEmailOtpWhereInput
+}
+
 
 export type AdminUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1227,6 +1373,7 @@ export type AdminUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   updatedSettings?: boolean | Prisma.AdminUser$updatedSettingsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.AdminUser$auditLogsArgs<ExtArgs>
   recoveryCodes?: boolean | Prisma.AdminUser$recoveryCodesArgs<ExtArgs>
+  emailOtps?: boolean | Prisma.AdminUser$emailOtpsArgs<ExtArgs>
   _count?: boolean | Prisma.AdminUserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["adminUser"]>
 
@@ -1272,6 +1419,7 @@ export type AdminUserInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   updatedSettings?: boolean | Prisma.AdminUser$updatedSettingsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.AdminUser$auditLogsArgs<ExtArgs>
   recoveryCodes?: boolean | Prisma.AdminUser$recoveryCodesArgs<ExtArgs>
+  emailOtps?: boolean | Prisma.AdminUser$emailOtpsArgs<ExtArgs>
   _count?: boolean | Prisma.AdminUserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AdminUserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1287,6 +1435,7 @@ export type $AdminUserPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     updatedSettings: Prisma.$SystemSettingPayload<ExtArgs>[]
     auditLogs: Prisma.$AdminAuditLogPayload<ExtArgs>[]
     recoveryCodes: Prisma.$AdminRecoveryCodePayload<ExtArgs>[]
+    emailOtps: Prisma.$AdminEmailOtpPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1698,6 +1847,7 @@ export interface Prisma__AdminUserClient<T, Null = never, ExtArgs extends runtim
   updatedSettings<T extends Prisma.AdminUser$updatedSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminUser$updatedSettingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SystemSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.AdminUser$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminUser$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recoveryCodes<T extends Prisma.AdminUser$recoveryCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminUser$recoveryCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminRecoveryCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  emailOtps<T extends Prisma.AdminUser$emailOtpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminUser$emailOtpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminEmailOtpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2293,6 +2443,30 @@ export type AdminUser$recoveryCodesArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.AdminRecoveryCodeScalarFieldEnum | Prisma.AdminRecoveryCodeScalarFieldEnum[]
+}
+
+/**
+ * AdminUser.emailOtps
+ */
+export type AdminUser$emailOtpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AdminEmailOtp
+   */
+  select?: Prisma.AdminEmailOtpSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AdminEmailOtp
+   */
+  omit?: Prisma.AdminEmailOtpOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AdminEmailOtpInclude<ExtArgs> | null
+  where?: Prisma.AdminEmailOtpWhereInput
+  orderBy?: Prisma.AdminEmailOtpOrderByWithRelationInput | Prisma.AdminEmailOtpOrderByWithRelationInput[]
+  cursor?: Prisma.AdminEmailOtpWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AdminEmailOtpScalarFieldEnum | Prisma.AdminEmailOtpScalarFieldEnum[]
 }
 
 /**

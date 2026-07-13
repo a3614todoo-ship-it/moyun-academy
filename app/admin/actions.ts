@@ -9,6 +9,7 @@ import {
   requireAdmin,
 } from "@/lib/admin/auth";
 import { sendEmailLog } from "@/lib/email/mailer";
+import { issueAdminEmailOtp } from "@/lib/admin/email-otp-service";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit } from "@/lib/security/rate-limit";
 import { verifyPassword } from "@/lib/security/password";
@@ -66,24 +67,49 @@ export async function loginAdmin(
     return { message: "Email 或密碼錯誤。" };
   }
 
-  const availableCodes = await prisma.adminRecoveryCode.count({
-    where: { adminUserId: admin.id, usedAt: null },
+  await createAdminMfaChallenge(admin.id);
+  const emailSendLimit = await checkRateLimit({
+    scope: "admin-login-email-code-send",
+    limit: 5,
+    windowSeconds: 15 * 60,
+    identifiers: [admin.id],
   });
-  if (availableCodes === 0) {
+  if (!emailSendLimit.allowed) {
     await recordAdminAudit({
       adminUserId: admin.id,
-      action: "ADMIN_LOGIN_RECOVERY_CODES_UNAVAILABLE",
-      metadata: { reason: "no_unused_codes" },
+      action: "ADMIN_LOGIN_EMAIL_CODE_SEND_RATE_LIMITED",
+      metadata: { reason: "rate_limited" },
     });
-    return { message: "此帳號尚未設定可用的救援碼，請聯絡系統管理者重新產生。" };
+    redirect("/admin/login/verify?delivery=limited");
   }
 
-  await createAdminMfaChallenge(admin.id);
   await recordAdminAudit({
     adminUserId: admin.id,
     action: "ADMIN_LOGIN_PASSWORD_VERIFIED",
   });
-  redirect("/admin/login/verify");
+  let delivery: "sent" | "failed" = "sent";
+  try {
+    await issueAdminEmailOtp(admin.id, admin.email);
+    await checkRateLimit({
+      scope: "admin-login-email-code-resend-cooldown",
+      limit: 1,
+      windowSeconds: 60,
+      identifiers: [admin.id],
+    });
+    await recordAdminAudit({
+      adminUserId: admin.id,
+      action: "ADMIN_LOGIN_EMAIL_CODE_SENT",
+    });
+  } catch (error) {
+    delivery = "failed";
+    await recordAdminAudit({
+      adminUserId: admin.id,
+      action: "ADMIN_LOGIN_EMAIL_CODE_SEND_FAILED",
+      metadata: { reason: "mail_delivery_failed" },
+    });
+    console.error("管理員登入驗證碼寄送失敗", error);
+  }
+  redirect(`/admin/login/verify?delivery=${delivery}`);
 }
 
 export async function logoutAdmin() {

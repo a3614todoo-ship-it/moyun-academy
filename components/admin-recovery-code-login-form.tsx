@@ -33,7 +33,7 @@ export function AdminRecoveryCodeLoginForm() {
       <button className="button button-gold button-block" disabled={pending} type="submit">
         {pending ? "驗證中…" : "驗證並登入"}
       </button>
-      <Link className="admin-login-back" href="/admin/login">返回帳號密碼登入</Link>
+      <Link className="admin-login-back" href="/admin/login/verify">改用 Email 驗證碼</Link>
     </form>
   );
 }

@@ -43,6 +43,11 @@ export type EmailLog = Prisma.EmailLogModel
  */
 export type AdminUser = Prisma.AdminUserModel
 /**
+ * Model AdminEmailOtp
+ * 
+ */
+export type AdminEmailOtp = Prisma.AdminEmailOtpModel
+/**
  * Model AdminRecoveryCode
  * 
  */

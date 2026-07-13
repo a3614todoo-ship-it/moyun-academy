@@ -389,6 +389,7 @@ export const ModelName = {
   PaymentReport: 'PaymentReport',
   EmailLog: 'EmailLog',
   AdminUser: 'AdminUser',
+  AdminEmailOtp: 'AdminEmailOtp',
   AdminRecoveryCode: 'AdminRecoveryCode',
   AdminAuditLog: 'AdminAuditLog',
   SystemSetting: 'SystemSetting',
@@ -420,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "application" | "membershipPlan" | "paymentReport" | "emailLog" | "adminUser" | "adminRecoveryCode" | "adminAuditLog" | "systemSetting" | "adminSession" | "memberUser" | "memberSession" | "membershipSubscription" | "applicationStatusHistory" | "course" | "coursePurchase" | "liveSession" | "liveQuestion" | "liveQuestionUpvote" | "courseLesson" | "contactMessage" | "securityRateLimitBucket"
+    modelProps: "application" | "membershipPlan" | "paymentReport" | "emailLog" | "adminUser" | "adminEmailOtp" | "adminRecoveryCode" | "adminAuditLog" | "systemSetting" | "adminSession" | "memberUser" | "memberSession" | "membershipSubscription" | "applicationStatusHistory" | "course" | "coursePurchase" | "liveSession" | "liveQuestion" | "liveQuestionUpvote" | "courseLesson" | "contactMessage" | "securityRateLimitBucket"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -791,6 +792,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AdminUserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AdminUserCountAggregateOutputType> | number
+        }
+      }
+    }
+    AdminEmailOtp: {
+      payload: Prisma.$AdminEmailOtpPayload<ExtArgs>
+      fields: Prisma.AdminEmailOtpFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdminEmailOtpFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdminEmailOtpFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload>
+        }
+        findFirst: {
+          args: Prisma.AdminEmailOtpFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdminEmailOtpFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload>
+        }
+        findMany: {
+          args: Prisma.AdminEmailOtpFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload>[]
+        }
+        create: {
+          args: Prisma.AdminEmailOtpCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload>
+        }
+        createMany: {
+          args: Prisma.AdminEmailOtpCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AdminEmailOtpCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload>[]
+        }
+        delete: {
+          args: Prisma.AdminEmailOtpDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload>
+        }
+        update: {
+          args: Prisma.AdminEmailOtpUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload>
+        }
+        deleteMany: {
+          args: Prisma.AdminEmailOtpDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdminEmailOtpUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AdminEmailOtpUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload>[]
+        }
+        upsert: {
+          args: Prisma.AdminEmailOtpUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminEmailOtpPayload>
+        }
+        aggregate: {
+          args: Prisma.AdminEmailOtpAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdminEmailOtp>
+        }
+        groupBy: {
+          args: Prisma.AdminEmailOtpGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminEmailOtpGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdminEmailOtpCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminEmailOtpCountAggregateOutputType> | number
         }
       }
     }
@@ -2108,6 +2183,19 @@ export const AdminUserScalarFieldEnum = {
 export type AdminUserScalarFieldEnum = (typeof AdminUserScalarFieldEnum)[keyof typeof AdminUserScalarFieldEnum]
 
 
+export const AdminEmailOtpScalarFieldEnum = {
+  id: 'id',
+  adminUserId: 'adminUserId',
+  codeHash: 'codeHash',
+  attempts: 'attempts',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminEmailOtpScalarFieldEnum = (typeof AdminEmailOtpScalarFieldEnum)[keyof typeof AdminEmailOtpScalarFieldEnum]
+
+
 export const AdminRecoveryCodeScalarFieldEnum = {
   id: 'id',
   adminUserId: 'adminUserId',
@@ -2763,6 +2851,7 @@ export type GlobalOmitConfig = {
   paymentReport?: Prisma.PaymentReportOmit
   emailLog?: Prisma.EmailLogOmit
   adminUser?: Prisma.AdminUserOmit
+  adminEmailOtp?: Prisma.AdminEmailOtpOmit
   adminRecoveryCode?: Prisma.AdminRecoveryCodeOmit
   adminAuditLog?: Prisma.AdminAuditLogOmit
   systemSetting?: Prisma.SystemSettingOmit
