@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { upvoteLiveQuestion } from "@/app/courses/[slug]/live/actions";
 import { LiveQuestionForm } from "@/components/live-question-form";
-import { CoursePurchaseStatus, LivePlatform, LiveQuestionStatus } from "@/generated/prisma/enums";
-import { hasCourseAccessSession } from "@/lib/course-access-session";
+import { LivePlatform } from "@/generated/prisma/enums";
+import { getAuthorizedCoursePurchase } from "@/lib/course-access-session";
 import {
   externalPlatformActionLabel,
   getVimeoEmbedUrl,
@@ -18,7 +17,6 @@ import { getYouTubeEmbedUrl } from "@/lib/youtube";
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ token?: string }>;
 };
 
 export const dynamic = "force-dynamic";
@@ -63,46 +61,10 @@ function AccessRequired({ slug }: { slug: string }) {
   );
 }
 
-export default async function CourseLivePage({ params, searchParams }: Props) {
-  const [{ slug }, query] = await Promise.all([params, searchParams]);
-  const token = query.token?.trim();
-
-  if (!token) notFound();
-
-  const purchase = await prisma.coursePurchase.findFirst({
-    where: {
-      accessToken: token,
-      status: CoursePurchaseStatus.APPROVED,
-      course: { slug, isPublished: true },
-    },
-    include: {
-      course: {
-        include: {
-          lessonUnits: {
-            where: { isPublished: true },
-            orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
-          },
-          liveSession: {
-            include: {
-              questions: {
-                where: { status: { not: LiveQuestionStatus.HIDDEN } },
-                orderBy: [
-                  { upvoteCount: "desc" },
-                  { createdAt: "desc" },
-                ],
-                take: 50,
-              },
-            },
-          },
-        },
-      },
-    },
-  });
-
-  if (!purchase) notFound();
-  if (!(await hasCourseAccessSession(purchase))) {
-    return <AccessRequired slug={slug} />;
-  }
+export default async function CourseLivePage({ params }: Props) {
+  const { slug } = await params;
+  const purchase = await getAuthorizedCoursePurchase(slug);
+  if (!purchase) return <AccessRequired slug={slug} />;
 
   const liveSession = purchase.course.liveSession;
   const upvotes = liveSession
@@ -202,7 +164,7 @@ export default async function CourseLivePage({ params, searchParams }: Props) {
               {liveSession?.enableQuestions ? (
                 <section className="live-panel-section">
                   <h2>站內 Q&A</h2>
-                  <LiveQuestionForm slug={slug} token={token} />
+                  <LiveQuestionForm slug={slug} />
                   <div className="live-question-list">
                     {liveSession.questions.map((question) => (
                       <article className="live-question-item" key={question.id}>
@@ -213,7 +175,6 @@ export default async function CourseLivePage({ params, searchParams }: Props) {
                         <p>{question.body}</p>
                         <form action={upvoteLiveQuestion} className="live-upvote-form">
                           <input name="slug" type="hidden" value={slug} />
-                          <input name="token" type="hidden" value={token} />
                           <input name="questionId" type="hidden" value={question.id} />
                           <button disabled={upvotedQuestionIds.has(question.id)} type="submit">
                             {upvotedQuestionIds.has(question.id) ? "已按讚" : "我也想問"} · {question.upvoteCount}

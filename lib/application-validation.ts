@@ -18,7 +18,11 @@ export const applicationSchema = z.object({
     .trim()
     .url("請填寫有效的 Facebook 個人頁連結")
     .refine(
-      (value) => new URL(value).hostname.toLowerCase().endsWith("facebook.com"),
+      (value) => {
+        const url = new URL(value);
+        const hostname = url.hostname.toLowerCase();
+        return url.protocol === "https:" && (hostname === "facebook.com" || hostname.endsWith(".facebook.com"));
+      },
       "連結必須是 facebook.com 網址",
     ),
   planCode: z.string().trim().min(1, "請選擇會員方案"),

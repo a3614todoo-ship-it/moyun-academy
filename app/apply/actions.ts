@@ -6,6 +6,8 @@ import { generateApplicationNumber } from "@/lib/application-number";
 import { applicationSchema } from "@/lib/application-validation";
 import { sendEmailLogs } from "@/lib/email/mailer";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit } from "@/lib/security/rate-limit";
+import { publicReferenceQuery } from "@/lib/security/public-reference";
 
 export type ApplicationActionState = {
   message: string;
@@ -35,6 +37,13 @@ export async function createApplication(
   }
 
   const values = parsed.data;
+  const rateLimit = await checkRateLimit({
+    scope: "membership-application",
+    limit: 5,
+    windowSeconds: 10 * 60,
+    identifiers: [values.email, values.phone],
+  });
+  if (!rateLimit.allowed) return { message: "送出次數過多，請稍後再試。" };
   const plan = await prisma.membershipPlan.findFirst({
     where: { code: values.planCode, isActive: true },
   });
@@ -56,7 +65,7 @@ export async function createApplication(
   });
 
   if (recentApplication) {
-    redirect(`/apply/success?application_no=${recentApplication.applicationNo}`);
+    redirect(`/apply/success?${publicReferenceQuery("application", recentApplication.applicationNo)}`);
   }
 
   let applicationNo: string;
@@ -105,5 +114,5 @@ export async function createApplication(
   }
 
   await sendEmailLogs([emailLogId]);
-  redirect(`/apply/success?application_no=${applicationNo}`);
+  redirect(`/apply/success?${publicReferenceQuery("application", applicationNo)}`);
 }

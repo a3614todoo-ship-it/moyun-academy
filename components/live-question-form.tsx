@@ -8,10 +8,9 @@ import {
 
 type Props = {
   slug: string;
-  token: string;
 };
 
-export function LiveQuestionForm({ slug, token }: Props) {
+export function LiveQuestionForm({ slug }: Props) {
   const initialState: LiveQuestionActionState = { message: "" };
   const [state, formAction, pending] = useActionState(createLiveQuestion, initialState);
   const formRef = useRef<HTMLFormElement>(null);
@@ -26,7 +25,6 @@ export function LiveQuestionForm({ slug, token }: Props) {
       ref={formRef}
     >
       <input name="slug" type="hidden" value={slug} />
-      <input name="token" type="hidden" value={token} />
       <label>
         <span>提出你的問題</span>
         <textarea

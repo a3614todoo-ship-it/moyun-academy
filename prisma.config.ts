@@ -8,7 +8,7 @@ export default defineConfig({
     seed: "tsx prisma/seed.ts",
   },
   datasource: {
-    // Migration 使用直連或 Session pooler，避免 transaction pooler 限制。
+    // Migration 使用 DIRECT_URL，避免透過 transaction pooler 執行結構異動。
     url: env("DIRECT_URL"),
   },
 });

@@ -1,10 +1,11 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { ApplicationStatus, CourseAccessType, CoursePurchaseStatus } from "@/generated/prisma/enums";
+import { ApplicationStatus, CourseAccessType, CoursePurchaseStatus, MembershipSubscriptionStatus } from "@/generated/prisma/enums";
 import { createCourseAccessSession } from "@/lib/course-access-session";
 import { generateCoursePurchaseNumber } from "@/lib/course-purchase-number";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit } from "@/lib/security/rate-limit";
 
 export type MemberCourseAccessLookupState = {
   message: string;
@@ -16,10 +17,6 @@ export type MemberCourseAccessLookupState = {
 
 function text(formData: FormData, name: string) {
   return String(formData.get(name) || "").trim();
-}
-
-function validUntil(approvedAt: Date, durationDays: number) {
-  return new Date(approvedAt.getTime() + durationDays * 24 * 60 * 60 * 1000);
 }
 
 export async function lookupMemberCourseAccess(
@@ -42,6 +39,14 @@ export async function lookupMemberCourseAccess(
     return { message: "請確認欄位是否正確。", fieldErrors };
   }
 
+  const rateLimit = await checkRateLimit({
+    scope: "member-course-access-lookup",
+    limit: 5,
+    windowSeconds: 10 * 60,
+    identifiers: [applicationNo, email],
+  });
+  if (!rateLimit.allowed) return { message: "查詢次數過多，請稍後再試。" };
+
   const [course, application] = await Promise.all([
     prisma.course.findFirst({
       where: { slug, isPublished: true, accessType: CourseAccessType.MEMBER_INCLUDED },
@@ -49,7 +54,7 @@ export async function lookupMemberCourseAccess(
     }),
     prisma.application.findUnique({
       where: { applicationNo },
-      include: { plan: true },
+      include: { membershipSubscription: true },
     }),
   ]);
 
@@ -65,23 +70,29 @@ export async function lookupMemberCourseAccess(
   if (!validStatuses.includes(application.status)) {
     return { message: "這筆會員申請尚未審核通過。審核通過後即可進入會員免費課程。" };
   }
-  if (!application.approvedAt) {
+  if (!application.approvedAt || !application.memberUserId) {
     return { message: "這筆會員資料尚未建立核准時間，請聯繫客服協助確認。" };
   }
 
-  const expiresAt = validUntil(application.approvedAt, application.plan.durationDays);
-  if (expiresAt < new Date()) {
+  const subscription = application.membershipSubscription;
+  const now = new Date();
+  if (
+    !subscription ||
+    subscription.status !== MembershipSubscriptionStatus.ACTIVE ||
+    subscription.startsAt > now ||
+    subscription.endsAt < now
+  ) {
     return { message: "這筆會員資格已超過有效期間。請重新加入會員後再觀看會員免費課程。" };
   }
 
   const existingAccess = await prisma.coursePurchase.findFirst({
     where: {
       courseId: course.id,
-      email: application.email,
+      memberUserId: application.memberUserId,
       status: CoursePurchaseStatus.APPROVED,
       amount: 0,
     },
-    select: { id: true, email: true, accessToken: true },
+    select: { id: true },
     orderBy: { createdAt: "desc" },
   });
 
@@ -92,8 +103,8 @@ export async function lookupMemberCourseAccess(
         data: { memberUserId: application.memberUserId },
       });
     }
-    await createCourseAccessSession(slug, existingAccess);
-    redirect(`/courses/${slug}/live?token=${existingAccess.accessToken}`);
+    await createCourseAccessSession(slug, existingAccess.id);
+    redirect(`/courses/${slug}/live`);
   }
 
   const purchaseNo = await generateCoursePurchaseNumber();
@@ -111,9 +122,9 @@ export async function lookupMemberCourseAccess(
       reviewedAt: new Date(),
       note: `會員免費課程入口；會員申請編號：${application.applicationNo}`,
     },
-    select: { id: true, email: true, accessToken: true },
+    select: { id: true },
   });
 
-  await createCourseAccessSession(slug, access);
-  redirect(`/courses/${slug}/live?token=${access.accessToken}`);
+  await createCourseAccessSession(slug, access.id);
+  redirect(`/courses/${slug}/live`);
 }

@@ -1,17 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { verifyPublicReferenceSignature } from "@/lib/security/public-reference";
 
 export const metadata: Metadata = { title: "課程匯款回報完成" };
 export const dynamic = "force-dynamic";
 
 type Props = {
-  searchParams: Promise<{ purchase_no?: string }>;
+  searchParams: Promise<{ purchase_no?: string; sig?: string }>;
 };
 
 export default async function CoursePaymentReportSuccessPage({ searchParams }: Props) {
-  const purchaseNo = (await searchParams).purchase_no?.trim().toUpperCase();
-  const purchase = purchaseNo
+  const query = await searchParams;
+  const purchaseNo = query.purchase_no?.trim().toUpperCase();
+  const validReference = Boolean(
+    purchaseNo && verifyPublicReferenceSignature("purchase", purchaseNo, query.sig),
+  );
+  const purchase = validReference && purchaseNo
     ? await prisma.coursePurchase.findUnique({
         where: { purchaseNo },
         select: {

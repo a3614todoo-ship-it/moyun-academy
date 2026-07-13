@@ -2,6 +2,9 @@
 .env.*
 .env.local
 .env*.local
+*.bak
+*recovery-codes*.txt
+*credentials*.json
 .vercel/
 .next/
 node_modules/

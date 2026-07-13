@@ -6,11 +6,15 @@ import { coursePaymentReportSchema } from "@/lib/course-payment-report-validatio
 import { getEmailConfig } from "@/lib/email/config";
 import { sendEmailLogs } from "@/lib/email/mailer";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit } from "@/lib/security/rate-limit";
+import { publicReferenceQuery } from "@/lib/security/public-reference";
 
 export type CoursePaymentReportActionState = {
   message: string;
   fieldErrors?: Record<string, string[] | undefined>;
 };
+
+class ExistingCoursePaymentReportError extends Error {}
 
 export async function createCoursePaymentReport(
   _previousState: CoursePaymentReportActionState,
@@ -35,6 +39,13 @@ export async function createCoursePaymentReport(
   }
 
   const values = parsed.data;
+  const rateLimit = await checkRateLimit({
+    scope: "course-payment-report",
+    limit: 5,
+    windowSeconds: 10 * 60,
+    identifiers: [values.purchaseNo, values.phone],
+  });
+  if (!rateLimit.allowed) return { message: "送出次數過多，請稍後再試。" };
   const purchase = await prisma.coursePurchase.findFirst({
     where: {
       purchaseNo: values.purchaseNo,
@@ -51,7 +62,7 @@ export async function createCoursePaymentReport(
   }
 
   if (purchase.status !== CoursePurchaseStatus.PENDING_PAYMENT) {
-    redirect(`/course-payment-report/success?purchase_no=${purchase.purchaseNo}`);
+    redirect(`/course-payment-report/success?${publicReferenceQuery("purchase", purchase.purchaseNo)}`);
   }
 
   if (values.amount !== purchase.amount) {
@@ -65,8 +76,8 @@ export async function createCoursePaymentReport(
 
   try {
     emailLogIds = await prisma.$transaction(async (transaction) => {
-      await transaction.coursePurchase.update({
-        where: { id: purchase.id },
+      const updated = await transaction.coursePurchase.updateMany({
+        where: { id: purchase.id, status: CoursePurchaseStatus.PENDING_PAYMENT },
         data: {
           status: CoursePurchaseStatus.PAYMENT_REPORTED,
           bankLast5: values.bankLast5,
@@ -75,6 +86,7 @@ export async function createCoursePaymentReport(
           note: values.note,
         },
       });
+      if (updated.count !== 1) throw new ExistingCoursePaymentReportError();
 
       const userEmailLog = await transaction.emailLog.create({
         data: {
@@ -99,10 +111,13 @@ export async function createCoursePaymentReport(
       return [userEmailLog.id, adminEmailLog.id];
     });
   } catch (error) {
+    if (error instanceof ExistingCoursePaymentReportError) {
+      redirect(`/course-payment-report/success?${publicReferenceQuery("purchase", purchase.purchaseNo)}`);
+    }
     console.error("建立課程匯款回報失敗", error);
     return { message: "系統暫時無法送出課程匯款回報，請稍後再試。" };
   }
 
   await sendEmailLogs(emailLogIds);
-  redirect(`/course-payment-report/success?purchase_no=${purchase.purchaseNo}`);
+  redirect(`/course-payment-report/success?${publicReferenceQuery("purchase", purchase.purchaseNo)}`);
 }

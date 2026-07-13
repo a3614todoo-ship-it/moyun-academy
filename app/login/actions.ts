@@ -1,10 +1,11 @@
 "use server";
 
-import { compare } from "bcryptjs";
 import { redirect } from "next/navigation";
 import { MemberUserStatus } from "@/generated/prisma/enums";
 import { createMemberSession } from "@/lib/member/auth";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit } from "@/lib/security/rate-limit";
+import { verifyPassword } from "@/lib/security/password";
 
 export type MemberLoginState = { message: string };
 
@@ -17,11 +18,19 @@ export async function loginMember(
 
   if (!email || !password) return { message: "請輸入 Email 與密碼。" };
 
+  const rateLimit = await checkRateLimit({
+    scope: "member-login",
+    limit: 5,
+    windowSeconds: 15 * 60,
+    identifiers: [email],
+  });
+  if (!rateLimit.allowed) return { message: "登入嘗試次數過多，請稍後再試。" };
+
   const member = await prisma.memberUser.findUnique({ where: { email } });
-  const valid =
-    member?.status === MemberUserStatus.ACTIVE && member.passwordHash
-      ? await compare(password, member.passwordHash)
-      : false;
+  const valid = await verifyPassword(
+    password,
+    member?.status === MemberUserStatus.ACTIVE ? member.passwordHash : null,
+  );
 
   if (!member || !valid) {
     return { message: "Email 或密碼錯誤，或帳號尚未完成密碼設定。" };

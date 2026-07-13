@@ -1,4 +1,5 @@
 import { EmailType } from "@/generated/prisma/enums";
+import { publicReferenceQuery } from "@/lib/security/public-reference";
 
 type TemplateApplication = {
   applicationNo: string;
@@ -25,7 +26,6 @@ type TemplateCoursePurchase = {
   bankLast5: string | null;
   payerName: string | null;
   paidAt: Date | null;
-  accessToken: string;
   approvedAt: Date | null;
   memberUser?: { id: string; passwordSetAt: Date | null } | null;
   course: {
@@ -131,7 +131,7 @@ export function buildEmailTemplate({
   if (type === EmailType.APPLICATION_CREATED) {
     const item = requireApplication(application);
     const subject = "您的我輩學堂會員申請已建立";
-    const successUrl = `${siteUrl}/apply/success?application_no=${item.applicationNo}`;
+    const successUrl = `${siteUrl}/apply/success?${publicReferenceQuery("application", item.applicationNo)}`;
     const paymentUrl = `${siteUrl}/payment-report?application_no=${item.applicationNo}`;
     return {
       subject,
@@ -264,7 +264,7 @@ ${facebookGroupUrl ? `Facebook 私密社團：${facebookGroupUrl}` : "Facebook �
   if (type === EmailType.COURSE_PURCHASE_CREATED) {
     const item = requireCoursePurchase(coursePurchase);
     const subject = `您的課程購買申請已建立：${item.course.title}`;
-    const successUrl = `${siteUrl}/course-purchase/success?purchase_no=${item.purchaseNo}`;
+    const successUrl = `${siteUrl}/course-purchase/success?${publicReferenceQuery("purchase", item.purchaseNo)}`;
     const reportUrl = `${siteUrl}/course-payment-report?purchase_no=${item.purchaseNo}`;
     return {
       subject,

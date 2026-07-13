@@ -6,6 +6,7 @@ import { CoursePurchaseStatus, EmailStatus, EmailType, MemberUserStatus } from "
 import { requireAdmin } from "@/lib/admin/auth";
 import { sendEmailLog } from "@/lib/email/mailer";
 import { prisma } from "@/lib/prisma";
+import { recordAdminAudit } from "@/lib/security/admin-audit";
 
 function text(formData: FormData, name: string) {
   return String(formData.get(name) || "").trim();
@@ -98,6 +99,14 @@ export async function updateCoursePurchaseStatus(formData: FormData) {
   });
 
   if (emailLogId) await sendEmailLog(emailLogId);
+
+  await recordAdminAudit({
+    adminUserId: session.adminUser.id,
+    action: "COURSE_PURCHASE_STATUS_CHANGED",
+    targetType: "CoursePurchase",
+    targetId: purchaseId,
+    metadata: { fromStatus: purchase.status, toStatus: nextStatus },
+  });
 
   revalidatePath("/admin");
   revalidatePath("/admin/course-purchases");

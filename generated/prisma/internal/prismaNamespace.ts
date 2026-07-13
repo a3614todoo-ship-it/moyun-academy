@@ -389,6 +389,7 @@ export const ModelName = {
   PaymentReport: 'PaymentReport',
   EmailLog: 'EmailLog',
   AdminUser: 'AdminUser',
+  AdminAuditLog: 'AdminAuditLog',
   SystemSetting: 'SystemSetting',
   AdminSession: 'AdminSession',
   MemberUser: 'MemberUser',
@@ -401,7 +402,8 @@ export const ModelName = {
   LiveQuestion: 'LiveQuestion',
   LiveQuestionUpvote: 'LiveQuestionUpvote',
   CourseLesson: 'CourseLesson',
-  ContactMessage: 'ContactMessage'
+  ContactMessage: 'ContactMessage',
+  SecurityRateLimitBucket: 'SecurityRateLimitBucket'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "application" | "membershipPlan" | "paymentReport" | "emailLog" | "adminUser" | "systemSetting" | "adminSession" | "memberUser" | "memberSession" | "membershipSubscription" | "applicationStatusHistory" | "course" | "coursePurchase" | "liveSession" | "liveQuestion" | "liveQuestionUpvote" | "courseLesson" | "contactMessage"
+    modelProps: "application" | "membershipPlan" | "paymentReport" | "emailLog" | "adminUser" | "adminAuditLog" | "systemSetting" | "adminSession" | "memberUser" | "memberSession" | "membershipSubscription" | "applicationStatusHistory" | "course" | "coursePurchase" | "liveSession" | "liveQuestion" | "liveQuestionUpvote" | "courseLesson" | "contactMessage" | "securityRateLimitBucket"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -788,6 +790,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AdminUserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AdminUserCountAggregateOutputType> | number
+        }
+      }
+    }
+    AdminAuditLog: {
+      payload: Prisma.$AdminAuditLogPayload<ExtArgs>
+      fields: Prisma.AdminAuditLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdminAuditLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdminAuditLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload>
+        }
+        findFirst: {
+          args: Prisma.AdminAuditLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdminAuditLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload>
+        }
+        findMany: {
+          args: Prisma.AdminAuditLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload>[]
+        }
+        create: {
+          args: Prisma.AdminAuditLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload>
+        }
+        createMany: {
+          args: Prisma.AdminAuditLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AdminAuditLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload>[]
+        }
+        delete: {
+          args: Prisma.AdminAuditLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload>
+        }
+        update: {
+          args: Prisma.AdminAuditLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.AdminAuditLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdminAuditLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AdminAuditLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.AdminAuditLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminAuditLogPayload>
+        }
+        aggregate: {
+          args: Prisma.AdminAuditLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdminAuditLog>
+        }
+        groupBy: {
+          args: Prisma.AdminAuditLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminAuditLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdminAuditLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminAuditLogCountAggregateOutputType> | number
         }
       }
     }
@@ -1753,6 +1829,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SecurityRateLimitBucket: {
+      payload: Prisma.$SecurityRateLimitBucketPayload<ExtArgs>
+      fields: Prisma.SecurityRateLimitBucketFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SecurityRateLimitBucketFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SecurityRateLimitBucketFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload>
+        }
+        findFirst: {
+          args: Prisma.SecurityRateLimitBucketFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SecurityRateLimitBucketFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload>
+        }
+        findMany: {
+          args: Prisma.SecurityRateLimitBucketFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload>[]
+        }
+        create: {
+          args: Prisma.SecurityRateLimitBucketCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload>
+        }
+        createMany: {
+          args: Prisma.SecurityRateLimitBucketCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SecurityRateLimitBucketCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload>[]
+        }
+        delete: {
+          args: Prisma.SecurityRateLimitBucketDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload>
+        }
+        update: {
+          args: Prisma.SecurityRateLimitBucketUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload>
+        }
+        deleteMany: {
+          args: Prisma.SecurityRateLimitBucketDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SecurityRateLimitBucketUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SecurityRateLimitBucketUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload>[]
+        }
+        upsert: {
+          args: Prisma.SecurityRateLimitBucketUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SecurityRateLimitBucketPayload>
+        }
+        aggregate: {
+          args: Prisma.SecurityRateLimitBucketAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSecurityRateLimitBucket>
+        }
+        groupBy: {
+          args: Prisma.SecurityRateLimitBucketGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SecurityRateLimitBucketGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SecurityRateLimitBucketCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SecurityRateLimitBucketCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1881,6 +2031,20 @@ export const AdminUserScalarFieldEnum = {
 } as const
 
 export type AdminUserScalarFieldEnum = (typeof AdminUserScalarFieldEnum)[keyof typeof AdminUserScalarFieldEnum]
+
+
+export const AdminAuditLogScalarFieldEnum = {
+  id: 'id',
+  adminUserId: 'adminUserId',
+  action: 'action',
+  targetType: 'targetType',
+  targetId: 'targetId',
+  metadata: 'metadata',
+  ipHash: 'ipHash',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminAuditLogScalarFieldEnum = (typeof AdminAuditLogScalarFieldEnum)[keyof typeof AdminAuditLogScalarFieldEnum]
 
 
 export const SystemSettingScalarFieldEnum = {
@@ -2108,6 +2272,17 @@ export const ContactMessageScalarFieldEnum = {
 } as const
 
 export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnum)[keyof typeof ContactMessageScalarFieldEnum]
+
+
+export const SecurityRateLimitBucketScalarFieldEnum = {
+  id: 'id',
+  count: 'count',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SecurityRateLimitBucketScalarFieldEnum = (typeof SecurityRateLimitBucketScalarFieldEnum)[keyof typeof SecurityRateLimitBucketScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2502,6 +2677,7 @@ export type GlobalOmitConfig = {
   paymentReport?: Prisma.PaymentReportOmit
   emailLog?: Prisma.EmailLogOmit
   adminUser?: Prisma.AdminUserOmit
+  adminAuditLog?: Prisma.AdminAuditLogOmit
   systemSetting?: Prisma.SystemSettingOmit
   adminSession?: Prisma.AdminSessionOmit
   memberUser?: Prisma.MemberUserOmit
@@ -2515,6 +2691,7 @@ export type GlobalOmitConfig = {
   liveQuestionUpvote?: Prisma.LiveQuestionUpvoteOmit
   courseLesson?: Prisma.CourseLessonOmit
   contactMessage?: Prisma.ContactMessageOmit
+  securityRateLimitBucket?: Prisma.SecurityRateLimitBucketOmit
 }
 
 /* Types for Logging */

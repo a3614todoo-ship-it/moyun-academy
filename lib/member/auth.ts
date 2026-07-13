@@ -5,16 +5,18 @@ import { MemberUserStatus } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 
 const MEMBER_SESSION_COOKIE = "wobei_member_session";
-const SESSION_DAYS = 30;
-const SET_PASSWORD_EXPIRES_HOURS = 72;
+const SESSION_DAYS = 14;
+const SET_PASSWORD_EXPIRES_HOURS = 24;
 
 function hashToken(token: string) {
   return createHash("sha256").update(token).digest("hex");
 }
 
 function secret() {
-  const value = process.env.MEMBER_AUTH_SECRET || process.env.ADMIN_SESSION_SECRET || process.env.DATABASE_URL;
-  if (!value) throw new Error("缺少會員驗證簽章 secret。");
+  const value = process.env.MEMBER_AUTH_SECRET;
+  if (!value || value.length < 32) {
+    throw new Error("MEMBER_AUTH_SECRET 至少需要 32 個字元。");
+  }
   return value;
 }
 
@@ -55,11 +57,8 @@ export async function verifySetPasswordToken(token: string) {
   });
 
   if (!member || member.status === MemberUserStatus.DISABLED) return null;
-
   const currentVersion = member.passwordSetAt ? member.passwordSetAt.getTime() : 0;
-  if (currentVersion !== passwordVersion) return null;
-
-  return member;
+  return currentVersion === passwordVersion ? member : null;
 }
 
 export async function createMemberSession(memberUserId: string) {
@@ -67,20 +66,14 @@ export async function createMemberSession(memberUserId: string) {
   const expiresAt = new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);
 
   await prisma.memberSession.create({
-    data: {
-      memberUserId,
-      tokenHash: hashToken(token),
-      expiresAt,
-    },
+    data: { memberUserId, tokenHash: hashToken(token), expiresAt },
   });
 
   const cookieStore = await cookies();
   cookieStore.set(MEMBER_SESSION_COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
-    secure:
-      process.env.VERCEL === "1" ||
-      process.env.NEXT_PUBLIC_SITE_URL?.startsWith("https://") === true,
+    secure: process.env.VERCEL === "1" || process.env.NEXT_PUBLIC_SITE_URL?.startsWith("https://") === true,
     path: "/",
     expires: expiresAt,
   });
@@ -113,14 +106,14 @@ export async function requireMember() {
 export async function destroyMemberSession() {
   const cookieStore = await cookies();
   const token = cookieStore.get(MEMBER_SESSION_COOKIE)?.value;
-
   if (token) {
-    await prisma.memberSession.deleteMany({
-      where: { tokenHash: hashToken(token) },
-    });
+    await prisma.memberSession.deleteMany({ where: { tokenHash: hashToken(token) } });
   }
-
   cookieStore.delete(MEMBER_SESSION_COOKIE);
+}
+
+export async function destroyAllMemberSessions(memberUserId: string) {
+  await prisma.memberSession.deleteMany({ where: { memberUserId } });
 }
 
 export function membershipEndsAt(startedAt: Date, durationDays: number) {

@@ -6,6 +6,8 @@ import { generateCoursePurchaseNumber } from "@/lib/course-purchase-number";
 import { coursePurchaseSchema } from "@/lib/course-purchase-validation";
 import { sendEmailLogs } from "@/lib/email/mailer";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit } from "@/lib/security/rate-limit";
+import { publicReferenceQuery } from "@/lib/security/public-reference";
 
 export type CoursePurchaseActionState = {
   message: string;
@@ -32,6 +34,13 @@ export async function createCoursePurchase(
   }
 
   const values = parsed.data;
+  const rateLimit = await checkRateLimit({
+    scope: "course-purchase",
+    limit: 5,
+    windowSeconds: 10 * 60,
+    identifiers: [values.email, values.phone],
+  });
+  if (!rateLimit.allowed) return { message: "送出次數過多，請稍後再試。" };
   const course = await prisma.course.findFirst({
     where: {
       id: values.courseId,
@@ -62,7 +71,7 @@ export async function createCoursePurchase(
   });
 
   if (recentPurchase) {
-    redirect(`/course-purchase/success?purchase_no=${recentPurchase.purchaseNo}`);
+    redirect(`/course-purchase/success?${publicReferenceQuery("purchase", recentPurchase.purchaseNo)}`);
   }
 
   let purchaseNo: string;
@@ -100,5 +109,5 @@ export async function createCoursePurchase(
   }
 
   await sendEmailLogs([emailLogId]);
-  redirect(`/course-purchase/success?purchase_no=${purchaseNo}`);
+  redirect(`/course-purchase/success?${publicReferenceQuery("purchase", purchaseNo)}`);
 }

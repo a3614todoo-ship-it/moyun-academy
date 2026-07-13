@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getBankTransferSettings } from "@/lib/settings";
+import { verifyPublicReferenceSignature } from "@/lib/security/public-reference";
 
 export const metadata: Metadata = { title: "課程購買申請完成" };
 export const dynamic = "force-dynamic";
 
 type Props = {
-  searchParams: Promise<{ purchase_no?: string }>;
+  searchParams: Promise<{ purchase_no?: string; sig?: string }>;
 };
 
 function BankValue({
@@ -21,9 +22,13 @@ function BankValue({
 }
 
 export default async function CoursePurchaseSuccessPage({ searchParams }: Props) {
-  const purchaseNo = (await searchParams).purchase_no?.trim().toUpperCase();
+  const query = await searchParams;
+  const purchaseNo = query.purchase_no?.trim().toUpperCase();
+  const validReference = Boolean(
+    purchaseNo && verifyPublicReferenceSignature("purchase", purchaseNo, query.sig),
+  );
   const [purchase, bankSettings] = await Promise.all([
-    purchaseNo
+    validReference && purchaseNo
       ? prisma.coursePurchase.findUnique({
           where: { purchaseNo },
           select: {
