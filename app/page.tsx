@@ -32,7 +32,10 @@ export default async function HomePage() {
         <div className="container home-hero-grid">
           <div className="home-hero-copy">
             <span className="eyebrow">張曼娟的古典文學學堂</span>
-            <h1>在古典文字裡，<br />照見我們這一輩的生活</h1>
+            <h1>
+              <span className="hero-title-line">在古典文字裡，</span>
+              <span className="hero-title-line">照見我們這一輩的生活</span>
+            </h1>
             <p>
               跟著張曼娟慢讀經典，<br />
               把古人的生命經驗帶回今日，<br />
@@ -88,12 +91,12 @@ export default async function HomePage() {
                   <rect fill="#eee8dc" height="540" width="640" />
                   <image
                     className="author-photo-image"
-                    height="566"
+                    height="632"
                     href="/images/author-zhang-manjuan.webp"
                     preserveAspectRatio="xMidYMin slice"
                     width="640"
                     x="0"
-                    y="-26"
+                    y="-92"
                   />
                   <rect className="author-photo-wash" height="540" width="640" />
                 </g>
