@@ -88,12 +88,12 @@ export default async function HomePage() {
                   <rect fill="#eee8dc" height="540" width="640" />
                   <image
                     className="author-photo-image"
-                    height="566"
+                    height="632"
                     href="/images/author-zhang-manjuan.webp"
                     preserveAspectRatio="xMidYMin slice"
                     width="640"
                     x="0"
-                    y="-26"
+                    y="-92"
                   />
                   <rect className="author-photo-wash" height="540" width="640" />
                 </g>
