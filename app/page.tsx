@@ -48,7 +48,62 @@ export default async function HomePage() {
             <div className="hero-paper hero-paper-back" aria-hidden="true" />
             <div className="hero-paper hero-paper-script" aria-hidden="true">讀書破萬卷，下筆如有神</div>
             <div className="author-photo-wrap">
-              <img alt="作家張曼娟" className="author-photo" src="/images/author-zhang-manjuan.webp" />
+              <svg
+                aria-labelledby="author-photo-title"
+                className="author-photo-svg"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                viewBox="0 0 640 540"
+              >
+                <title id="author-photo-title">作家張曼娟</title>
+                <defs>
+                  <filter id="torn-edge-distortion" x="-12%" y="-12%" width="124%" height="124%">
+                    <feTurbulence
+                      baseFrequency="0.012 0.072"
+                      numOctaves="4"
+                      result="paperNoise"
+                      seed="17"
+                      type="fractalNoise"
+                    />
+                    <feDisplacementMap
+                      in="SourceGraphic"
+                      in2="paperNoise"
+                      scale="24"
+                      xChannelSelector="R"
+                      yChannelSelector="B"
+                    />
+                  </filter>
+                  <mask id="torn-paper-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="540">
+                    <rect
+                      fill="white"
+                      filter="url(#torn-edge-distortion)"
+                      height="492"
+                      width="584"
+                      x="28"
+                      y="24"
+                    />
+                  </mask>
+                </defs>
+                <g mask="url(#torn-paper-mask)">
+                  <rect fill="#eee8dc" height="540" width="640" />
+                  <image
+                    className="author-photo-image"
+                    height="540"
+                    href="/images/author-zhang-manjuan.webp"
+                    preserveAspectRatio="xMidYMid slice"
+                    width="640"
+                    x="0"
+                    y="0"
+                  />
+                  <rect className="author-photo-wash" height="540" width="640" />
+                </g>
+                <g className="torn-fibers" fill="none" strokeLinecap="round">
+                  <path d="M35 45c-9 4-15 1-22 8m17 26c-11-1-17 4-23 2m24 55c-10 5-18 4-25 10m28 67c-12-2-17 2-26 0m24 74c-8 4-16 3-23 7m28 77c-12 1-16 6-25 7m27 65c-9 6-15 4-23 11m31 37c-8 8-16 8-21 14" />
+                  <path d="M604 42c11 3 17-1 25 5m-22 49c10 1 16 6 25 4m-29 64c12 5 18 2 27 8m-25 69c9-1 15 4 25 3m-26 76c11 5 18 4 27 10m-29 61c10 2 16 8 26 8m-28 61c11 7 16 5 24 13" />
+                  <path d="M55 29c5-10 4-16 10-23m58 22c-2-9 3-15 2-23m72 22c5-11 3-17 9-24m69 24c0-10 6-17 4-24m75 25c4-10 3-17 10-24m68 25c-1-10 4-16 3-25m72 28c5-11 3-17 9-24" />
+                  <path d="M66 508c1 10-4 17-2 25m67-26c-5 10-3 18-10 25m80-27c1 11-4 18-3 27m73-26c-5 10-3 17-9 25m80-25c0 10-5 17-3 25m72-27c-5 11-3 17-9 25m77-29c1 11-4 17-1 24" />
+                </g>
+              </svg>
             </div>
             <div className="paper-note"><span>慢讀，<br />不急著抵達</span></div>
             <p className="author-signature">作家｜張曼娟</p>
