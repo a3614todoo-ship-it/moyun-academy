@@ -1391,7 +1391,7 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
 .homepage .author-photo-wrap {
   position: absolute;
   z-index: 2;
-  top: -8px;
+  top: -22px;
   left: 8%;
   width: 76%;
   height: auto;
