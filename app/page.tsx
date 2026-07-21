@@ -32,7 +32,10 @@ export default async function HomePage() {
         <div className="container home-hero-grid">
           <div className="home-hero-copy">
             <span className="eyebrow">張曼娟的古典文學學堂</span>
-            <h1>在古典文字裡，<br />照見我們這一輩的生活</h1>
+            <h1>
+              <span className="hero-title-line">在古典文字裡，</span>
+              <span className="hero-title-line">照見我們這一輩的生活</span>
+            </h1>
             <p>
               跟著張曼娟慢讀經典，<br />
               把古人的生命經驗帶回今日，<br />

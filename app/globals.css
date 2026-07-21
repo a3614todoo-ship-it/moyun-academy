@@ -1384,6 +1384,10 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
   font-size: clamp(38px, 3.75vw, 58px);
   letter-spacing: .075em;
 }
+.hero-title-line {
+  display: block;
+  white-space: nowrap;
+}
 .homepage .author-feature {
   min-width: 0;
   min-height: 458px;
@@ -1464,7 +1468,7 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
     grid-template-columns: minmax(340px, .85fr) minmax(450px, 1.15fr);
     gap: 16px;
   }
-  .homepage .home-hero-copy h1 { font-size: 40px; }
+  .homepage .home-hero-copy h1 { font-size: 35px; }
   .homepage .author-photo-wrap { left: 6%; width: 78%; }
   .homepage .paper-note { right: -2%; }
 }
@@ -1514,6 +1518,7 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
 
 @media (max-width: 460px) {
   .homepage .home-hero { padding-top: 20px; }
+  .homepage .home-hero-copy h1 { font-size: 28px; letter-spacing: .045em; }
   .homepage .button { min-width: 136px; padding-inline: 14px; }
   .homepage .author-feature { min-height: 330px; }
   .homepage .author-photo-wrap { left: 3%; width: 92%; }
