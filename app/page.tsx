@@ -90,7 +90,7 @@ export default async function HomePage() {
                     className="author-photo-image"
                     height="540"
                     href="/images/author-zhang-manjuan.webp"
-                    preserveAspectRatio="xMidYMid slice"
+                    preserveAspectRatio="xMidYMin slice"
                     width="640"
                     x="0"
                     y="0"
