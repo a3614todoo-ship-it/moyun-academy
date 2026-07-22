@@ -25,7 +25,10 @@ function safeEqual(left: string, right: string) {
 }
 
 function secureCookie() {
-  return process.env.VERCEL === "1" || process.env.NEXT_PUBLIC_SITE_URL?.startsWith("https://") === true;
+  // 正式環境一律使用 HTTPS Cookie；避免非 Vercel 部署漏設站點網址時降級。
+  return process.env.NODE_ENV === "production"
+    || process.env.VERCEL === "1"
+    || process.env.NEXT_PUBLIC_SITE_URL?.startsWith("https://") === true;
 }
 
 export async function createCourseAccessSession(slug: string, purchaseId: string) {

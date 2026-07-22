@@ -21,7 +21,9 @@ function authSecret() {
 }
 
 function secureCookie() {
-  return process.env.VERCEL === "1"
+  // 正式環境一律使用 HTTPS Cookie；若部署設定錯誤，寧可讓登入失敗也不降級傳送 Session。
+  return process.env.NODE_ENV === "production"
+    || process.env.VERCEL === "1"
     || process.env.NEXT_PUBLIC_SITE_URL?.startsWith("https://") === true;
 }
 
