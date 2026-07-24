@@ -1630,3 +1630,390 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
   .academy-course-section { padding: 52px 0; }.academy-section-heading { align-items: start; flex-direction: column; gap: 14px; }.academy-section-heading h2 { font-size: 28px; }.academy-course-grid { grid-template-columns: 1fr; }.academy-course-card { grid-template-columns: 126px 1fr; min-height: 170px; }.academy-course-image { min-height: 170px; }.academy-course-body { padding: 17px 15px; }.academy-course-body h3 { font-size: 17px; }
   .academy-membership-inner { grid-template-columns: 1fr; gap: 22px; padding: 40px 0; }.academy-membership h2 { font-size: 27px; }.academy-membership .academy-button { width: fit-content; }
 }
+
+/* 2026-07-24：公開首頁雙版型切換與「窗景閱讀室」版型。 */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.home-design-toolbar {
+  position: relative;
+  z-index: 12;
+  border-bottom: 1px solid rgba(34, 58, 59, .12);
+  background: #edf2ef;
+}
+.home-design-toolbar-inner {
+  display: flex;
+  width: min(1180px, calc(100% - 40px));
+  min-height: 58px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+.home-design-toolbar-label {
+  color: #5d6d6b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+.home-design-options {
+  display: inline-grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 3px;
+  border: 1px solid #c5d0cd;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .72);
+}
+.home-design-option {
+  min-width: 78px;
+  min-height: 38px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  color: #53615f;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.home-design-option[aria-pressed="true"] {
+  color: #fff;
+  background: #173d43;
+  box-shadow: 0 4px 12px rgba(23, 61, 67, .18);
+}
+.home-design-option:focus-visible {
+  outline: 3px solid #d96552;
+  outline-offset: 3px;
+}
+
+html[data-home-design="window"] .site-header {
+  border-bottom-color: rgba(23, 61, 67, .16);
+  background: rgba(243, 246, 244, .96);
+}
+html[data-home-design="window"] .brand-seal { display: none; }
+html[data-home-design="window"] .brand strong {
+  color: #173d43;
+  font-size: 25px;
+  letter-spacing: .15em;
+}
+html[data-home-design="window"] .brand small { color: #657477; }
+html[data-home-design="window"] .main-nav a { color: #405054; }
+html[data-home-design="window"] .main-nav a::after { background: #d96552; }
+html[data-home-design="window"] .header-join-link {
+  border-color: #d96552;
+  border-radius: 0;
+  background: #d96552;
+}
+html[data-home-design="window"] .home-design-toolbar { background: #f3f6f4; }
+html[data-home-design="window"] .home-design-option[aria-pressed="true"] { background: #d96552; }
+
+.window-home {
+  overflow: hidden;
+  color: #253033;
+  background: #f3f6f4;
+  font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  animation: window-home-enter .36s ease both;
+}
+.window-home-container {
+  width: min(1240px, calc(100% - 48px));
+  margin: 0 auto;
+}
+.window-home-kicker {
+  margin: 0 0 22px;
+  color: #d96552;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .2em;
+}
+.window-home-hero {
+  position: relative;
+  min-height: 650px;
+  background: #f3f6f4;
+}
+.window-home-hero-grid {
+  display: grid;
+  min-height: 650px;
+  grid-template-columns: 49% 51%;
+}
+.window-home-hero-copy {
+  position: relative;
+  z-index: 2;
+  padding: 95px 40px 86px 0;
+  align-self: center;
+}
+.window-home-hero h1 {
+  margin: 0;
+  color: #173d43;
+  font-family: "Noto Serif TC", "Source Han Serif TC", "PMingLiU", serif;
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 700;
+  line-height: 1.17;
+  letter-spacing: .045em;
+}
+.window-home-intro {
+  max-width: 540px;
+  margin: 28px 0 30px;
+  color: #536267;
+  font-size: 17px;
+  line-height: 1.9;
+  letter-spacing: .04em;
+}
+.window-home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  align-items: center;
+}
+.window-home-primary,
+.window-home-member-cta {
+  display: inline-flex;
+  min-width: 150px;
+  min-height: 50px;
+  padding: 0 24px;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: #173d43;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.window-home-primary:hover,
+.window-home-member-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(23, 61, 67, .18); }
+.window-home-secondary,
+.window-home-text-link {
+  display: inline-flex;
+  padding-bottom: 6px;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #d96552;
+  color: #173d43;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.window-home-photo-stage { position: relative; min-width: 0; }
+.window-home-photo {
+  position: absolute;
+  top: 38px;
+  right: -100px;
+  bottom: 42px;
+  left: 24px;
+  margin: 0;
+  overflow: hidden;
+  background: #dfe8e5;
+}
+.window-home-photo::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(243, 246, 244, .22), transparent 25%);
+  content: "";
+}
+.window-home-photo img {
+  object-fit: cover;
+  object-position: 45% 28%;
+  filter: saturate(.8) contrast(.98);
+}
+.window-home-index {
+  position: absolute;
+  z-index: 3;
+  top: 68px;
+  left: -10px;
+  display: flex;
+  gap: 18px;
+  color: #d96552;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  writing-mode: vertical-rl;
+}
+.window-home-quote {
+  position: absolute;
+  z-index: 3;
+  right: 8px;
+  bottom: 68px;
+  width: 280px;
+  margin: 0;
+  padding: 22px 24px;
+  color: #fff;
+  background: rgba(23, 61, 67, .92);
+  font-family: "Noto Serif TC", "Source Han Serif TC", serif;
+  font-size: 19px;
+  font-style: normal;
+  line-height: 1.75;
+  letter-spacing: .08em;
+}
+.window-home-quote cite {
+  display: block;
+  margin-top: 9px;
+  color: #dbe5e2;
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  letter-spacing: .16em;
+}
+.window-home-hero-rule {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 7px;
+  background: linear-gradient(90deg, #d96552 0 15%, #a9bbb7 15% 100%);
+}
+.window-home-values { border-bottom: 1px solid #d9e1df; background: #fff; }
+.window-home-values-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+.window-home-value {
+  display: grid;
+  min-height: 178px;
+  padding: 34px 38px;
+  grid-template-columns: 44px 1fr;
+  gap: 18px;
+  align-content: center;
+}
+.window-home-value + .window-home-value { border-left: 1px solid #d9e1df; }
+.window-home-number,
+.window-home-course-number { color: #d96552; font-size: 12px; font-weight: 800; letter-spacing: .12em; }
+.window-home-value h2 {
+  margin: 0 0 8px;
+  color: #173d43;
+  font-family: "Noto Serif TC", serif;
+  font-size: 20px;
+  letter-spacing: .08em;
+}
+.window-home-value p { margin: 0; color: #657477; font-size: 13px; line-height: 1.75; }
+.window-home-courses { padding: 96px 0 104px; background: #e8efed; }
+.window-home-courses-grid { display: grid; grid-template-columns: 350px minmax(0, 1fr); gap: 72px; }
+.window-home-section-copy h2,
+.window-home-membership h2 {
+  margin: 0;
+  color: #173d43;
+  font-family: "Noto Serif TC", serif;
+  font-size: clamp(34px, 3.2vw, 44px);
+  line-height: 1.38;
+  letter-spacing: .055em;
+}
+.window-home-section-copy > p:not(.window-home-kicker) {
+  margin: 23px 0 31px;
+  color: #617074;
+  font-size: 15px;
+  line-height: 1.85;
+}
+.window-home-course-list { border-top: 1px solid #a9bbb7; }
+.window-home-course {
+  display: grid;
+  min-height: 138px;
+  padding: 22px 0;
+  grid-template-columns: 54px minmax(0, 1fr) 128px 30px;
+  gap: 18px;
+  align-items: center;
+  border-bottom: 1px solid #a9bbb7;
+  transition: background .2s ease, padding .2s ease;
+}
+.window-home-course:hover { padding-right: 12px; padding-left: 12px; background: rgba(255, 255, 255, .46); }
+.window-home-course-title { display: grid; gap: 7px; }
+.window-home-course-title small { color: #68787b; font-size: 10px; font-weight: 800; letter-spacing: .17em; }
+.window-home-course-title strong {
+  color: #173d43;
+  font-family: "Noto Serif TC", serif;
+  font-size: 23px;
+  line-height: 1.45;
+  letter-spacing: .035em;
+}
+.window-home-course-meta { color: #647478; font-size: 12px; line-height: 1.8; }
+.window-home-course-arrow { color: #d96552; font-size: 22px; transition: transform .2s ease; }
+.window-home-course:hover .window-home-course-arrow { transform: translateX(5px); }
+.window-home-membership { color: #fff; background: #173d43; }
+.window-home-membership-grid {
+  display: grid;
+  min-height: 310px;
+  padding: 70px 0;
+  grid-template-columns: 1.25fr .8fr auto;
+  gap: 64px;
+  align-items: center;
+}
+.window-home-membership .window-home-kicker { color: #ff8a77; }
+.window-home-membership h2 { color: #fff; font-size: clamp(31px, 3vw, 40px); }
+.window-home-membership p:not(.window-home-kicker) { margin: 16px 0 0; color: #c6d4d2; font-size: 14px; }
+.window-home-membership ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; color: #e5ecea; font-size: 14px; }
+.window-home-membership li::before { margin-right: 11px; color: #ff8a77; content: "＋"; }
+.window-home-member-cta { min-width: 170px; background: #d96552; }
+.window-home-primary:focus-visible,
+.window-home-secondary:focus-visible,
+.window-home-text-link:focus-visible,
+.window-home-course:focus-visible,
+.window-home-member-cta:focus-visible {
+  outline: 3px solid #d96552;
+  outline-offset: 4px;
+}
+.window-home-member-cta:focus-visible { outline-color: #fff; }
+
+html[data-home-design="window"] .site-footer { color: #253033; background: #fff; }
+html[data-home-design="window"] .footer-brand strong { color: #173d43; }
+html[data-home-design="window"] .footer-grid p,
+html[data-home-design="window"] .footer-grid a,
+html[data-home-design="window"] .footer-grid span { color: #68777a; }
+html[data-home-design="window"] .footer-grid > div > strong { color: #173d43; }
+html[data-home-design="window"] .copyright { border-top-color: #d9e1df; color: #879396; }
+
+@keyframes window-home-enter {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 980px) {
+  .window-home-hero-grid { grid-template-columns: 1fr; }
+  .window-home-hero-copy { max-width: 720px; padding: 74px 0 42px; }
+  .window-home-photo-stage { height: 540px; }
+  .window-home-photo { right: 0; left: 34px; }
+  .window-home-index { left: 0; }
+  .window-home-quote { right: 24px; }
+  .window-home-courses-grid { grid-template-columns: 1fr; gap: 48px; }
+  .window-home-section-copy { max-width: 620px; }
+  .window-home-membership-grid { grid-template-columns: 1fr auto; gap: 36px; }
+  .window-home-membership ul { display: none; }
+}
+
+@media (max-width: 680px) {
+  .home-design-toolbar-inner { width: min(100% - 28px, 1180px); min-height: 62px; justify-content: space-between; }
+  .home-design-toolbar-label { font-size: 11px; }
+  .home-design-option { min-width: 68px; min-height: 40px; padding-inline: 12px; font-size: 12px; }
+  .window-home-container { width: min(100% - 28px, 1240px); }
+  .window-home-hero h1 { font-size: clamp(39px, 11.5vw, 54px); }
+  .window-home-hero-copy { padding: 58px 0 32px; }
+  .window-home-intro { font-size: 15px; }
+  .window-home-photo-stage { height: 420px; }
+  .window-home-photo { top: 18px; right: -14px; bottom: 24px; left: 22px; }
+  .window-home-index { top: 40px; left: -5px; }
+  .window-home-quote { right: 0; bottom: 42px; width: 235px; padding: 18px 19px; font-size: 16px; }
+  .window-home-values-grid { grid-template-columns: 1fr; }
+  .window-home-value { min-height: 124px; padding: 24px 18px; }
+  .window-home-value + .window-home-value { border-top: 1px solid #d9e1df; border-left: 0; }
+  .window-home-courses { padding: 66px 0 72px; }
+  .window-home-course { min-height: 132px; grid-template-columns: 38px minmax(0, 1fr) 24px; }
+  .window-home-course-meta { display: none; }
+  .window-home-course-title strong { font-size: 19px; }
+  .window-home-membership-grid { min-height: 0; padding: 56px 0; grid-template-columns: 1fr; }
+  .window-home-membership h2 { font-size: 31px; }
+  .window-home-member-cta { width: fit-content; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window-home,
+  .home-design-option,
+  .window-home-primary,
+  .window-home-member-cta,
+  .window-home-course,
+  .window-home-course-arrow { animation: none; transition: none; }
+}
