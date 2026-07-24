@@ -1,132 +1,121 @@
+import Image from "next/image";
 import Link from "next/link";
-import { CourseCard } from "@/components/course-card";
 import { getFeaturedCourses } from "@/lib/course-data";
 
-const beliefs = [
+const learningValues = [
   {
-    mark: "竹",
-    title: "慢讀經典",
-    detail: "不趕進度，細讀原典，在字裡行間與古人相遇，讓經典真正進入生命。",
+    icon: "書",
+    title: "系統化課程",
+    detail: "由淺入深，走出一條能長久閱讀的路。",
   },
   {
-    mark: "茶",
-    title: "回到生活",
-    detail: "將古人的智慧與情感，轉化為理解自己、陪伴他人與面對日常的力量。",
+    icon: "筆",
+    title: "作家親自授課",
+    detail: "跟隨張曼娟老師，讀懂文字裡的感受與提問。",
   },
   {
-    mark: "筆",
-    title: "形成自己的眼光",
-    detail: "閱讀是為了思辨與選擇，在對話與反思中養成獨立而溫暖的觀點。",
+    icon: "人",
+    title: "學習社群",
+    detail: "與同好交換閱讀的發現，讓思考持續發生。",
   },
 ];
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const courses = await getFeaturedCourses();
+  // 資料庫暫時不可用時，首頁仍保留可前往課程總覽的入口。
+  const courses = await getFeaturedCourses().catch(() => []);
+  const fallbackCourseTitles = ["古典文學的心靈旅程", "張曼娟的寫作課", "經典選讀與深度對話"];
 
   return (
-    <main className="homepage">
-      <section className="home-hero" id="author">
-        <div className="home-hero-bamboo" aria-hidden="true" />
-        <div className="container home-hero-grid">
-          <div className="home-hero-copy">
-            <span className="eyebrow">張曼娟的古典文學學堂</span>
-            <h1>
-              <span className="hero-title-line">在古典文字裡，</span>
-              <span className="hero-title-line">照見我們這一輩的生活</span>
+    <main className="redesigned-homepage">
+      <section className="academy-hero" aria-labelledby="home-title">
+        <div className="academy-hero-wash" aria-hidden="true" />
+        <div className="container academy-hero-grid">
+          <div className="academy-hero-copy">
+            <p className="academy-kicker">張曼娟老師・線上文學學習平台</p>
+            <h1 id="home-title">
+              讓文學，<br />
+              成為理解自己的<span>一種方式</span>
             </h1>
-            <p>
-              跟著張曼娟慢讀經典，<br />
-              把古人的生命經驗帶回今日，<br />
-              重新理解自己、他人與世界。
+            <p className="academy-intro">
+              從閱讀經典到書寫生活，跟著張曼娟老師，
+              <br className="desktop-only" />
+              在文字裡看見自己，也在理解中安頓心靈。
             </p>
-            <div className="button-row">
-              <Link className="button button-forest" href="/author">認識張曼娟 <span>→</span></Link>
-              <Link className="button button-outline" href="/courses">開始閱讀 <span>→</span></Link>
+            <div className="academy-action-row">
+              <Link className="academy-button academy-button-primary" href="/courses">探索課程</Link>
+              <Link className="academy-button academy-button-secondary" href="/author">認識張曼娟</Link>
             </div>
           </div>
 
-          <div className="author-feature">
-            <div className="hero-paper hero-paper-back" aria-hidden="true" />
-            <div className="hero-paper hero-paper-script" aria-hidden="true">讀書破萬卷，下筆如有神</div>
-            <div className="author-photo-wrap">
-              <svg
-                aria-labelledby="author-photo-title"
-                className="author-photo-svg"
-                preserveAspectRatio="xMidYMid meet"
-                role="img"
-                viewBox="0 0 640 540"
-              >
-                <title id="author-photo-title">作家張曼娟</title>
-                <defs>
-                  <filter id="torn-edge-distortion" x="-12%" y="-12%" width="124%" height="124%">
-                    <feTurbulence
-                      baseFrequency="0.012 0.072"
-                      numOctaves="4"
-                      result="paperNoise"
-                      seed="17"
-                      type="fractalNoise"
-                    />
-                    <feDisplacementMap
-                      in="SourceGraphic"
-                      in2="paperNoise"
-                      scale="24"
-                      xChannelSelector="R"
-                      yChannelSelector="B"
-                    />
-                  </filter>
-                  <mask id="torn-paper-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="540">
-                    <rect
-                      fill="white"
-                      filter="url(#torn-edge-distortion)"
-                      height="492"
-                      width="584"
-                      x="28"
-                      y="24"
-                    />
-                  </mask>
-                </defs>
-                <g mask="url(#torn-paper-mask)">
-                  <rect fill="#eee8dc" height="540" width="640" />
-                  <image
-                    className="author-photo-image"
-                    height="632"
-                    href="/images/author-zhang-manjuan.webp"
-                    preserveAspectRatio="xMidYMin slice"
-                    width="640"
-                    x="0"
-                    y="-92"
-                  />
-                  <rect className="author-photo-wash" height="540" width="640" />
-                </g>
-                <g className="torn-fibers" fill="none" strokeLinecap="round">
-                  <path d="M35 45c-9 4-15 1-22 8m17 26c-11-1-17 4-23 2m24 55c-10 5-18 4-25 10m28 67c-12-2-17 2-26 0m24 74c-8 4-16 3-23 7m28 77c-12 1-16 6-25 7m27 65c-9 6-15 4-23 11m31 37c-8 8-16 8-21 14" />
-                  <path d="M604 42c11 3 17-1 25 5m-22 49c10 1 16 6 25 4m-29 64c12 5 18 2 27 8m-25 69c9-1 15 4 25 3m-26 76c11 5 18 4 27 10m-29 61c10 2 16 8 26 8m-28 61c11 7 16 5 24 13" />
-                  <path d="M55 29c5-10 4-16 10-23m58 22c-2-9 3-15 2-23m72 22c5-11 3-17 9-24m69 24c0-10 6-17 4-24m75 25c4-10 3-17 10-24m68 25c-1-10 4-16 3-25m72 28c5-11 3-17 9-24" />
-                  <path d="M66 508c1 10-4 17-2 25m67-26c-5 10-3 18-10 25m80-27c1 11-4 18-3 27m73-26c-5 10-3 17-9 25m80-25c0 10-5 17-3 25m72-27c-5 11-3 17-9 25m77-29c1 11-4 17-1 24" />
-                </g>
-              </svg>
-            </div>
-            <div className="paper-note"><span>慢讀，<br />不急著抵達</span></div>
-            <p className="author-signature">作家｜張曼娟</p>
+          <div className="academy-portrait-stage">
+            <div className="academy-portrait-paper" aria-hidden="true" />
+            <figure className="academy-portrait">
+              <Image
+                alt="張曼娟老師"
+                height={1200}
+                priority
+                src="/images/author-zhang-manjuan.webp"
+                width={800}
+              />
+            </figure>
+            <p className="academy-vertical-note" aria-hidden="true">
+              文字是生命的地圖，<br />也是回家的路。
+            </p>
+            <p className="academy-signature">張曼娟</p>
           </div>
         </div>
       </section>
 
-      <section className="belief-section" id="beliefs">
-        <div className="container belief-layout">
-          <div className="belief-heading">
-            <h2>學堂相信的三件事</h2>
-            <span aria-hidden="true" />
+      <section className="academy-values" aria-label="學習特色">
+        <div className="container academy-value-grid">
+          {learningValues.map((value) => (
+            <article className="academy-value" key={value.title}>
+              <span aria-hidden="true" className="academy-value-icon">{value.icon}</span>
+              <div>
+                <h2>{value.title}</h2>
+                <p>{value.detail}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="academy-course-section" id="path" aria-labelledby="courses-title">
+        <div className="container">
+          <div className="academy-section-heading">
+            <div>
+              <p className="academy-kicker">精選課程</p>
+              <h2 id="courses-title">此刻，從哪一門課開始？</h2>
+            </div>
+            <Link className="academy-all-courses" href="/courses">查看全部課程 <span aria-hidden="true">→</span></Link>
           </div>
-          <div className="belief-grid">
-            {beliefs.map((item) => (
-              <article className="belief-card" key={item.title}>
-                <span className="belief-illustration" aria-hidden="true">{item.mark}</span>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.detail}</p>
+
+          <div className="academy-course-grid">
+            {courses.slice(0, 3).map((course, index) => (
+              <article className={`academy-course-card course-tone-${index + 1}`} key={course.slug}>
+                <Link className="academy-course-image" href={`/courses/${course.slug}`}>
+                  {course.coverImageUrl ? (
+                    <Image alt="" fill sizes="(max-width: 760px) 100vw, 33vw" src={course.coverImageUrl} />
+                  ) : <span className="academy-course-ink" aria-hidden="true" />}
+                </Link>
+                <div className="academy-course-body">
+                  <p>{course.category}</p>
+                  <h3><Link href={`/courses/${course.slug}`}>{course.title}</Link></h3>
+                  <span className="academy-course-meta">{course.lessons} 單元 {course.duration ? `・${course.duration}` : ""}</span>
+                  <Link className="academy-course-link" href={`/courses/${course.slug}`}>了解更多 <span aria-hidden="true">→</span></Link>
+                </div>
+              </article>
+            ))}
+            {courses.length === 0 && fallbackCourseTitles.map((title, index) => (
+              <article className={`academy-course-card course-tone-${index + 1}`} key={title}>
+                <Link className="academy-course-image" href="/courses"><span className="academy-course-ink" aria-hidden="true" /></Link>
+                <div className="academy-course-body">
+                  <p>文學選讀</p>
+                  <h3><Link href="/courses">{title}</Link></h3>
+                  <span className="academy-course-meta">請前往課程總覽查看內容</span>
+                  <Link className="academy-course-link" href="/courses">查看課程 <span aria-hidden="true">→</span></Link>
                 </div>
               </article>
             ))}
@@ -134,29 +123,19 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section course-entry-section" id="path">
-        <div className="container course-entry-grid">
-          <div className="course-entry-copy">
-            <span className="eyebrow">閱讀路徑</span>
-            <h2>從這些篇章開始</h2>
-            <span className="heading-rule" aria-hidden="true" />
-            <p>每一門課，都是一段閱讀旅程，陪你在經典裡看見更寬闊的世界，也看見更好的自己。</p>
-            <Link className="text-link" href="/courses">瀏覽所有課程　→</Link>
+      <section className="academy-membership" id="membership" aria-labelledby="membership-title">
+        <div className="container academy-membership-inner">
+          <div>
+            <p className="academy-kicker">會員專區</p>
+            <h2 id="membership-title">加入會員，讓學習成為<br className="desktop-only" />生活裡持續發亮的事</h2>
+            <p>享有會員課程、專屬學習資源與最新活動通知。</p>
           </div>
-          <div className="course-grid course-grid-three">
-            {courses.slice(0, 3).map((course) => <CourseCard course={course} key={course.slug} />)}
-          </div>
-        </div>
-      </section>
-
-      <section className="membership-cta" id="events">
-        <div className="container cta-inner">
-          <div className="cta-copy">
-            <span className="eyebrow">與閱讀同行</span>
-            <h2>加入我輩學堂，持續走在閱讀路上</h2>
-            <p>在課程、直播與社群陪伴中，慢慢累積自己的文學眼光。</p>
-          </div>
-          <Link className="button button-forest" href="/membership">認識會員方案　→</Link>
+          <ul className="academy-membership-points" aria-label="會員權益">
+            <li>所有付費課程</li>
+            <li>專屬學習社群</li>
+            <li>活動與課程通知</li>
+          </ul>
+          <Link className="academy-button academy-button-gold" href="/membership">立即加入會員</Link>
         </div>
       </section>
     </main>
