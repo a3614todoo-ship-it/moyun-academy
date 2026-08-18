@@ -47,7 +47,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           <div><strong>快速導覽</strong><Link href="/author">認識張曼娟</Link><Link href="/courses">課程總覽</Link><Link href="/membership">會員專區</Link><Link href="/login">會員登入</Link></div>
           <div><strong>聯絡我們</strong><span>service@wobei-academy.tw</span><span>服務時間：週一至週五 10:00–18:00</span></div>
         </div>
-        <div className="container copyright">© 2026 我輩學堂</div>
+        <div className="container copyright">
+          <span>© 2026 我輩學堂</span>
+          <Link className="footer-admin-login" href="/admin/login">管理者登入</Link>
+        </div>
       </footer>
     </>
   );
