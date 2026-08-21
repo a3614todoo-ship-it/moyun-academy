@@ -60,7 +60,7 @@ export default async function AdminApplicationsPage({ searchParams }: Props) {
               {applications.map((item) => (
                 <tr key={item.id}>
                   <td><Link href={`/admin/applications/${item.id}`}>{item.applicationNo}</Link></td>
-                  <td>{item.name}</td><td>{item.phone}</td><td>{item.email}</td><td>{item.plan.name}</td>
+                  <td>{item.name}</td><td>{item.phone}</td><td>{item.email}</td><td>{item.planName}</td>
                   <td><span className={statusClass(item.status)}>{applicationStatusLabels[item.status]}</span></td>
                   <td>{formatTaipeiDateTime(item.createdAt)}</td>
                 </tr>

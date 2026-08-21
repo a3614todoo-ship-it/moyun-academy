@@ -35,7 +35,8 @@ export default async function ApplySuccessPage({ searchParams }: Props) {
             applicationNo: true,
             status: true,
             createdAt: true,
-            plan: { select: { name: true, price: true } },
+            planName: true,
+            planPrice: true,
           },
         })
       : null,
@@ -72,8 +73,8 @@ export default async function ApplySuccessPage({ searchParams }: Props) {
         <div className="payment-summary">
           <h2>匯款資訊</h2>
           <dl>
-            <div><dt>申請方案</dt><dd>{application.plan.name}</dd></div>
-            <div><dt>應繳金額</dt><dd>NT$ {application.plan.price.toLocaleString("zh-TW")}</dd></div>
+            <div><dt>申請方案</dt><dd>{application.planName}</dd></div>
+            <div><dt>應繳金額</dt><dd>NT$ {application.planPrice.toLocaleString("zh-TW")}</dd></div>
             <div><dt>銀行名稱</dt><BankValue value={bankSettings.bankName} /></div>
             <div><dt>分行</dt><BankValue value={bankSettings.bankBranch} /></div>
             <div><dt>匯款戶名</dt><BankValue value={bankSettings.bankAccountName} /></div>

@@ -6,6 +6,7 @@ import { CourseAccessType, LivePlatform } from "@/generated/prisma/enums";
 import { requireAdmin } from "@/lib/admin/auth";
 import { isVimeoUrl } from "@/lib/live";
 import { prisma } from "@/lib/prisma";
+import { recordAdminAudit } from "@/lib/security/admin-audit";
 import { parseTaipeiDateTimeLocal } from "@/lib/taipei-time";
 import { getYouTubeVideoId } from "@/lib/youtube";
 
@@ -46,6 +47,7 @@ function lessonDataFromForm(formData: FormData) {
     const title = text(formData, `${prefix}Title`);
     const handoutUrl = text(formData, `${prefix}HandoutUrl`);
     const replayVideoUrl = text(formData, `${prefix}ReplayVideoUrl`);
+    const replayAudioUrl = text(formData, `${prefix}ReplayAudioUrl`);
 
     if (!title) return null;
 
@@ -61,6 +63,7 @@ function lessonDataFromForm(formData: FormData) {
       reflectionPrompt: text(formData, `${prefix}ReflectionPrompt`) || null,
       handoutUrl: handoutUrl || null,
       replayVideoUrl: replayVideoUrl || null,
+      replayAudioUrl: replayAudioUrl || null,
       sortOrder: index,
       isPublished: formData.get(`${prefix}IsPublished`) !== "off",
     };
@@ -68,7 +71,7 @@ function lessonDataFromForm(formData: FormData) {
 }
 
 export async function saveCourse(formData: FormData) {
-  await requireAdmin();
+  const session = await requireAdmin();
   const id = text(formData, "id");
   const slug = text(formData, "slug").toLowerCase();
   const title = text(formData, "title");
@@ -88,6 +91,11 @@ export async function saveCourse(formData: FormData) {
   const fullVideoUrl = text(formData, "fullVideoUrl");
   const accessType = text(formData, "accessType") as CourseAccessType;
   const price = Number.parseInt(text(formData, "price"), 10);
+  const publicRegistrationOpenAt = optionalDate(formData, "publicRegistrationOpenAt");
+  const registrationCloseAt = optionalDate(formData, "registrationCloseAt");
+  const replayEnabled = formData.get("replayEnabled") === "on";
+  const replayOpenAt = optionalDate(formData, "replayOpenAt");
+  const replayCloseAt = optionalDate(formData, "replayCloseAt");
   const sortOrder = Number.parseInt(text(formData, "sortOrder"), 10);
   const isPublished = formData.get("isPublished") === "on";
   const isFeatured = formData.get("isFeatured") === "on";
@@ -108,7 +116,7 @@ export async function saveCourse(formData: FormData) {
   const existingCourse = id
     ? await prisma.course.findUnique({
         where: { id },
-        select: { slug: true, isPublished: true, publishedAt: true },
+        select: { slug: true, isPublished: true, publishedAt: true, price: true },
       })
     : null;
 
@@ -128,6 +136,10 @@ export async function saveCourse(formData: FormData) {
     !Number.isInteger(sortOrder) ||
     !Object.values(LivePlatform).includes(livePlatform) ||
     courseStartAt === undefined ||
+    publicRegistrationOpenAt === undefined ||
+    registrationCloseAt === undefined ||
+    replayOpenAt === undefined ||
+    replayCloseAt === undefined ||
     liveStartsAt === undefined ||
     liveEndsAt === undefined ||
     livePlayerOpenAt === undefined ||
@@ -161,8 +173,19 @@ export async function saveCourse(formData: FormData) {
     }
   }
 
-  if (lessonUnits.some((lesson) => (lesson.handoutUrl && !validHttpUrl(lesson.handoutUrl)) || (lesson.replayVideoUrl && !validHttpUrl(lesson.replayVideoUrl)))) {
+  if (lessonUnits.some((lesson) =>
+    (lesson.handoutUrl && !validHttpUrl(lesson.handoutUrl))
+    || (lesson.replayVideoUrl && !validHttpUrl(lesson.replayVideoUrl))
+    || (lesson.replayAudioUrl && !validHttpUrl(lesson.replayAudioUrl)))) {
     redirect(`/admin/courses/${id || "new"}?error=lesson_url`);
+  }
+
+  if (publicRegistrationOpenAt && registrationCloseAt && publicRegistrationOpenAt >= registrationCloseAt) {
+    redirect(`/admin/courses/${id || "new"}?error=registration_window`);
+  }
+
+  if (replayOpenAt && replayCloseAt && replayOpenAt >= replayCloseAt) {
+    redirect(`/admin/courses/${id || "new"}?error=replay_window`);
   }
 
   if (liveIsEnabled) {
@@ -170,6 +193,7 @@ export async function saveCourse(formData: FormData) {
       livePlatform === LivePlatform.GOOGLE_MEET ||
       livePlatform === LivePlatform.ZOOM_WEBINAR ||
       livePlatform === LivePlatform.ZOOM_MEETING ||
+      livePlatform === LivePlatform.FACEBOOK_GROUP ||
       livePlatform === LivePlatform.EXTERNAL_URL;
 
     if (!liveTitle) redirect(`/admin/courses/${id || "new"}?error=live_required`);
@@ -223,6 +247,11 @@ export async function saveCourse(formData: FormData) {
     fullVideoUrl: fullVideoUrl || null,
     accessType,
     price,
+    publicRegistrationOpenAt,
+    registrationCloseAt,
+    replayEnabled,
+    replayOpenAt,
+    replayCloseAt,
     isPublished,
     isFeatured,
     sortOrder,
@@ -268,6 +297,20 @@ export async function saveCourse(formData: FormData) {
     });
   }
 
+  await recordAdminAudit({
+    adminUserId: session.adminUser.id,
+    action: existingCourse && existingCourse.price !== price ? "COURSE_PRICE_CHANGED" : "COURSE_UPDATED",
+    targetType: "Course",
+    targetId: course.id,
+    metadata: {
+      slug: course.slug,
+      oldPrice: existingCourse?.price ?? null,
+      newPrice: price,
+      accessType,
+      replayEnabled,
+    },
+  });
+
   revalidatePath("/");
   revalidatePath("/courses");
   if (existingCourse?.slug && existingCourse.slug !== course.slug) {
@@ -275,6 +318,7 @@ export async function saveCourse(formData: FormData) {
   }
   revalidatePath(`/courses/${course.slug}`);
   revalidatePath(`/courses/${course.slug}/live`);
+  revalidatePath(`/courses/${course.slug}/watch`);
   revalidatePath("/admin/courses");
   redirect(`/admin/courses/${course.id}?saved=1`);
 }

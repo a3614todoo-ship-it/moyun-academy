@@ -14,10 +14,9 @@ type Props = {
 };
 
 export default async function ApplyPage({ searchParams }: Props) {
-  const params = await searchParams;
-  const planCode = params.plan?.trim().toLowerCase();
+  await searchParams;
   const plan = await prisma.membershipPlan.findFirst({
-    where: planCode ? { code: planCode, isActive: true } : { isActive: true },
+    where: { code: "annual", isActive: true },
     select: {
       code: true,
       name: true,

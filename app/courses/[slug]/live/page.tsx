@@ -4,6 +4,7 @@ import { upvoteLiveQuestion } from "@/app/courses/[slug]/live/actions";
 import { LiveQuestionForm } from "@/components/live-question-form";
 import { LivePlatform } from "@/generated/prisma/enums";
 import { getAuthorizedCoursePurchase } from "@/lib/course-access-session";
+import { replayState, replayStateMessage } from "@/lib/course-replay";
 import {
   externalPlatformActionLabel,
   getVimeoEmbedUrl,
@@ -86,6 +87,7 @@ export default async function CourseLivePage({ params }: Props) {
         closeAt: liveSession.playerCloseAt,
       })
     : "NOT_OPEN";
+  const currentReplayState = replayState(purchase.course, now);
   const playerIsOpen = Boolean(liveSession?.isEnabled && windowState === "OPEN");
   const platform = liveSession?.platform || LivePlatform.YOUTUBE_LIVE;
   const youtubeEmbedUrl =
@@ -100,6 +102,7 @@ export default async function CourseLivePage({ params }: Props) {
     platform === LivePlatform.GOOGLE_MEET ||
     platform === LivePlatform.ZOOM_WEBINAR ||
     platform === LivePlatform.ZOOM_MEETING ||
+    platform === LivePlatform.FACEBOOK_GROUP ||
     platform === LivePlatform.EXTERNAL_URL;
   const externalUrl = playerIsOpen && isExternalPlatform ? liveSession?.externalUrl || "" : "";
   const watermarkText = `${purchase.name} / ${maskEmail(purchase.email)}`;
@@ -118,6 +121,13 @@ export default async function CourseLivePage({ params }: Props) {
               ? `直播時間：${formatDateTime(liveSession.startsAt)}－${formatDateTime(liveSession.endsAt)}`
               : "這裡會集中直播、回放、講義、文本共讀與 Q&A。"}
           </p>
+          {currentReplayState === "OPEN" && purchase.course.fullVideoUrl ? (
+            <p>
+              <Link className="button button-gold" href={`/courses/${slug}/watch`}>
+                進入完整課程回看
+              </Link>
+            </p>
+          ) : null}
 
           <div className="live-classroom-grid">
             <section className="live-player-card">
@@ -206,11 +216,12 @@ export default async function CourseLivePage({ params }: Props) {
             <div className="section-heading">
               <span className="eyebrow">文本共讀</span>
               <h2>單元、講義與提問卡</h2>
+              {currentReplayState !== "OPEN" ? <p>{replayStateMessage(currentReplayState)}</p> : null}
             </div>
             {purchase.course.lessonUnits.length ? (
               <div className="learning-lesson-list">
                 {purchase.course.lessonUnits.map((lesson, index) => {
-                  const replayEmbedUrl = materialEmbedUrl(lesson.replayVideoUrl);
+                  const replayEmbedUrl = currentReplayState === "OPEN" ? materialEmbedUrl(lesson.replayVideoUrl) : "";
                   return (
                     <article className="learning-lesson-card" key={lesson.id}>
                       <div className="learning-lesson-heading">
@@ -258,9 +269,9 @@ export default async function CourseLivePage({ params }: Props) {
                             下載講義
                           </a>
                         ) : null}
-                        {lesson.replayVideoUrl ? (
+                        {currentReplayState === "OPEN" && lesson.replayVideoUrl ? (
                           <a className="button button-outline" href={lesson.replayVideoUrl} rel="noreferrer" target="_blank">
-                            開啟回放
+                            開啟影片回放
                           </a>
                         ) : null}
                       </div>
@@ -273,6 +284,14 @@ export default async function CourseLivePage({ params }: Props) {
                             src={replayEmbedUrl}
                             title={`${lesson.title} 回放`}
                           />
+                        </div>
+                      ) : null}
+                      {currentReplayState === "OPEN" && lesson.replayAudioUrl ? (
+                        <div>
+                          <h4>聲音回放</h4>
+                          <audio controls preload="metadata" src={lesson.replayAudioUrl}>
+                            你的瀏覽器不支援音訊播放。
+                          </audio>
                         </div>
                       ) : null}
                     </article>

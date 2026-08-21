@@ -44,7 +44,7 @@ export async function GET(request: Request) {
     ...rows.map((item) =>
       [
         item.applicationNo, item.name, item.phone, item.email, item.address,
-        item.facebookName, item.facebookProfileUrl, item.plan.name,
+        item.facebookName, item.facebookProfileUrl, item.planName,
         applicationStatusLabels[item.status], formatTaipeiDateTime(item.createdAt),
       ].map(csvCell).join(","),
     ),

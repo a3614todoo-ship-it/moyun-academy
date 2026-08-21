@@ -513,14 +513,6 @@ export type MembershipPlanUpdateOneRequiredWithoutApplicationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MembershipPlanUpdateToOneWithWhereWithoutApplicationsInput, Prisma.MembershipPlanUpdateWithoutApplicationsInput>, Prisma.MembershipPlanUncheckedUpdateWithoutApplicationsInput>
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }

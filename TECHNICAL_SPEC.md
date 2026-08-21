@@ -748,3 +748,37 @@ npx.cmd prisma migrate deploy
 - 2026-07-24：首頁加入所有訪客可操作的公開雙版型切換器，保留原版並新增「窗景版」；偏好以 Cookie 保存一年，網址可用 `design` 參數分享指定版型，兩版共用同一份課程資料與既有功能路由。
 - 2026-07-27：首頁原版與窗景版共用品牌名稱統一由「墨韻學堂」改為「我輩學堂」，同步更新頁首、頁尾、版權文字、首頁無障礙標籤與圓形「我」字標。
 - 2026-08-18：公開網站頁尾最底部新增低調的「管理者登入」入口，連至既有 `/admin/login`，不在頁首公開顯示；同步支援原版、窗景版與鍵盤焦點樣式。
+- 2026-08-21：開始導入會議確認的新制規則：單一年度會員、會員提前 7 天報名、Facebook 私密社團直播、課程個別回看開關／期限、影片與聲音回看，以及會員費／課程費後台調整與價格變更稽核。既有申請與訂單保留成交當下金額。
+
+## 20. 2026-08-21 新制會員與課程權限
+
+### 20.1 年度會員與價格快照
+
+- 前台與會員申請只接受 `MembershipPlan.code = annual` 的年度會員方案。
+- 年度會員效期固定為 365 天，預設年費為 NT$ 2,500；後台可修改方案名稱、年費、說明與權益。
+- `Application.planName`、`Application.planPrice`、`Application.planDurationDays` 保存送出申請當下的資料。
+- 核准會員時，`MembershipSubscription` 從申請快照建立，不會讀取之後修改的方案價格。
+- `CoursePurchase.amount` 繼續保存購買當下的課程金額。
+- 會員與課程價格變更會寫入 `AdminAuditLog`，不寫入密碼、連線字串或付款帳號。
+
+### 20.2 會員提前 7 天報名
+
+- `Course.publicRegistrationOpenAt` 設定一般訪客開放時間。
+- 有效會員的開放時間固定為一般訪客開放時間前 7 天。
+- `Course.registrationCloseAt` 可個別設定報名截止時間。
+- 課程頁與購買頁只負責顯示狀態；`createCoursePurchase` 會再次查詢會員資格並強制檢查時段。
+- 會員優先期間必須登入有效會員帳號，並使用會員帳號的 Email 建立訂單。
+
+### 20.3 Facebook 私密社團直播
+
+- `LivePlatform.FACEBOOK_GROUP` 代表 Facebook 私密社團直播。
+- 直播連結存於既有 `LiveSession.externalUrl`，只在播放器開放區間內對已驗證學員顯示。
+- 直播結束後不會自動開放網站回看，必須由管理員啟用課程回看。
+
+### 20.4 個別課程回看
+
+- `Course.replayEnabled` 是回看總開關。
+- `Course.replayOpenAt` 與 `Course.replayCloseAt` 是每門課各自的回看區間。
+- 學習教室與 `/watch` 會在伺服器端判斷回看狀態；未開放、尚未開始或已截止時不渲染影片／音訊網址。
+- `CourseLesson.replayVideoUrl` 提供影片回看，`CourseLesson.replayAudioUrl` 提供聲音回看。
+- 會員課程仍需有效會員資格；付費課程仍需已核准的購買紀錄，回看開關不能取代原有身分驗證。

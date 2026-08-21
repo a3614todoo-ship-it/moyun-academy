@@ -7,6 +7,9 @@ type TemplateApplication = {
   email: string;
   phone: string;
   approvedAt: Date | null;
+  planName: string;
+  planPrice: number;
+  planDurationDays: number;
   memberUser?: { id: string; passwordSetAt: Date | null } | null;
   plan: { name: string; price: number; durationDays: number };
   paymentReports: Array<{
@@ -66,7 +69,7 @@ function addDays(value: Date, days: number) {
 
 function membershipPeriod(application: TemplateApplication) {
   const startedAt = application.approvedAt || new Date();
-  const endedAt = addDays(startedAt, application.plan.durationDays);
+  const endedAt = addDays(startedAt, application.planDurationDays);
   return `${formatDate(startedAt)}－${formatDate(endedAt)}`;
 }
 
@@ -139,8 +142,8 @@ export function buildEmailTemplate({
 
 您的會員申請已建立。
 報名編號：${item.applicationNo}
-會員方案：${item.plan.name}
-應匯款金額：${money(item.plan.price)}
+會員方案：${item.planName}
+應匯款金額：${money(item.planPrice)}
 
 查看匯款資訊：
 ${successUrl}
@@ -152,8 +155,8 @@ ${paymentUrl}`,
         `<p>${escapeHtml(item.name)} 您好，您的會員申請已建立。</p>
         <table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows([
           ["報名編號", item.applicationNo],
-          ["會員方案", item.plan.name],
-          ["應匯款金額", money(item.plan.price)],
+          ["會員方案", item.planName],
+          ["應匯款金額", money(item.planPrice)],
         ])}</table>
         ${button(successUrl, "查看匯款資訊", "#aa751d")}
         <p>匯款完成後，請至網站回報匯款資料。</p>
@@ -172,7 +175,7 @@ ${paymentUrl}`,
 
 我們已收到您的會員匯款回報。
 報名編號：${item.applicationNo}
-回報金額：${report ? money(report.amount) : money(item.plan.price)}
+回報金額：${report ? money(report.amount) : money(item.planPrice)}
 
 管理員會核對匯款資料，審核通過後再寄出通知。`,
       html: emailShell(
@@ -180,7 +183,7 @@ ${paymentUrl}`,
         `<p>${escapeHtml(item.name)} 您好，我們已收到您的會員匯款回報。</p>
         <table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows([
           ["報名編號", item.applicationNo],
-          ["回報金額", report ? money(report.amount) : money(item.plan.price)],
+          ["回報金額", report ? money(report.amount) : money(item.planPrice)],
           ["目前狀態", "待管理員審核"],
         ])}</table>`,
       ),
@@ -199,7 +202,7 @@ ${paymentUrl}`,
 姓名：${item.name}
 電話：${item.phone}
 Email：${item.email}
-會員方案：${item.plan.name}
+會員方案：${item.planName}
 回報金額：${report ? money(report.amount) : "未取得"}
 帳號後五碼：${report?.bankLast5 || "未取得"}
 匯款日期：${report ? formatDate(report.paidAt) : "未取得"}
@@ -211,7 +214,7 @@ Email：${item.email}
           ["姓名", item.name],
           ["電話", item.phone],
           ["Email", item.email],
-          ["會員方案", item.plan.name],
+          ["會員方案", item.planName],
           ["回報金額", report ? money(report.amount) : "未取得"],
           ["帳號後五碼", report?.bankLast5 || "未取得"],
           ["匯款日期", report ? formatDate(report.paidAt) : "未取得"],
@@ -240,9 +243,9 @@ Email：${item.email}
 
 您的我輩學堂會員申請已審核通過。
 報名編號：${item.applicationNo}
-會員方案：${item.plan.name}
+會員方案：${item.planName}
 會員期間：${period}
-會員效期：${item.plan.durationDays} 天
+會員效期：${item.planDurationDays} 天
 ${accountText}
 ${facebookGroupUrl ? `Facebook 私密社團：${facebookGroupUrl}` : "Facebook 私密社團網址將由管理員另行通知。"}`,
       html: emailShell(
@@ -250,9 +253,9 @@ ${facebookGroupUrl ? `Facebook 私密社團：${facebookGroupUrl}` : "Facebook �
         `<p>${escapeHtml(item.name)} 您好，您的會員申請已審核通過。</p>
         <table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows([
           ["報名編號", item.applicationNo],
-          ["會員方案", item.plan.name],
+          ["會員方案", item.planName],
           ["會員期間", period],
-          ["會員效期", `${item.plan.durationDays} 天`],
+          ["會員效期", `${item.planDurationDays} 天`],
         ])}</table>
         <p style="margin:18px 0 0;color:#69726d;font-size:14px;line-height:1.8;">會員期間自審核通過日起算，期間內可依學堂安排觀看會員課程與參與會員社群。</p>
         ${accountHtml}

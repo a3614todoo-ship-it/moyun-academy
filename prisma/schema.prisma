@@ -8,30 +8,33 @@ datasource db {
 }
 
 model Application {
-  id                 String                     @id @default(cuid())
-  applicationNo      String                     @unique
-  name               String
-  phone              String
-  email              String
-  address            String
-  facebookName       String
-  facebookProfileUrl String
-  planId             String
-  plan               MembershipPlan             @relation(fields: [planId], references: [id])
-  memberUserId       String?
-  memberUser         MemberUser?                @relation(fields: [memberUserId], references: [id], onDelete: SetNull)
-  status             ApplicationStatus          @default(PENDING_PAYMENT)
-  agreedToTermsAt    DateTime
-  approvedAt         DateTime?
-  joinedFacebookAt   DateTime?
-  rejectedAt         DateTime?
-  cancelledAt        DateTime?
-  paymentReports     PaymentReport[]
-  emailLogs          EmailLog[]
-  statusHistory      ApplicationStatusHistory[]
+  id                     String                     @id @default(cuid())
+  applicationNo          String                     @unique
+  name                   String
+  phone                  String
+  email                  String
+  address                String
+  facebookName           String
+  facebookProfileUrl     String
+  planId                 String
+  plan                   MembershipPlan             @relation(fields: [planId], references: [id])
+  planName               String
+  planPrice              Int
+  planDurationDays       Int
+  memberUserId           String?
+  memberUser             MemberUser?                @relation(fields: [memberUserId], references: [id], onDelete: SetNull)
+  status                 ApplicationStatus          @default(PENDING_PAYMENT)
+  agreedToTermsAt        DateTime
+  approvedAt             DateTime?
+  joinedFacebookAt       DateTime?
+  rejectedAt             DateTime?
+  cancelledAt            DateTime?
+  paymentReports         PaymentReport[]
+  emailLogs              EmailLog[]
+  statusHistory          ApplicationStatusHistory[]
   membershipSubscription MembershipSubscription?
-  createdAt          DateTime                   @default(now())
-  updatedAt          DateTime                   @updatedAt
+  createdAt              DateTime                   @default(now())
+  updatedAt              DateTime                   @updatedAt
 
   @@index([status, createdAt])
   @@index([email])
@@ -101,45 +104,45 @@ model EmailLog {
 }
 
 model AdminUser {
-  id               String                     @id @default(cuid())
-  email            String                     @unique
-  passwordHash     String
-  name             String
-  isActive         Boolean                    @default(true)
-  lastLoginAt      DateTime?
-  sessions         AdminSession[]
-  reviewedPayments PaymentReport[]
+  id                      String                     @id @default(cuid())
+  email                   String                     @unique
+  passwordHash            String
+  name                    String
+  isActive                Boolean                    @default(true)
+  lastLoginAt             DateTime?
+  sessions                AdminSession[]
+  reviewedPayments        PaymentReport[]
   reviewedCoursePurchases CoursePurchase[]
-  statusChanges    ApplicationStatusHistory[]
-  updatedSettings  SystemSetting[]
-  auditLogs        AdminAuditLog[]
-  recoveryCodes    AdminRecoveryCode[]
-  emailOtps        AdminEmailOtp[]
-  createdAt        DateTime                   @default(now())
-  updatedAt        DateTime                   @updatedAt
+  statusChanges           ApplicationStatusHistory[]
+  updatedSettings         SystemSetting[]
+  auditLogs               AdminAuditLog[]
+  recoveryCodes           AdminRecoveryCode[]
+  emailOtps               AdminEmailOtp[]
+  createdAt               DateTime                   @default(now())
+  updatedAt               DateTime                   @updatedAt
 }
 
 model AdminEmailOtp {
-  id          String     @id @default(cuid())
+  id          String    @id @default(cuid())
   adminUserId String
-  adminUser   AdminUser  @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
   codeHash    String
-  attempts    Int        @default(0)
+  attempts    Int       @default(0)
   expiresAt   DateTime
   consumedAt  DateTime?
-  createdAt   DateTime   @default(now())
+  createdAt   DateTime  @default(now())
 
   @@index([adminUserId, consumedAt, createdAt])
   @@index([expiresAt])
 }
 
 model AdminRecoveryCode {
-  id          String     @id @default(cuid())
+  id          String    @id @default(cuid())
   adminUserId String
-  adminUser   AdminUser  @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
-  codeHash    String     @unique
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+  codeHash    String    @unique
   usedAt      DateTime?
-  createdAt   DateTime   @default(now())
+  createdAt   DateTime  @default(now())
 
   @@index([adminUserId, usedAt])
 }
@@ -185,20 +188,20 @@ model AdminSession {
 }
 
 model MemberUser {
-  id             String                   @id @default(cuid())
-  email          String                   @unique
-  passwordHash   String?
-  name           String
-  phone          String?
-  status         MemberUserStatus         @default(PENDING_PASSWORD)
-  passwordSetAt  DateTime?
-  lastLoginAt    DateTime?
-  applications   Application[]
-  subscriptions  MembershipSubscription[]
-  sessions       MemberSession[]
+  id              String                   @id @default(cuid())
+  email           String                   @unique
+  passwordHash    String?
+  name            String
+  phone           String?
+  status          MemberUserStatus         @default(PENDING_PASSWORD)
+  passwordSetAt   DateTime?
+  lastLoginAt     DateTime?
+  applications    Application[]
+  subscriptions   MembershipSubscription[]
+  sessions        MemberSession[]
   coursePurchases CoursePurchase[]
-  createdAt      DateTime                 @default(now())
-  updatedAt      DateTime                 @updatedAt
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
 
   @@index([status, createdAt])
   @@index([phone])
@@ -217,19 +220,19 @@ model MemberSession {
 }
 
 model MembershipSubscription {
-  id              String                       @id @default(cuid())
-  memberUserId    String
-  memberUser      MemberUser                   @relation(fields: [memberUserId], references: [id], onDelete: Cascade)
-  applicationId   String                       @unique
-  application     Application                  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
-  planName        String
-  planPrice       Int
-  durationDays    Int
-  startsAt        DateTime
-  endsAt          DateTime
-  status          MembershipSubscriptionStatus @default(ACTIVE)
-  createdAt       DateTime                     @default(now())
-  updatedAt       DateTime                     @updatedAt
+  id            String                       @id @default(cuid())
+  memberUserId  String
+  memberUser    MemberUser                   @relation(fields: [memberUserId], references: [id], onDelete: Cascade)
+  applicationId String                       @unique
+  application   Application                  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  planName      String
+  planPrice     Int
+  durationDays  Int
+  startsAt      DateTime
+  endsAt        DateTime
+  status        MembershipSubscriptionStatus @default(ACTIVE)
+  createdAt     DateTime                     @default(now())
+  updatedAt     DateTime                     @updatedAt
 
   @@index([memberUserId, status])
   @@index([endsAt])
@@ -251,68 +254,75 @@ model ApplicationStatusHistory {
 }
 
 model Course {
-  id              String    @id @default(cuid())
-  slug            String    @unique
-  title           String
-  subtitle        String?
-  category        String
-  excerpt         String
-  description     String
-  outline         Json?
-  audiences       Json?
-  lessonCount     Int       @default(0)
-  durationText    String?
-  courseStartAt   DateTime?
-  courseFormatText String?
-  viewingPolicyText String?
-  coverImageUrl   String?
-  previewVideoUrl String?
-  fullVideoUrl    String?
-  accessType      CourseAccessType @default(MEMBER_INCLUDED)
-  price           Int       @default(0)
-  isPublished     Boolean   @default(false)
-  isFeatured      Boolean   @default(false)
-  sortOrder       Int       @default(0)
-  publishedAt     DateTime?
-  purchases       CoursePurchase[]
-  liveSession      LiveSession?
-  lessonUnits      CourseLesson[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  id                       String           @id @default(cuid())
+  slug                     String           @unique
+  title                    String
+  subtitle                 String?
+  category                 String
+  excerpt                  String
+  description              String
+  outline                  Json?
+  audiences                Json?
+  lessonCount              Int              @default(0)
+  durationText             String?
+  courseStartAt            DateTime?
+  courseFormatText         String?
+  viewingPolicyText        String?
+  coverImageUrl            String?
+  previewVideoUrl          String?
+  fullVideoUrl             String?
+  accessType               CourseAccessType @default(MEMBER_INCLUDED)
+  price                    Int              @default(0)
+  publicRegistrationOpenAt DateTime?
+  registrationCloseAt      DateTime?
+  replayEnabled            Boolean          @default(false)
+  replayOpenAt             DateTime?
+  replayCloseAt            DateTime?
+  isPublished              Boolean          @default(false)
+  isFeatured               Boolean          @default(false)
+  sortOrder                Int              @default(0)
+  publishedAt              DateTime?
+  purchases                CoursePurchase[]
+  liveSession              LiveSession?
+  lessonUnits              CourseLesson[]
+  createdAt                DateTime         @default(now())
+  updatedAt                DateTime         @updatedAt
 
   @@index([isPublished, sortOrder])
   @@index([category])
   @@index([accessType])
+  @@index([publicRegistrationOpenAt, registrationCloseAt])
+  @@index([replayEnabled, replayOpenAt, replayCloseAt])
 }
 
 model CoursePurchase {
-  id             String               @id @default(cuid())
-  purchaseNo     String               @unique
-  courseId       String
-  course         Course               @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  name           String
-  phone          String
-  email          String
-  amount         Int
-  memberUserId   String?
-  memberUser     MemberUser?           @relation(fields: [memberUserId], references: [id], onDelete: SetNull)
-  bankLast5      String?
-  payerName      String?
-  paidAt         DateTime?
-  note           String?
-  status         CoursePurchaseStatus @default(PENDING_PAYMENT)
+  id              String               @id @default(cuid())
+  purchaseNo      String               @unique
+  courseId        String
+  course          Course               @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  name            String
+  phone           String
+  email           String
+  amount          Int
+  memberUserId    String?
+  memberUser      MemberUser?          @relation(fields: [memberUserId], references: [id], onDelete: SetNull)
+  bankLast5       String?
+  payerName       String?
+  paidAt          DateTime?
+  note            String?
+  status          CoursePurchaseStatus @default(PENDING_PAYMENT)
   // 舊版明文權杖欄位僅保留相容性；新版程式不再寫入或使用。
-  accessToken    String?              @unique
-  approvedAt     DateTime?
-  rejectedAt     DateTime?
-  reviewedAt     DateTime?
-  reviewedById   String?
-  reviewedBy     AdminUser?           @relation(fields: [reviewedById], references: [id], onDelete: SetNull)
-  emailLogs      EmailLog[]
-  liveQuestions  LiveQuestion[]
+  accessToken     String?              @unique
+  approvedAt      DateTime?
+  rejectedAt      DateTime?
+  reviewedAt      DateTime?
+  reviewedById    String?
+  reviewedBy      AdminUser?           @relation(fields: [reviewedById], references: [id], onDelete: SetNull)
+  emailLogs       EmailLog[]
+  liveQuestions   LiveQuestion[]
   questionUpvotes LiveQuestionUpvote[]
-  createdAt      DateTime             @default(now())
-  updatedAt      DateTime             @updatedAt
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
 
   @@index([courseId, status])
   @@index([status, createdAt])
@@ -323,46 +333,46 @@ model CoursePurchase {
 }
 
 model LiveSession {
-  id                    String         @id @default(cuid())
-  courseId              String         @unique
-  course                Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  title                 String
-  platform              LivePlatform   @default(YOUTUBE_LIVE)
-  isEnabled             Boolean        @default(false)
-  startsAt              DateTime?
-  endsAt                DateTime?
-  playerOpenAt          DateTime?
-  playerCloseAt         DateTime?
-  youtubeVideoId        String?
-  youtubeChatEmbedUrl   String?
-  enableYoutubeChat     Boolean        @default(false)
-  enableQuestions       Boolean        @default(true)
-  showWatermark         Boolean        @default(true)
-  externalUrl           String?
-  questions             LiveQuestion[]
-  createdAt             DateTime       @default(now())
-  updatedAt             DateTime       @updatedAt
+  id                  String         @id @default(cuid())
+  courseId            String         @unique
+  course              Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title               String
+  platform            LivePlatform   @default(YOUTUBE_LIVE)
+  isEnabled           Boolean        @default(false)
+  startsAt            DateTime?
+  endsAt              DateTime?
+  playerOpenAt        DateTime?
+  playerCloseAt       DateTime?
+  youtubeVideoId      String?
+  youtubeChatEmbedUrl String?
+  enableYoutubeChat   Boolean        @default(false)
+  enableQuestions     Boolean        @default(true)
+  showWatermark       Boolean        @default(true)
+  externalUrl         String?
+  questions           LiveQuestion[]
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
 
   @@index([isEnabled, playerOpenAt, playerCloseAt])
   @@index([platform])
 }
 
 model LiveQuestion {
-  id               String             @id @default(cuid())
+  id               String               @id @default(cuid())
   liveSessionId    String
-  liveSession      LiveSession        @relation(fields: [liveSessionId], references: [id], onDelete: Cascade)
+  liveSession      LiveSession          @relation(fields: [liveSessionId], references: [id], onDelete: Cascade)
   coursePurchaseId String
-  coursePurchase   CoursePurchase     @relation(fields: [coursePurchaseId], references: [id], onDelete: Cascade)
+  coursePurchase   CoursePurchase       @relation(fields: [coursePurchaseId], references: [id], onDelete: Cascade)
   displayName      String
   emailMasked      String
   body             String
-  status           LiveQuestionStatus @default(OPEN)
-  upvoteCount      Int                @default(0)
+  status           LiveQuestionStatus   @default(OPEN)
+  upvoteCount      Int                  @default(0)
   upvotes          LiveQuestionUpvote[]
   answeredAt       DateTime?
   answer           String?
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
 
   @@index([liveSessionId, status, createdAt])
   @@index([coursePurchaseId, createdAt])
@@ -381,9 +391,9 @@ model LiveQuestionUpvote {
 }
 
 model CourseLesson {
-  id               String   @id @default(cuid())
+  id               String    @id @default(cuid())
   courseId         String
-  course           Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course           Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
   title            String
   summary          String?
   startsAt         DateTime?
@@ -395,10 +405,11 @@ model CourseLesson {
   reflectionPrompt String?
   handoutUrl       String?
   replayVideoUrl   String?
-  sortOrder        Int      @default(0)
-  isPublished      Boolean  @default(true)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  replayAudioUrl   String?
+  sortOrder        Int       @default(0)
+  isPublished      Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   @@index([courseId, sortOrder])
   @@index([isPublished, startsAt])
@@ -480,6 +491,7 @@ enum MembershipSubscriptionStatus {
 enum LivePlatform {
   YOUTUBE_LIVE
   VIMEO_LIVE
+  FACEBOOK_GROUP
   GOOGLE_MEET
   ZOOM_WEBINAR
   ZOOM_MEETING

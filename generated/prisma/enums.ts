@@ -77,6 +77,7 @@ export type MembershipSubscriptionStatus = (typeof MembershipSubscriptionStatus)
 export const LivePlatform = {
   YOUTUBE_LIVE: 'YOUTUBE_LIVE',
   VIMEO_LIVE: 'VIMEO_LIVE',
+  FACEBOOK_GROUP: 'FACEBOOK_GROUP',
   GOOGLE_MEET: 'GOOGLE_MEET',
   ZOOM_WEBINAR: 'ZOOM_WEBINAR',
   ZOOM_MEETING: 'ZOOM_MEETING',

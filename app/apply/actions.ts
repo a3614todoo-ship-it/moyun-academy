@@ -45,7 +45,7 @@ export async function createApplication(
   });
   if (!rateLimit.allowed) return { message: "送出次數過多，請稍後再試。" };
   const plan = await prisma.membershipPlan.findFirst({
-    where: { code: values.planCode, isActive: true },
+    where: { code: "annual", isActive: true },
   });
 
   if (!plan) {
@@ -84,6 +84,9 @@ export async function createApplication(
           facebookName: values.facebookName,
           facebookProfileUrl: values.facebookProfileUrl,
           planId: plan.id,
+          planName: plan.name,
+          planPrice: plan.price,
+          planDurationDays: plan.durationDays,
           agreedToTermsAt: new Date(),
         },
       });

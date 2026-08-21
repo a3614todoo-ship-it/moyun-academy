@@ -6,6 +6,12 @@ import { CourseAccessLookupForm } from "@/components/course-access-lookup-form";
 import { MemberCourseAccessLookupForm } from "@/components/member-course-access-lookup-form";
 import { MembershipSubscriptionStatus } from "@/generated/prisma/enums";
 import { getPublishedCourse } from "@/lib/course-data";
+import {
+  canCreateCoursePurchase,
+  memberRegistrationOpenAt,
+  registrationState,
+} from "@/lib/course-registration";
+import { replayState, replayStateMessage } from "@/lib/course-replay";
 import { getMemberSession } from "@/lib/member/auth";
 import { prisma } from "@/lib/prisma";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
@@ -66,12 +72,17 @@ export default async function CourseDetailPage({ params }: Props) {
   ]);
 
   const previewEmbedUrl = getYouTubeEmbedUrl(course.previewVideoUrl);
+  const currentReplayState = replayState(course);
+  const purchaseWindowState = registrationState(course, Boolean(activeSubscription));
+  const memberOpenAt = memberRegistrationOpenAt(course.publicRegistrationOpenAt);
   const fullVideoEmbedUrl =
-    course.accessType === "PUBLIC_FREE"
+    course.accessType === "PUBLIC_FREE" && currentReplayState === "OPEN"
       ? getYouTubeEmbedUrl(course.fullVideoUrl)
       : "";
   const canShowPublicFullVideo =
-    course.accessType === "PUBLIC_FREE" && Boolean(course.fullVideoUrl);
+    course.accessType === "PUBLIC_FREE"
+    && currentReplayState === "OPEN"
+    && Boolean(course.fullVideoUrl);
 
   const courseInfoItems = [
     {
@@ -238,7 +249,11 @@ export default async function CourseDetailPage({ params }: Props) {
             <h3>{course.title}</h3>
             {course.accessType === "PUBLIC_FREE" ? (
               <>
-                <p>這堂課目前開放免費觀看，你可以先從這裡開始，慢慢熟悉我輩學堂的閱讀方式。</p>
+                <p>
+                  {currentReplayState === "OPEN"
+                    ? "這堂課目前開放免費觀看，你可以先從這裡開始，慢慢熟悉我輩學堂的閱讀方式。"
+                    : replayStateMessage(currentReplayState)}
+                </p>
                 <Link className="button button-gold button-block" href="/courses">
                   繼續探索課程
                 </Link>
@@ -268,11 +283,20 @@ export default async function CourseDetailPage({ params }: Props) {
                 <ul>
                   <li>課程價格：{money(course.price)}</li>
                   <li>付款方式：銀行匯款、人工對帳</li>
+                  {memberOpenAt ? <li>會員優先開放：{formatDateTime(memberOpenAt)}</li> : null}
+                  {course.publicRegistrationOpenAt ? <li>一般訪客開放：{formatDateTime(course.publicRegistrationOpenAt)}</li> : null}
+                  {course.registrationCloseAt ? <li>報名截止：{formatDateTime(course.registrationCloseAt)}</li> : null}
                   <li>可依後台設定進入直播、回放、講義與 Q&A</li>
                 </ul>
-                <Link className="button button-gold button-block" href={`/courses/${course.slug}/purchase`}>
-                  報名這堂課
-                </Link>
+                {canCreateCoursePurchase(purchaseWindowState) ? (
+                  <Link className="button button-gold button-block" href={`/courses/${course.slug}/purchase`}>
+                    {purchaseWindowState === "OPEN_MEMBER" ? "以會員資格優先報名" : "報名這堂課"}
+                  </Link>
+                ) : purchaseWindowState === "MEMBER_PRIORITY" ? (
+                  <Link className="button button-gold button-block" href="/login">會員登入後優先報名</Link>
+                ) : (
+                  <p><strong>{purchaseWindowState === "CLOSED" ? "這門課的報名已截止。" : "這門課尚未開放報名。"}</strong></p>
+                )}
                 <CourseAccessLookupForm slug={course.slug} />
               </>
             ) : null}

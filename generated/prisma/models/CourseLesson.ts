@@ -48,6 +48,7 @@ export type CourseLessonMinAggregateOutputType = {
   reflectionPrompt: string | null
   handoutUrl: string | null
   replayVideoUrl: string | null
+  replayAudioUrl: string | null
   sortOrder: number | null
   isPublished: boolean | null
   createdAt: Date | null
@@ -68,6 +69,7 @@ export type CourseLessonMaxAggregateOutputType = {
   reflectionPrompt: string | null
   handoutUrl: string | null
   replayVideoUrl: string | null
+  replayAudioUrl: string | null
   sortOrder: number | null
   isPublished: boolean | null
   createdAt: Date | null
@@ -88,6 +90,7 @@ export type CourseLessonCountAggregateOutputType = {
   reflectionPrompt: number
   handoutUrl: number
   replayVideoUrl: number
+  replayAudioUrl: number
   sortOrder: number
   isPublished: number
   createdAt: number
@@ -118,6 +121,7 @@ export type CourseLessonMinAggregateInputType = {
   reflectionPrompt?: true
   handoutUrl?: true
   replayVideoUrl?: true
+  replayAudioUrl?: true
   sortOrder?: true
   isPublished?: true
   createdAt?: true
@@ -138,6 +142,7 @@ export type CourseLessonMaxAggregateInputType = {
   reflectionPrompt?: true
   handoutUrl?: true
   replayVideoUrl?: true
+  replayAudioUrl?: true
   sortOrder?: true
   isPublished?: true
   createdAt?: true
@@ -158,6 +163,7 @@ export type CourseLessonCountAggregateInputType = {
   reflectionPrompt?: true
   handoutUrl?: true
   replayVideoUrl?: true
+  replayAudioUrl?: true
   sortOrder?: true
   isPublished?: true
   createdAt?: true
@@ -265,6 +271,7 @@ export type CourseLessonGroupByOutputType = {
   reflectionPrompt: string | null
   handoutUrl: string | null
   replayVideoUrl: string | null
+  replayAudioUrl: string | null
   sortOrder: number
   isPublished: boolean
   createdAt: Date
@@ -308,6 +315,7 @@ export type CourseLessonWhereInput = {
   reflectionPrompt?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   handoutUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   replayVideoUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  replayAudioUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   sortOrder?: Prisma.IntFilter<"CourseLesson"> | number
   isPublished?: Prisma.BoolFilter<"CourseLesson"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseLesson"> | Date | string
@@ -329,6 +337,7 @@ export type CourseLessonOrderByWithRelationInput = {
   reflectionPrompt?: Prisma.SortOrderInput | Prisma.SortOrder
   handoutUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   replayVideoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayAudioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -353,6 +362,7 @@ export type CourseLessonWhereUniqueInput = Prisma.AtLeast<{
   reflectionPrompt?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   handoutUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   replayVideoUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  replayAudioUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   sortOrder?: Prisma.IntFilter<"CourseLesson"> | number
   isPublished?: Prisma.BoolFilter<"CourseLesson"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseLesson"> | Date | string
@@ -374,6 +384,7 @@ export type CourseLessonOrderByWithAggregationInput = {
   reflectionPrompt?: Prisma.SortOrderInput | Prisma.SortOrder
   handoutUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   replayVideoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayAudioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -402,6 +413,7 @@ export type CourseLessonScalarWhereWithAggregatesInput = {
   reflectionPrompt?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
   handoutUrl?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
   replayVideoUrl?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
+  replayAudioUrl?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
   sortOrder?: Prisma.IntWithAggregatesFilter<"CourseLesson"> | number
   isPublished?: Prisma.BoolWithAggregatesFilter<"CourseLesson"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CourseLesson"> | Date | string
@@ -421,6 +433,7 @@ export type CourseLessonCreateInput = {
   reflectionPrompt?: string | null
   handoutUrl?: string | null
   replayVideoUrl?: string | null
+  replayAudioUrl?: string | null
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
@@ -442,6 +455,7 @@ export type CourseLessonUncheckedCreateInput = {
   reflectionPrompt?: string | null
   handoutUrl?: string | null
   replayVideoUrl?: string | null
+  replayAudioUrl?: string | null
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
@@ -461,6 +475,7 @@ export type CourseLessonUpdateInput = {
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -482,6 +497,7 @@ export type CourseLessonUncheckedUpdateInput = {
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -502,6 +518,7 @@ export type CourseLessonCreateManyInput = {
   reflectionPrompt?: string | null
   handoutUrl?: string | null
   replayVideoUrl?: string | null
+  replayAudioUrl?: string | null
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
@@ -521,6 +538,7 @@ export type CourseLessonUpdateManyMutationInput = {
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -541,6 +559,7 @@ export type CourseLessonUncheckedUpdateManyInput = {
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -571,6 +590,7 @@ export type CourseLessonCountOrderByAggregateInput = {
   reflectionPrompt?: Prisma.SortOrder
   handoutUrl?: Prisma.SortOrder
   replayVideoUrl?: Prisma.SortOrder
+  replayAudioUrl?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -595,6 +615,7 @@ export type CourseLessonMaxOrderByAggregateInput = {
   reflectionPrompt?: Prisma.SortOrder
   handoutUrl?: Prisma.SortOrder
   replayVideoUrl?: Prisma.SortOrder
+  replayAudioUrl?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -615,6 +636,7 @@ export type CourseLessonMinOrderByAggregateInput = {
   reflectionPrompt?: Prisma.SortOrder
   handoutUrl?: Prisma.SortOrder
   replayVideoUrl?: Prisma.SortOrder
+  replayAudioUrl?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -680,6 +702,7 @@ export type CourseLessonCreateWithoutCourseInput = {
   reflectionPrompt?: string | null
   handoutUrl?: string | null
   replayVideoUrl?: string | null
+  replayAudioUrl?: string | null
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
@@ -699,6 +722,7 @@ export type CourseLessonUncheckedCreateWithoutCourseInput = {
   reflectionPrompt?: string | null
   handoutUrl?: string | null
   replayVideoUrl?: string | null
+  replayAudioUrl?: string | null
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
@@ -748,6 +772,7 @@ export type CourseLessonScalarWhereInput = {
   reflectionPrompt?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   handoutUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   replayVideoUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  replayAudioUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   sortOrder?: Prisma.IntFilter<"CourseLesson"> | number
   isPublished?: Prisma.BoolFilter<"CourseLesson"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseLesson"> | Date | string
@@ -767,6 +792,7 @@ export type CourseLessonCreateManyCourseInput = {
   reflectionPrompt?: string | null
   handoutUrl?: string | null
   replayVideoUrl?: string | null
+  replayAudioUrl?: string | null
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
@@ -786,6 +812,7 @@ export type CourseLessonUpdateWithoutCourseInput = {
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -805,6 +832,7 @@ export type CourseLessonUncheckedUpdateWithoutCourseInput = {
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -824,6 +852,7 @@ export type CourseLessonUncheckedUpdateManyWithoutCourseInput = {
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -846,6 +875,7 @@ export type CourseLessonSelect<ExtArgs extends runtime.Types.Extensions.Internal
   reflectionPrompt?: boolean
   handoutUrl?: boolean
   replayVideoUrl?: boolean
+  replayAudioUrl?: boolean
   sortOrder?: boolean
   isPublished?: boolean
   createdAt?: boolean
@@ -867,6 +897,7 @@ export type CourseLessonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   reflectionPrompt?: boolean
   handoutUrl?: boolean
   replayVideoUrl?: boolean
+  replayAudioUrl?: boolean
   sortOrder?: boolean
   isPublished?: boolean
   createdAt?: boolean
@@ -888,6 +919,7 @@ export type CourseLessonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   reflectionPrompt?: boolean
   handoutUrl?: boolean
   replayVideoUrl?: boolean
+  replayAudioUrl?: boolean
   sortOrder?: boolean
   isPublished?: boolean
   createdAt?: boolean
@@ -909,13 +941,14 @@ export type CourseLessonSelectScalar = {
   reflectionPrompt?: boolean
   handoutUrl?: boolean
   replayVideoUrl?: boolean
+  replayAudioUrl?: boolean
   sortOrder?: boolean
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CourseLessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "title" | "summary" | "startsAt" | "durationText" | "originalText" | "translation" | "annotation" | "teacherNote" | "reflectionPrompt" | "handoutUrl" | "replayVideoUrl" | "sortOrder" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["courseLesson"]>
+export type CourseLessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "title" | "summary" | "startsAt" | "durationText" | "originalText" | "translation" | "annotation" | "teacherNote" | "reflectionPrompt" | "handoutUrl" | "replayVideoUrl" | "replayAudioUrl" | "sortOrder" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["courseLesson"]>
 export type CourseLessonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
@@ -945,6 +978,7 @@ export type $CourseLessonPayload<ExtArgs extends runtime.Types.Extensions.Intern
     reflectionPrompt: string | null
     handoutUrl: string | null
     replayVideoUrl: string | null
+    replayAudioUrl: string | null
     sortOrder: number
     isPublished: boolean
     createdAt: Date
@@ -1386,6 +1420,7 @@ export interface CourseLessonFieldRefs {
   readonly reflectionPrompt: Prisma.FieldRef<"CourseLesson", 'String'>
   readonly handoutUrl: Prisma.FieldRef<"CourseLesson", 'String'>
   readonly replayVideoUrl: Prisma.FieldRef<"CourseLesson", 'String'>
+  readonly replayAudioUrl: Prisma.FieldRef<"CourseLesson", 'String'>
   readonly sortOrder: Prisma.FieldRef<"CourseLesson", 'Int'>
   readonly isPublished: Prisma.FieldRef<"CourseLesson", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"CourseLesson", 'DateTime'>

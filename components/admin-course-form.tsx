@@ -29,6 +29,7 @@ type CourseLessonValue = {
   reflectionPrompt?: string | null;
   handoutUrl?: string | null;
   replayVideoUrl?: string | null;
+  replayAudioUrl?: string | null;
   isPublished?: boolean;
 };
 
@@ -52,6 +53,11 @@ type CourseFormValue = {
   fullVideoUrl?: string | null;
   accessType?: string;
   price?: number;
+  publicRegistrationOpenAt?: Date | string | null;
+  registrationCloseAt?: Date | string | null;
+  replayEnabled?: boolean;
+  replayOpenAt?: Date | string | null;
+  replayCloseAt?: Date | string | null;
   isPublished?: boolean;
   isFeatured?: boolean;
   sortOrder?: number;
@@ -166,6 +172,27 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
                 />
               </label>
             </div>
+
+            <div className="admin-course-grid">
+              <label>
+                一般訪客報名開放時間
+                <input
+                  defaultValue={formatTaipeiDateTimeLocal(course?.publicRegistrationOpenAt)}
+                  name="publicRegistrationOpenAt"
+                  type="datetime-local"
+                />
+                <small>有效會員會自動提前 7 天開放；留白代表課程上架後立即開放。</small>
+              </label>
+              <label>
+                報名截止時間
+                <input
+                  defaultValue={formatTaipeiDateTimeLocal(course?.registrationCloseAt)}
+                  name="registrationCloseAt"
+                  type="datetime-local"
+                />
+                <small>留白代表不設定截止時間。</small>
+              </label>
+            </div>
           </section>
 
           <label>
@@ -217,7 +244,7 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
               <label>
                 課程價格
                 <input defaultValue={course?.price ?? 0} min="0" name="price" type="number" />
-                <small>免費與會員免費課程可填 0；付費課程需大於 0。</small>
+                <small>免費與會員免費課程可填 0；付費課程需大於 0。改價只影響新訂單，既有訂單保留原金額。</small>
               </label>
             </div>
 
@@ -231,6 +258,25 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
               />
               <small>若是直播系列，回放也可以填在「單元管理」的回放影片網址。</small>
             </label>
+
+            <div className="admin-course-checks">
+              <label>
+                <input defaultChecked={course?.replayEnabled} name="replayEnabled" type="checkbox" />
+                開放網站回看
+              </label>
+            </div>
+            <div className="admin-course-grid">
+              <label>
+                回看開放時間
+                <input defaultValue={formatTaipeiDateTimeLocal(course?.replayOpenAt)} name="replayOpenAt" type="datetime-local" />
+                <small>留白代表勾選後立即開放。</small>
+              </label>
+              <label>
+                回看截止時間
+                <input defaultValue={formatTaipeiDateTimeLocal(course?.replayCloseAt)} name="replayCloseAt" type="datetime-local" />
+                <small>付費課程可逐堂設定期限；留白代表不設截止。</small>
+              </label>
+            </div>
           </section>
 
           <label>
@@ -324,6 +370,10 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
                       回放影片網址
                       <input defaultValue={lesson?.replayVideoUrl || ""} name={`${prefix}ReplayVideoUrl`} placeholder="YouTube / Vimeo 回放網址" type="url" />
                     </label>
+                    <label>
+                      回放聲音網址
+                      <input defaultValue={lesson?.replayAudioUrl || ""} name={`${prefix}ReplayAudioUrl`} placeholder="HTTPS 音檔網址（MP3、M4A 等）" type="url" />
+                    </label>
                   </section>
                 );
               })}
@@ -370,6 +420,7 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
                 <select defaultValue={live?.platform || "YOUTUBE_LIVE"} name="livePlatform">
                   <option value="YOUTUBE_LIVE">YouTube Live</option>
                   <option value="VIMEO_LIVE">Vimeo Live</option>
+                  <option value="FACEBOOK_GROUP">Facebook 私密社團直播</option>
                   <option value="GOOGLE_MEET">Google Meet</option>
                   <option value="ZOOM_WEBINAR">Zoom Webinar</option>
                   <option value="ZOOM_MEETING">Zoom Meeting</option>
@@ -392,11 +443,11 @@ export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
             </div>
 
             <label>
-              Vimeo / Google Meet / Zoom / 外部直播連結
+              Facebook 私密社團 / Vimeo / Google Meet / Zoom / 外部直播連結
               <input
                 defaultValue={live?.externalUrl || ""}
                 name="liveExternalUrl"
-                placeholder="Vimeo event、Google Meet、Zoom 會議連結，或其他直播平台網址"
+                placeholder="Facebook 私密社團貼文、Vimeo event、Google Meet、Zoom 或其他直播網址"
                 type="url"
               />
             </label>

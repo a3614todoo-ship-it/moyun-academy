@@ -4,99 +4,74 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/admin/auth";
 import { prisma } from "@/lib/prisma";
+import { recordAdminAudit } from "@/lib/security/admin-audit";
 
 function text(formData: FormData, name: string) {
   return String(formData.get(name) || "").trim();
 }
 
 function lines(value: string) {
-  return value
-    .split(/\r?\n/)
-    .map((item) => item.trim())
-    .filter(Boolean);
+  return value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
 }
 
-function validPlanCode(value: string) {
-  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
-}
-
-function redirectWithError(error: string, id?: string) {
-  const suffix = id ? `&id=${encodeURIComponent(id)}` : "";
-  redirect(`/admin/membership-plans?error=${error}${suffix}`);
-}
-
-export async function saveMembershipPlan(formData: FormData) {
-  await requireAdmin();
-
-  const id = text(formData, "id");
-  const code = text(formData, "code").toLowerCase();
+export async function saveAnnualMembershipPlan(formData: FormData) {
+  const session = await requireAdmin();
   const name = text(formData, "name");
   const price = Number.parseInt(text(formData, "price"), 10);
-  const durationDays = Number.parseInt(text(formData, "durationDays"), 10);
-  const sortOrder = Number.parseInt(text(formData, "sortOrder"), 10);
   const description = text(formData, "description");
   const benefits = lines(text(formData, "benefits"));
-  const isActive = formData.get("isActive") === "on";
 
-  if (
-    !code ||
-    !name ||
-    !validPlanCode(code) ||
-    !Number.isInteger(price) ||
-    price < 0 ||
-    !Number.isInteger(durationDays) ||
-    durationDays <= 0 ||
-    !Number.isInteger(sortOrder)
-  ) {
-    redirectWithError("invalid", id);
+  if (!name || !Number.isInteger(price) || price < 0) {
+    redirect("/admin/membership-plans?error=invalid");
   }
 
-  const duplicate = await prisma.membershipPlan.findFirst({
-    where: { code, id: id ? { not: id } : undefined },
-    select: { id: true },
+  const previous = await prisma.membershipPlan.findUnique({
+    where: { code: "annual" },
+    select: { id: true, name: true, price: true },
   });
 
-  if (duplicate) {
-    redirectWithError("duplicate", id);
-  }
+  const annualPlan = await prisma.$transaction(async (transaction) => {
+    await transaction.membershipPlan.updateMany({
+      where: { code: { not: "annual" } },
+      data: { isActive: false },
+    });
 
-  const data = {
-    code,
-    name,
-    price,
-    durationDays,
-    description: description || null,
-    benefits,
-    isActive,
-    sortOrder,
-  };
-
-  if (id) {
-    const existing = await prisma.membershipPlan.findUnique({ where: { id }, select: { id: true } });
-    if (!existing) redirect("/admin/membership-plans?error=missing");
-    await prisma.membershipPlan.update({ where: { id }, data });
-  } else {
-    await prisma.membershipPlan.create({ data });
-  }
-
-  revalidatePath("/admin/membership-plans");
-  revalidatePath("/membership");
-  revalidatePath("/apply");
-  redirect("/admin/membership-plans?saved=1");
-}
-
-export async function toggleMembershipPlanActive(formData: FormData) {
-  await requireAdmin();
-  const id = text(formData, "id");
-  const plan = await prisma.membershipPlan.findUnique({
-    where: { id },
-    select: { isActive: true },
+    return transaction.membershipPlan.upsert({
+      where: { code: "annual" },
+      create: {
+        code: "annual",
+        name,
+        price,
+        durationDays: 365,
+        description: description || null,
+        benefits,
+        isActive: true,
+        sortOrder: 1,
+      },
+      update: {
+        name,
+        price,
+        durationDays: 365,
+        description: description || null,
+        benefits,
+        isActive: true,
+        sortOrder: 1,
+      },
+    });
   });
-  if (!plan) redirect("/admin/membership-plans?error=missing");
 
-  await prisma.membershipPlan.update({
-    where: { id },
-    data: { isActive: !plan.isActive },
+  await recordAdminAudit({
+    adminUserId: session.adminUser.id,
+    action: previous?.price !== price ? "MEMBERSHIP_PRICE_CHANGED" : "MEMBERSHIP_PLAN_UPDATED",
+    targetType: "MembershipPlan",
+    targetId: annualPlan.id,
+    metadata: {
+      oldPrice: previous?.price ?? null,
+      newPrice: price,
+      oldName: previous?.name ?? null,
+      newName: name,
+      durationDays: 365,
+    },
   });
 
   revalidatePath("/admin/membership-plans");

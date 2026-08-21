@@ -19,7 +19,7 @@ function durationLabel(days: number) {
 
 export default async function MembershipPage() {
   const plans = await prisma.membershipPlan.findMany({
-    where: { isActive: true },
+    where: { code: "annual", isActive: true },
     orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
   });
 
@@ -29,7 +29,7 @@ export default async function MembershipPage() {
         <div className="container">
           <span className="eyebrow">深度閱讀，持續學習</span>
           <h1>我輩學堂會員方案</h1>
-          <p>選擇適合自己的閱讀節奏，在會員期間觀看會員課程，並加入學習社群。</p>
+          <p>一年一會，在會員有效期間不限次數觀看會員課程，並優先取得付費課程報名資格。</p>
         </div>
       </section>
       <section className="section">
@@ -51,9 +51,9 @@ export default async function MembershipPage() {
                     </ul>
                   ) : (
                     <ul className="check-list">
-                      <li>會員期間觀看會員免費課程</li>
+                      <li>會員有效期間不限次數觀看會員課程</li>
                       <li>加入 Facebook 私密學習社團</li>
-                      <li>下載課程講義與延伸閱讀</li>
+                      <li>付費課程提前 7 天開放報名</li>
                     </ul>
                   )}
                   <Link className="button button-gold button-block" href={`/apply?plan=${encodeURIComponent(plan.code)}`}>

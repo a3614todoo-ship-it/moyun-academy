@@ -59,9 +59,9 @@ export default async function AdminApplicationDetailPage({ params, searchParams 
           <section className="admin-panel admin-info-panel">
             <div className="admin-panel-heading"><h2>會員方案</h2></div>
             <dl className="admin-detail-list">
-              <div><dt>方案</dt><dd>{application.plan.name}</dd></div>
-              <div><dt>金額</dt><dd>NT$ {application.plan.price.toLocaleString("zh-TW")}</dd></div>
-              <div><dt>效期</dt><dd>{application.plan.durationDays} 天</dd></div>
+              <div><dt>方案</dt><dd>{application.planName}</dd></div>
+              <div><dt>金額</dt><dd>NT$ {application.planPrice.toLocaleString("zh-TW")}</dd></div>
+              <div><dt>效期</dt><dd>{application.planDurationDays} 天</dd></div>
             </dl>
           </section>
           <section className="admin-panel admin-info-panel">

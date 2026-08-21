@@ -56,6 +56,11 @@ export type CourseMinAggregateOutputType = {
   fullVideoUrl: string | null
   accessType: $Enums.CourseAccessType | null
   price: number | null
+  publicRegistrationOpenAt: Date | null
+  registrationCloseAt: Date | null
+  replayEnabled: boolean | null
+  replayOpenAt: Date | null
+  replayCloseAt: Date | null
   isPublished: boolean | null
   isFeatured: boolean | null
   sortOrder: number | null
@@ -82,6 +87,11 @@ export type CourseMaxAggregateOutputType = {
   fullVideoUrl: string | null
   accessType: $Enums.CourseAccessType | null
   price: number | null
+  publicRegistrationOpenAt: Date | null
+  registrationCloseAt: Date | null
+  replayEnabled: boolean | null
+  replayOpenAt: Date | null
+  replayCloseAt: Date | null
   isPublished: boolean | null
   isFeatured: boolean | null
   sortOrder: number | null
@@ -110,6 +120,11 @@ export type CourseCountAggregateOutputType = {
   fullVideoUrl: number
   accessType: number
   price: number
+  publicRegistrationOpenAt: number
+  registrationCloseAt: number
+  replayEnabled: number
+  replayOpenAt: number
+  replayCloseAt: number
   isPublished: number
   isFeatured: number
   sortOrder: number
@@ -150,6 +165,11 @@ export type CourseMinAggregateInputType = {
   fullVideoUrl?: true
   accessType?: true
   price?: true
+  publicRegistrationOpenAt?: true
+  registrationCloseAt?: true
+  replayEnabled?: true
+  replayOpenAt?: true
+  replayCloseAt?: true
   isPublished?: true
   isFeatured?: true
   sortOrder?: true
@@ -176,6 +196,11 @@ export type CourseMaxAggregateInputType = {
   fullVideoUrl?: true
   accessType?: true
   price?: true
+  publicRegistrationOpenAt?: true
+  registrationCloseAt?: true
+  replayEnabled?: true
+  replayOpenAt?: true
+  replayCloseAt?: true
   isPublished?: true
   isFeatured?: true
   sortOrder?: true
@@ -204,6 +229,11 @@ export type CourseCountAggregateInputType = {
   fullVideoUrl?: true
   accessType?: true
   price?: true
+  publicRegistrationOpenAt?: true
+  registrationCloseAt?: true
+  replayEnabled?: true
+  replayOpenAt?: true
+  replayCloseAt?: true
   isPublished?: true
   isFeatured?: true
   sortOrder?: true
@@ -319,6 +349,11 @@ export type CourseGroupByOutputType = {
   fullVideoUrl: string | null
   accessType: $Enums.CourseAccessType
   price: number
+  publicRegistrationOpenAt: Date | null
+  registrationCloseAt: Date | null
+  replayEnabled: boolean
+  replayOpenAt: Date | null
+  replayCloseAt: Date | null
   isPublished: boolean
   isFeatured: boolean
   sortOrder: number
@@ -370,6 +405,11 @@ export type CourseWhereInput = {
   fullVideoUrl?: Prisma.StringNullableFilter<"Course"> | string | null
   accessType?: Prisma.EnumCourseAccessTypeFilter<"Course"> | $Enums.CourseAccessType
   price?: Prisma.IntFilter<"Course"> | number
+  publicRegistrationOpenAt?: Prisma.DateTimeNullableFilter<"Course"> | Date | string | null
+  registrationCloseAt?: Prisma.DateTimeNullableFilter<"Course"> | Date | string | null
+  replayEnabled?: Prisma.BoolFilter<"Course"> | boolean
+  replayOpenAt?: Prisma.DateTimeNullableFilter<"Course"> | Date | string | null
+  replayCloseAt?: Prisma.DateTimeNullableFilter<"Course"> | Date | string | null
   isPublished?: Prisma.BoolFilter<"Course"> | boolean
   isFeatured?: Prisma.BoolFilter<"Course"> | boolean
   sortOrder?: Prisma.IntFilter<"Course"> | number
@@ -401,6 +441,11 @@ export type CourseOrderByWithRelationInput = {
   fullVideoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   accessType?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  publicRegistrationOpenAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  registrationCloseAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayEnabled?: Prisma.SortOrder
+  replayOpenAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayCloseAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   isFeatured?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -435,6 +480,11 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   fullVideoUrl?: Prisma.StringNullableFilter<"Course"> | string | null
   accessType?: Prisma.EnumCourseAccessTypeFilter<"Course"> | $Enums.CourseAccessType
   price?: Prisma.IntFilter<"Course"> | number
+  publicRegistrationOpenAt?: Prisma.DateTimeNullableFilter<"Course"> | Date | string | null
+  registrationCloseAt?: Prisma.DateTimeNullableFilter<"Course"> | Date | string | null
+  replayEnabled?: Prisma.BoolFilter<"Course"> | boolean
+  replayOpenAt?: Prisma.DateTimeNullableFilter<"Course"> | Date | string | null
+  replayCloseAt?: Prisma.DateTimeNullableFilter<"Course"> | Date | string | null
   isPublished?: Prisma.BoolFilter<"Course"> | boolean
   isFeatured?: Prisma.BoolFilter<"Course"> | boolean
   sortOrder?: Prisma.IntFilter<"Course"> | number
@@ -466,6 +516,11 @@ export type CourseOrderByWithAggregationInput = {
   fullVideoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   accessType?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  publicRegistrationOpenAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  registrationCloseAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayEnabled?: Prisma.SortOrder
+  replayOpenAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayCloseAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   isFeatured?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -502,6 +557,11 @@ export type CourseScalarWhereWithAggregatesInput = {
   fullVideoUrl?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null
   accessType?: Prisma.EnumCourseAccessTypeWithAggregatesFilter<"Course"> | $Enums.CourseAccessType
   price?: Prisma.IntWithAggregatesFilter<"Course"> | number
+  publicRegistrationOpenAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Course"> | Date | string | null
+  registrationCloseAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Course"> | Date | string | null
+  replayEnabled?: Prisma.BoolWithAggregatesFilter<"Course"> | boolean
+  replayOpenAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Course"> | Date | string | null
+  replayCloseAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Course"> | Date | string | null
   isPublished?: Prisma.BoolWithAggregatesFilter<"Course"> | boolean
   isFeatured?: Prisma.BoolWithAggregatesFilter<"Course"> | boolean
   sortOrder?: Prisma.IntWithAggregatesFilter<"Course"> | number
@@ -530,6 +590,11 @@ export type CourseCreateInput = {
   fullVideoUrl?: string | null
   accessType?: $Enums.CourseAccessType
   price?: number
+  publicRegistrationOpenAt?: Date | string | null
+  registrationCloseAt?: Date | string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: number
@@ -561,6 +626,11 @@ export type CourseUncheckedCreateInput = {
   fullVideoUrl?: string | null
   accessType?: $Enums.CourseAccessType
   price?: number
+  publicRegistrationOpenAt?: Date | string | null
+  registrationCloseAt?: Date | string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: number
@@ -592,6 +662,11 @@ export type CourseUpdateInput = {
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
   price?: Prisma.IntFieldUpdateOperationsInput | number
+  publicRegistrationOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -623,6 +698,11 @@ export type CourseUncheckedUpdateInput = {
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
   price?: Prisma.IntFieldUpdateOperationsInput | number
+  publicRegistrationOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -654,6 +734,11 @@ export type CourseCreateManyInput = {
   fullVideoUrl?: string | null
   accessType?: $Enums.CourseAccessType
   price?: number
+  publicRegistrationOpenAt?: Date | string | null
+  registrationCloseAt?: Date | string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: number
@@ -682,6 +767,11 @@ export type CourseUpdateManyMutationInput = {
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
   price?: Prisma.IntFieldUpdateOperationsInput | number
+  publicRegistrationOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -710,6 +800,11 @@ export type CourseUncheckedUpdateManyInput = {
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
   price?: Prisma.IntFieldUpdateOperationsInput | number
+  publicRegistrationOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -738,6 +833,11 @@ export type CourseCountOrderByAggregateInput = {
   fullVideoUrl?: Prisma.SortOrder
   accessType?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  publicRegistrationOpenAt?: Prisma.SortOrder
+  registrationCloseAt?: Prisma.SortOrder
+  replayEnabled?: Prisma.SortOrder
+  replayOpenAt?: Prisma.SortOrder
+  replayCloseAt?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   isFeatured?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -770,6 +870,11 @@ export type CourseMaxOrderByAggregateInput = {
   fullVideoUrl?: Prisma.SortOrder
   accessType?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  publicRegistrationOpenAt?: Prisma.SortOrder
+  registrationCloseAt?: Prisma.SortOrder
+  replayEnabled?: Prisma.SortOrder
+  replayOpenAt?: Prisma.SortOrder
+  replayCloseAt?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   isFeatured?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -796,6 +901,11 @@ export type CourseMinOrderByAggregateInput = {
   fullVideoUrl?: Prisma.SortOrder
   accessType?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  publicRegistrationOpenAt?: Prisma.SortOrder
+  registrationCloseAt?: Prisma.SortOrder
+  replayEnabled?: Prisma.SortOrder
+  replayOpenAt?: Prisma.SortOrder
+  replayCloseAt?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   isFeatured?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -881,6 +991,11 @@ export type CourseCreateWithoutPurchasesInput = {
   fullVideoUrl?: string | null
   accessType?: $Enums.CourseAccessType
   price?: number
+  publicRegistrationOpenAt?: Date | string | null
+  registrationCloseAt?: Date | string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: number
@@ -911,6 +1026,11 @@ export type CourseUncheckedCreateWithoutPurchasesInput = {
   fullVideoUrl?: string | null
   accessType?: $Enums.CourseAccessType
   price?: number
+  publicRegistrationOpenAt?: Date | string | null
+  registrationCloseAt?: Date | string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: number
@@ -957,6 +1077,11 @@ export type CourseUpdateWithoutPurchasesInput = {
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
   price?: Prisma.IntFieldUpdateOperationsInput | number
+  publicRegistrationOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -987,6 +1112,11 @@ export type CourseUncheckedUpdateWithoutPurchasesInput = {
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
   price?: Prisma.IntFieldUpdateOperationsInput | number
+  publicRegistrationOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1017,6 +1147,11 @@ export type CourseCreateWithoutLiveSessionInput = {
   fullVideoUrl?: string | null
   accessType?: $Enums.CourseAccessType
   price?: number
+  publicRegistrationOpenAt?: Date | string | null
+  registrationCloseAt?: Date | string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: number
@@ -1047,6 +1182,11 @@ export type CourseUncheckedCreateWithoutLiveSessionInput = {
   fullVideoUrl?: string | null
   accessType?: $Enums.CourseAccessType
   price?: number
+  publicRegistrationOpenAt?: Date | string | null
+  registrationCloseAt?: Date | string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: number
@@ -1093,6 +1233,11 @@ export type CourseUpdateWithoutLiveSessionInput = {
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
   price?: Prisma.IntFieldUpdateOperationsInput | number
+  publicRegistrationOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1123,6 +1268,11 @@ export type CourseUncheckedUpdateWithoutLiveSessionInput = {
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
   price?: Prisma.IntFieldUpdateOperationsInput | number
+  publicRegistrationOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1153,6 +1303,11 @@ export type CourseCreateWithoutLessonUnitsInput = {
   fullVideoUrl?: string | null
   accessType?: $Enums.CourseAccessType
   price?: number
+  publicRegistrationOpenAt?: Date | string | null
+  registrationCloseAt?: Date | string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: number
@@ -1183,6 +1338,11 @@ export type CourseUncheckedCreateWithoutLessonUnitsInput = {
   fullVideoUrl?: string | null
   accessType?: $Enums.CourseAccessType
   price?: number
+  publicRegistrationOpenAt?: Date | string | null
+  registrationCloseAt?: Date | string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: number
@@ -1229,6 +1389,11 @@ export type CourseUpdateWithoutLessonUnitsInput = {
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
   price?: Prisma.IntFieldUpdateOperationsInput | number
+  publicRegistrationOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1259,6 +1424,11 @@ export type CourseUncheckedUpdateWithoutLessonUnitsInput = {
   fullVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accessType?: Prisma.EnumCourseAccessTypeFieldUpdateOperationsInput | $Enums.CourseAccessType
   price?: Prisma.IntFieldUpdateOperationsInput | number
+  publicRegistrationOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1329,6 +1499,11 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   fullVideoUrl?: boolean
   accessType?: boolean
   price?: boolean
+  publicRegistrationOpenAt?: boolean
+  registrationCloseAt?: boolean
+  replayEnabled?: boolean
+  replayOpenAt?: boolean
+  replayCloseAt?: boolean
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: boolean
@@ -1361,6 +1536,11 @@ export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   fullVideoUrl?: boolean
   accessType?: boolean
   price?: boolean
+  publicRegistrationOpenAt?: boolean
+  registrationCloseAt?: boolean
+  replayEnabled?: boolean
+  replayOpenAt?: boolean
+  replayCloseAt?: boolean
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: boolean
@@ -1389,6 +1569,11 @@ export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   fullVideoUrl?: boolean
   accessType?: boolean
   price?: boolean
+  publicRegistrationOpenAt?: boolean
+  registrationCloseAt?: boolean
+  replayEnabled?: boolean
+  replayOpenAt?: boolean
+  replayCloseAt?: boolean
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: boolean
@@ -1417,6 +1602,11 @@ export type CourseSelectScalar = {
   fullVideoUrl?: boolean
   accessType?: boolean
   price?: boolean
+  publicRegistrationOpenAt?: boolean
+  registrationCloseAt?: boolean
+  replayEnabled?: boolean
+  replayOpenAt?: boolean
+  replayCloseAt?: boolean
   isPublished?: boolean
   isFeatured?: boolean
   sortOrder?: boolean
@@ -1425,7 +1615,7 @@ export type CourseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "subtitle" | "category" | "excerpt" | "description" | "outline" | "audiences" | "lessonCount" | "durationText" | "courseStartAt" | "courseFormatText" | "viewingPolicyText" | "coverImageUrl" | "previewVideoUrl" | "fullVideoUrl" | "accessType" | "price" | "isPublished" | "isFeatured" | "sortOrder" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
+export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "subtitle" | "category" | "excerpt" | "description" | "outline" | "audiences" | "lessonCount" | "durationText" | "courseStartAt" | "courseFormatText" | "viewingPolicyText" | "coverImageUrl" | "previewVideoUrl" | "fullVideoUrl" | "accessType" | "price" | "publicRegistrationOpenAt" | "registrationCloseAt" | "replayEnabled" | "replayOpenAt" | "replayCloseAt" | "isPublished" | "isFeatured" | "sortOrder" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
 export type CourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   purchases?: boolean | Prisma.Course$purchasesArgs<ExtArgs>
   liveSession?: boolean | Prisma.Course$liveSessionArgs<ExtArgs>
@@ -1462,6 +1652,11 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     fullVideoUrl: string | null
     accessType: $Enums.CourseAccessType
     price: number
+    publicRegistrationOpenAt: Date | null
+    registrationCloseAt: Date | null
+    replayEnabled: boolean
+    replayOpenAt: Date | null
+    replayCloseAt: Date | null
     isPublished: boolean
     isFeatured: boolean
     sortOrder: number
@@ -1913,6 +2108,11 @@ export interface CourseFieldRefs {
   readonly fullVideoUrl: Prisma.FieldRef<"Course", 'String'>
   readonly accessType: Prisma.FieldRef<"Course", 'CourseAccessType'>
   readonly price: Prisma.FieldRef<"Course", 'Int'>
+  readonly publicRegistrationOpenAt: Prisma.FieldRef<"Course", 'DateTime'>
+  readonly registrationCloseAt: Prisma.FieldRef<"Course", 'DateTime'>
+  readonly replayEnabled: Prisma.FieldRef<"Course", 'Boolean'>
+  readonly replayOpenAt: Prisma.FieldRef<"Course", 'DateTime'>
+  readonly replayCloseAt: Prisma.FieldRef<"Course", 'DateTime'>
   readonly isPublished: Prisma.FieldRef<"Course", 'Boolean'>
   readonly isFeatured: Prisma.FieldRef<"Course", 'Boolean'>
   readonly sortOrder: Prisma.FieldRef<"Course", 'Int'>

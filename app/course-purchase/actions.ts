@@ -1,10 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { CourseAccessType, CoursePurchaseStatus, EmailStatus, EmailType } from "@/generated/prisma/enums";
+import { CourseAccessType, CoursePurchaseStatus, EmailStatus, EmailType, MembershipSubscriptionStatus } from "@/generated/prisma/enums";
 import { generateCoursePurchaseNumber } from "@/lib/course-purchase-number";
+import { canCreateCoursePurchase, registrationState } from "@/lib/course-registration";
 import { coursePurchaseSchema } from "@/lib/course-purchase-validation";
 import { sendEmailLogs } from "@/lib/email/mailer";
+import { getMemberSession } from "@/lib/member/auth";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit } from "@/lib/security/rate-limit";
 import { publicReferenceQuery } from "@/lib/security/public-reference";
@@ -47,7 +49,13 @@ export async function createCoursePurchase(
       isPublished: true,
       accessType: CourseAccessType.PAID,
     },
-    select: { id: true, title: true, price: true },
+    select: {
+      id: true,
+      title: true,
+      price: true,
+      publicRegistrationOpenAt: true,
+      registrationCloseAt: true,
+    },
   });
 
   if (!course) {
@@ -56,6 +64,36 @@ export async function createCoursePurchase(
 
   if (course.price <= 0) {
     return { message: "這門課尚未設定有效售價，請先聯絡管理員。" };
+  }
+
+  const memberSession = await getMemberSession();
+  const activeSubscription = memberSession
+    ? await prisma.membershipSubscription.findFirst({
+        where: {
+          memberUserId: memberSession.memberUser.id,
+          status: MembershipSubscriptionStatus.ACTIVE,
+          startsAt: { lte: new Date() },
+          endsAt: { gte: new Date() },
+        },
+        select: { id: true },
+      })
+    : null;
+  const windowState = registrationState(course, Boolean(activeSubscription));
+
+  if (!canCreateCoursePurchase(windowState)) {
+    if (windowState === "MEMBER_PRIORITY") {
+      return { message: "目前是會員優先報名期間，請先登入有效會員帳號。" };
+    }
+    if (windowState === "CLOSED") return { message: "這門課的報名已截止。" };
+    return { message: "這門課尚未開放報名，請留意課程頁公告。" };
+  }
+
+  if (
+    windowState === "OPEN_MEMBER"
+    && memberSession
+    && values.email.toLowerCase() !== memberSession.memberUser.email.toLowerCase()
+  ) {
+    return { message: "會員優先報名期間請使用會員帳號的 Email 報名。" };
   }
 
   const recentPurchase = await prisma.coursePurchase.findFirst({
@@ -88,6 +126,12 @@ export async function createCoursePurchase(
           phone: values.phone,
           email: values.email,
           amount: course.price,
+          memberUserId:
+            activeSubscription
+            && memberSession
+            && values.email.toLowerCase() === memberSession.memberUser.email.toLowerCase()
+              ? memberSession.memberUser.id
+              : null,
         },
       });
 

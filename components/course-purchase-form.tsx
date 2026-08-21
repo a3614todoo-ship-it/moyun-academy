@@ -12,13 +12,17 @@ type Props = {
     title: string;
     price: number;
   };
+  memberDefaults?: {
+    name: string;
+    email: string;
+  };
 };
 
 function ErrorText({ errors }: { errors?: string[] }) {
   return errors?.length ? <span className="field-error">{errors[0]}</span> : null;
 }
 
-export function CoursePurchaseForm({ course }: Props) {
+export function CoursePurchaseForm({ course, memberDefaults }: Props) {
   const initialState: CoursePurchaseActionState = { message: "" };
   const [state, formAction, pending] = useActionState(
     createCoursePurchase,
@@ -43,6 +47,7 @@ export function CoursePurchaseForm({ course }: Props) {
           <input
             aria-invalid={Boolean(state.fieldErrors?.name)}
             autoComplete="name"
+            defaultValue={memberDefaults?.name || ""}
             name="name"
             placeholder="請填寫真實姓名"
             required
@@ -68,6 +73,7 @@ export function CoursePurchaseForm({ course }: Props) {
         <input
           aria-invalid={Boolean(state.fieldErrors?.email)}
           autoComplete="email"
+          defaultValue={memberDefaults?.email || ""}
           name="email"
           placeholder="name@example.com"
           required

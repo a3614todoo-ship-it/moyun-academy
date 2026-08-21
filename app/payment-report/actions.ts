@@ -53,7 +53,6 @@ export async function createPaymentReport(
       phone: values.phone,
     },
     include: {
-      plan: { select: { price: true } },
       paymentReports: { select: { id: true }, take: 1 },
     },
   });
@@ -66,9 +65,9 @@ export async function createPaymentReport(
     redirect(`/payment-report/success?${publicReferenceQuery("application", application.applicationNo)}`);
   }
 
-  if (values.amount !== application.plan.price) {
+  if (values.amount !== application.planPrice) {
     return {
-      message: `匯款金額應為 NT$ ${application.plan.price.toLocaleString("zh-TW")}，請確認後再送出。`,
+      message: `匯款金額應為 NT$ ${application.planPrice.toLocaleString("zh-TW")}，請確認後再送出。`,
       fieldErrors: { amount: ["匯款金額與申請方案不符"] },
     };
   }

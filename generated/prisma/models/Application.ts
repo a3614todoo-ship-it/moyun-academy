@@ -20,8 +20,20 @@ export type ApplicationModel = runtime.Types.Result.DefaultSelection<Prisma.$App
 
 export type AggregateApplication = {
   _count: ApplicationCountAggregateOutputType | null
+  _avg: ApplicationAvgAggregateOutputType | null
+  _sum: ApplicationSumAggregateOutputType | null
   _min: ApplicationMinAggregateOutputType | null
   _max: ApplicationMaxAggregateOutputType | null
+}
+
+export type ApplicationAvgAggregateOutputType = {
+  planPrice: number | null
+  planDurationDays: number | null
+}
+
+export type ApplicationSumAggregateOutputType = {
+  planPrice: number | null
+  planDurationDays: number | null
 }
 
 export type ApplicationMinAggregateOutputType = {
@@ -34,6 +46,9 @@ export type ApplicationMinAggregateOutputType = {
   facebookName: string | null
   facebookProfileUrl: string | null
   planId: string | null
+  planName: string | null
+  planPrice: number | null
+  planDurationDays: number | null
   memberUserId: string | null
   status: $Enums.ApplicationStatus | null
   agreedToTermsAt: Date | null
@@ -55,6 +70,9 @@ export type ApplicationMaxAggregateOutputType = {
   facebookName: string | null
   facebookProfileUrl: string | null
   planId: string | null
+  planName: string | null
+  planPrice: number | null
+  planDurationDays: number | null
   memberUserId: string | null
   status: $Enums.ApplicationStatus | null
   agreedToTermsAt: Date | null
@@ -76,6 +94,9 @@ export type ApplicationCountAggregateOutputType = {
   facebookName: number
   facebookProfileUrl: number
   planId: number
+  planName: number
+  planPrice: number
+  planDurationDays: number
   memberUserId: number
   status: number
   agreedToTermsAt: number
@@ -89,6 +110,16 @@ export type ApplicationCountAggregateOutputType = {
 }
 
 
+export type ApplicationAvgAggregateInputType = {
+  planPrice?: true
+  planDurationDays?: true
+}
+
+export type ApplicationSumAggregateInputType = {
+  planPrice?: true
+  planDurationDays?: true
+}
+
 export type ApplicationMinAggregateInputType = {
   id?: true
   applicationNo?: true
@@ -99,6 +130,9 @@ export type ApplicationMinAggregateInputType = {
   facebookName?: true
   facebookProfileUrl?: true
   planId?: true
+  planName?: true
+  planPrice?: true
+  planDurationDays?: true
   memberUserId?: true
   status?: true
   agreedToTermsAt?: true
@@ -120,6 +154,9 @@ export type ApplicationMaxAggregateInputType = {
   facebookName?: true
   facebookProfileUrl?: true
   planId?: true
+  planName?: true
+  planPrice?: true
+  planDurationDays?: true
   memberUserId?: true
   status?: true
   agreedToTermsAt?: true
@@ -141,6 +178,9 @@ export type ApplicationCountAggregateInputType = {
   facebookName?: true
   facebookProfileUrl?: true
   planId?: true
+  planName?: true
+  planPrice?: true
+  planDurationDays?: true
   memberUserId?: true
   status?: true
   agreedToTermsAt?: true
@@ -191,6 +231,18 @@ export type ApplicationAggregateArgs<ExtArgs extends runtime.Types.Extensions.In
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ApplicationAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ApplicationSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ApplicationMinAggregateInputType
@@ -221,6 +273,8 @@ export type ApplicationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   _count?: ApplicationCountAggregateInputType | true
+  _avg?: ApplicationAvgAggregateInputType
+  _sum?: ApplicationSumAggregateInputType
   _min?: ApplicationMinAggregateInputType
   _max?: ApplicationMaxAggregateInputType
 }
@@ -235,6 +289,9 @@ export type ApplicationGroupByOutputType = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   memberUserId: string | null
   status: $Enums.ApplicationStatus
   agreedToTermsAt: Date
@@ -245,6 +302,8 @@ export type ApplicationGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   _count: ApplicationCountAggregateOutputType | null
+  _avg: ApplicationAvgAggregateOutputType | null
+  _sum: ApplicationSumAggregateOutputType | null
   _min: ApplicationMinAggregateOutputType | null
   _max: ApplicationMaxAggregateOutputType | null
 }
@@ -277,6 +336,9 @@ export type ApplicationWhereInput = {
   facebookName?: Prisma.StringFilter<"Application"> | string
   facebookProfileUrl?: Prisma.StringFilter<"Application"> | string
   planId?: Prisma.StringFilter<"Application"> | string
+  planName?: Prisma.StringFilter<"Application"> | string
+  planPrice?: Prisma.IntFilter<"Application"> | number
+  planDurationDays?: Prisma.IntFilter<"Application"> | number
   memberUserId?: Prisma.StringNullableFilter<"Application"> | string | null
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFilter<"Application"> | Date | string
@@ -304,6 +366,9 @@ export type ApplicationOrderByWithRelationInput = {
   facebookName?: Prisma.SortOrder
   facebookProfileUrl?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  planName?: Prisma.SortOrder
+  planPrice?: Prisma.SortOrder
+  planDurationDays?: Prisma.SortOrder
   memberUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   agreedToTermsAt?: Prisma.SortOrder
@@ -334,6 +399,9 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   facebookName?: Prisma.StringFilter<"Application"> | string
   facebookProfileUrl?: Prisma.StringFilter<"Application"> | string
   planId?: Prisma.StringFilter<"Application"> | string
+  planName?: Prisma.StringFilter<"Application"> | string
+  planPrice?: Prisma.IntFilter<"Application"> | number
+  planDurationDays?: Prisma.IntFilter<"Application"> | number
   memberUserId?: Prisma.StringNullableFilter<"Application"> | string | null
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFilter<"Application"> | Date | string
@@ -361,6 +429,9 @@ export type ApplicationOrderByWithAggregationInput = {
   facebookName?: Prisma.SortOrder
   facebookProfileUrl?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  planName?: Prisma.SortOrder
+  planPrice?: Prisma.SortOrder
+  planDurationDays?: Prisma.SortOrder
   memberUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   agreedToTermsAt?: Prisma.SortOrder
@@ -371,8 +442,10 @@ export type ApplicationOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ApplicationCountOrderByAggregateInput
+  _avg?: Prisma.ApplicationAvgOrderByAggregateInput
   _max?: Prisma.ApplicationMaxOrderByAggregateInput
   _min?: Prisma.ApplicationMinOrderByAggregateInput
+  _sum?: Prisma.ApplicationSumOrderByAggregateInput
 }
 
 export type ApplicationScalarWhereWithAggregatesInput = {
@@ -388,6 +461,9 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   facebookName?: Prisma.StringWithAggregatesFilter<"Application"> | string
   facebookProfileUrl?: Prisma.StringWithAggregatesFilter<"Application"> | string
   planId?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  planName?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  planPrice?: Prisma.IntWithAggregatesFilter<"Application"> | number
+  planDurationDays?: Prisma.IntWithAggregatesFilter<"Application"> | number
   memberUserId?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   status?: Prisma.EnumApplicationStatusWithAggregatesFilter<"Application"> | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
@@ -408,6 +484,9 @@ export type ApplicationCreateInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -434,6 +513,9 @@ export type ApplicationUncheckedCreateInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
@@ -458,6 +540,9 @@ export type ApplicationUpdateInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -484,6 +569,9 @@ export type ApplicationUncheckedUpdateInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -509,6 +597,9 @@ export type ApplicationCreateManyInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
@@ -529,6 +620,9 @@ export type ApplicationUpdateManyMutationInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -549,6 +643,9 @@ export type ApplicationUncheckedUpdateManyInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -570,6 +667,9 @@ export type ApplicationCountOrderByAggregateInput = {
   facebookName?: Prisma.SortOrder
   facebookProfileUrl?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  planName?: Prisma.SortOrder
+  planPrice?: Prisma.SortOrder
+  planDurationDays?: Prisma.SortOrder
   memberUserId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   agreedToTermsAt?: Prisma.SortOrder
@@ -579,6 +679,11 @@ export type ApplicationCountOrderByAggregateInput = {
   cancelledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ApplicationAvgOrderByAggregateInput = {
+  planPrice?: Prisma.SortOrder
+  planDurationDays?: Prisma.SortOrder
 }
 
 export type ApplicationMaxOrderByAggregateInput = {
@@ -591,6 +696,9 @@ export type ApplicationMaxOrderByAggregateInput = {
   facebookName?: Prisma.SortOrder
   facebookProfileUrl?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  planName?: Prisma.SortOrder
+  planPrice?: Prisma.SortOrder
+  planDurationDays?: Prisma.SortOrder
   memberUserId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   agreedToTermsAt?: Prisma.SortOrder
@@ -612,6 +720,9 @@ export type ApplicationMinOrderByAggregateInput = {
   facebookName?: Prisma.SortOrder
   facebookProfileUrl?: Prisma.SortOrder
   planId?: Prisma.SortOrder
+  planName?: Prisma.SortOrder
+  planPrice?: Prisma.SortOrder
+  planDurationDays?: Prisma.SortOrder
   memberUserId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   agreedToTermsAt?: Prisma.SortOrder
@@ -621,6 +732,11 @@ export type ApplicationMinOrderByAggregateInput = {
   cancelledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ApplicationSumOrderByAggregateInput = {
+  planPrice?: Prisma.SortOrder
+  planDurationDays?: Prisma.SortOrder
 }
 
 export type ApplicationListRelationFilter = {
@@ -645,6 +761,14 @@ export type ApplicationNullableScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type EnumApplicationStatusFieldUpdateOperationsInput = {
@@ -814,6 +938,9 @@ export type ApplicationCreateWithoutPlanInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -838,6 +965,9 @@ export type ApplicationUncheckedCreateWithoutPlanInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
@@ -892,6 +1022,9 @@ export type ApplicationScalarWhereInput = {
   facebookName?: Prisma.StringFilter<"Application"> | string
   facebookProfileUrl?: Prisma.StringFilter<"Application"> | string
   planId?: Prisma.StringFilter<"Application"> | string
+  planName?: Prisma.StringFilter<"Application"> | string
+  planPrice?: Prisma.IntFilter<"Application"> | number
+  planDurationDays?: Prisma.IntFilter<"Application"> | number
   memberUserId?: Prisma.StringNullableFilter<"Application"> | string | null
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFilter<"Application"> | Date | string
@@ -912,6 +1045,9 @@ export type ApplicationCreateWithoutPaymentReportsInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -937,6 +1073,9 @@ export type ApplicationUncheckedCreateWithoutPaymentReportsInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
@@ -976,6 +1115,9 @@ export type ApplicationUpdateWithoutPaymentReportsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1001,6 +1143,9 @@ export type ApplicationUncheckedUpdateWithoutPaymentReportsInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1024,6 +1169,9 @@ export type ApplicationCreateWithoutEmailLogsInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -1049,6 +1197,9 @@ export type ApplicationUncheckedCreateWithoutEmailLogsInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
@@ -1088,6 +1239,9 @@ export type ApplicationUpdateWithoutEmailLogsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1113,6 +1267,9 @@ export type ApplicationUncheckedUpdateWithoutEmailLogsInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1136,6 +1293,9 @@ export type ApplicationCreateWithoutMemberUserInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -1161,6 +1321,9 @@ export type ApplicationUncheckedCreateWithoutMemberUserInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -1210,6 +1373,9 @@ export type ApplicationCreateWithoutMembershipSubscriptionInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -1235,6 +1401,9 @@ export type ApplicationUncheckedCreateWithoutMembershipSubscriptionInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
@@ -1274,6 +1443,9 @@ export type ApplicationUpdateWithoutMembershipSubscriptionInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1299,6 +1471,9 @@ export type ApplicationUncheckedUpdateWithoutMembershipSubscriptionInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1322,6 +1497,9 @@ export type ApplicationCreateWithoutStatusHistoryInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -1347,6 +1525,9 @@ export type ApplicationUncheckedCreateWithoutStatusHistoryInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
@@ -1386,6 +1567,9 @@ export type ApplicationUpdateWithoutStatusHistoryInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1411,6 +1595,9 @@ export type ApplicationUncheckedUpdateWithoutStatusHistoryInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1434,6 +1621,9 @@ export type ApplicationCreateManyPlanInput = {
   address: string
   facebookName: string
   facebookProfileUrl: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   memberUserId?: string | null
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
@@ -1454,6 +1644,9 @@ export type ApplicationUpdateWithoutPlanInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1478,6 +1671,9 @@ export type ApplicationUncheckedUpdateWithoutPlanInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1502,6 +1698,9 @@ export type ApplicationUncheckedUpdateManyWithoutPlanInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   memberUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1523,6 +1722,9 @@ export type ApplicationCreateManyMemberUserInput = {
   facebookName: string
   facebookProfileUrl: string
   planId: string
+  planName: string
+  planPrice: number
+  planDurationDays: number
   status?: $Enums.ApplicationStatus
   agreedToTermsAt: Date | string
   approvedAt?: Date | string | null
@@ -1542,6 +1744,9 @@ export type ApplicationUpdateWithoutMemberUserInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1567,6 +1772,9 @@ export type ApplicationUncheckedUpdateWithoutMemberUserInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1591,6 +1799,9 @@ export type ApplicationUncheckedUpdateManyWithoutMemberUserInput = {
   facebookName?: Prisma.StringFieldUpdateOperationsInput | string
   facebookProfileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
+  planName?: Prisma.StringFieldUpdateOperationsInput | string
+  planPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  planDurationDays?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   agreedToTermsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1660,6 +1871,9 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   facebookName?: boolean
   facebookProfileUrl?: boolean
   planId?: boolean
+  planName?: boolean
+  planPrice?: boolean
+  planDurationDays?: boolean
   memberUserId?: boolean
   status?: boolean
   agreedToTermsAt?: boolean
@@ -1688,6 +1902,9 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   facebookName?: boolean
   facebookProfileUrl?: boolean
   planId?: boolean
+  planName?: boolean
+  planPrice?: boolean
+  planDurationDays?: boolean
   memberUserId?: boolean
   status?: boolean
   agreedToTermsAt?: boolean
@@ -1711,6 +1928,9 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   facebookName?: boolean
   facebookProfileUrl?: boolean
   planId?: boolean
+  planName?: boolean
+  planPrice?: boolean
+  planDurationDays?: boolean
   memberUserId?: boolean
   status?: boolean
   agreedToTermsAt?: boolean
@@ -1734,6 +1954,9 @@ export type ApplicationSelectScalar = {
   facebookName?: boolean
   facebookProfileUrl?: boolean
   planId?: boolean
+  planName?: boolean
+  planPrice?: boolean
+  planDurationDays?: boolean
   memberUserId?: boolean
   status?: boolean
   agreedToTermsAt?: boolean
@@ -1745,7 +1968,7 @@ export type ApplicationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationNo" | "name" | "phone" | "email" | "address" | "facebookName" | "facebookProfileUrl" | "planId" | "memberUserId" | "status" | "agreedToTermsAt" | "approvedAt" | "joinedFacebookAt" | "rejectedAt" | "cancelledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationNo" | "name" | "phone" | "email" | "address" | "facebookName" | "facebookProfileUrl" | "planId" | "planName" | "planPrice" | "planDurationDays" | "memberUserId" | "status" | "agreedToTermsAt" | "approvedAt" | "joinedFacebookAt" | "rejectedAt" | "cancelledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.MembershipPlanDefaultArgs<ExtArgs>
   memberUser?: boolean | Prisma.Application$memberUserArgs<ExtArgs>
@@ -1784,6 +2007,9 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     facebookName: string
     facebookProfileUrl: string
     planId: string
+    planName: string
+    planPrice: number
+    planDurationDays: number
     memberUserId: string | null
     status: $Enums.ApplicationStatus
     agreedToTermsAt: Date
@@ -2231,6 +2457,9 @@ export interface ApplicationFieldRefs {
   readonly facebookName: Prisma.FieldRef<"Application", 'String'>
   readonly facebookProfileUrl: Prisma.FieldRef<"Application", 'String'>
   readonly planId: Prisma.FieldRef<"Application", 'String'>
+  readonly planName: Prisma.FieldRef<"Application", 'String'>
+  readonly planPrice: Prisma.FieldRef<"Application", 'Int'>
+  readonly planDurationDays: Prisma.FieldRef<"Application", 'Int'>
   readonly memberUserId: Prisma.FieldRef<"Application", 'String'>
   readonly status: Prisma.FieldRef<"Application", 'ApplicationStatus'>
   readonly agreedToTermsAt: Prisma.FieldRef<"Application", 'DateTime'>

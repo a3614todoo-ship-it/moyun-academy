@@ -25,6 +25,11 @@ export type CourseView = {
   fullVideoUrl: string;
   accessType: string;
   price: number;
+  publicRegistrationOpenAt: Date | null;
+  registrationCloseAt: Date | null;
+  replayEnabled: boolean;
+  replayOpenAt: Date | null;
+  replayCloseAt: Date | null;
   isPaid: boolean;
   accessLabel: string;
 };
@@ -66,6 +71,11 @@ export function toCourseView(course: {
   fullVideoUrl: string | null;
   accessType: string;
   price: number;
+  publicRegistrationOpenAt: Date | null;
+  registrationCloseAt: Date | null;
+  replayEnabled: boolean;
+  replayOpenAt: Date | null;
+  replayCloseAt: Date | null;
   isFeatured: boolean;
   sortOrder: number;
 }): CourseView {
@@ -91,6 +101,11 @@ export function toCourseView(course: {
     fullVideoUrl: course.fullVideoUrl || "",
     accessType: course.accessType,
     price: course.price,
+    publicRegistrationOpenAt: course.publicRegistrationOpenAt,
+    registrationCloseAt: course.registrationCloseAt,
+    replayEnabled: course.replayEnabled,
+    replayOpenAt: course.replayOpenAt,
+    replayCloseAt: course.replayCloseAt,
     isPaid: course.accessType === "PAID",
     accessLabel: accessLabel(course.accessType, course.price),
   };

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAuthorizedCoursePurchase } from "@/lib/course-access-session";
 import { getVimeoEmbedUrl } from "@/lib/live";
+import { replayState, replayStateMessage } from "@/lib/course-replay";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
 
 type Props = {
@@ -38,6 +39,21 @@ export default async function CourseWatchPage({ params }: Props) {
   const { slug } = await params;
   const purchase = await getAuthorizedCoursePurchase(slug);
   if (!purchase) return <AccessRequired slug={slug} />;
+
+  const currentReplayState = replayState(purchase.course);
+  if (currentReplayState !== "OPEN") {
+    return (
+      <main className="result-page">
+        <section className="container result-card">
+          <span className="result-mark">!</span>
+          <span className="eyebrow">課程回看</span>
+          <h1>{purchase.course.title}</h1>
+          <p>{replayStateMessage(currentReplayState)}</p>
+          <Link className="button button-forest" href={`/courses/${slug}/live`}>回到學習教室</Link>
+        </section>
+      </main>
+    );
+  }
 
   const courseEmbedUrl = embedUrl(purchase.course.fullVideoUrl);
 
@@ -80,16 +96,16 @@ export default async function CourseWatchPage({ params }: Props) {
               <span className="eyebrow">單元回放</span>
               <h2>依單元觀看</h2>
             </div>
-            {purchase.course.lessonUnits.some((lesson) => lesson.replayVideoUrl) ? (
+            {purchase.course.lessonUnits.some((lesson) => lesson.replayVideoUrl || lesson.replayAudioUrl) ? (
               <div className="learning-lesson-list">
                 {purchase.course.lessonUnits.map((lesson) => {
                   const lessonEmbedUrl = embedUrl(lesson.replayVideoUrl);
-                  if (!lesson.replayVideoUrl) return null;
+                  if (!lesson.replayVideoUrl && !lesson.replayAudioUrl) return null;
                   return (
                     <article className="learning-lesson-card" key={lesson.id}>
                       <h3>{lesson.title}</h3>
                       {lesson.summary ? <p>{lesson.summary}</p> : null}
-                      {lessonEmbedUrl ? (
+                      {lesson.replayVideoUrl && lessonEmbedUrl ? (
                         <div className="youtube-preview learning-replay-frame">
                           <iframe
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -99,11 +115,19 @@ export default async function CourseWatchPage({ params }: Props) {
                             title={`${lesson.title} 回放`}
                           />
                         </div>
-                      ) : (
+                      ) : lesson.replayVideoUrl ? (
                         <a className="button button-outline" href={lesson.replayVideoUrl} rel="noreferrer" target="_blank">
-                          開啟回放
+                          開啟影片回放
                         </a>
-                      )}
+                      ) : null}
+                      {lesson.replayAudioUrl ? (
+                        <div>
+                          <h4>聲音回放</h4>
+                          <audio controls preload="metadata" src={lesson.replayAudioUrl}>
+                            你的瀏覽器不支援音訊播放。
+                          </audio>
+                        </div>
+                      ) : null}
                     </article>
                   );
                 })}

@@ -27,6 +27,8 @@ const errorMessages: Record<string, string> = {
   live_chat: "YouTube Chat 只能搭配 YouTube Live，並且需要有效的 Chat Embed URL。",
   live_external: "Google Meet、Zoom 或外部直播平台請填寫有效連結。",
   live_window: "播放器開放時間必須早於關閉時間。",
+  registration_window: "一般訪客報名開放時間必須早於報名截止時間。",
+  replay_window: "回看開放時間必須早於回看截止時間。",
 };
 
 export default async function EditCoursePage({ params, searchParams }: Props) {

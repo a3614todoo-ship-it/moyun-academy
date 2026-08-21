@@ -35,6 +35,8 @@ export function platformLabel(platform: LivePlatform | string) {
   switch (platform) {
     case LivePlatform.VIMEO_LIVE:
       return "Vimeo Live";
+    case LivePlatform.FACEBOOK_GROUP:
+      return "Facebook 私密社團直播";
     case LivePlatform.GOOGLE_MEET:
       return "Google Meet";
     case LivePlatform.ZOOM_WEBINAR:
@@ -51,6 +53,8 @@ export function platformLabel(platform: LivePlatform | string) {
 
 export function externalPlatformActionLabel(platform: LivePlatform | string) {
   switch (platform) {
+    case LivePlatform.FACEBOOK_GROUP:
+      return "前往 Facebook 私密社團直播";
     case LivePlatform.GOOGLE_MEET:
       return "進入 Google Meet 教室";
     case LivePlatform.ZOOM_WEBINAR:

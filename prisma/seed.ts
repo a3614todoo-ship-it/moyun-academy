@@ -25,38 +25,19 @@ async function seedMembershipPlan() {
 
   const plans = [
     {
-      code: "monthly",
-      name: "一個月會員",
-      price: 600,
-      durationDays: 30,
-      description: "適合短期體驗我輩學堂的學員。",
-      sortOrder: 1,
-    },
-    {
-      code: "quarterly",
-      name: "一季會員",
-      price: 1500,
-      durationDays: 90,
-      description: "適合跟著一季課程慢慢讀的學員。",
-      sortOrder: 2,
-    },
-    {
-      code: "semiannual",
-      name: "半年度會員",
-      price: 2800,
-      durationDays: 180,
-      description: "適合固定閱讀陪伴與持續累積的學員。",
-      sortOrder: 3,
-    },
-    {
       code: "annual",
-      name: "年度學習會員",
-      price: 3600,
+      name: "年度會員",
+      price: 2500,
       durationDays: 365,
       description: "適合希望有系統、持續閱讀古典文學的學習者。",
-      sortOrder: 4,
+      sortOrder: 1,
     },
   ];
+
+  await prisma.membershipPlan.updateMany({
+    where: { code: { not: "annual" } },
+    data: { isActive: false },
+  });
 
   await Promise.all(
     plans.map((plan) =>
