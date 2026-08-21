@@ -142,3 +142,4 @@
 - 已套用正式資料庫 migration；Supabase 安全 advisor 無警告。
 - 已新增核心單元測試並通過 production build。
 - Vercel 已設定 Supabase URL、publishable key、bucket 名稱與 server-only `SUPABASE_SECRET_KEY`；Secret 由管理者直接存入 Vercel Sensitive 環境變數，內容未寫入規格、log 或 Git。
+- 正式資料庫、GitHub `main` 與 Vercel Production 已發布；公開頁面、管理權限攔截與未授權教材下載已通過正式環境驗證。
