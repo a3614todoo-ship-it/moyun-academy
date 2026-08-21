@@ -56,12 +56,17 @@ export const ModelName = {
   PaymentReport: 'PaymentReport',
   EmailLog: 'EmailLog',
   AdminUser: 'AdminUser',
+  AdminInvitation: 'AdminInvitation',
   AdminEmailOtp: 'AdminEmailOtp',
   AdminRecoveryCode: 'AdminRecoveryCode',
   AdminAuditLog: 'AdminAuditLog',
   SystemSetting: 'SystemSetting',
   AdminSession: 'AdminSession',
   MemberUser: 'MemberUser',
+  InPersonEvent: 'InPersonEvent',
+  EventRegistration: 'EventRegistration',
+  EventStaffAssignment: 'EventStaffAssignment',
+  EventCheckIn: 'EventCheckIn',
   MemberSession: 'MemberSession',
   MembershipSubscription: 'MembershipSubscription',
   ApplicationStatusHistory: 'ApplicationStatusHistory',
@@ -157,6 +162,7 @@ export const EmailLogScalarFieldEnum = {
   id: 'id',
   applicationId: 'applicationId',
   coursePurchaseId: 'coursePurchaseId',
+  eventRegistrationId: 'eventRegistrationId',
   type: 'type',
   recipient: 'recipient',
   subject: 'subject',
@@ -178,6 +184,7 @@ export const AdminUserScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   name: 'name',
+  role: 'role',
   isActive: 'isActive',
   lastLoginAt: 'lastLoginAt',
   createdAt: 'createdAt',
@@ -185,6 +192,21 @@ export const AdminUserScalarFieldEnum = {
 } as const
 
 export type AdminUserScalarFieldEnum = (typeof AdminUserScalarFieldEnum)[keyof typeof AdminUserScalarFieldEnum]
+
+
+export const AdminInvitationScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  role: 'role',
+  tokenHash: 'tokenHash',
+  invitedById: 'invitedById',
+  expiresAt: 'expiresAt',
+  acceptedAt: 'acceptedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminInvitationScalarFieldEnum = (typeof AdminInvitationScalarFieldEnum)[keyof typeof AdminInvitationScalarFieldEnum]
 
 
 export const AdminEmailOtpScalarFieldEnum = {
@@ -262,6 +284,102 @@ export const MemberUserScalarFieldEnum = {
 } as const
 
 export type MemberUserScalarFieldEnum = (typeof MemberUserScalarFieldEnum)[keyof typeof MemberUserScalarFieldEnum]
+
+
+export const InPersonEventScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  subtitle: 'subtitle',
+  category: 'category',
+  excerpt: 'excerpt',
+  description: 'description',
+  coverImageUrl: 'coverImageUrl',
+  venueName: 'venueName',
+  venueAddress: 'venueAddress',
+  mapUrl: 'mapUrl',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  registrationOpenAt: 'registrationOpenAt',
+  publicRegistrationOpenAt: 'publicRegistrationOpenAt',
+  registrationCloseAt: 'registrationCloseAt',
+  capacity: 'capacity',
+  waitlistEnabled: 'waitlistEnabled',
+  waitlistPaymentHours: 'waitlistPaymentHours',
+  pricingMode: 'pricingMode',
+  publicPrice: 'publicPrice',
+  memberPrice: 'memberPrice',
+  audience: 'audience',
+  status: 'status',
+  isFeatured: 'isFeatured',
+  sortOrder: 'sortOrder',
+  publishedAt: 'publishedAt',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InPersonEventScalarFieldEnum = (typeof InPersonEventScalarFieldEnum)[keyof typeof InPersonEventScalarFieldEnum]
+
+
+export const EventRegistrationScalarFieldEnum = {
+  id: 'id',
+  registrationNo: 'registrationNo',
+  eventId: 'eventId',
+  memberUserId: 'memberUserId',
+  name: 'name',
+  phone: 'phone',
+  email: 'email',
+  status: 'status',
+  amount: 'amount',
+  isMemberPrice: 'isMemberPrice',
+  waitlistSequence: 'waitlistSequence',
+  offeredAt: 'offeredAt',
+  offerExpiresAt: 'offerExpiresAt',
+  bankLast5: 'bankLast5',
+  payerName: 'payerName',
+  paidAt: 'paidAt',
+  paymentReportedAt: 'paymentReportedAt',
+  reviewedAt: 'reviewedAt',
+  reviewedById: 'reviewedById',
+  ticketTokenHash: 'ticketTokenHash',
+  agreedToPrivacyAt: 'agreedToPrivacyAt',
+  note: 'note',
+  confirmedAt: 'confirmedAt',
+  cancelledAt: 'cancelledAt',
+  rejectedAt: 'rejectedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EventRegistrationScalarFieldEnum = (typeof EventRegistrationScalarFieldEnum)[keyof typeof EventRegistrationScalarFieldEnum]
+
+
+export const EventStaffAssignmentScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  adminUserId: 'adminUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type EventStaffAssignmentScalarFieldEnum = (typeof EventStaffAssignmentScalarFieldEnum)[keyof typeof EventStaffAssignmentScalarFieldEnum]
+
+
+export const EventCheckInScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  registrationId: 'registrationId',
+  method: 'method',
+  checkedInAt: 'checkedInAt',
+  checkedInById: 'checkedInById',
+  reversedAt: 'reversedAt',
+  reversedById: 'reversedById',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EventCheckInScalarFieldEnum = (typeof EventCheckInScalarFieldEnum)[keyof typeof EventCheckInScalarFieldEnum]
 
 
 export const MemberSessionScalarFieldEnum = {

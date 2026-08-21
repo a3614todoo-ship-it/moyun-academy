@@ -14,7 +14,7 @@ export default async function LessonEditorPage({ params, searchParams }: Props) 
   if (!course) notFound();
   const lesson = lessonId === "new" ? null : await prisma.courseLesson.findFirst({ where: { id: lessonId, courseId: id }, include: { liveSession: true } });
   if (lessonId !== "new" && !lesson) notFound();
-  return <AdminShell adminName={session.adminUser.name}>
+  return <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
     <div className="admin-page-heading"><div><Link className="admin-breadcrumb" href={`/admin/courses/${id}/lessons`}>回到逐堂管理</Link><h1>{lesson ? "編輯課堂" : "新增課堂"}</h1><span>{course.title}</span></div></div>
     {query.saved === "1" ? <div className="admin-success-message">課堂資料已儲存。</div> : null}
     {query.error ? <div className="admin-form-error admin-course-message">{errors[query.error] || "儲存失敗，請再檢查一次。"}</div> : null}

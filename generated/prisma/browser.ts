@@ -43,6 +43,11 @@ export type EmailLog = Prisma.EmailLogModel
  */
 export type AdminUser = Prisma.AdminUserModel
 /**
+ * Model AdminInvitation
+ * 
+ */
+export type AdminInvitation = Prisma.AdminInvitationModel
+/**
  * Model AdminEmailOtp
  * 
  */
@@ -72,6 +77,26 @@ export type AdminSession = Prisma.AdminSessionModel
  * 
  */
 export type MemberUser = Prisma.MemberUserModel
+/**
+ * Model InPersonEvent
+ * 
+ */
+export type InPersonEvent = Prisma.InPersonEventModel
+/**
+ * Model EventRegistration
+ * 
+ */
+export type EventRegistration = Prisma.EventRegistrationModel
+/**
+ * Model EventStaffAssignment
+ * 
+ */
+export type EventStaffAssignment = Prisma.EventStaffAssignmentModel
+/**
+ * Model EventCheckIn
+ * 
+ */
+export type EventCheckIn = Prisma.EventCheckInModel
 /**
  * Model MemberSession
  * 

@@ -37,6 +37,16 @@ export const emailTypeLabels: Record<EmailType, string> = {
   LIVE_REMINDER: "直播前提醒",
   REPLAY_CLOSING: "回看截止提醒",
   REPLAY_OPENED: "回看開放通知",
+  EVENT_REGISTRATION_CREATED: "活動報名建立",
+  EVENT_PAYMENT_REPORTED_USER: "活動匯款回報通知",
+  EVENT_PAYMENT_REPORTED_ADMIN: "活動匯款待審核",
+  EVENT_REGISTRATION_CONFIRMED: "活動報名確認",
+  EVENT_WAITLISTED: "活動候補通知",
+  EVENT_WAITLIST_OFFERED: "活動候補遞補",
+  EVENT_UPDATED: "活動異動通知",
+  EVENT_CANCELLED: "活動取消通知",
+  EVENT_REMINDER: "活動行前提醒",
+  ADMIN_INVITATION: "管理員帳號邀請",
 };
 
 export const emailStatusLabels: Record<EmailStatus, string> = {

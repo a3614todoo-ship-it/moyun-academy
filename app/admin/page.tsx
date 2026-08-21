@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { AdminShell } from "@/components/admin-shell";
-import { ApplicationStatus, CoursePurchaseStatus, EmailStatus } from "@/generated/prisma/enums";
+import { ApplicationStatus, CoursePurchaseStatus, EmailStatus, EventRegistrationStatus, EventStatus } from "@/generated/prisma/enums";
 import {
   applicationStatusLabels,
   coursePurchaseStatusLabels,
@@ -9,11 +9,13 @@ import {
 } from "@/lib/admin/labels";
 import { requireAdmin } from "@/lib/admin/auth";
 import { prisma } from "@/lib/prisma";
+import { taipeiDayRange } from "@/lib/taipei-time";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
   const session = await requireAdmin();
+  const today = taipeiDayRange();
   const [
     totalApplications,
     memberPaymentReported,
@@ -22,6 +24,9 @@ export default async function AdminDashboardPage() {
     coursePaymentReported,
     approvedPurchases,
     failedEmails,
+    upcomingEvents,
+    eventPaymentsReported,
+    todayCheckIns,
     recentApplications,
     recentPurchases,
   ] = await Promise.all([
@@ -32,6 +37,9 @@ export default async function AdminDashboardPage() {
     prisma.coursePurchase.count({ where: { status: CoursePurchaseStatus.PAYMENT_REPORTED } }),
     prisma.coursePurchase.count({ where: { status: CoursePurchaseStatus.APPROVED } }),
     prisma.emailLog.count({ where: { status: EmailStatus.FAILED } }),
+    prisma.inPersonEvent.count({ where: { status: EventStatus.PUBLISHED, startsAt: { gte: new Date() } } }),
+    prisma.eventRegistration.count({ where: { status: EventRegistrationStatus.PAYMENT_REPORTED } }),
+    prisma.eventCheckIn.count({ where: { checkedInAt: { gte: today.start, lt: today.end } } }),
     prisma.application.findMany({
       orderBy: { createdAt: "desc" },
       take: 5,
@@ -52,10 +60,13 @@ export default async function AdminDashboardPage() {
     ["課程匯款待審", coursePaymentReported],
     ["課程已開通", approvedPurchases],
     ["Email 寄送失敗", failedEmails],
+    ["即將舉行活動", upcomingEvents],
+    ["活動匯款待審", eventPaymentsReported],
+    ["今日活動報到", todayCheckIns],
   ] as const;
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div>
           <span>我輩學堂管理中心</span>

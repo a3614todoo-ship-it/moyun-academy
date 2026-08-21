@@ -2,6 +2,7 @@ import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypt
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { AdminRole } from "@/generated/prisma/enums";
 
 const SESSION_COOKIE = "wobei_admin_session";
 const MFA_CHALLENGE_COOKIE = "wobei_admin_mfa_challenge";
@@ -118,15 +119,39 @@ export async function getAdminSession() {
     },
     include: {
       adminUser: {
-        select: { id: true, email: true, name: true, isActive: true },
+        select: { id: true, email: true, name: true, isActive: true, role: true },
       },
     },
   });
 }
 
-export async function requireAdmin() {
+export async function requireAuthenticatedAdmin() {
   const session = await getAdminSession();
   if (!session) redirect("/admin/login");
+  return session;
+}
+
+export async function requireAdmin() {
+  const session = await requireAuthenticatedAdmin();
+  if (session.adminUser.role === AdminRole.CHECKIN_STAFF) redirect("/admin/check-in");
+  return session;
+}
+
+export async function requireOwner() {
+  const session = await requireAuthenticatedAdmin();
+  if (session.adminUser.role !== AdminRole.OWNER) redirect("/admin");
+  return session;
+}
+
+export async function requireEventCheckInAccess(eventId: string) {
+  const session = await requireAuthenticatedAdmin();
+  if (session.adminUser.role !== AdminRole.CHECKIN_STAFF) return session;
+
+  const assignment = await prisma.eventStaffAssignment.findUnique({
+    where: { eventId_adminUserId: { eventId, adminUserId: session.adminUser.id } },
+    select: { id: true },
+  });
+  if (!assignment) redirect("/admin/check-in?error=not_assigned");
   return session;
 }
 

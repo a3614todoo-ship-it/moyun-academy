@@ -806,3 +806,14 @@ npx.cmd prisma migrate deploy
 - Rate Limit 與管理員 IP 稽核共用 `trustedRequestAddress`。
 - Vercel 環境優先使用平台產生的 `x-vercel-forwarded-for`，其次才使用 Vercel 覆寫的 `x-forwarded-for`。
 - 非 Vercel 的本機環境不信任任意 `x-forwarded-for`，僅使用 `x-real-ip` 或 `unknown`。
+
+## 21. 2026-08-21 實體活動、候補與現場報到
+
+- 活動主檔使用 `InPersonEvent`，支援免費、全員付費、會員免費／訪客付費三種計價方式，以及公開、會員限定、會員優先三種報名對象。
+- `InPersonEvent.waitlistEnabled` 由後台逐場設定；關閉時額滿即停止報名，開啟時才建立 `WAITLISTED` 報名。
+- `waitlistPaymentHours` 逐場設定候補遞補付款期限；逾期由每日通知排程釋出名額並遞補下一位。
+- 付費報名沿用人工匯款回報與管理員審核，免費報名直接確認；確認後以不含個資的票券權杖產生 QR Code。
+- 現場報到支援 QR 與人工查找；票券原文不存入資料庫，只保存 SHA-256 雜湊，重複掃描不建立第二筆報到。
+- 管理後台新增 `OWNER`、`ADMIN`、`CHECKIN_STAFF`，現場人員只能進入被指派活動的報到頁；管理員帳號以 48 小時一次性邀請建立。
+- 新增資料表啟用 RLS，撤銷 `anon`、`authenticated` 直接權限；`academy_runtime` 取得逐表最小讀寫授權與專用 policy，網站仍使用低權限連線。
+- 完整功能規格與驗收條件見 `backups/20260821-in-person-events-spec.md`。

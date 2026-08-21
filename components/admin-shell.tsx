@@ -4,12 +4,15 @@ import { AdminScrollToTop } from "@/components/admin-scroll-to-top";
 
 type Props = {
   adminName: string;
+  adminRole?: "OWNER" | "ADMIN" | "CHECKIN_STAFF";
   children: React.ReactNode;
 };
 
 const navItems = [
   { href: "/admin", label: "總覽" },
   { href: "/admin/courses", label: "課程管理" },
+  { href: "/admin/events", label: "實體活動" },
+  { href: "/admin/check-in", label: "現場報到" },
   { href: "/admin/course-purchases", label: "課程購買" },
   { href: "/admin/course-purchases?status=PAYMENT_REPORTED", label: "課程匯款審核" },
   { href: "/admin/questions", label: "課程問答" },
@@ -19,9 +22,10 @@ const navItems = [
   { href: "/admin/emails", label: "Email 寄送" },
   { href: "/admin/settings", label: "系統設定" },
   { href: "/admin/security", label: "安全設定" },
+  { href: "/admin/admin-users", label: "管理員帳號", ownerOnly: true },
 ];
 
-export function AdminShell({ adminName, children }: Props) {
+export function AdminShell({ adminName, adminRole = "ADMIN", children }: Props) {
   const displayAdminName = adminName || "我輩學堂管理員";
 
   return (
@@ -36,7 +40,10 @@ export function AdminShell({ adminName, children }: Props) {
           </div>
         </Link>
         <nav>
-          {navItems.map((item) => (
+          {navItems.filter((item) => {
+            if (adminRole === "CHECKIN_STAFF") return item.href === "/admin/check-in";
+            return !item.ownerOnly || adminRole === "OWNER";
+          }).map((item) => (
             <Link href={item.href} key={item.href}>{item.label}</Link>
           ))}
         </nav>

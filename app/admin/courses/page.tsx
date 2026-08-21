@@ -39,7 +39,7 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
   ]);
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div>
           <span>課程、付費權限與直播設定</span>

@@ -44,7 +44,7 @@ export default async function EditCoursePage({ params, searchParams }: Props) {
   if (!course) notFound();
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div>
           <Link className="admin-breadcrumb" href="/admin/courses">

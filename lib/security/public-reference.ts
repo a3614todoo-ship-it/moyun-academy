@@ -8,14 +8,16 @@ function publicReferenceSecret() {
   return value;
 }
 
-export function buildPublicReferenceSignature(kind: "application" | "purchase", reference: string) {
+type PublicReferenceKind = "application" | "purchase" | "event";
+
+export function buildPublicReferenceSignature(kind: PublicReferenceKind, reference: string) {
   return createHmac("sha256", publicReferenceSecret())
     .update(`${kind}:${reference}`)
     .digest("base64url");
 }
 
 export function verifyPublicReferenceSignature(
-  kind: "application" | "purchase",
+  kind: PublicReferenceKind,
   reference: string,
   signature?: string,
 ) {
@@ -25,8 +27,8 @@ export function verifyPublicReferenceSignature(
   return expected.length === actual.length && timingSafeEqual(expected, actual);
 }
 
-export function publicReferenceQuery(kind: "application" | "purchase", reference: string) {
-  const name = kind === "application" ? "application_no" : "purchase_no";
+export function publicReferenceQuery(kind: PublicReferenceKind, reference: string) {
+  const name = kind === "application" ? "application_no" : kind === "purchase" ? "purchase_no" : "registration_no";
   const signature = buildPublicReferenceSignature(kind, reference);
   return `${name}=${encodeURIComponent(reference)}&sig=${encodeURIComponent(signature)}`;
 }

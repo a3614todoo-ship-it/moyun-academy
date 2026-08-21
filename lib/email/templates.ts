@@ -39,15 +39,35 @@ type TemplateCoursePurchase = {
   };
 };
 
+type TemplateEventRegistration = {
+  registrationNo: string;
+  name: string;
+  email: string;
+  phone: string;
+  amount: number;
+  status: string;
+  offerExpiresAt: Date | null;
+  bankLast5: string | null;
+  payerName: string | null;
+  paidAt: Date | null;
+  event: { title: string; slug: string; startsAt: Date; venueName: string; venueAddress: string };
+};
+
 type TemplateInput = {
   type: EmailType;
   application?: TemplateApplication | null;
   coursePurchase?: TemplateCoursePurchase | null;
+  eventRegistration?: TemplateEventRegistration | null;
   metadata?: unknown;
   siteUrl: string;
   facebookGroupUrl?: string;
   memberSetPasswordUrl?: string;
 };
+
+function requireEventRegistration(value?: TemplateEventRegistration | null) {
+  if (!value) throw new Error("這封信缺少活動報名資料。");
+  return value;
+}
 
 function money(value: number) {
   return `NT$ ${value.toLocaleString("zh-TW")}`;
@@ -159,11 +179,54 @@ export function buildEmailTemplate({
   type,
   application,
   coursePurchase,
+  eventRegistration,
   metadata,
   siteUrl,
   facebookGroupUrl = "",
   memberSetPasswordUrl = "",
 }: TemplateInput) {
+  if (type.toString().startsWith("EVENT_")) {
+    const item = requireEventRegistration(eventRegistration);
+    const eventUrl = `${siteUrl}/events/${encodeURIComponent(item.event.slug)}`;
+    const ticketUrl = `${siteUrl}/events/ticket?${publicReferenceQuery("event", item.registrationNo)}`;
+    const rows: Array<[string, string]> = [["活動", item.event.title], ["報名編號", item.registrationNo], ["活動時間", formatDateTime(item.event.startsAt)], ["活動地點", `${item.event.venueName}｜${item.event.venueAddress}`]];
+    if (type === EmailType.EVENT_WAITLISTED) {
+      const subject = `已加入候補：${item.event.title}`;
+      return { subject, text: `${item.name} 您好：\n\n您已加入「${item.event.title}」候補名單。\n報名編號：${item.registrationNo}\n有名額釋出時會依序通知。\n\n${eventUrl}`, html: emailShell(subject, `<p>${escapeHtml(item.name)} 您好，您已加入活動候補名單；有名額釋出時會依序通知。</p><table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows(rows)}</table>${button(eventUrl, "查看活動")}`) };
+    }
+    if (type === EmailType.EVENT_WAITLIST_OFFERED) {
+      const subject = `候補名額已保留：${item.event.title}`;
+      const deadline = item.offerExpiresAt ? formatDateTime(item.offerExpiresAt) : "請至活動頁查看";
+      return { subject, text: `${item.name} 您好：\n\n候補名額已為您保留至 ${deadline}。\n報名編號：${item.registrationNo}\n應付金額：${money(item.amount)}\n\n${siteUrl}/event-payment-report?registration_no=${item.registrationNo}`, html: emailShell(subject, `<p>${escapeHtml(item.name)} 您好，候補名額已為您保留。</p><table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows([...rows, ["付款期限", deadline], ["應付金額", money(item.amount)]])}</table>${button(`${siteUrl}/event-payment-report?registration_no=${encodeURIComponent(item.registrationNo)}`, "回報活動匯款", "#aa751d")}`) };
+    }
+    if (type === EmailType.EVENT_PAYMENT_REPORTED_ADMIN) {
+      const subject = `新的活動匯款待審核：${item.event.title}`;
+      return { subject, text: `活動：${item.event.title}\n報名編號：${item.registrationNo}\n姓名：${item.name}\n電話：${item.phone}\n金額：${money(item.amount)}\n帳號後五碼：${item.bankLast5 || "未取得"}`, html: emailShell(subject, `<table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows([...rows, ["姓名", item.name], ["電話", item.phone], ["金額", money(item.amount)], ["帳號後五碼", item.bankLast5 || "未取得"]])}</table>${button(`${siteUrl}/admin/events`, "前往後台")}`) };
+    }
+    if (type === EmailType.EVENT_PAYMENT_REPORTED_USER) {
+      const subject = `已收到活動匯款回報：${item.event.title}`;
+      return { subject, text: `${item.name} 您好：\n\n已收到您的活動匯款回報，管理員核對後會寄出電子票券。\n報名編號：${item.registrationNo}`, html: emailShell(subject, `<p>${escapeHtml(item.name)} 您好，我們已收到活動匯款回報，核對後會寄出電子票券。</p><table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows(rows)}</table>`) };
+    }
+    if (type === EmailType.EVENT_CANCELLED) {
+      const subject = `活動取消通知：${item.event.title}`;
+      return { subject, text: `${item.name} 您好：\n\n「${item.event.title}」已取消，後續處理將由學堂另行聯絡。`, html: emailShell(subject, `<p>${escapeHtml(item.name)} 您好，「${escapeHtml(item.event.title)}」已取消，後續處理將由學堂另行聯絡。</p>`) };
+    }
+    if (type === EmailType.EVENT_UPDATED) {
+      const subject = `活動資訊更新：${item.event.title}`;
+      return {
+        subject,
+        text: `${item.name} 您好：\n\n「${item.event.title}」的時間或地點已有更新。\n時間：${formatDateTime(item.event.startsAt)}\n地點：${item.event.venueName}｜${item.event.venueAddress}\n\n${eventUrl}`,
+        html: emailShell(subject, `<p>${escapeHtml(item.name)} 您好，活動的時間或地點已有更新，請以以下最新資訊為準。</p><table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows(rows)}</table>${button(eventUrl, "查看最新活動資訊")}`),
+      };
+    }
+    if (type === EmailType.EVENT_REMINDER) {
+      const subject = `明日活動提醒：${item.event.title}`;
+      return { subject, text: `${item.name} 您好：\n\n提醒您明日參加「${item.event.title}」。\n時間：${formatDateTime(item.event.startsAt)}\n地點：${item.event.venueName}｜${item.event.venueAddress}\n\n電子票券：${ticketUrl}`, html: emailShell(subject, `<p>${escapeHtml(item.name)} 您好，提醒您明日參加活動。</p><table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows(rows)}</table>${button(ticketUrl, "開啟電子票券")}`) };
+    }
+    const confirmed = type === EmailType.EVENT_REGISTRATION_CONFIRMED;
+    const subject = confirmed ? `活動報名確認：${item.event.title}` : `活動報名已建立：${item.event.title}`;
+    return { subject, text: `${item.name} 您好：\n\n${confirmed ? "您的活動報名已確認，請於活動當天出示電子票券。" : "您的活動報名已建立，請依網站說明完成匯款。"}\n報名編號：${item.registrationNo}\n${confirmed ? `電子票券：${ticketUrl}` : `${siteUrl}/event-payment-report?registration_no=${item.registrationNo}`}`, html: emailShell(subject, `<p>${escapeHtml(item.name)} 您好，${confirmed ? "您的活動報名已確認。" : "您的活動報名已建立，請依網站說明完成匯款。"}</p><table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows([...rows, ["費用", item.amount > 0 ? money(item.amount) : "免費"]])}</table>${button(confirmed ? ticketUrl : `${siteUrl}/event-payment-report?registration_no=${encodeURIComponent(item.registrationNo)}`, confirmed ? "查看電子票券" : "回報活動匯款", confirmed ? "#153f35" : "#aa751d")}`) };
+  }
   if (type === EmailType.APPLICATION_CREATED) {
     const item = requireApplication(application);
     const subject = "您的我輩學堂會員申請已建立";

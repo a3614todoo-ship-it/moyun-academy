@@ -31,7 +31,7 @@ export default async function AdminCoursePurchasesPage({ searchParams }: Props) 
   });
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div>
           <span>付費課程報名、匯款與審核</span>

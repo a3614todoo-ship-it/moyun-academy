@@ -35,10 +35,77 @@ export const EmailType = {
   MEMBER_PRIORITY_OPEN: 'MEMBER_PRIORITY_OPEN',
   LIVE_REMINDER: 'LIVE_REMINDER',
   REPLAY_CLOSING: 'REPLAY_CLOSING',
-  REPLAY_OPENED: 'REPLAY_OPENED'
+  REPLAY_OPENED: 'REPLAY_OPENED',
+  EVENT_REGISTRATION_CREATED: 'EVENT_REGISTRATION_CREATED',
+  EVENT_PAYMENT_REPORTED_USER: 'EVENT_PAYMENT_REPORTED_USER',
+  EVENT_PAYMENT_REPORTED_ADMIN: 'EVENT_PAYMENT_REPORTED_ADMIN',
+  EVENT_REGISTRATION_CONFIRMED: 'EVENT_REGISTRATION_CONFIRMED',
+  EVENT_WAITLISTED: 'EVENT_WAITLISTED',
+  EVENT_WAITLIST_OFFERED: 'EVENT_WAITLIST_OFFERED',
+  EVENT_UPDATED: 'EVENT_UPDATED',
+  EVENT_CANCELLED: 'EVENT_CANCELLED',
+  EVENT_REMINDER: 'EVENT_REMINDER',
+  ADMIN_INVITATION: 'ADMIN_INVITATION'
 } as const
 
 export type EmailType = (typeof EmailType)[keyof typeof EmailType]
+
+
+export const AdminRole = {
+  OWNER: 'OWNER',
+  ADMIN: 'ADMIN',
+  CHECKIN_STAFF: 'CHECKIN_STAFF'
+} as const
+
+export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole]
+
+
+export const EventPricingMode = {
+  FREE: 'FREE',
+  PAID: 'PAID',
+  MEMBER_FREE_PUBLIC_PAID: 'MEMBER_FREE_PUBLIC_PAID'
+} as const
+
+export type EventPricingMode = (typeof EventPricingMode)[keyof typeof EventPricingMode]
+
+
+export const EventAudience = {
+  PUBLIC: 'PUBLIC',
+  MEMBERS_ONLY: 'MEMBERS_ONLY',
+  MEMBER_PRIORITY: 'MEMBER_PRIORITY'
+} as const
+
+export type EventAudience = (typeof EventAudience)[keyof typeof EventAudience]
+
+
+export const EventStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
+
+
+export const EventRegistrationStatus = {
+  PENDING_PAYMENT: 'PENDING_PAYMENT',
+  PAYMENT_REPORTED: 'PAYMENT_REPORTED',
+  CONFIRMED: 'CONFIRMED',
+  WAITLISTED: 'WAITLISTED',
+  WAITLIST_OFFERED: 'WAITLIST_OFFERED',
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type EventRegistrationStatus = (typeof EventRegistrationStatus)[keyof typeof EventRegistrationStatus]
+
+
+export const EventCheckInMethod = {
+  QR: 'QR',
+  MANUAL: 'MANUAL'
+} as const
+
+export type EventCheckInMethod = (typeof EventCheckInMethod)[keyof typeof EventCheckInMethod]
 
 
 export const CourseAccessType = {

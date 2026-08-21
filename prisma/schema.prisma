@@ -82,46 +82,71 @@ model PaymentReport {
 }
 
 model EmailLog {
-  id               String          @id @default(cuid())
-  applicationId    String?
-  application      Application?    @relation(fields: [applicationId], references: [id], onDelete: SetNull)
-  coursePurchaseId String?
-  coursePurchase   CoursePurchase? @relation(fields: [coursePurchaseId], references: [id], onDelete: SetNull)
-  type             EmailType
-  recipient        String
-  subject          String
-  dedupeKey        String?         @unique
-  metadata         Json?
-  status           EmailStatus     @default(PENDING)
-  providerId       String?
-  errorMessage     String?
-  sentAt           DateTime?
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
+  id                  String             @id @default(cuid())
+  applicationId       String?
+  application         Application?       @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+  coursePurchaseId    String?
+  coursePurchase      CoursePurchase?    @relation(fields: [coursePurchaseId], references: [id], onDelete: SetNull)
+  eventRegistrationId String?
+  eventRegistration   EventRegistration? @relation(fields: [eventRegistrationId], references: [id], onDelete: SetNull)
+  type                EmailType
+  recipient           String
+  subject             String
+  dedupeKey           String?            @unique
+  metadata            Json?
+  status              EmailStatus        @default(PENDING)
+  providerId          String?
+  errorMessage        String?
+  sentAt              DateTime?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
 
   @@index([applicationId, createdAt])
   @@index([coursePurchaseId, createdAt])
+  @@index([eventRegistrationId, createdAt])
   @@index([status, createdAt])
   @@index([recipient])
 }
 
 model AdminUser {
-  id                      String                     @id @default(cuid())
-  email                   String                     @unique
-  passwordHash            String
-  name                    String
-  isActive                Boolean                    @default(true)
-  lastLoginAt             DateTime?
-  sessions                AdminSession[]
-  reviewedPayments        PaymentReport[]
-  reviewedCoursePurchases CoursePurchase[]
-  statusChanges           ApplicationStatusHistory[]
-  updatedSettings         SystemSetting[]
-  auditLogs               AdminAuditLog[]
-  recoveryCodes           AdminRecoveryCode[]
-  emailOtps               AdminEmailOtp[]
-  createdAt               DateTime                   @default(now())
-  updatedAt               DateTime                   @updatedAt
+  id                         String                     @id @default(cuid())
+  email                      String                     @unique
+  passwordHash               String
+  name                       String
+  role                       AdminRole                  @default(ADMIN)
+  isActive                   Boolean                    @default(true)
+  lastLoginAt                DateTime?
+  sessions                   AdminSession[]
+  reviewedPayments           PaymentReport[]
+  reviewedCoursePurchases    CoursePurchase[]
+  statusChanges              ApplicationStatusHistory[]
+  updatedSettings            SystemSetting[]
+  auditLogs                  AdminAuditLog[]
+  recoveryCodes              AdminRecoveryCode[]
+  emailOtps                  AdminEmailOtp[]
+  sentInvitations            AdminInvitation[]          @relation("AdminInvitationInviter")
+  eventAssignments           EventStaffAssignment[]
+  eventRegistrationsReviewed EventRegistration[]        @relation("EventRegistrationReviewer")
+  eventCheckIns              EventCheckIn[]             @relation("EventCheckInOperator")
+  reversedEventCheckIns      EventCheckIn[]             @relation("EventCheckInReverser")
+  createdAt                  DateTime                   @default(now())
+  updatedAt                  DateTime                   @updatedAt
+}
+
+model AdminInvitation {
+  id          String    @id @default(cuid())
+  email       String
+  name        String
+  role        AdminRole
+  tokenHash   String    @unique
+  invitedById String
+  invitedBy   AdminUser @relation("AdminInvitationInviter", fields: [invitedById], references: [id], onDelete: Cascade)
+  expiresAt   DateTime
+  acceptedAt  DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([email, acceptedAt])
+  @@index([expiresAt])
 }
 
 model AdminEmailOtp {
@@ -190,23 +215,139 @@ model AdminSession {
 }
 
 model MemberUser {
-  id              String                   @id @default(cuid())
-  email           String                   @unique
-  passwordHash    String?
-  name            String
-  phone           String?
-  status          MemberUserStatus         @default(PENDING_PASSWORD)
-  passwordSetAt   DateTime?
-  lastLoginAt     DateTime?
-  applications    Application[]
-  subscriptions   MembershipSubscription[]
-  sessions        MemberSession[]
-  coursePurchases CoursePurchase[]
-  createdAt       DateTime                 @default(now())
-  updatedAt       DateTime                 @updatedAt
+  id                 String                   @id @default(cuid())
+  email              String                   @unique
+  passwordHash       String?
+  name               String
+  phone              String?
+  status             MemberUserStatus         @default(PENDING_PASSWORD)
+  passwordSetAt      DateTime?
+  lastLoginAt        DateTime?
+  applications       Application[]
+  subscriptions      MembershipSubscription[]
+  sessions           MemberSession[]
+  coursePurchases    CoursePurchase[]
+  eventRegistrations EventRegistration[]
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
 
   @@index([status, createdAt])
   @@index([phone])
+}
+
+model InPersonEvent {
+  id                       String                 @id @default(cuid())
+  slug                     String                 @unique
+  title                    String
+  subtitle                 String?
+  category                 String
+  excerpt                  String
+  description              String
+  coverImageUrl            String?
+  venueName                String
+  venueAddress             String
+  mapUrl                   String?
+  startsAt                 DateTime
+  endsAt                   DateTime
+  registrationOpenAt       DateTime
+  publicRegistrationOpenAt DateTime?
+  registrationCloseAt      DateTime
+  capacity                 Int
+  waitlistEnabled          Boolean                @default(true)
+  waitlistPaymentHours     Int                    @default(48)
+  pricingMode              EventPricingMode
+  publicPrice              Int                    @default(0)
+  memberPrice              Int                    @default(0)
+  audience                 EventAudience          @default(PUBLIC)
+  status                   EventStatus            @default(DRAFT)
+  isFeatured               Boolean                @default(false)
+  sortOrder                Int                    @default(0)
+  publishedAt              DateTime?
+  cancelledAt              DateTime?
+  registrations            EventRegistration[]
+  staffAssignments         EventStaffAssignment[]
+  checkIns                 EventCheckIn[]
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+
+  @@index([status, startsAt])
+  @@index([registrationOpenAt, publicRegistrationOpenAt, registrationCloseAt])
+  @@index([isFeatured, sortOrder])
+}
+
+model EventRegistration {
+  id                String                  @id @default(cuid())
+  registrationNo    String                  @unique
+  eventId           String
+  event             InPersonEvent           @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  memberUserId      String?
+  memberUser        MemberUser?             @relation(fields: [memberUserId], references: [id], onDelete: SetNull)
+  name              String
+  phone             String
+  email             String
+  status            EventRegistrationStatus
+  amount            Int                     @default(0)
+  isMemberPrice     Boolean                 @default(false)
+  waitlistSequence  Int?
+  offeredAt         DateTime?
+  offerExpiresAt    DateTime?
+  bankLast5         String?
+  payerName         String?
+  paidAt            DateTime?
+  paymentReportedAt DateTime?
+  reviewedAt        DateTime?
+  reviewedById      String?
+  reviewedBy        AdminUser?              @relation("EventRegistrationReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  ticketTokenHash   String?                 @unique
+  agreedToPrivacyAt DateTime
+  note              String?
+  confirmedAt       DateTime?
+  cancelledAt       DateTime?
+  rejectedAt        DateTime?
+  emailLogs         EmailLog[]
+  checkIn           EventCheckIn?
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+
+  @@index([eventId, status, createdAt])
+  @@index([eventId, waitlistSequence])
+  @@index([email])
+  @@index([phone])
+  @@index([memberUserId])
+  @@index([offerExpiresAt, status])
+}
+
+model EventStaffAssignment {
+  id          String        @id @default(cuid())
+  eventId     String
+  event       InPersonEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  adminUserId String
+  adminUser   AdminUser     @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+
+  @@unique([eventId, adminUserId])
+  @@index([adminUserId])
+}
+
+model EventCheckIn {
+  id             String             @id @default(cuid())
+  eventId        String
+  event          InPersonEvent      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  registrationId String             @unique
+  registration   EventRegistration  @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+  method         EventCheckInMethod
+  checkedInAt    DateTime           @default(now())
+  checkedInById  String
+  checkedInBy    AdminUser          @relation("EventCheckInOperator", fields: [checkedInById], references: [id], onDelete: Restrict)
+  reversedAt     DateTime?
+  reversedById   String?
+  reversedBy     AdminUser?         @relation("EventCheckInReverser", fields: [reversedById], references: [id], onDelete: SetNull)
+  note           String?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@index([eventId, reversedAt, checkedInAt])
+  @@index([checkedInById])
 }
 
 model MemberSession {
@@ -398,34 +539,34 @@ model LiveQuestionUpvote {
 }
 
 model CourseLesson {
-  id               String    @id @default(cuid())
-  courseId         String
-  course           Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  title            String
-  summary          String?
-  startsAt         DateTime?
-  durationText     String?
-  originalText     String?
-  translation      String?
-  annotation       String?
-  teacherNote      String?
-  reflectionPrompt String?
-  handoutUrl       String?
-  handoutStoragePath String?
-  handoutFileName  String?
-  handoutContentType String?
-  handoutSizeBytes Int?
-  replayVideoUrl   String?
-  replayAudioUrl   String?
-  replayEnabled    Boolean                @default(false)
-  replayOpenAt     DateTime?
-  replayCloseAt    DateTime?
+  id                     String                 @id @default(cuid())
+  courseId               String
+  course                 Course                 @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title                  String
+  summary                String?
+  startsAt               DateTime?
+  durationText           String?
+  originalText           String?
+  translation            String?
+  annotation             String?
+  teacherNote            String?
+  reflectionPrompt       String?
+  handoutUrl             String?
+  handoutStoragePath     String?
+  handoutFileName        String?
+  handoutContentType     String?
+  handoutSizeBytes       Int?
+  replayVideoUrl         String?
+  replayAudioUrl         String?
+  replayEnabled          Boolean                @default(false)
+  replayOpenAt           DateTime?
+  replayCloseAt          DateTime?
   replayProductionStatus ReplayProductionStatus @default(SCHEDULED)
-  liveSession      LiveSession?
-  sortOrder        Int       @default(0)
-  isPublished      Boolean   @default(true)
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  liveSession            LiveSession?
+  sortOrder              Int                    @default(0)
+  isPublished            Boolean                @default(true)
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
 
   @@index([courseId, sortOrder])
   @@index([isPublished, startsAt])
@@ -482,6 +623,55 @@ enum EmailType {
   LIVE_REMINDER
   REPLAY_CLOSING
   REPLAY_OPENED
+  EVENT_REGISTRATION_CREATED
+  EVENT_PAYMENT_REPORTED_USER
+  EVENT_PAYMENT_REPORTED_ADMIN
+  EVENT_REGISTRATION_CONFIRMED
+  EVENT_WAITLISTED
+  EVENT_WAITLIST_OFFERED
+  EVENT_UPDATED
+  EVENT_CANCELLED
+  EVENT_REMINDER
+  ADMIN_INVITATION
+}
+
+enum AdminRole {
+  OWNER
+  ADMIN
+  CHECKIN_STAFF
+}
+
+enum EventPricingMode {
+  FREE
+  PAID
+  MEMBER_FREE_PUBLIC_PAID
+}
+
+enum EventAudience {
+  PUBLIC
+  MEMBERS_ONLY
+  MEMBER_PRIORITY
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+}
+
+enum EventRegistrationStatus {
+  PENDING_PAYMENT
+  PAYMENT_REPORTED
+  CONFIRMED
+  WAITLISTED
+  WAITLIST_OFFERED
+  REJECTED
+  CANCELLED
+}
+
+enum EventCheckInMethod {
+  QR
+  MANUAL
 }
 
 enum CourseAccessType {

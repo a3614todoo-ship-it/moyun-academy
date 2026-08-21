@@ -1563,6 +1563,79 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
   .homepage .author-signature { right: 1%; }
 }
 
+/* 實體活動：延續學堂宣紙、墨綠與朱印語彙，資訊密度則以現場營運為優先。 */
+.event-page-hero { position: relative; overflow: hidden; }
+.event-page-hero::after { content: "會"; position: absolute; right: 7vw; bottom: -4rem; color: rgba(23,67,57,.055); font-family: var(--font-serif); font-size: clamp(10rem,24vw,24rem); line-height: 1; }
+.event-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px; }
+.event-card { overflow: hidden; border: 1px solid rgba(44,61,54,.16); border-radius: 4px; background: #fffdf7; box-shadow: 0 14px 34px rgba(35,44,39,.08); }
+.event-card-image { position: relative; min-height: 260px; overflow: hidden; display: grid; place-items: center; color: rgba(255,255,255,.85); background: linear-gradient(135deg,#36584e,#b18a53); font-family: var(--font-serif); font-size: 7rem; }
+.event-card-image img { object-fit: cover; }
+.event-card-image::after { content: ""; position: absolute; inset: auto 0 0; height: 45%; background: linear-gradient(transparent,rgba(9,30,25,.48)); }
+.event-card-image em { position: absolute; z-index: 1; left: 20px; bottom: 18px; padding: 6px 11px; color: #fff; border: 1px solid rgba(255,255,255,.62); font-style: normal; letter-spacing: .12em; }
+.event-card-body { padding: 26px; }
+.event-card-body > p:first-child { margin: 0 0 8px; color: #9a6a28; font-size: .9rem; letter-spacing: .06em; }
+.event-card-body h2 { margin: 0 0 8px; color: var(--forest); font-family: var(--font-serif); font-size: 1.8rem; }
+.event-card-body > span { color: #6f746f; font-size: .92rem; }
+.event-card-body > p { color: #555d59; line-height: 1.8; }
+.event-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 22px; padding-top: 18px; border-top: 1px solid #e7dfd1; }
+.event-card-footer strong { color: #a34834; font-size: .9rem; }
+.event-card-footer a { color: var(--forest); font-weight: 700; }
+.event-empty { padding: 72px 24px; text-align: center; border: 1px dashed #c9baa2; background: rgba(255,253,247,.7); }
+.event-empty > span { display: inline-grid; width: 58px; height: 58px; place-items: center; color: #fff; border-radius: 50%; background: #174339; font-family: var(--font-serif); font-size: 2rem; }
+.event-detail-hero { padding: clamp(48px,7vw,92px) 0; background: linear-gradient(110deg,#f8f3e9 0 57%,#e7eee9 57%); }
+.event-detail-grid { display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: clamp(34px,6vw,88px); }
+.event-detail-grid h1 { max-width: 780px; margin: 14px 0 20px; color: var(--forest); font-family: var(--font-serif); font-size: clamp(2.5rem,5vw,5.4rem); line-height: 1.12; }
+.event-lead { max-width: 680px; color: #5e665f; font-size: 1.2rem; line-height: 1.9; }
+.event-detail-image { position: relative; min-height: 520px; display: grid; place-items: center; overflow: hidden; color: rgba(255,255,255,.8); background: linear-gradient(145deg,#315b50,#b99155); font-family: var(--font-serif); font-size: 12rem; clip-path: polygon(2% 1%,98% 3%,100% 96%,4% 100%,0 42%); }
+.event-detail-image img { object-fit: cover; }
+.event-facts { display: grid; gap: 14px; margin-top: 34px; }
+.event-facts div { display: grid; grid-template-columns: 72px 1fr; gap: 4px 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(44,61,54,.15); }
+.event-facts small { grid-row: span 2; color: #9a6a28; letter-spacing: .12em; }
+.event-facts strong,.event-facts span { color: #32463f; }
+.event-content-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(340px,460px); align-items: start; gap: clamp(34px,7vw,92px); }
+.event-content-grid aside { position: sticky; top: 110px; }
+.event-prose h2 { margin: 0 0 18px; color: var(--forest); font-family: var(--font-serif); font-size: 2rem; }
+.event-prose h2:not(:first-child) { margin-top: 42px; }
+.event-prose p,.event-prose dd { color: #525b56; line-height: 2; }
+.event-prose dl > div { display: grid; grid-template-columns: 110px 1fr; padding: 14px 0; border-bottom: 1px solid #e5ddd0; }
+.event-prose dt { color: #9a6a28; font-weight: 700; }
+.event-registration-closed { text-align: center; }
+.event-registration-closed h2 { color: var(--forest); font-family: var(--font-serif); }
+.event-ticket-page { min-height: 100vh; padding: 48px 18px; background: radial-gradient(circle at 20% 10%,rgba(161,119,51,.14),transparent 32%),#ede8dd; }
+.event-ticket { max-width: 620px; margin: auto; overflow: hidden; border: 1px solid #cfc4b2; border-radius: 8px; background: #fffdf7; box-shadow: 0 24px 60px rgba(31,42,37,.17); }
+.event-ticket-head,.event-ticket-foot { display: flex; justify-content: space-between; gap: 16px; padding: 16px 24px; color: #fff; background: #174339; font-size: .88rem; letter-spacing: .06em; }
+.event-ticket-body { padding: 32px; text-align: center; }
+.event-ticket-body h1 { margin: 10px 0 24px; color: var(--forest); font-family: var(--font-serif); font-size: 2.1rem; }
+.event-ticket-qr { display: inline-flex; padding: 14px; border: 1px solid #ded4c4; background: #fff; }
+.event-ticket-qr img { width: min(320px,70vw); height: auto; }
+.event-ticket-code { color: #86612d; font-size: .84rem; letter-spacing: .12em; }
+.event-ticket-body dl { margin-top: 26px; text-align: left; }
+.event-ticket-body dl div { display: grid; grid-template-columns: 92px 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid #ebe4d8; }
+.event-ticket-body dt { color: #777; }.event-ticket-body dd { margin: 0; color: #243d35; font-weight: 700; }
+.event-ticket-foot { display: block; text-align: center; background: #a94734; }
+.checkin-scanner { margin-bottom: 26px; padding: 24px; border-radius: 6px; color: #fff; background: #123c33; box-shadow: 0 16px 36px rgba(13,45,38,.2); }
+.checkin-scanner-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.checkin-scanner-head span { color: #d9bc7c; font-size: .78rem; letter-spacing: .18em; }.checkin-scanner-head h2 { margin: 4px 0 0; }
+.checkin-scanner button { border-color: #d9bc7c; color: #fff; background: transparent; }
+.checkin-camera { position: relative; min-height: 260px; margin: 20px 0; display: grid; place-items: center; overflow: hidden; border: 1px dashed rgba(255,255,255,.38); background: #092a23; }
+.checkin-camera video { width: 100%; max-height: 460px; object-fit: cover; }.checkin-camera > span { position: absolute; inset: auto 16px 16px; padding: 8px; text-align: center; background: rgba(0,0,0,.55); }
+.checkin-token-form { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 12px; }.checkin-token-form label { display: grid; gap: 6px; }.checkin-token-form input { min-height: 44px; }
+.checkin-result { display: grid; gap: 4px; margin-top: 16px; padding: 14px 18px; color: #222; background: #f1e4bc; }.checkin-result.is-success { background: #cfe9d7; }.checkin-result.is-error { background: #f0ccc5; }
+.checkin-event-grid .admin-kpi-card { text-decoration: none; }.checkin-event-grid .admin-kpi-card strong { font-size: 1.25rem; }
+.admin-assignment-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }.admin-assignment-grid label { display: flex; align-items: flex-start; gap: 10px; padding: 12px; border: 1px solid #ded7ca; background: #fff; }.admin-assignment-grid input { width: 18px; height: 18px; }.admin-assignment-grid span { display: grid; gap: 3px; }.admin-assignment-grid small { color: #777; }
+.admin-table td > small,.admin-table td strong + small { display: block; margin-top: 4px; color: #777; }
+.admin-heading-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }.admin-heading-actions form { margin: 0; }
+
+@media (max-width: 900px) {
+  .event-grid,.event-detail-grid,.event-content-grid { grid-template-columns: 1fr; }
+  .event-detail-hero { background: #f8f3e9; }.event-detail-image { min-height: 380px; }.event-content-grid aside { position: static; }
+}
+@media (max-width: 620px) {
+  .event-grid,.admin-assignment-grid { grid-template-columns: 1fr; }.event-card-image { min-height: 220px; }.event-detail-image { min-height: 310px; }
+  .event-facts div,.event-prose dl > div,.event-ticket-body dl div { grid-template-columns: 1fr; }.event-facts small { grid-row: auto; }
+  .checkin-token-form { grid-template-columns: 1fr; }.checkin-scanner-head { align-items: flex-start; }.event-ticket-body { padding: 26px 20px; }
+}
+
 /* 2026-07-24：首頁改版，以張曼娟老師照片為主視覺。 */
 .site-header {
   border-bottom: 1px solid rgba(52, 55, 47, .14);

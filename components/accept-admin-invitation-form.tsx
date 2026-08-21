@@ -1,0 +1,4 @@
+"use client";
+import { useActionState } from "react";
+import { acceptAdminInvitation, type AcceptInvitationState } from "@/app/admin/admin-users/actions";
+export function AcceptAdminInvitationForm({ token }: { token: string }) { const [state, action, pending] = useActionState(acceptAdminInvitation, { message: "" } as AcceptInvitationState); return <form action={action} className="login-form"><input type="hidden" name="token" value={token} /><label><span>設定密碼</span><input required minLength={12} name="password" type="password" autoComplete="new-password" /></label><label><span>再次輸入密碼</span><input required minLength={12} name="confirmPassword" type="password" autoComplete="new-password" /></label>{state.message ? <p className="form-message" role="alert">{state.message}</p> : null}<button disabled={pending} type="submit">{pending ? "正在建立帳號…" : "建立後台帳號"}</button></form>; }

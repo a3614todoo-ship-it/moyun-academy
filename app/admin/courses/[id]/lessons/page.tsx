@@ -16,7 +16,7 @@ export default async function CourseLessonsPage({ params, searchParams }: Props)
   const [{ id }, query, session] = await Promise.all([params, searchParams, requireAdmin()]);
   const course = await prisma.course.findUnique({ where: { id }, include: { lessonUnits: { include: { liveSession: true }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] } } });
   if (!course) notFound();
-  return <AdminShell adminName={session.adminUser.name}>
+  return <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
     <div className="admin-page-heading"><div><Link className="admin-breadcrumb" href={`/admin/courses/${course.id}`}>回到課程設定</Link><h1>逐堂內容管理</h1><span>{course.title}</span></div><Link className="admin-primary-link" href={`/admin/courses/${course.id}/lessons/new`}>新增課堂</Link></div>
     {query.deleted === "1" ? <div className="admin-success-message">課堂已刪除。</div> : null}
     <section className="admin-panel"><div className="admin-panel-heading"><h2>共 {course.lessonUnits.length} 堂</h2><p>{course.accessType === "MEMBER_INCLUDED" ? "會員課直播使用 FB 私密社團。" : course.accessType === "PAID" ? "付費課直播使用 Vimeo Live 並嵌入網站。" : "公開課可自行選擇直播平台。"}</p></div>

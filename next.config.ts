@@ -21,7 +21,7 @@ const securityHeaders = [
   { key: "Referrer-Policy", value: "no-referrer" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
-  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
+  { key: "Permissions-Policy", value: "camera=(self), microphone=(), geolocation=(), payment=()" },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
   { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
 ];
@@ -32,6 +32,9 @@ const privateNoStoreHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "**" }],
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
@@ -41,6 +44,9 @@ const nextConfig: NextConfig = {
       { source: "/payment-report/success", headers: privateNoStoreHeaders },
       { source: "/course-purchase/success", headers: privateNoStoreHeaders },
       { source: "/course-payment-report/success", headers: privateNoStoreHeaders },
+      { source: "/event-registration/success", headers: privateNoStoreHeaders },
+      { source: "/event-payment-report/success", headers: privateNoStoreHeaders },
+      { source: "/events/ticket", headers: privateNoStoreHeaders },
       { source: "/courses/:slug/live", headers: privateNoStoreHeaders },
       { source: "/courses/:slug/watch", headers: privateNoStoreHeaders },
     ];

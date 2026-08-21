@@ -7,6 +7,7 @@ const navigation = [
   { href: "/author", label: "講師介紹" },
   { href: "/#path", label: "學習路徑" },
   { href: "/courses", label: "課程總覽" },
+  { href: "/events", label: "實體活動" },
   { href: "/membership", label: "會員專區" },
 ];
 
@@ -44,7 +45,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             </Link>
             <p>從閱讀經典到書寫生活，讓文學成為理解自己的一種方式。</p>
           </div>
-          <div><strong>快速導覽</strong><Link href="/author">認識張曼娟</Link><Link href="/courses">課程總覽</Link><Link href="/membership">會員專區</Link><Link href="/login">會員登入</Link></div>
+          <div><strong>快速導覽</strong><Link href="/author">認識張曼娟</Link><Link href="/courses">課程總覽</Link><Link href="/events">實體活動</Link><Link href="/membership">會員專區</Link><Link href="/login">會員登入</Link></div>
           <div><strong>聯絡我們</strong><span>service@wobei-academy.tw</span><span>服務時間：週一至週五 10:00–18:00</span></div>
         </div>
         <div className="container copyright">

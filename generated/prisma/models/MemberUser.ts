@@ -226,6 +226,7 @@ export type MemberUserWhereInput = {
   subscriptions?: Prisma.MembershipSubscriptionListRelationFilter
   sessions?: Prisma.MemberSessionListRelationFilter
   coursePurchases?: Prisma.CoursePurchaseListRelationFilter
+  eventRegistrations?: Prisma.EventRegistrationListRelationFilter
 }
 
 export type MemberUserOrderByWithRelationInput = {
@@ -243,6 +244,7 @@ export type MemberUserOrderByWithRelationInput = {
   subscriptions?: Prisma.MembershipSubscriptionOrderByRelationAggregateInput
   sessions?: Prisma.MemberSessionOrderByRelationAggregateInput
   coursePurchases?: Prisma.CoursePurchaseOrderByRelationAggregateInput
+  eventRegistrations?: Prisma.EventRegistrationOrderByRelationAggregateInput
 }
 
 export type MemberUserWhereUniqueInput = Prisma.AtLeast<{
@@ -263,6 +265,7 @@ export type MemberUserWhereUniqueInput = Prisma.AtLeast<{
   subscriptions?: Prisma.MembershipSubscriptionListRelationFilter
   sessions?: Prisma.MemberSessionListRelationFilter
   coursePurchases?: Prisma.CoursePurchaseListRelationFilter
+  eventRegistrations?: Prisma.EventRegistrationListRelationFilter
 }, "id" | "email">
 
 export type MemberUserOrderByWithAggregationInput = {
@@ -312,6 +315,7 @@ export type MemberUserCreateInput = {
   subscriptions?: Prisma.MembershipSubscriptionCreateNestedManyWithoutMemberUserInput
   sessions?: Prisma.MemberSessionCreateNestedManyWithoutMemberUserInput
   coursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutMemberUserInput
+  eventRegistrations?: Prisma.EventRegistrationCreateNestedManyWithoutMemberUserInput
 }
 
 export type MemberUserUncheckedCreateInput = {
@@ -329,6 +333,7 @@ export type MemberUserUncheckedCreateInput = {
   subscriptions?: Prisma.MembershipSubscriptionUncheckedCreateNestedManyWithoutMemberUserInput
   sessions?: Prisma.MemberSessionUncheckedCreateNestedManyWithoutMemberUserInput
   coursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutMemberUserInput
+  eventRegistrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutMemberUserInput
 }
 
 export type MemberUserUpdateInput = {
@@ -346,6 +351,7 @@ export type MemberUserUpdateInput = {
   subscriptions?: Prisma.MembershipSubscriptionUpdateManyWithoutMemberUserNestedInput
   sessions?: Prisma.MemberSessionUpdateManyWithoutMemberUserNestedInput
   coursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutMemberUserNestedInput
+  eventRegistrations?: Prisma.EventRegistrationUpdateManyWithoutMemberUserNestedInput
 }
 
 export type MemberUserUncheckedUpdateInput = {
@@ -363,6 +369,7 @@ export type MemberUserUncheckedUpdateInput = {
   subscriptions?: Prisma.MembershipSubscriptionUncheckedUpdateManyWithoutMemberUserNestedInput
   sessions?: Prisma.MemberSessionUncheckedUpdateManyWithoutMemberUserNestedInput
   coursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutMemberUserNestedInput
+  eventRegistrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutMemberUserNestedInput
 }
 
 export type MemberUserCreateManyInput = {
@@ -473,6 +480,22 @@ export type EnumMemberUserStatusFieldUpdateOperationsInput = {
   set?: $Enums.MemberUserStatus
 }
 
+export type MemberUserCreateNestedOneWithoutEventRegistrationsInput = {
+  create?: Prisma.XOR<Prisma.MemberUserCreateWithoutEventRegistrationsInput, Prisma.MemberUserUncheckedCreateWithoutEventRegistrationsInput>
+  connectOrCreate?: Prisma.MemberUserCreateOrConnectWithoutEventRegistrationsInput
+  connect?: Prisma.MemberUserWhereUniqueInput
+}
+
+export type MemberUserUpdateOneWithoutEventRegistrationsNestedInput = {
+  create?: Prisma.XOR<Prisma.MemberUserCreateWithoutEventRegistrationsInput, Prisma.MemberUserUncheckedCreateWithoutEventRegistrationsInput>
+  connectOrCreate?: Prisma.MemberUserCreateOrConnectWithoutEventRegistrationsInput
+  upsert?: Prisma.MemberUserUpsertWithoutEventRegistrationsInput
+  disconnect?: Prisma.MemberUserWhereInput | boolean
+  delete?: Prisma.MemberUserWhereInput | boolean
+  connect?: Prisma.MemberUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MemberUserUpdateToOneWithWhereWithoutEventRegistrationsInput, Prisma.MemberUserUpdateWithoutEventRegistrationsInput>, Prisma.MemberUserUncheckedUpdateWithoutEventRegistrationsInput>
+}
+
 export type MemberUserCreateNestedOneWithoutSessionsInput = {
   create?: Prisma.XOR<Prisma.MemberUserCreateWithoutSessionsInput, Prisma.MemberUserUncheckedCreateWithoutSessionsInput>
   connectOrCreate?: Prisma.MemberUserCreateOrConnectWithoutSessionsInput
@@ -531,6 +554,7 @@ export type MemberUserCreateWithoutApplicationsInput = {
   subscriptions?: Prisma.MembershipSubscriptionCreateNestedManyWithoutMemberUserInput
   sessions?: Prisma.MemberSessionCreateNestedManyWithoutMemberUserInput
   coursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutMemberUserInput
+  eventRegistrations?: Prisma.EventRegistrationCreateNestedManyWithoutMemberUserInput
 }
 
 export type MemberUserUncheckedCreateWithoutApplicationsInput = {
@@ -547,6 +571,7 @@ export type MemberUserUncheckedCreateWithoutApplicationsInput = {
   subscriptions?: Prisma.MembershipSubscriptionUncheckedCreateNestedManyWithoutMemberUserInput
   sessions?: Prisma.MemberSessionUncheckedCreateNestedManyWithoutMemberUserInput
   coursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutMemberUserInput
+  eventRegistrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutMemberUserInput
 }
 
 export type MemberUserCreateOrConnectWithoutApplicationsInput = {
@@ -579,6 +604,7 @@ export type MemberUserUpdateWithoutApplicationsInput = {
   subscriptions?: Prisma.MembershipSubscriptionUpdateManyWithoutMemberUserNestedInput
   sessions?: Prisma.MemberSessionUpdateManyWithoutMemberUserNestedInput
   coursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutMemberUserNestedInput
+  eventRegistrations?: Prisma.EventRegistrationUpdateManyWithoutMemberUserNestedInput
 }
 
 export type MemberUserUncheckedUpdateWithoutApplicationsInput = {
@@ -592,6 +618,91 @@ export type MemberUserUncheckedUpdateWithoutApplicationsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.MembershipSubscriptionUncheckedUpdateManyWithoutMemberUserNestedInput
+  sessions?: Prisma.MemberSessionUncheckedUpdateManyWithoutMemberUserNestedInput
+  coursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutMemberUserNestedInput
+  eventRegistrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutMemberUserNestedInput
+}
+
+export type MemberUserCreateWithoutEventRegistrationsInput = {
+  id?: string
+  email: string
+  passwordHash?: string | null
+  name: string
+  phone?: string | null
+  status?: $Enums.MemberUserStatus
+  passwordSetAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  applications?: Prisma.ApplicationCreateNestedManyWithoutMemberUserInput
+  subscriptions?: Prisma.MembershipSubscriptionCreateNestedManyWithoutMemberUserInput
+  sessions?: Prisma.MemberSessionCreateNestedManyWithoutMemberUserInput
+  coursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutMemberUserInput
+}
+
+export type MemberUserUncheckedCreateWithoutEventRegistrationsInput = {
+  id?: string
+  email: string
+  passwordHash?: string | null
+  name: string
+  phone?: string | null
+  status?: $Enums.MemberUserStatus
+  passwordSetAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutMemberUserInput
+  subscriptions?: Prisma.MembershipSubscriptionUncheckedCreateNestedManyWithoutMemberUserInput
+  sessions?: Prisma.MemberSessionUncheckedCreateNestedManyWithoutMemberUserInput
+  coursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutMemberUserInput
+}
+
+export type MemberUserCreateOrConnectWithoutEventRegistrationsInput = {
+  where: Prisma.MemberUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.MemberUserCreateWithoutEventRegistrationsInput, Prisma.MemberUserUncheckedCreateWithoutEventRegistrationsInput>
+}
+
+export type MemberUserUpsertWithoutEventRegistrationsInput = {
+  update: Prisma.XOR<Prisma.MemberUserUpdateWithoutEventRegistrationsInput, Prisma.MemberUserUncheckedUpdateWithoutEventRegistrationsInput>
+  create: Prisma.XOR<Prisma.MemberUserCreateWithoutEventRegistrationsInput, Prisma.MemberUserUncheckedCreateWithoutEventRegistrationsInput>
+  where?: Prisma.MemberUserWhereInput
+}
+
+export type MemberUserUpdateToOneWithWhereWithoutEventRegistrationsInput = {
+  where?: Prisma.MemberUserWhereInput
+  data: Prisma.XOR<Prisma.MemberUserUpdateWithoutEventRegistrationsInput, Prisma.MemberUserUncheckedUpdateWithoutEventRegistrationsInput>
+}
+
+export type MemberUserUpdateWithoutEventRegistrationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMemberUserStatusFieldUpdateOperationsInput | $Enums.MemberUserStatus
+  passwordSetAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUpdateManyWithoutMemberUserNestedInput
+  subscriptions?: Prisma.MembershipSubscriptionUpdateManyWithoutMemberUserNestedInput
+  sessions?: Prisma.MemberSessionUpdateManyWithoutMemberUserNestedInput
+  coursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutMemberUserNestedInput
+}
+
+export type MemberUserUncheckedUpdateWithoutEventRegistrationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMemberUserStatusFieldUpdateOperationsInput | $Enums.MemberUserStatus
+  passwordSetAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutMemberUserNestedInput
   subscriptions?: Prisma.MembershipSubscriptionUncheckedUpdateManyWithoutMemberUserNestedInput
   sessions?: Prisma.MemberSessionUncheckedUpdateManyWithoutMemberUserNestedInput
   coursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutMemberUserNestedInput
@@ -611,6 +722,7 @@ export type MemberUserCreateWithoutSessionsInput = {
   applications?: Prisma.ApplicationCreateNestedManyWithoutMemberUserInput
   subscriptions?: Prisma.MembershipSubscriptionCreateNestedManyWithoutMemberUserInput
   coursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutMemberUserInput
+  eventRegistrations?: Prisma.EventRegistrationCreateNestedManyWithoutMemberUserInput
 }
 
 export type MemberUserUncheckedCreateWithoutSessionsInput = {
@@ -627,6 +739,7 @@ export type MemberUserUncheckedCreateWithoutSessionsInput = {
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutMemberUserInput
   subscriptions?: Prisma.MembershipSubscriptionUncheckedCreateNestedManyWithoutMemberUserInput
   coursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutMemberUserInput
+  eventRegistrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutMemberUserInput
 }
 
 export type MemberUserCreateOrConnectWithoutSessionsInput = {
@@ -659,6 +772,7 @@ export type MemberUserUpdateWithoutSessionsInput = {
   applications?: Prisma.ApplicationUpdateManyWithoutMemberUserNestedInput
   subscriptions?: Prisma.MembershipSubscriptionUpdateManyWithoutMemberUserNestedInput
   coursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutMemberUserNestedInput
+  eventRegistrations?: Prisma.EventRegistrationUpdateManyWithoutMemberUserNestedInput
 }
 
 export type MemberUserUncheckedUpdateWithoutSessionsInput = {
@@ -675,6 +789,7 @@ export type MemberUserUncheckedUpdateWithoutSessionsInput = {
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutMemberUserNestedInput
   subscriptions?: Prisma.MembershipSubscriptionUncheckedUpdateManyWithoutMemberUserNestedInput
   coursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutMemberUserNestedInput
+  eventRegistrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutMemberUserNestedInput
 }
 
 export type MemberUserCreateWithoutSubscriptionsInput = {
@@ -691,6 +806,7 @@ export type MemberUserCreateWithoutSubscriptionsInput = {
   applications?: Prisma.ApplicationCreateNestedManyWithoutMemberUserInput
   sessions?: Prisma.MemberSessionCreateNestedManyWithoutMemberUserInput
   coursePurchases?: Prisma.CoursePurchaseCreateNestedManyWithoutMemberUserInput
+  eventRegistrations?: Prisma.EventRegistrationCreateNestedManyWithoutMemberUserInput
 }
 
 export type MemberUserUncheckedCreateWithoutSubscriptionsInput = {
@@ -707,6 +823,7 @@ export type MemberUserUncheckedCreateWithoutSubscriptionsInput = {
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutMemberUserInput
   sessions?: Prisma.MemberSessionUncheckedCreateNestedManyWithoutMemberUserInput
   coursePurchases?: Prisma.CoursePurchaseUncheckedCreateNestedManyWithoutMemberUserInput
+  eventRegistrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutMemberUserInput
 }
 
 export type MemberUserCreateOrConnectWithoutSubscriptionsInput = {
@@ -739,6 +856,7 @@ export type MemberUserUpdateWithoutSubscriptionsInput = {
   applications?: Prisma.ApplicationUpdateManyWithoutMemberUserNestedInput
   sessions?: Prisma.MemberSessionUpdateManyWithoutMemberUserNestedInput
   coursePurchases?: Prisma.CoursePurchaseUpdateManyWithoutMemberUserNestedInput
+  eventRegistrations?: Prisma.EventRegistrationUpdateManyWithoutMemberUserNestedInput
 }
 
 export type MemberUserUncheckedUpdateWithoutSubscriptionsInput = {
@@ -755,6 +873,7 @@ export type MemberUserUncheckedUpdateWithoutSubscriptionsInput = {
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutMemberUserNestedInput
   sessions?: Prisma.MemberSessionUncheckedUpdateManyWithoutMemberUserNestedInput
   coursePurchases?: Prisma.CoursePurchaseUncheckedUpdateManyWithoutMemberUserNestedInput
+  eventRegistrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutMemberUserNestedInput
 }
 
 export type MemberUserCreateWithoutCoursePurchasesInput = {
@@ -771,6 +890,7 @@ export type MemberUserCreateWithoutCoursePurchasesInput = {
   applications?: Prisma.ApplicationCreateNestedManyWithoutMemberUserInput
   subscriptions?: Prisma.MembershipSubscriptionCreateNestedManyWithoutMemberUserInput
   sessions?: Prisma.MemberSessionCreateNestedManyWithoutMemberUserInput
+  eventRegistrations?: Prisma.EventRegistrationCreateNestedManyWithoutMemberUserInput
 }
 
 export type MemberUserUncheckedCreateWithoutCoursePurchasesInput = {
@@ -787,6 +907,7 @@ export type MemberUserUncheckedCreateWithoutCoursePurchasesInput = {
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutMemberUserInput
   subscriptions?: Prisma.MembershipSubscriptionUncheckedCreateNestedManyWithoutMemberUserInput
   sessions?: Prisma.MemberSessionUncheckedCreateNestedManyWithoutMemberUserInput
+  eventRegistrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutMemberUserInput
 }
 
 export type MemberUserCreateOrConnectWithoutCoursePurchasesInput = {
@@ -819,6 +940,7 @@ export type MemberUserUpdateWithoutCoursePurchasesInput = {
   applications?: Prisma.ApplicationUpdateManyWithoutMemberUserNestedInput
   subscriptions?: Prisma.MembershipSubscriptionUpdateManyWithoutMemberUserNestedInput
   sessions?: Prisma.MemberSessionUpdateManyWithoutMemberUserNestedInput
+  eventRegistrations?: Prisma.EventRegistrationUpdateManyWithoutMemberUserNestedInput
 }
 
 export type MemberUserUncheckedUpdateWithoutCoursePurchasesInput = {
@@ -835,6 +957,7 @@ export type MemberUserUncheckedUpdateWithoutCoursePurchasesInput = {
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutMemberUserNestedInput
   subscriptions?: Prisma.MembershipSubscriptionUncheckedUpdateManyWithoutMemberUserNestedInput
   sessions?: Prisma.MemberSessionUncheckedUpdateManyWithoutMemberUserNestedInput
+  eventRegistrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutMemberUserNestedInput
 }
 
 
@@ -847,6 +970,7 @@ export type MemberUserCountOutputType = {
   subscriptions: number
   sessions: number
   coursePurchases: number
+  eventRegistrations: number
 }
 
 export type MemberUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -854,6 +978,7 @@ export type MemberUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extens
   subscriptions?: boolean | MemberUserCountOutputTypeCountSubscriptionsArgs
   sessions?: boolean | MemberUserCountOutputTypeCountSessionsArgs
   coursePurchases?: boolean | MemberUserCountOutputTypeCountCoursePurchasesArgs
+  eventRegistrations?: boolean | MemberUserCountOutputTypeCountEventRegistrationsArgs
 }
 
 /**
@@ -894,6 +1019,13 @@ export type MemberUserCountOutputTypeCountCoursePurchasesArgs<ExtArgs extends ru
   where?: Prisma.CoursePurchaseWhereInput
 }
 
+/**
+ * MemberUserCountOutputType without action
+ */
+export type MemberUserCountOutputTypeCountEventRegistrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EventRegistrationWhereInput
+}
+
 
 export type MemberUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -910,6 +1042,7 @@ export type MemberUserSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   subscriptions?: boolean | Prisma.MemberUser$subscriptionsArgs<ExtArgs>
   sessions?: boolean | Prisma.MemberUser$sessionsArgs<ExtArgs>
   coursePurchases?: boolean | Prisma.MemberUser$coursePurchasesArgs<ExtArgs>
+  eventRegistrations?: boolean | Prisma.MemberUser$eventRegistrationsArgs<ExtArgs>
   _count?: boolean | Prisma.MemberUserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["memberUser"]>
 
@@ -958,6 +1091,7 @@ export type MemberUserInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   subscriptions?: boolean | Prisma.MemberUser$subscriptionsArgs<ExtArgs>
   sessions?: boolean | Prisma.MemberUser$sessionsArgs<ExtArgs>
   coursePurchases?: boolean | Prisma.MemberUser$coursePurchasesArgs<ExtArgs>
+  eventRegistrations?: boolean | Prisma.MemberUser$eventRegistrationsArgs<ExtArgs>
   _count?: boolean | Prisma.MemberUserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MemberUserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -970,6 +1104,7 @@ export type $MemberUserPayload<ExtArgs extends runtime.Types.Extensions.Internal
     subscriptions: Prisma.$MembershipSubscriptionPayload<ExtArgs>[]
     sessions: Prisma.$MemberSessionPayload<ExtArgs>[]
     coursePurchases: Prisma.$CoursePurchasePayload<ExtArgs>[]
+    eventRegistrations: Prisma.$EventRegistrationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1380,6 +1515,7 @@ export interface Prisma__MemberUserClient<T, Null = never, ExtArgs extends runti
   subscriptions<T extends Prisma.MemberUser$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberUser$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MembershipSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.MemberUser$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberUser$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   coursePurchases<T extends Prisma.MemberUser$coursePurchasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberUser$coursePurchasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoursePurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  eventRegistrations<T extends Prisma.MemberUser$eventRegistrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberUser$eventRegistrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1905,6 +2041,30 @@ export type MemberUser$coursePurchasesArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.CoursePurchaseScalarFieldEnum | Prisma.CoursePurchaseScalarFieldEnum[]
+}
+
+/**
+ * MemberUser.eventRegistrations
+ */
+export type MemberUser$eventRegistrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EventRegistration
+   */
+  select?: Prisma.EventRegistrationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EventRegistration
+   */
+  omit?: Prisma.EventRegistrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EventRegistrationInclude<ExtArgs> | null
+  where?: Prisma.EventRegistrationWhereInput
+  orderBy?: Prisma.EventRegistrationOrderByWithRelationInput | Prisma.EventRegistrationOrderByWithRelationInput[]
+  cursor?: Prisma.EventRegistrationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EventRegistrationScalarFieldEnum | Prisma.EventRegistrationScalarFieldEnum[]
 }
 
 /**

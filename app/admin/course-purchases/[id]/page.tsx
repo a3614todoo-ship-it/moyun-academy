@@ -45,7 +45,7 @@ export default async function AdminCoursePurchaseDetailPage({ params, searchPara
   ];
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div>
           <Link className="admin-breadcrumb" href="/admin/course-purchases">

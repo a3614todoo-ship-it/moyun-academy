@@ -26,7 +26,7 @@ export default async function AdminMembershipPlansPage({ searchParams }: Props) 
   ]);
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div>
           <span>單一年度會員制</span>

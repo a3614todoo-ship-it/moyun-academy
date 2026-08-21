@@ -30,7 +30,7 @@ export default async function NewCoursePage({ searchParams }: Props) {
   const [session, params] = await Promise.all([requireAdmin(), searchParams]);
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div>
           <Link className="admin-breadcrumb" href="/admin/courses">

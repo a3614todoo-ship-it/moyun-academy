@@ -27,7 +27,7 @@ export default async function AdminSettingsPage({ searchParams }: Props) {
   ]);
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div>
           <span>通知與社群連結</span>

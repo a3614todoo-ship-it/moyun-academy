@@ -42,7 +42,7 @@ export default async function AdminEmailsPage({ searchParams }: Props) {
   const countMap = new Map(counts.map((item) => [item.status, item._count._all]));
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div><span>通知、排程與寄送狀態</span><h1>Email 寄送總覽</h1></div>
       </div>

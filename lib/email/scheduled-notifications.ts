@@ -4,11 +4,13 @@ import {
   CoursePurchaseStatus,
   EmailStatus,
   EmailType,
+  EventRegistrationStatus,
   MembershipSubscriptionStatus,
   MemberUserStatus,
 } from "@/generated/prisma/enums";
 import { sendEmailLogs } from "@/lib/email/mailer";
 import { prisma } from "@/lib/prisma";
+import { promoteNextWaitlist } from "@/lib/events/waitlist";
 import { shiftUtcDays, taipeiDayRange } from "@/lib/taipei-time";
 
 const EXPIRY_REMINDER_DAYS = [30, 14, 7] as const;
@@ -19,6 +21,7 @@ type Recipient = {
   email: string;
   applicationId?: string;
   coursePurchaseId?: string;
+  eventRegistrationId?: string;
 };
 
 type QueueInput = {
@@ -122,6 +125,7 @@ async function queueScheduledEmail(input: QueueInput) {
     create: {
       applicationId: input.recipient.applicationId,
       coursePurchaseId: input.recipient.coursePurchaseId,
+      eventRegistrationId: input.recipient.eventRegistrationId,
       type: input.type,
       recipient: input.recipient.email,
       subject: input.subject,
@@ -178,7 +182,51 @@ export async function runScheduledNotifications(now = new Date()) {
     liveReminder: 0,
     replayOpened: 0,
     replayClosing: 0,
+    eventReminder: 0,
+    waitlistExpired: 0,
   };
+
+  const expiredOffers = await prisma.eventRegistration.findMany({
+    where: { status: EventRegistrationStatus.WAITLIST_OFFERED, offerExpiresAt: { lt: now } },
+    select: { id: true, eventId: true },
+  });
+  for (const offer of expiredOffers) {
+    const promotedEmailId = await prisma.$transaction(async (transaction) => {
+      const expired = await transaction.eventRegistration.updateMany({
+        where: { id: offer.id, status: EventRegistrationStatus.WAITLIST_OFFERED, offerExpiresAt: { lt: now } },
+        data: { status: EventRegistrationStatus.CANCELLED, cancelledAt: now, note: "候補付款期限屆滿，系統自動釋出名額。" },
+      });
+      if (expired.count !== 1) return null;
+      return promoteNextWaitlist(transaction, offer.eventId);
+    });
+    if (promotedEmailId) pendingIds.push(promotedEmailId);
+    queued.waitlistExpired += 1;
+  }
+
+  const tomorrowEvents = await prisma.inPersonEvent.findMany({
+    where: { status: "PUBLISHED", startsAt: { gte: ranges.tomorrow.start, lt: ranges.tomorrow.end } },
+    select: {
+      id: true,
+      title: true,
+      registrations: {
+        where: { status: EventRegistrationStatus.CONFIRMED },
+        select: { id: true, name: true, email: true },
+      },
+    },
+  });
+  for (const event of tomorrowEvents) {
+    for (const registration of event.registrations) {
+      const log = await queueScheduledEmail({
+        dedupeKey: `event-reminder:${event.id}:${registration.id}`,
+        type: EmailType.EVENT_REMINDER,
+        recipient: { key: `event-registration:${registration.id}`, name: registration.name, email: registration.email, eventRegistrationId: registration.id },
+        subject: `明日活動提醒：${event.title}`,
+        metadata: {},
+      });
+      if (log.status === EmailStatus.PENDING) pendingIds.push(log.id);
+      queued.eventReminder += 1;
+    }
+  }
 
   for (const daysRemaining of EXPIRY_REMINDER_DAYS) {
     const start = shiftUtcDays(ranges.today.start, daysRemaining);

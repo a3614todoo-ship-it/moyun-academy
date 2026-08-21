@@ -899,14 +899,6 @@ export type CourseLessonUpdateOneWithoutLiveSessionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CourseLessonUpdateToOneWithWhereWithoutLiveSessionInput, Prisma.CourseLessonUpdateWithoutLiveSessionInput>, Prisma.CourseLessonUncheckedUpdateWithoutLiveSessionInput>
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EnumReplayProductionStatusFieldUpdateOperationsInput = {
   set?: $Enums.ReplayProductionStatus
 }

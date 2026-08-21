@@ -38,7 +38,7 @@ export default async function AdminApplicationDetailPage({ params, searchParams 
   ];
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div><Link className="admin-breadcrumb" href="/admin/applications">← 返回報名名單</Link><h1>{application.name}</h1><span>{application.applicationNo}</span></div>
         <span className={statusClass(application.status)}>{applicationStatusLabels[application.status]}</span>

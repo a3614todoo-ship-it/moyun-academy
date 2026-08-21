@@ -1,0 +1,6 @@
+import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { verifyPublicReferenceSignature } from "@/lib/security/public-reference";
+
+export const dynamic = "force-dynamic";
+export default async function EventPaymentReportSuccessPage({ searchParams }: { searchParams: Promise<{ registration_no?: string; sig?: string }> }) { const q = await searchParams; const no = q.registration_no?.trim().toUpperCase(); const valid = Boolean(no && verifyPublicReferenceSignature("event", no, q.sig)); const item = valid && no ? await prisma.eventRegistration.findUnique({ where: { registrationNo: no }, include: { event: { select: { title: true, slug: true } } } }) : null; if (!item) return <main className="result-page"><section className="container result-card"><h1>找不到匯款回報資料</h1><Link className="button button-forest" href="/events">返回活動列表</Link></section></main>; return <main className="result-page"><section className="container result-card success-card"><span className="result-mark">✓</span><h1>已收到活動匯款資料</h1><p>管理員核對通過後，會寄出電子票券。</p><div className="application-number"><small>活動報名編號</small><strong>{item.registrationNo}</strong></div><Link className="button button-outline" href={`/events/${item.event.slug}`}>返回活動頁</Link></section></main>; }

@@ -39,7 +39,7 @@ export default async function AdminSecurityPage() {
   ]);
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div><span>帳號保護</span><h1>安全設定與稽核</h1></div>
       </div>

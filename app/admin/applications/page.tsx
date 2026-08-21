@@ -37,7 +37,7 @@ export default async function AdminApplicationsPage({ searchParams }: Props) {
   });
 
   return (
-    <AdminShell adminName={session.adminUser.name}>
+    <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div><span>會員與付款流程</span><h1>報名名單</h1></div>
         <a className="admin-primary-link" href={`/admin/applications/export?q=${encodeURIComponent(q)}&status=${status || ""}`}>匯出 CSV</a>
