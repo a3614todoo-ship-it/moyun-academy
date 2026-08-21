@@ -1116,7 +1116,7 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
 .admin-nav-overview:hover,.admin-nav-overview:focus-visible,.admin-nav-group-links a:hover,.admin-nav-group-links a:focus-visible { color: white; outline: none; background: #20483e; }
 .admin-nav-overview[aria-current="page"],.admin-nav-group-links a[aria-current="page"] { color: white; background: #20483e; box-shadow: inset 3px 0 #b89048; font-weight: 800; }
 .admin-nav-group { border-top: 1px solid rgba(197,210,205,.1); padding-top: 7px; }
-.admin-nav-group summary { position: relative; display: flex; min-height: 38px; padding: 8px 30px 8px 12px; align-items: center; color: #93aaa2; cursor: pointer; font-size: 12px; font-weight: 800; letter-spacing: .08em; list-style: none; }
+.admin-nav-group summary { position: relative; display: flex; min-height: 38px; padding: 8px 30px 8px 12px; align-items: center; color: #93aaa2; cursor: pointer; font-size: 14px; font-weight: 800; letter-spacing: .08em; list-style: none; }
 .admin-nav-group summary::-webkit-details-marker { display: none; }.admin-nav-group summary::after { position: absolute; right: 12px; content: "⌄"; color: #b89048; font-size: 15px; transition: transform .16s ease; }.admin-nav-group[open] summary::after { transform: rotate(180deg); }
 .admin-nav-group summary:hover,.admin-nav-group summary:focus-visible,.admin-nav-group summary.is-active { color: #f4f7f5; outline: none; }
 .admin-nav-group-links { display: grid; gap: 3px; padding: 1px 0 5px 8px; }
