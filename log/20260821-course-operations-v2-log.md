@@ -36,5 +36,5 @@
 - `npm test`：5/5 通過；Prisma validate/generate 通過；Next.js production build 通過。
 - 瀏覽器驗證：首頁與課程總覽有內容、無錯誤覆蓋；未登入後台會導向管理員登入；無權限教材下載回傳 404。
 - npm audit 初次發現 Next.js 舊版漏洞，已升級 Next.js 16.3.1 並以相容 override 修補間接依賴；最終 audit 為 0 vulnerabilities。
-- Vercel Production／Preview 已新增 Supabase 公開 URL、publishable key 與 bucket 名稱；尚需以 Sensitive 變數設定 server-only `SUPABASE_SECRET_KEY`。
+- Vercel Production／Preview 已新增 Supabase 公開 URL、publishable key、bucket 名稱及 server-only `SUPABASE_SECRET_KEY`；CLI 僅確認變數存在且為 Hidden／Sensitive，未讀取或輸出金鑰內容。
 - 已建立完成後備份 `backups/20260821-course-operations-v2-after/`，同樣未包含任何 `.env` 或 Secret。

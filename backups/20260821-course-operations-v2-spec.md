@@ -141,4 +141,4 @@
 - 已完成跨課程 Q&A 篩選、回覆、置頂、隱藏、恢復與管理稽核。
 - 已套用正式資料庫 migration；Supabase 安全 advisor 無警告。
 - 已新增核心單元測試並通過 production build。
-- Vercel 已設定 Supabase URL、publishable key 與 bucket 名稱；伺服器端 `SUPABASE_SECRET_KEY` 必須由管理者在 Supabase 建立後以 Vercel Sensitive 環境變數設定，不能寫入規格、log 或 Git。
+- Vercel 已設定 Supabase URL、publishable key、bucket 名稱與 server-only `SUPABASE_SECRET_KEY`；Secret 由管理者直接存入 Vercel Sensitive 環境變數，內容未寫入規格、log 或 Git。
