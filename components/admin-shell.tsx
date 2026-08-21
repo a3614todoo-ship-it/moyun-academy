@@ -15,6 +15,7 @@ const navItems = [
   { href: "/admin/membership-plans", label: "會員方案" },
   { href: "/admin/applications", label: "會員申請" },
   { href: "/admin/applications?status=PAYMENT_REPORTED", label: "會員匯款審核" },
+  { href: "/admin/emails", label: "Email 寄送" },
   { href: "/admin/settings", label: "系統設定" },
   { href: "/admin/security", label: "安全設定" },
 ];

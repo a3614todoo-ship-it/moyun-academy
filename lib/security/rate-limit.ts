@@ -1,6 +1,7 @@
 import { createHmac, randomInt } from "node:crypto";
 import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
+import { trustedRequestAddress } from "@/lib/security/request-origin";
 
 type RateLimitOptions = {
   scope: string;
@@ -25,8 +26,7 @@ function rateLimitSecret() {
 
 async function requestAddress() {
   const requestHeaders = await headers();
-  const forwarded = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return (forwarded || requestHeaders.get("x-real-ip") || "unknown").slice(0, 100);
+  return trustedRequestAddress(requestHeaders);
 }
 
 function bucketId(scope: string, windowStartedAt: number, identifiers: string[]) {

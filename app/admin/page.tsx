@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { AdminShell } from "@/components/admin-shell";
-import { ApplicationStatus, CoursePurchaseStatus } from "@/generated/prisma/enums";
+import { ApplicationStatus, CoursePurchaseStatus, EmailStatus } from "@/generated/prisma/enums";
 import {
   applicationStatusLabels,
   coursePurchaseStatusLabels,
@@ -21,6 +21,7 @@ export default async function AdminDashboardPage() {
     totalPurchases,
     coursePaymentReported,
     approvedPurchases,
+    failedEmails,
     recentApplications,
     recentPurchases,
   ] = await Promise.all([
@@ -30,6 +31,7 @@ export default async function AdminDashboardPage() {
     prisma.coursePurchase.count(),
     prisma.coursePurchase.count({ where: { status: CoursePurchaseStatus.PAYMENT_REPORTED } }),
     prisma.coursePurchase.count({ where: { status: CoursePurchaseStatus.APPROVED } }),
+    prisma.emailLog.count({ where: { status: EmailStatus.FAILED } }),
     prisma.application.findMany({
       orderBy: { createdAt: "desc" },
       take: 5,
@@ -49,6 +51,7 @@ export default async function AdminDashboardPage() {
     ["課程購買總數", totalPurchases],
     ["課程匯款待審", coursePaymentReported],
     ["課程已開通", approvedPurchases],
+    ["Email 寄送失敗", failedEmails],
   ] as const;
 
   return (

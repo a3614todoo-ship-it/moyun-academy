@@ -90,6 +90,8 @@ model EmailLog {
   type             EmailType
   recipient        String
   subject          String
+  dedupeKey        String?         @unique
+  metadata         Json?
   status           EmailStatus     @default(PENDING)
   providerId       String?
   errorMessage     String?
@@ -460,6 +462,10 @@ enum EmailType {
   COURSE_PAYMENT_REPORTED_USER
   COURSE_PAYMENT_REPORTED_ADMIN
   COURSE_PURCHASE_APPROVED
+  MEMBERSHIP_EXPIRING
+  MEMBER_PRIORITY_OPEN
+  LIVE_REMINDER
+  REPLAY_CLOSING
 }
 
 enum CourseAccessType {
@@ -507,6 +513,7 @@ enum LiveQuestionStatus {
 
 enum EmailStatus {
   PENDING
+  PROCESSING
   SENT
   FAILED
 }

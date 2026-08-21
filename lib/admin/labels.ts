@@ -32,10 +32,15 @@ export const emailTypeLabels: Record<EmailType, string> = {
   COURSE_PAYMENT_REPORTED_USER: "課程匯款回報通知",
   COURSE_PAYMENT_REPORTED_ADMIN: "課程匯款待審核",
   COURSE_PURCHASE_APPROVED: "課程購買審核通過",
+  MEMBERSHIP_EXPIRING: "會員資格到期提醒",
+  MEMBER_PRIORITY_OPEN: "會員優先報名通知",
+  LIVE_REMINDER: "直播前提醒",
+  REPLAY_CLOSING: "回看截止提醒",
 };
 
 export const emailStatusLabels: Record<EmailStatus, string> = {
   PENDING: "待寄送",
+  PROCESSING: "寄送中",
   SENT: "已寄送",
   FAILED: "寄送失敗",
 };

@@ -20,6 +20,7 @@ const auditLabels: Record<string, string> = {
   ADMIN_LOGIN_SUCCEEDED: "管理員登入成功",
   ADMIN_RECOVERY_CODES_REGENERATED: "救援碼已重新產生",
   ADMIN_RECOVERY_CODES_REGENERATION_RATE_LIMITED: "救援碼重建已限速",
+  EMAIL_DELIVERY_RETRIED: "Email 已由管理員重新寄送",
 };
 
 export default async function AdminSecurityPage() {
@@ -44,7 +45,7 @@ export default async function AdminSecurityPage() {
       </div>
       <AdminRecoveryCodeManager remainingCount={remainingCount} />
       <section className="admin-panel">
-        <div className="admin-panel-heading"><h2>最近 50 筆登入安全紀錄</h2></div>
+        <div className="admin-panel-heading"><h2>最近 50 筆安全與營運紀錄</h2></div>
         {auditLogs.length ? (
           <div className="admin-table-wrap">
             <table className="admin-table">
@@ -59,7 +60,7 @@ export default async function AdminSecurityPage() {
               </tbody>
             </table>
           </div>
-        ) : <p className="admin-empty">目前沒有登入安全紀錄。</p>}
+        ) : <p className="admin-empty">目前沒有安全與營運紀錄。</p>}
       </section>
     </AdminShell>
   );

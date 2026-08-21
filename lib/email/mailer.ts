@@ -42,7 +42,24 @@ export async function sendAdminLoginCode(recipient: string, code: string) {
 }
 
 export async function sendEmailLog(emailLogId: string) {
-  const config = getEmailConfig();
+  const claimed = await prisma.emailLog.updateMany({
+    where: { id: emailLogId, status: EmailStatus.PENDING },
+    data: { status: EmailStatus.PROCESSING, errorMessage: null },
+  });
+
+  if (!claimed.count) {
+    const existing = await prisma.emailLog.findUnique({
+      where: { id: emailLogId },
+      select: { status: true, providerId: true },
+    });
+    if (!existing) throw new Error(`找不到 EmailLog：${emailLogId}`);
+    return {
+      success: existing.status === EmailStatus.SENT,
+      skipped: true as const,
+      messageId: existing.providerId || undefined,
+    };
+  }
+
   const emailLog = await prisma.emailLog.findUnique({
     where: { id: emailLogId },
     include: {
@@ -86,31 +103,33 @@ export async function sendEmailLog(emailLogId: string) {
     throw new Error(`找不到 EmailLog：${emailLogId}`);
   }
 
-  if (!emailLog.application && !emailLog.coursePurchase) {
-    throw new Error(`EmailLog ${emailLogId} 缺少關聯資料。`);
-  }
-
-  const facebookGroupUrl = emailLog.application ? await getFacebookGroupUrl() : "";
-  const memberSetPasswordUrl =
-    emailLog.type === "APPLICATION_APPROVED" && emailLog.application?.memberUser && !emailLog.application.memberUser.passwordSetAt
-      ? `${config.siteUrl}/set-password?token=${encodeURIComponent(
-          buildSetPasswordToken(emailLog.application.memberUser.id, emailLog.application.memberUser.passwordSetAt),
-        )}`
-      : emailLog.type === "COURSE_PURCHASE_APPROVED" && emailLog.coursePurchase?.memberUser && !emailLog.coursePurchase.memberUser.passwordSetAt
-        ? `${config.siteUrl}/set-password?token=${encodeURIComponent(
-            buildSetPasswordToken(emailLog.coursePurchase.memberUser.id, emailLog.coursePurchase.memberUser.passwordSetAt),
-          )}`
-      : "";
-  const template = buildEmailTemplate({
-    type: emailLog.type,
-    application: emailLog.application,
-    coursePurchase: emailLog.coursePurchase,
-    siteUrl: config.siteUrl,
-    facebookGroupUrl,
-    memberSetPasswordUrl,
-  });
-
   try {
+    const config = getEmailConfig();
+    if (!emailLog.application && !emailLog.coursePurchase) {
+      throw new Error(`EmailLog ${emailLogId} 缺少關聯資料。`);
+    }
+
+    const facebookGroupUrl = emailLog.application ? await getFacebookGroupUrl() : "";
+    const memberSetPasswordUrl =
+      emailLog.type === "APPLICATION_APPROVED" && emailLog.application?.memberUser && !emailLog.application.memberUser.passwordSetAt
+        ? `${config.siteUrl}/set-password?token=${encodeURIComponent(
+            buildSetPasswordToken(emailLog.application.memberUser.id, emailLog.application.memberUser.passwordSetAt),
+          )}`
+        : emailLog.type === "COURSE_PURCHASE_APPROVED" && emailLog.coursePurchase?.memberUser && !emailLog.coursePurchase.memberUser.passwordSetAt
+          ? `${config.siteUrl}/set-password?token=${encodeURIComponent(
+              buildSetPasswordToken(emailLog.coursePurchase.memberUser.id, emailLog.coursePurchase.memberUser.passwordSetAt),
+            )}`
+          : "";
+    const template = buildEmailTemplate({
+      type: emailLog.type,
+      application: emailLog.application,
+      coursePurchase: emailLog.coursePurchase,
+      metadata: emailLog.metadata,
+      siteUrl: config.siteUrl,
+      facebookGroupUrl,
+      memberSetPasswordUrl,
+    });
+
     const result = await getTransporter().sendMail({
       from: config.from,
       to: emailLog.recipient,

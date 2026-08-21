@@ -1128,6 +1128,9 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
 .admin-status { display: inline-flex; padding: 4px 9px; border-radius: 999px; font-size: 11px; font-weight: 800; }
 .status-pending-payment { color: #866016; background: #fff4d8; }.status-payment-reported { color: #1a5d77; background: #e5f5fb; }.status-approved { color: #28734f; background: #e5f5eb; }.status-joined-facebook-group { color: #315e9c; background: #e8effa; }.status-rejected,.status-cancelled { color: #91443b; background: #faeae8; }
 .admin-filters { display: grid; grid-template-columns: minmax(280px, 1fr) 220px auto auto; gap: 10px; margin-bottom: 20px; }.admin-filters input,.admin-filters select { min-height: 43px; padding: 8px 11px; border: 1px solid #ccd6d1; background: white; }.admin-filters button { border: 0; padding: 0 16px; color: white; background: var(--forest); cursor: pointer; }.admin-filters a { align-self: center; color: #68756f; font-size: 13px; }
+.admin-email-filters { grid-template-columns: minmax(240px, 1fr) 170px 220px auto auto; }
+.status-pending { color: #866016; background: #fff4d8; }.status-processing { color: #315e9c; background: #e8effa; }.status-sent { color: #28734f; background: #e5f5eb; }.status-failed { color: #91443b; background: #faeae8; }
+.admin-table-button { min-height: 32px; border: 0; border-radius: 3px; padding: 0 10px; color: white; background: #315c51; cursor: pointer; font-weight: 700; }
 .admin-success-message { margin-bottom: 20px; padding: 13px 16px; color: #236143; background: #e5f4ea; }
 .admin-detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) 310px; gap: 22px; align-items: start; }.admin-info-panel { padding-bottom: 10px; }
 .admin-detail-list { display: grid; grid-template-columns: repeat(2, 1fr); margin: 0; }.admin-detail-list div { padding: 14px 20px; border-bottom: 1px solid #edf0ee; }.admin-detail-list dt { color: #7a8580; font-size: 12px; }.admin-detail-list dd { margin: 4px 0 0; overflow-wrap: anywhere; color: #253b34; font-weight: 700; }.admin-detail-list a { color: #176455; }
@@ -1362,7 +1365,7 @@ blockquote { margin: 24px 0 0; padding: 18px 24px; border-left: 3px solid var(--
   .payment-summary dl div { grid-template-columns: 1fr; gap: 2px; }
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }
   .admin-page { padding: 18px 12px; }.admin-topbar { padding-inline: 14px; }.admin-page-heading { align-items: flex-start; flex-direction: column; }
-  .admin-kpi-grid,.admin-detail-list { grid-template-columns: 1fr; }.admin-filters { grid-template-columns: 1fr; }.admin-sidebar nav { grid-template-columns: 1fr; }
+  .admin-kpi-grid,.admin-detail-list { grid-template-columns: 1fr; }.admin-filters,.admin-email-filters { grid-template-columns: 1fr; }.admin-sidebar nav { grid-template-columns: 1fr; }
   .admin-login-card { padding: 30px 22px; }
 }
 

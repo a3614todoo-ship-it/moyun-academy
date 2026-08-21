@@ -31,6 +31,7 @@ export type EmailLogMinAggregateOutputType = {
   type: $Enums.EmailType | null
   recipient: string | null
   subject: string | null
+  dedupeKey: string | null
   status: $Enums.EmailStatus | null
   providerId: string | null
   errorMessage: string | null
@@ -46,6 +47,7 @@ export type EmailLogMaxAggregateOutputType = {
   type: $Enums.EmailType | null
   recipient: string | null
   subject: string | null
+  dedupeKey: string | null
   status: $Enums.EmailStatus | null
   providerId: string | null
   errorMessage: string | null
@@ -61,6 +63,8 @@ export type EmailLogCountAggregateOutputType = {
   type: number
   recipient: number
   subject: number
+  dedupeKey: number
+  metadata: number
   status: number
   providerId: number
   errorMessage: number
@@ -78,6 +82,7 @@ export type EmailLogMinAggregateInputType = {
   type?: true
   recipient?: true
   subject?: true
+  dedupeKey?: true
   status?: true
   providerId?: true
   errorMessage?: true
@@ -93,6 +98,7 @@ export type EmailLogMaxAggregateInputType = {
   type?: true
   recipient?: true
   subject?: true
+  dedupeKey?: true
   status?: true
   providerId?: true
   errorMessage?: true
@@ -108,6 +114,8 @@ export type EmailLogCountAggregateInputType = {
   type?: true
   recipient?: true
   subject?: true
+  dedupeKey?: true
+  metadata?: true
   status?: true
   providerId?: true
   errorMessage?: true
@@ -196,6 +204,8 @@ export type EmailLogGroupByOutputType = {
   type: $Enums.EmailType
   recipient: string
   subject: string
+  dedupeKey: string | null
+  metadata: runtime.JsonValue | null
   status: $Enums.EmailStatus
   providerId: string | null
   errorMessage: string | null
@@ -232,6 +242,8 @@ export type EmailLogWhereInput = {
   type?: Prisma.EnumEmailTypeFilter<"EmailLog"> | $Enums.EmailType
   recipient?: Prisma.StringFilter<"EmailLog"> | string
   subject?: Prisma.StringFilter<"EmailLog"> | string
+  dedupeKey?: Prisma.StringNullableFilter<"EmailLog"> | string | null
+  metadata?: Prisma.JsonNullableFilter<"EmailLog">
   status?: Prisma.EnumEmailStatusFilter<"EmailLog"> | $Enums.EmailStatus
   providerId?: Prisma.StringNullableFilter<"EmailLog"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"EmailLog"> | string | null
@@ -249,6 +261,8 @@ export type EmailLogOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
   subject?: Prisma.SortOrder
+  dedupeKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   providerId?: Prisma.SortOrderInput | Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -261,6 +275,7 @@ export type EmailLogOrderByWithRelationInput = {
 
 export type EmailLogWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  dedupeKey?: string
   AND?: Prisma.EmailLogWhereInput | Prisma.EmailLogWhereInput[]
   OR?: Prisma.EmailLogWhereInput[]
   NOT?: Prisma.EmailLogWhereInput | Prisma.EmailLogWhereInput[]
@@ -269,6 +284,7 @@ export type EmailLogWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumEmailTypeFilter<"EmailLog"> | $Enums.EmailType
   recipient?: Prisma.StringFilter<"EmailLog"> | string
   subject?: Prisma.StringFilter<"EmailLog"> | string
+  metadata?: Prisma.JsonNullableFilter<"EmailLog">
   status?: Prisma.EnumEmailStatusFilter<"EmailLog"> | $Enums.EmailStatus
   providerId?: Prisma.StringNullableFilter<"EmailLog"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"EmailLog"> | string | null
@@ -277,7 +293,7 @@ export type EmailLogWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"EmailLog"> | Date | string
   application?: Prisma.XOR<Prisma.ApplicationNullableScalarRelationFilter, Prisma.ApplicationWhereInput> | null
   coursePurchase?: Prisma.XOR<Prisma.CoursePurchaseNullableScalarRelationFilter, Prisma.CoursePurchaseWhereInput> | null
-}, "id">
+}, "id" | "dedupeKey">
 
 export type EmailLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -286,6 +302,8 @@ export type EmailLogOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
   subject?: Prisma.SortOrder
+  dedupeKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   providerId?: Prisma.SortOrderInput | Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -307,6 +325,8 @@ export type EmailLogScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumEmailTypeWithAggregatesFilter<"EmailLog"> | $Enums.EmailType
   recipient?: Prisma.StringWithAggregatesFilter<"EmailLog"> | string
   subject?: Prisma.StringWithAggregatesFilter<"EmailLog"> | string
+  dedupeKey?: Prisma.StringNullableWithAggregatesFilter<"EmailLog"> | string | null
+  metadata?: Prisma.JsonNullableWithAggregatesFilter<"EmailLog">
   status?: Prisma.EnumEmailStatusWithAggregatesFilter<"EmailLog"> | $Enums.EmailStatus
   providerId?: Prisma.StringNullableWithAggregatesFilter<"EmailLog"> | string | null
   errorMessage?: Prisma.StringNullableWithAggregatesFilter<"EmailLog"> | string | null
@@ -320,6 +340,8 @@ export type EmailLogCreateInput = {
   type: $Enums.EmailType
   recipient: string
   subject: string
+  dedupeKey?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.EmailStatus
   providerId?: string | null
   errorMessage?: string | null
@@ -337,6 +359,8 @@ export type EmailLogUncheckedCreateInput = {
   type: $Enums.EmailType
   recipient: string
   subject: string
+  dedupeKey?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.EmailStatus
   providerId?: string | null
   errorMessage?: string | null
@@ -350,6 +374,8 @@ export type EmailLogUpdateInput = {
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  dedupeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
   providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -367,6 +393,8 @@ export type EmailLogUncheckedUpdateInput = {
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  dedupeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
   providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -382,6 +410,8 @@ export type EmailLogCreateManyInput = {
   type: $Enums.EmailType
   recipient: string
   subject: string
+  dedupeKey?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.EmailStatus
   providerId?: string | null
   errorMessage?: string | null
@@ -395,6 +425,8 @@ export type EmailLogUpdateManyMutationInput = {
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  dedupeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
   providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -410,6 +442,8 @@ export type EmailLogUncheckedUpdateManyInput = {
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  dedupeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
   providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -435,6 +469,8 @@ export type EmailLogCountOrderByAggregateInput = {
   type?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
   subject?: Prisma.SortOrder
+  dedupeKey?: Prisma.SortOrder
+  metadata?: Prisma.SortOrder
   status?: Prisma.SortOrder
   providerId?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
@@ -450,6 +486,7 @@ export type EmailLogMaxOrderByAggregateInput = {
   type?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
   subject?: Prisma.SortOrder
+  dedupeKey?: Prisma.SortOrder
   status?: Prisma.SortOrder
   providerId?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
@@ -465,6 +502,7 @@ export type EmailLogMinOrderByAggregateInput = {
   type?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
   subject?: Prisma.SortOrder
+  dedupeKey?: Prisma.SortOrder
   status?: Prisma.SortOrder
   providerId?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
@@ -570,6 +608,8 @@ export type EmailLogCreateWithoutApplicationInput = {
   type: $Enums.EmailType
   recipient: string
   subject: string
+  dedupeKey?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.EmailStatus
   providerId?: string | null
   errorMessage?: string | null
@@ -585,6 +625,8 @@ export type EmailLogUncheckedCreateWithoutApplicationInput = {
   type: $Enums.EmailType
   recipient: string
   subject: string
+  dedupeKey?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.EmailStatus
   providerId?: string | null
   errorMessage?: string | null
@@ -629,6 +671,8 @@ export type EmailLogScalarWhereInput = {
   type?: Prisma.EnumEmailTypeFilter<"EmailLog"> | $Enums.EmailType
   recipient?: Prisma.StringFilter<"EmailLog"> | string
   subject?: Prisma.StringFilter<"EmailLog"> | string
+  dedupeKey?: Prisma.StringNullableFilter<"EmailLog"> | string | null
+  metadata?: Prisma.JsonNullableFilter<"EmailLog">
   status?: Prisma.EnumEmailStatusFilter<"EmailLog"> | $Enums.EmailStatus
   providerId?: Prisma.StringNullableFilter<"EmailLog"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"EmailLog"> | string | null
@@ -642,6 +686,8 @@ export type EmailLogCreateWithoutCoursePurchaseInput = {
   type: $Enums.EmailType
   recipient: string
   subject: string
+  dedupeKey?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.EmailStatus
   providerId?: string | null
   errorMessage?: string | null
@@ -657,6 +703,8 @@ export type EmailLogUncheckedCreateWithoutCoursePurchaseInput = {
   type: $Enums.EmailType
   recipient: string
   subject: string
+  dedupeKey?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.EmailStatus
   providerId?: string | null
   errorMessage?: string | null
@@ -697,6 +745,8 @@ export type EmailLogCreateManyApplicationInput = {
   type: $Enums.EmailType
   recipient: string
   subject: string
+  dedupeKey?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.EmailStatus
   providerId?: string | null
   errorMessage?: string | null
@@ -710,6 +760,8 @@ export type EmailLogUpdateWithoutApplicationInput = {
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  dedupeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
   providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -725,6 +777,8 @@ export type EmailLogUncheckedUpdateWithoutApplicationInput = {
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  dedupeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
   providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -739,6 +793,8 @@ export type EmailLogUncheckedUpdateManyWithoutApplicationInput = {
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  dedupeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
   providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -753,6 +809,8 @@ export type EmailLogCreateManyCoursePurchaseInput = {
   type: $Enums.EmailType
   recipient: string
   subject: string
+  dedupeKey?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.EmailStatus
   providerId?: string | null
   errorMessage?: string | null
@@ -766,6 +824,8 @@ export type EmailLogUpdateWithoutCoursePurchaseInput = {
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  dedupeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
   providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -781,6 +841,8 @@ export type EmailLogUncheckedUpdateWithoutCoursePurchaseInput = {
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  dedupeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
   providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -795,6 +857,8 @@ export type EmailLogUncheckedUpdateManyWithoutCoursePurchaseInput = {
   type?: Prisma.EnumEmailTypeFieldUpdateOperationsInput | $Enums.EmailType
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  dedupeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumEmailStatusFieldUpdateOperationsInput | $Enums.EmailStatus
   providerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -812,6 +876,8 @@ export type EmailLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   type?: boolean
   recipient?: boolean
   subject?: boolean
+  dedupeKey?: boolean
+  metadata?: boolean
   status?: boolean
   providerId?: boolean
   errorMessage?: boolean
@@ -829,6 +895,8 @@ export type EmailLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   type?: boolean
   recipient?: boolean
   subject?: boolean
+  dedupeKey?: boolean
+  metadata?: boolean
   status?: boolean
   providerId?: boolean
   errorMessage?: boolean
@@ -846,6 +914,8 @@ export type EmailLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   type?: boolean
   recipient?: boolean
   subject?: boolean
+  dedupeKey?: boolean
+  metadata?: boolean
   status?: boolean
   providerId?: boolean
   errorMessage?: boolean
@@ -863,6 +933,8 @@ export type EmailLogSelectScalar = {
   type?: boolean
   recipient?: boolean
   subject?: boolean
+  dedupeKey?: boolean
+  metadata?: boolean
   status?: boolean
   providerId?: boolean
   errorMessage?: boolean
@@ -871,7 +943,7 @@ export type EmailLogSelectScalar = {
   updatedAt?: boolean
 }
 
-export type EmailLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationId" | "coursePurchaseId" | "type" | "recipient" | "subject" | "status" | "providerId" | "errorMessage" | "sentAt" | "createdAt" | "updatedAt", ExtArgs["result"]["emailLog"]>
+export type EmailLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationId" | "coursePurchaseId" | "type" | "recipient" | "subject" | "dedupeKey" | "metadata" | "status" | "providerId" | "errorMessage" | "sentAt" | "createdAt" | "updatedAt", ExtArgs["result"]["emailLog"]>
 export type EmailLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   application?: boolean | Prisma.EmailLog$applicationArgs<ExtArgs>
   coursePurchase?: boolean | Prisma.EmailLog$coursePurchaseArgs<ExtArgs>
@@ -898,6 +970,8 @@ export type $EmailLogPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     type: $Enums.EmailType
     recipient: string
     subject: string
+    dedupeKey: string | null
+    metadata: runtime.JsonValue | null
     status: $Enums.EmailStatus
     providerId: string | null
     errorMessage: string | null
@@ -1335,6 +1409,8 @@ export interface EmailLogFieldRefs {
   readonly type: Prisma.FieldRef<"EmailLog", 'EmailType'>
   readonly recipient: Prisma.FieldRef<"EmailLog", 'String'>
   readonly subject: Prisma.FieldRef<"EmailLog", 'String'>
+  readonly dedupeKey: Prisma.FieldRef<"EmailLog", 'String'>
+  readonly metadata: Prisma.FieldRef<"EmailLog", 'Json'>
   readonly status: Prisma.FieldRef<"EmailLog", 'EmailStatus'>
   readonly providerId: Prisma.FieldRef<"EmailLog", 'String'>
   readonly errorMessage: Prisma.FieldRef<"EmailLog", 'String'>

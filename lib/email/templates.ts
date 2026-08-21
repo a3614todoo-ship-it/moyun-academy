@@ -43,6 +43,7 @@ type TemplateInput = {
   type: EmailType;
   application?: TemplateApplication | null;
   coursePurchase?: TemplateCoursePurchase | null;
+  metadata?: unknown;
   siteUrl: string;
   facebookGroupUrl?: string;
   memberSetPasswordUrl?: string;
@@ -59,6 +60,37 @@ function formatDate(value: Date) {
     month: "2-digit",
     day: "2-digit",
   }).format(value);
+}
+
+function formatDateTime(value: Date) {
+  return new Intl.DateTimeFormat("zh-TW", {
+    timeZone: "Asia/Taipei",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(value);
+}
+
+function metadataText(metadata: unknown, key: string) {
+  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) return "";
+  const value = (metadata as Record<string, unknown>)[key];
+  return typeof value === "string" ? value : "";
+}
+
+function metadataNumber(metadata: unknown, key: string) {
+  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) return null;
+  const value = (metadata as Record<string, unknown>)[key];
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
+function metadataDate(metadata: unknown, key: string) {
+  const value = metadataText(metadata, key);
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
 }
 
 function addDays(value: Date, days: number) {
@@ -127,6 +159,7 @@ export function buildEmailTemplate({
   type,
   application,
   coursePurchase,
+  metadata,
   siteUrl,
   facebookGroupUrl = "",
   memberSetPasswordUrl = "",
@@ -398,6 +431,91 @@ ${hasLive ? "\n課程若有直播，也會在學習教室中顯示。" : ""}`,
         ${button(courseUrl, "前往課程頁驗證")}
         ${accountHtml}
         <p style="margin:18px 0 0;color:#69726d;font-size:14px;line-height:1.8;">為了保護付費內容，請在課程頁輸入購買編號與報名 Email 後進入學習教室。請勿任意轉傳學習教室網址。</p>`,
+      ),
+    };
+  }
+
+  if (type === EmailType.MEMBERSHIP_EXPIRING) {
+    const item = requireApplication(application);
+    const daysRemaining = metadataNumber(metadata, "daysRemaining") || 0;
+    const endsAt = metadataDate(metadata, "endsAt");
+    const subject = `您的我輩學堂會員資格將於 ${daysRemaining} 天後到期`;
+    const accountUrl = `${siteUrl}/account`;
+    return {
+      subject,
+      text: `${item.name} 您好：\n\n您的會員資格將於 ${daysRemaining} 天後到期。\n到期日：${endsAt ? formatDate(endsAt) : "請至會員中心查看"}\n\n查看會員中心：\n${accountUrl}`,
+      html: emailShell(
+        subject,
+        `<p>${escapeHtml(item.name)} 您好，提醒您目前的會員資格即將到期。</p>
+        <table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows([
+          ["剩餘天數", `${daysRemaining} 天`],
+          ["到期日", endsAt ? formatDate(endsAt) : "請至會員中心查看"],
+        ])}</table>
+        ${button(accountUrl, "查看會員中心")}`,
+      ),
+    };
+  }
+
+  if (type === EmailType.MEMBER_PRIORITY_OPEN) {
+    const item = requireApplication(application);
+    const courseTitle = metadataText(metadata, "courseTitle") || "專項課程";
+    const courseSlug = metadataText(metadata, "courseSlug");
+    const publicOpenAt = metadataDate(metadata, "publicOpenAt");
+    const courseUrl = `${siteUrl}/courses/${encodeURIComponent(courseSlug)}`;
+    const subject = `會員優先報名已開放：${courseTitle}`;
+    return {
+      subject,
+      text: `${item.name} 您好：\n\n「${courseTitle}」已開放年度會員優先報名。\n一般訪客開放時間：${publicOpenAt ? formatDateTime(publicOpenAt) : "請至課程頁查看"}\n\n前往課程頁：\n${courseUrl}`,
+      html: emailShell(
+        subject,
+        `<p>${escapeHtml(item.name)} 您好，「${escapeHtml(courseTitle)}」已開放年度會員優先報名。</p>
+        <table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows([
+          ["一般訪客開放", publicOpenAt ? formatDateTime(publicOpenAt) : "請至課程頁查看"],
+          ["會員優先期間", "一般訪客開放前 7 天"],
+        ])}</table>
+        ${button(courseUrl, "前往課程頁")}`,
+      ),
+    };
+  }
+
+  if (type === EmailType.LIVE_REMINDER) {
+    const recipientName = application?.name || coursePurchase?.name || "學員";
+    const courseTitle = metadataText(metadata, "courseTitle") || coursePurchase?.course.title || "課程";
+    const courseSlug = metadataText(metadata, "courseSlug") || coursePurchase?.course.slug || "";
+    const startsAt = metadataDate(metadata, "startsAt");
+    const liveUrl = `${siteUrl}/courses/${encodeURIComponent(courseSlug)}/live`;
+    const subject = `明日直播提醒：${courseTitle}`;
+    return {
+      subject,
+      text: `${recipientName} 您好：\n\n「${courseTitle}」直播將於明日舉行。\n直播時間：${startsAt ? formatDateTime(startsAt) : "請至學習教室查看"}\n\n進入學習教室：\n${liveUrl}`,
+      html: emailShell(
+        subject,
+        `<p>${escapeHtml(recipientName)} 您好，提醒您「${escapeHtml(courseTitle)}」直播將於明日舉行。</p>
+        <table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows([
+          ["直播時間", startsAt ? formatDateTime(startsAt) : "請至學習教室查看"],
+        ])}</table>
+        ${button(liveUrl, "進入學習教室")}`,
+      ),
+    };
+  }
+
+  if (type === EmailType.REPLAY_CLOSING) {
+    const recipientName = application?.name || coursePurchase?.name || "學員";
+    const courseTitle = metadataText(metadata, "courseTitle") || coursePurchase?.course.title || "課程";
+    const courseSlug = metadataText(metadata, "courseSlug") || coursePurchase?.course.slug || "";
+    const closesAt = metadataDate(metadata, "closesAt");
+    const watchUrl = `${siteUrl}/courses/${encodeURIComponent(courseSlug)}/watch`;
+    const subject = `回看即將截止：${courseTitle}`;
+    return {
+      subject,
+      text: `${recipientName} 您好：\n\n「${courseTitle}」的網站回看將於明日截止。\n截止時間：${closesAt ? formatDateTime(closesAt) : "請至課程頁查看"}\n\n前往回看：\n${watchUrl}`,
+      html: emailShell(
+        subject,
+        `<p>${escapeHtml(recipientName)} 您好，「${escapeHtml(courseTitle)}」的網站回看即將截止。</p>
+        <table style="width:100%;border-collapse:collapse;background:#fbf8f1;">${detailRows([
+          ["回看截止", closesAt ? formatDateTime(closesAt) : "請至課程頁查看"],
+        ])}</table>
+        ${button(watchUrl, "前往課程回看")}`,
       ),
     };
   }

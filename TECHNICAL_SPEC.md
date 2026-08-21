@@ -655,16 +655,15 @@ npx.cmd prisma migrate deploy
 
 ## 18. 已知限制與後續建議
 
-### 18.1 尚未完成完整會員登入
+### 18.1 會員登入與會員中心已完成
 
-目前以會員申請編號與 Email 查詢會員資格。  
-未來建議建立真正的會員帳號系統：
+目前已具備 Email + 密碼會員登入、會員中心、會員效期與我的課程。會員申請編號／購買編號加 Email 的入口仍保留為相容流程，兩種入口最後都會重新檢查有效會員資格或已核准的購買紀錄。
 
-- 使用者登入
-- 會員中心
-- 我的課程
+後續延伸項目：
+
 - 我的文學筆記
 - 我的收藏
+- 會員自行修改密碼與裝置 Session 管理
 
 ### 18.2 課程單元仍是 MVP
 
@@ -734,8 +733,6 @@ npx.cmd prisma migrate deploy
 
 未完成但建議下一階段：
 
-- 完整會員登入與會員中心
-- 我的課程
 - 我的文學筆記 / 金句收藏
 - 講義檔案上傳與權限下載
 - 單元獨立直播
@@ -782,3 +779,30 @@ npx.cmd prisma migrate deploy
 - 學習教室與 `/watch` 會在伺服器端判斷回看狀態；未開放、尚未開始或已截止時不渲染影片／音訊網址。
 - `CourseLesson.replayVideoUrl` 提供影片回看，`CourseLesson.replayAudioUrl` 提供聲音回看。
 - 會員課程仍需有效會員資格；付費課程仍需已核准的購買紀錄，回看開關不能取代原有身分驗證。
+
+### 20.5 正式營運通知排程
+
+- 使用 Vercel Cron 每日執行一次通知排程，排程時間為 UTC 01:00，對應台灣 09:00。
+- 端點為 `/api/cron/notifications`，必須使用 `CRON_SECRET` Bearer Token 驗證。
+- 排程通知包含：
+  - 會員到期前 30、14、7 天。
+  - 付費課程的會員優先報名開放日。
+  - 直播開始前一天。
+  - 回看截止前一天。
+- 公開免費課程沒有可識別的訂閱收件人，因此不主動寄送排程信。
+- 每封排程信使用 `EmailLog.dedupeKey` 唯一值，並在寄送前將狀態由 `PENDING` 原子更新為 `PROCESSING`，避免重複排程同時寄出。
+- 排程信寄送失敗後改為 `FAILED`，由管理員在 Email 寄送總覽確認與重新寄送。
+
+### 20.6 Email 營運總覽
+
+- `/admin/emails` 顯示最近 200 筆 Email 紀錄。
+- 可依寄送狀態、通知類型、收件人與主旨篩選。
+- 後台總覽顯示 Email 寄送失敗筆數。
+- `FAILED`、`PENDING` 或異常停留在 `PROCESSING` 的紀錄可由管理員重新送出；已成功寄出的信不在總覽重複寄送。
+- 重新寄送會記錄 `EMAIL_DELIVERY_RETRIED` 管理員稽核事件，但不記錄 SMTP 密碼、Cron Secret 或完整錯誤堆疊。
+
+### 20.7 正式環境請求來源
+
+- Rate Limit 與管理員 IP 稽核共用 `trustedRequestAddress`。
+- Vercel 環境優先使用平台產生的 `x-vercel-forwarded-for`，其次才使用 Vercel 覆寫的 `x-forwarded-for`。
+- 非 Vercel 的本機環境不信任任意 `x-forwarded-for`，僅使用 `x-real-ip` 或 `unknown`。

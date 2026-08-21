@@ -1,4 +1,5 @@
 const TAIPEI_OFFSET_MINUTES = 8 * 60;
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 function parseDateTimeLocalParts(value: string) {
   const match = value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/);
@@ -36,4 +37,21 @@ export function formatTaipeiDateTimeLocal(value?: Date | string | null) {
 
   const taipeiTime = new Date(date.getTime() + TAIPEI_OFFSET_MINUTES * 60 * 1000);
   return taipeiTime.toISOString().slice(0, 16);
+}
+
+/** 取得指定時間所在台灣日期的 UTC 起訖時間。 */
+export function taipeiDayRange(value = new Date()) {
+  const taipeiTime = new Date(value.getTime() + TAIPEI_OFFSET_MINUTES * 60 * 1000);
+  const start = new Date(
+    Date.UTC(
+      taipeiTime.getUTCFullYear(),
+      taipeiTime.getUTCMonth(),
+      taipeiTime.getUTCDate(),
+    ) - TAIPEI_OFFSET_MINUTES * 60 * 1000,
+  );
+  return { start, end: new Date(start.getTime() + DAY_MS) };
+}
+
+export function shiftUtcDays(value: Date, days: number) {
+  return new Date(value.getTime() + days * DAY_MS);
 }

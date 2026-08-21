@@ -160,6 +160,8 @@ export const EmailLogScalarFieldEnum = {
   type: 'type',
   recipient: 'recipient',
   subject: 'subject',
+  dedupeKey: 'dedupeKey',
+  metadata: 'metadata',
   status: 'status',
   providerId: 'providerId',
   errorMessage: 'errorMessage',
