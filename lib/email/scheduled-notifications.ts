@@ -145,6 +145,30 @@ async function sendPendingLogs(ids: string[]) {
   return results;
 }
 
+/** 手動立即開放回看時使用；與每日排程共用 dedupeKey 規則，避免重複寄送。 */
+export async function queueReplayOpenedNotificationsForLesson(lessonId: string, now = new Date()) {
+  const lesson = await prisma.courseLesson.findUnique({
+    where: { id: lessonId },
+    select: { id: true, title: true, replayEnabled: true, replayOpenAt: true, replayCloseAt: true, replayProductionStatus: true, course: { select: { id: true, title: true, slug: true, accessType: true, isPublished: true } } },
+  });
+  if (!lesson || !lesson.course.isPublished || !lesson.replayEnabled || lesson.replayProductionStatus !== "READY" || (lesson.replayOpenAt && lesson.replayOpenAt > now) || (lesson.replayCloseAt && lesson.replayCloseAt <= now)) return { queued: 0, sent: 0 };
+  const recipients = await courseRecipients(lesson.course.id, lesson.course.accessType, now);
+  const pendingIds: string[] = [];
+  for (const recipient of recipients) {
+    const marker = lesson.replayOpenAt?.toISOString() || "immediate";
+    const log = await queueScheduledEmail({
+      dedupeKey: `replay-opened:${lesson.id}:${recipient.key}:${marker}`,
+      type: EmailType.REPLAY_OPENED,
+      recipient,
+      subject: `回看已開放：${lesson.title}`,
+      metadata: { courseTitle: lesson.course.title, courseSlug: lesson.course.slug, lessonId: lesson.id, lessonTitle: lesson.title, opensAt: lesson.replayOpenAt?.toISOString() || now.toISOString(), closesAt: lesson.replayCloseAt?.toISOString() || "" },
+    });
+    if (log.status === EmailStatus.PENDING) pendingIds.push(log.id);
+  }
+  const results = await sendPendingLogs(pendingIds);
+  return { queued: pendingIds.length, sent: results.filter((item) => item.success).length };
+}
+
 export async function runScheduledNotifications(now = new Date()) {
   const ranges = scheduledNotificationRanges(now);
   const pendingIds: string[] = [];
@@ -152,6 +176,7 @@ export async function runScheduledNotifications(now = new Date()) {
     membershipExpiring: 0,
     memberPriorityOpen: 0,
     liveReminder: 0,
+    replayOpened: 0,
     replayClosing: 0,
   };
 
@@ -241,6 +266,7 @@ export async function runScheduledNotifications(now = new Date()) {
     select: {
       id: true,
       startsAt: true,
+      lesson: { select: { id: true, title: true } },
       course: { select: { id: true, title: true, slug: true, accessType: true } },
     },
   });
@@ -251,11 +277,13 @@ export async function runScheduledNotifications(now = new Date()) {
         dedupeKey: `live-reminder:${live.id}:${recipient.key}`,
         type: EmailType.LIVE_REMINDER,
         recipient,
-        subject: `明日直播提醒：${live.course.title}`,
+        subject: `明日直播提醒：${live.lesson?.title || live.course.title}`,
         metadata: {
           courseTitle: live.course.title,
           courseSlug: live.course.slug,
           startsAt: live.startsAt?.toISOString() || "",
+          lessonId: live.lesson?.id || "",
+          lessonTitle: live.lesson?.title || "",
         },
       });
       if (log.status === EmailStatus.PENDING) pendingIds.push(log.id);
@@ -263,30 +291,53 @@ export async function runScheduledNotifications(now = new Date()) {
     }
   }
 
-  const replayCourses = await prisma.course.findMany({
+  const replayLessons = await prisma.courseLesson.findMany({
     where: {
       isPublished: true,
       replayEnabled: true,
       replayCloseAt: { gte: ranges.tomorrow.start, lt: ranges.tomorrow.end },
+      replayProductionStatus: "READY",
+      course: { isPublished: true },
     },
-    select: { id: true, title: true, slug: true, accessType: true, replayCloseAt: true },
+    select: { id: true, title: true, replayCloseAt: true, course: { select: { id: true, title: true, slug: true, accessType: true } } },
   });
-  for (const course of replayCourses) {
-    const recipients = await courseRecipients(course.id, course.accessType, now);
+  for (const lesson of replayLessons) {
+    const recipients = await courseRecipients(lesson.course.id, lesson.course.accessType, now);
     for (const recipient of recipients) {
       const log = await queueScheduledEmail({
-        dedupeKey: `replay-closing:${course.id}:${recipient.key}:${course.replayCloseAt?.toISOString() || ""}`,
+        dedupeKey: `replay-closing:${lesson.id}:${recipient.key}:${lesson.replayCloseAt?.toISOString() || ""}`,
         type: EmailType.REPLAY_CLOSING,
         recipient,
-        subject: `回看即將截止：${course.title}`,
+        subject: `回看即將截止：${lesson.title}`,
         metadata: {
-          courseTitle: course.title,
-          courseSlug: course.slug,
-          closesAt: course.replayCloseAt?.toISOString() || "",
+          courseTitle: lesson.course.title,
+          courseSlug: lesson.course.slug,
+          lessonId: lesson.id,
+          lessonTitle: lesson.title,
+          closesAt: lesson.replayCloseAt?.toISOString() || "",
         },
       });
       if (log.status === EmailStatus.PENDING) pendingIds.push(log.id);
       queued.replayClosing += 1;
+    }
+  }
+
+  const openedLessons = await prisma.courseLesson.findMany({
+    where: { isPublished: true, replayEnabled: true, replayProductionStatus: "READY", replayOpenAt: { gte: ranges.today.start, lt: ranges.today.end }, course: { isPublished: true } },
+    select: { id: true, title: true, replayOpenAt: true, replayCloseAt: true, course: { select: { id: true, title: true, slug: true, accessType: true } } },
+  });
+  for (const lesson of openedLessons) {
+    const recipients = await courseRecipients(lesson.course.id, lesson.course.accessType, now);
+    for (const recipient of recipients) {
+      const log = await queueScheduledEmail({
+        dedupeKey: `replay-opened:${lesson.id}:${recipient.key}:${lesson.replayOpenAt?.toISOString() || ""}`,
+        type: EmailType.REPLAY_OPENED,
+        recipient,
+        subject: `回看已開放：${lesson.title}`,
+        metadata: { courseTitle: lesson.course.title, courseSlug: lesson.course.slug, lessonId: lesson.id, lessonTitle: lesson.title, opensAt: lesson.replayOpenAt?.toISOString() || "", closesAt: lesson.replayCloseAt?.toISOString() || "" },
+      });
+      if (log.status === EmailStatus.PENDING) pendingIds.push(log.id);
+      queued.replayOpened += 1;
     }
   }
 

@@ -1,482 +1,52 @@
+import Link from "next/link";
 import { saveCourse } from "@/app/admin/courses/actions";
 import { formatTaipeiDateTimeLocal } from "@/lib/taipei-time";
 
-type LiveSessionValue = {
-  title?: string;
-  platform?: string;
-  isEnabled?: boolean;
-  startsAt?: Date | string | null;
-  endsAt?: Date | string | null;
-  playerOpenAt?: Date | string | null;
-  playerCloseAt?: Date | string | null;
-  youtubeVideoId?: string | null;
-  youtubeChatEmbedUrl?: string | null;
-  enableYoutubeChat?: boolean;
-  enableQuestions?: boolean;
-  showWatermark?: boolean;
-  externalUrl?: string | null;
-};
-
-type CourseLessonValue = {
-  title?: string;
-  summary?: string | null;
-  startsAt?: Date | string | null;
-  durationText?: string | null;
-  originalText?: string | null;
-  translation?: string | null;
-  annotation?: string | null;
-  teacherNote?: string | null;
-  reflectionPrompt?: string | null;
-  handoutUrl?: string | null;
-  replayVideoUrl?: string | null;
-  replayAudioUrl?: string | null;
-  isPublished?: boolean;
-};
-
 type CourseFormValue = {
-  id?: string;
-  slug?: string;
-  title?: string;
-  subtitle?: string | null;
-  category?: string;
-  excerpt?: string;
-  description?: string;
-  outline?: unknown;
-  audiences?: unknown;
-  lessonCount?: number;
-  durationText?: string | null;
-  courseStartAt?: Date | string | null;
-  courseFormatText?: string | null;
-  viewingPolicyText?: string | null;
-  coverImageUrl?: string | null;
-  previewVideoUrl?: string | null;
-  fullVideoUrl?: string | null;
-  accessType?: string;
-  price?: number;
-  publicRegistrationOpenAt?: Date | string | null;
-  registrationCloseAt?: Date | string | null;
-  replayEnabled?: boolean;
-  replayOpenAt?: Date | string | null;
-  replayCloseAt?: Date | string | null;
-  isPublished?: boolean;
-  isFeatured?: boolean;
-  sortOrder?: number;
-  liveSession?: LiveSessionValue | null;
-  lessonUnits?: CourseLessonValue[];
+  id?: string; slug?: string; title?: string; subtitle?: string | null; category?: string;
+  excerpt?: string; description?: string; outline?: unknown; audiences?: unknown; lessonCount?: number;
+  durationText?: string | null; courseStartAt?: Date | string | null; courseFormatText?: string | null;
+  viewingPolicyText?: string | null; coverImageUrl?: string | null; previewVideoUrl?: string | null;
+  accessType?: string; price?: number; publicRegistrationOpenAt?: Date | string | null;
+  registrationCloseAt?: Date | string | null; isPublished?: boolean; isFeatured?: boolean; sortOrder?: number;
 };
 
 function listText(value: unknown) {
-  return Array.isArray(value)
-    ? value.filter((item): item is string => typeof item === "string").join("\n")
-    : "";
+  return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string").join("\n") : "";
 }
 
 export function AdminCourseForm({ course }: { course?: CourseFormValue }) {
-  const accessType = course?.accessType || "MEMBER_INCLUDED";
-  const live = course?.liveSession;
-  const lessons = Array.from({ length: 4 }, (_, index) => course?.lessonUnits?.[index] || null);
-
   return (
     <form action={saveCourse} className="admin-course-form">
       {course?.id ? <input name="id" type="hidden" value={course.id} /> : null}
-
-      <input className="admin-course-tab-radio" defaultChecked id="admin-course-tab-basic" name="adminCourseTab" type="radio" />
-      <input className="admin-course-tab-radio" id="admin-course-tab-lessons" name="adminCourseTab" type="radio" />
-      <input className="admin-course-tab-radio" id="admin-course-tab-live" name="adminCourseTab" type="radio" />
-
-      <div className="admin-course-tabs" role="tablist" aria-label="課程管理頁籤">
-        <label htmlFor="admin-course-tab-basic" role="tab">
-          基本設定
-          <small>課程資料、權限、封面</small>
-        </label>
-        <label htmlFor="admin-course-tab-lessons" role="tab">
-          單元管理
-          <small>講義、文本、回放</small>
-        </label>
-        <label htmlFor="admin-course-tab-live" role="tab">
-          直播設定
-          <small>直播平台、Q&A、開放時間</small>
-        </label>
-      </div>
-
-      <div className="admin-course-tab-panels">
-        <div className="admin-course-tab-panel admin-course-tab-panel-basic">
-          <section className="admin-course-info-box">
-            <div className="form-section-heading">
-              <span>BASE</span>
-              <div>
-                <h2>課程基本資料</h2>
-                <p>設定前台課程頁會看到的標題、分類、介紹、權限與封面。</p>
-              </div>
-            </div>
-
-            <div className="admin-course-grid">
-              <label>
-                課程名稱
-                <input defaultValue={course?.title || ""} name="title" />
-              </label>
-              <label>
-                課程網址代稱
-                <input
-                  defaultValue={course?.slug || ""}
-                  name="slug"
-                  pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
-                  placeholder="tang-poetry-intro"
-                />
-              </label>
-              <label>
-                課程分類
-                <input defaultValue={course?.category || ""} list="course-category-options" name="category" />
-                <datalist id="course-category-options">
-                  <option value="古典文學" />
-                  <option value="唐詩人生" />
-                  <option value="親子共讀" />
-                  <option value="寫作表達" />
-                </datalist>
-              </label>
-              <label>
-                副標題
-                <input defaultValue={course?.subtitle || ""} name="subtitle" />
-              </label>
-              <label>
-                單元數
-                <input defaultValue={course?.lessonCount ?? 0} min="0" name="lessonCount" type="number" />
-              </label>
-              <label>
-                排序
-                <input defaultValue={course?.sortOrder ?? 0} name="sortOrder" type="number" />
-              </label>
-              <label>
-                開課時間
-                <input defaultValue={formatTaipeiDateTimeLocal(course?.courseStartAt)} name="courseStartAt" type="datetime-local" />
-                <small>顯示在前台課程資訊卡；若每堂課時間不同，請在「單元管理」填寫。</small>
-              </label>
-              <label>
-                課程時長
-                <input defaultValue={course?.durationText || ""} name="durationText" placeholder="例如：20 小時" />
-              </label>
-              <label>
-                上課方式
-                <input
-                  defaultValue={course?.courseFormatText || ""}
-                  name="courseFormatText"
-                  placeholder="例如：直播，提供錄影後字幕，可提供完課證明"
-                />
-              </label>
-              <label>
-                觀看權限
-                <input
-                  defaultValue={course?.viewingPolicyText || ""}
-                  name="viewingPolicyText"
-                  placeholder="例如：直播後提供錄影，無期限、無限次觀看"
-                />
-              </label>
-            </div>
-
-            <div className="admin-course-grid">
-              <label>
-                一般訪客報名開放時間
-                <input
-                  defaultValue={formatTaipeiDateTimeLocal(course?.publicRegistrationOpenAt)}
-                  name="publicRegistrationOpenAt"
-                  type="datetime-local"
-                />
-                <small>有效會員會自動提前 7 天開放；留白代表課程上架後立即開放。</small>
-              </label>
-              <label>
-                報名截止時間
-                <input
-                  defaultValue={formatTaipeiDateTimeLocal(course?.registrationCloseAt)}
-                  name="registrationCloseAt"
-                  type="datetime-local"
-                />
-                <small>留白代表不設定截止時間。</small>
-              </label>
-            </div>
-          </section>
-
-          <label>
-            課程短介
-            <textarea defaultValue={course?.excerpt || ""} name="excerpt" rows={3} />
-          </label>
-          <label>
-            課程介紹
-            <textarea defaultValue={course?.description || ""} name="description" rows={7} />
-          </label>
-          <div className="admin-course-grid">
-            <label>
-              課程大綱（一行一項）
-              <textarea defaultValue={listText(course?.outline)} name="outline" rows={7} />
-            </label>
-            <label>
-              適合對象（一行一項）
-              <textarea defaultValue={listText(course?.audiences)} name="audiences" rows={7} />
-            </label>
-          </div>
-
-          <section className="admin-course-info-box">
-            <div className="form-section-heading">
-              <span>ACCESS</span>
-              <div>
-                <h2>權限與影片</h2>
-                <p>設定免費、會員免費或付費課程，以及試看片與完整影片網址。</p>
-              </div>
-            </div>
-            <label>
-              試看片網址（YouTube）
-              <input
-                defaultValue={course?.previewVideoUrl || ""}
-                name="previewVideoUrl"
-                placeholder="https://www.youtube.com/watch?v=..."
-                type="url"
-              />
-            </label>
-
-            <div className="admin-course-grid">
-              <label>
-                課程權限
-                <select defaultValue={accessType} name="accessType">
-                  <option value="PUBLIC_FREE">免費課程</option>
-                  <option value="MEMBER_INCLUDED">會員免費</option>
-                  <option value="PAID">付費課程</option>
-                </select>
-              </label>
-              <label>
-                課程價格
-                <input defaultValue={course?.price ?? 0} min="0" name="price" type="number" />
-                <small>免費與會員免費課程可填 0；付費課程需大於 0。改價只影響新訂單，既有訂單保留原金額。</small>
-              </label>
-            </div>
-
-            <label>
-              完整課程影片網址
-              <input
-                defaultValue={course?.fullVideoUrl || ""}
-                name="fullVideoUrl"
-                placeholder="YouTube 或 Vimeo 影片網址"
-                type="url"
-              />
-              <small>若是直播系列，回放也可以填在「單元管理」的回放影片網址。</small>
-            </label>
-
-            <div className="admin-course-checks">
-              <label>
-                <input defaultChecked={course?.replayEnabled} name="replayEnabled" type="checkbox" />
-                開放網站回看
-              </label>
-            </div>
-            <div className="admin-course-grid">
-              <label>
-                回看開放時間
-                <input defaultValue={formatTaipeiDateTimeLocal(course?.replayOpenAt)} name="replayOpenAt" type="datetime-local" />
-                <small>留白代表勾選後立即開放。</small>
-              </label>
-              <label>
-                回看截止時間
-                <input defaultValue={formatTaipeiDateTimeLocal(course?.replayCloseAt)} name="replayCloseAt" type="datetime-local" />
-                <small>付費課程可逐堂設定期限；留白代表不設截止。</small>
-              </label>
-            </div>
-          </section>
-
-          <label>
-            課程封面圖片網址
-            <input defaultValue={course?.coverImageUrl || ""} name="coverImageUrl" placeholder="https://..." type="url" />
-          </label>
-          <div className="admin-course-checks">
-            <label>
-              <input defaultChecked={course?.isPublished} name="isPublished" type="checkbox" />
-              發布課程
-            </label>
-            <label>
-              <input defaultChecked={course?.isFeatured} name="isFeatured" type="checkbox" />
-              首頁顯示
-            </label>
-          </div>
+      <section className="admin-course-info-box">
+        <div className="form-section-heading"><span>BASE</span><div><h2>課程基本資料</h2><p>課堂內容、直播與回看改由逐堂管理，儲存這裡不會重建既有課堂。</p></div></div>
+        <div className="admin-course-grid">
+          <label>課程名稱<input required defaultValue={course?.title || ""} name="title" /></label>
+          <label>網址代稱<input required defaultValue={course?.slug || ""} name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" /></label>
+          <label>課程分類<input required defaultValue={course?.category || ""} name="category" /></label>
+          <label>副標題<input defaultValue={course?.subtitle || ""} name="subtitle" /></label>
+          <label>單元數<input defaultValue={course?.lessonCount ?? 0} min="0" name="lessonCount" type="number" /></label>
+          <label>排序<input defaultValue={course?.sortOrder ?? 0} name="sortOrder" type="number" /></label>
+          <label>開課時間<input defaultValue={formatTaipeiDateTimeLocal(course?.courseStartAt)} name="courseStartAt" type="datetime-local" /></label>
+          <label>課程時長<input defaultValue={course?.durationText || ""} name="durationText" placeholder="例如：20 小時" /></label>
+          <label>上課方式<input defaultValue={course?.courseFormatText || ""} name="courseFormatText" /></label>
+          <label>觀看權限<input defaultValue={course?.viewingPolicyText || ""} name="viewingPolicyText" /></label>
+          <label>一般訪客報名開放<input defaultValue={formatTaipeiDateTimeLocal(course?.publicRegistrationOpenAt)} name="publicRegistrationOpenAt" type="datetime-local" /><small>有效會員會提前 7 天開放。</small></label>
+          <label>報名截止<input defaultValue={formatTaipeiDateTimeLocal(course?.registrationCloseAt)} name="registrationCloseAt" type="datetime-local" /></label>
+          <label>課程權限<select defaultValue={course?.accessType || "MEMBER_INCLUDED"} name="accessType"><option value="MEMBER_INCLUDED">有效會員專屬</option><option value="PAID">另外付費</option><option value="PUBLIC_FREE">公開免費</option></select></label>
+          <label>價格<input defaultValue={course?.price ?? 0} min="0" name="price" type="number" /><small>會員課可填 0；付費課必須大於 0，之後仍可調整。</small></label>
+          <label className="admin-course-span-2">封面圖片網址<input defaultValue={course?.coverImageUrl || ""} name="coverImageUrl" type="url" /></label>
+          <label className="admin-course-span-2">YouTube 試看片網址<input defaultValue={course?.previewVideoUrl || ""} name="previewVideoUrl" type="url" /></label>
+          <label className="admin-course-span-2">課程摘要<textarea required defaultValue={course?.excerpt || ""} name="excerpt" rows={3} /></label>
+          <label className="admin-course-span-2">完整介紹<textarea required defaultValue={course?.description || ""} name="description" rows={7} /></label>
+          <label>課程大綱（每行一項）<textarea defaultValue={listText(course?.outline)} name="outline" rows={7} /></label>
+          <label>適合對象（每行一項）<textarea defaultValue={listText(course?.audiences)} name="audiences" rows={7} /></label>
         </div>
-
-        <div className="admin-course-tab-panel admin-course-tab-panel-lessons">
-          <section className="admin-course-info-box">
-            <div className="form-section-heading">
-              <span>LESSON</span>
-              <div>
-                <h2>課程單元、文本與講義</h2>
-                <p>先提供最多 4 個單元的 MVP 管理。每個單元可設定文本共讀、提問卡、講義與回放連結。</p>
-              </div>
-            </div>
-
-            <div className="admin-lesson-editor">
-              {lessons.map((lesson, index) => {
-                const prefix = `lesson${index}`;
-                return (
-                  <section className="admin-lesson-card" key={prefix}>
-                    <div className="admin-lesson-card-heading">
-                      <h3>單元 {index + 1}</h3>
-                      <label>
-                        <input defaultChecked={lesson?.isPublished ?? true} name={`${prefix}IsPublished`} type="checkbox" />
-                        顯示此單元
-                      </label>
-                    </div>
-                    <div className="admin-course-grid">
-                      <label>
-                        單元標題
-                        <input defaultValue={lesson?.title || ""} name={`${prefix}Title`} placeholder="例如：唐詩與人生的第一道光" />
-                      </label>
-                      <label>
-                        單元時間
-                        <input defaultValue={formatTaipeiDateTimeLocal(lesson?.startsAt)} name={`${prefix}StartsAt`} type="datetime-local" />
-                      </label>
-                      <label>
-                        單元時長
-                        <input defaultValue={lesson?.durationText || ""} name={`${prefix}DurationText`} placeholder="例如：2 小時 30 分" />
-                      </label>
-                      <label>
-                        講義下載網址
-                        <input defaultValue={lesson?.handoutUrl || ""} name={`${prefix}HandoutUrl`} placeholder="https://..." type="url" />
-                      </label>
-                    </div>
-                    <label>
-                      單元摘要
-                      <textarea defaultValue={lesson?.summary || ""} name={`${prefix}Summary`} rows={2} />
-                    </label>
-                    <div className="admin-course-grid">
-                      <label>
-                        原文
-                        <textarea defaultValue={lesson?.originalText || ""} name={`${prefix}OriginalText`} rows={5} />
-                      </label>
-                      <label>
-                        白話翻譯
-                        <textarea defaultValue={lesson?.translation || ""} name={`${prefix}Translation`} rows={5} />
-                      </label>
-                      <label>
-                        字詞註解
-                        <textarea defaultValue={lesson?.annotation || ""} name={`${prefix}Annotation`} rows={5} />
-                      </label>
-                      <label>
-                        老師導讀
-                        <textarea defaultValue={lesson?.teacherNote || ""} name={`${prefix}TeacherNote`} rows={5} />
-                      </label>
-                    </div>
-                    <label>
-                      文學提問卡
-                      <textarea
-                        defaultValue={lesson?.reflectionPrompt || ""}
-                        name={`${prefix}ReflectionPrompt`}
-                        placeholder="例如：這首詩讓你想起人生中哪一次告別？"
-                        rows={3}
-                      />
-                    </label>
-                    <label>
-                      回放影片網址
-                      <input defaultValue={lesson?.replayVideoUrl || ""} name={`${prefix}ReplayVideoUrl`} placeholder="YouTube / Vimeo 回放網址" type="url" />
-                    </label>
-                    <label>
-                      回放聲音網址
-                      <input defaultValue={lesson?.replayAudioUrl || ""} name={`${prefix}ReplayAudioUrl`} placeholder="HTTPS 音檔網址（MP3、M4A 等）" type="url" />
-                    </label>
-                  </section>
-                );
-              })}
-            </div>
-          </section>
-        </div>
-
-        <div className="admin-course-tab-panel admin-course-tab-panel-live">
-          <section className="admin-course-live-box">
-            <div className="form-section-heading">
-              <span>LIVE</span>
-              <div>
-                <h2>直播設定</h2>
-                <p>用於付費直播課。學員完成購買審核後，才能進入直播教室與提問區。</p>
-              </div>
-            </div>
-
-            <div className="admin-course-checks">
-              <label>
-                <input defaultChecked={live?.isEnabled} name="liveIsEnabled" type="checkbox" />
-                啟用直播教室
-              </label>
-              <label>
-                <input defaultChecked={live?.enableQuestions ?? true} name="liveEnableQuestions" type="checkbox" />
-                啟用站內 Q&A
-              </label>
-              <label>
-                <input defaultChecked={live?.enableYoutubeChat} name="liveEnableYoutubeChat" type="checkbox" />
-                顯示 YouTube Chat
-              </label>
-              <label>
-                <input defaultChecked={live?.showWatermark ?? true} name="liveShowWatermark" type="checkbox" />
-                顯示購買者浮水印
-              </label>
-            </div>
-
-            <div className="admin-course-grid">
-              <label>
-                直播標題
-                <input defaultValue={live?.title || ""} name="liveTitle" placeholder="例如：唐詩與人生直播課" />
-              </label>
-              <label>
-                直播平台
-                <select defaultValue={live?.platform || "YOUTUBE_LIVE"} name="livePlatform">
-                  <option value="YOUTUBE_LIVE">YouTube Live</option>
-                  <option value="VIMEO_LIVE">Vimeo Live</option>
-                  <option value="FACEBOOK_GROUP">Facebook 私密社團直播</option>
-                  <option value="GOOGLE_MEET">Google Meet</option>
-                  <option value="ZOOM_WEBINAR">Zoom Webinar</option>
-                  <option value="ZOOM_MEETING">Zoom Meeting</option>
-                  <option value="EXTERNAL_URL">外部直播連結</option>
-                </select>
-              </label>
-              <label>
-                YouTube Live Video ID
-                <input defaultValue={live?.youtubeVideoId || ""} name="liveYoutubeVideoId" placeholder="只填 Video ID，不要貼完整 iframe" />
-              </label>
-              <label>
-                YouTube Chat Embed URL
-                <input
-                  defaultValue={live?.youtubeChatEmbedUrl || ""}
-                  name="liveYoutubeChatEmbedUrl"
-                  placeholder="https://www.youtube.com/live_chat?v=VIDEO_ID&embed_domain=..."
-                  type="url"
-                />
-              </label>
-            </div>
-
-            <label>
-              Facebook 私密社團 / Vimeo / Google Meet / Zoom / 外部直播連結
-              <input
-                defaultValue={live?.externalUrl || ""}
-                name="liveExternalUrl"
-                placeholder="Facebook 私密社團貼文、Vimeo event、Google Meet、Zoom 或其他直播網址"
-                type="url"
-              />
-            </label>
-
-            <div className="admin-course-grid">
-              <label>
-                直播開始時間
-                <input defaultValue={formatTaipeiDateTimeLocal(live?.startsAt)} name="liveStartsAt" type="datetime-local" />
-              </label>
-              <label>
-                直播結束時間
-                <input defaultValue={formatTaipeiDateTimeLocal(live?.endsAt)} name="liveEndsAt" type="datetime-local" />
-              </label>
-              <label>
-                播放器開放時間
-                <input defaultValue={formatTaipeiDateTimeLocal(live?.playerOpenAt)} name="livePlayerOpenAt" type="datetime-local" />
-              </label>
-              <label>
-                播放器關閉時間
-                <input defaultValue={formatTaipeiDateTimeLocal(live?.playerCloseAt)} name="livePlayerCloseAt" type="datetime-local" />
-              </label>
-            </div>
-          </section>
-        </div>
-      </div>
-
-      <button className="admin-course-save" type="submit">
-        儲存課程
-      </button>
+        <div className="admin-checkbox-row"><label><input defaultChecked={course?.isPublished} name="isPublished" type="checkbox" />前台上架</label><label><input defaultChecked={course?.isFeatured} name="isFeatured" type="checkbox" />首頁精選</label></div>
+      </section>
+      {course?.id ? <section className="admin-course-info-box"><div className="form-section-heading"><span>LESSONS</span><div><h2>逐堂內容與直播</h2><p>新增、排序每堂課，設定 FB／Vimeo 直播、回看期限、教材與問答。</p></div></div><Link className="admin-primary-link" href={`/admin/courses/${course.id}/lessons`}>管理課堂內容</Link></section> : <p className="admin-course-help">先建立課程，再進入逐堂內容管理。</p>}
+      <div className="admin-course-submit"><button type="submit">儲存課程</button></div>
     </form>
   );
 }

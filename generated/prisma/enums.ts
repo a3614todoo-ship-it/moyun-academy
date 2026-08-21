@@ -34,7 +34,8 @@ export const EmailType = {
   MEMBERSHIP_EXPIRING: 'MEMBERSHIP_EXPIRING',
   MEMBER_PRIORITY_OPEN: 'MEMBER_PRIORITY_OPEN',
   LIVE_REMINDER: 'LIVE_REMINDER',
-  REPLAY_CLOSING: 'REPLAY_CLOSING'
+  REPLAY_CLOSING: 'REPLAY_CLOSING',
+  REPLAY_OPENED: 'REPLAY_OPENED'
 } as const
 
 export type EmailType = (typeof EmailType)[keyof typeof EmailType]
@@ -99,6 +100,15 @@ export const LiveQuestionStatus = {
 } as const
 
 export type LiveQuestionStatus = (typeof LiveQuestionStatus)[keyof typeof LiveQuestionStatus]
+
+
+export const ReplayProductionStatus = {
+  SCHEDULED: 'SCHEDULED',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY'
+} as const
+
+export type ReplayProductionStatus = (typeof ReplayProductionStatus)[keyof typeof ReplayProductionStatus]
 
 
 export const EmailStatus = {

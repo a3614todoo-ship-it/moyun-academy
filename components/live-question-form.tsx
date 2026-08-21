@@ -8,9 +8,10 @@ import {
 
 type Props = {
   slug: string;
+  liveSessionId: string;
 };
 
-export function LiveQuestionForm({ slug }: Props) {
+export function LiveQuestionForm({ slug, liveSessionId }: Props) {
   const initialState: LiveQuestionActionState = { message: "" };
   const [state, formAction, pending] = useActionState(createLiveQuestion, initialState);
   const formRef = useRef<HTMLFormElement>(null);
@@ -25,6 +26,7 @@ export function LiveQuestionForm({ slug }: Props) {
       ref={formRef}
     >
       <input name="slug" type="hidden" value={slug} />
+      <input name="liveSessionId" type="hidden" value={liveSessionId} />
       <label>
         <span>提出你的問題</span>
         <textarea

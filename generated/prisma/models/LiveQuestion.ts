@@ -42,6 +42,7 @@ export type LiveQuestionMinAggregateOutputType = {
   emailMasked: string | null
   body: string | null
   status: $Enums.LiveQuestionStatus | null
+  isPinned: boolean | null
   upvoteCount: number | null
   answeredAt: Date | null
   answer: string | null
@@ -57,6 +58,7 @@ export type LiveQuestionMaxAggregateOutputType = {
   emailMasked: string | null
   body: string | null
   status: $Enums.LiveQuestionStatus | null
+  isPinned: boolean | null
   upvoteCount: number | null
   answeredAt: Date | null
   answer: string | null
@@ -72,6 +74,7 @@ export type LiveQuestionCountAggregateOutputType = {
   emailMasked: number
   body: number
   status: number
+  isPinned: number
   upvoteCount: number
   answeredAt: number
   answer: number
@@ -97,6 +100,7 @@ export type LiveQuestionMinAggregateInputType = {
   emailMasked?: true
   body?: true
   status?: true
+  isPinned?: true
   upvoteCount?: true
   answeredAt?: true
   answer?: true
@@ -112,6 +116,7 @@ export type LiveQuestionMaxAggregateInputType = {
   emailMasked?: true
   body?: true
   status?: true
+  isPinned?: true
   upvoteCount?: true
   answeredAt?: true
   answer?: true
@@ -127,6 +132,7 @@ export type LiveQuestionCountAggregateInputType = {
   emailMasked?: true
   body?: true
   status?: true
+  isPinned?: true
   upvoteCount?: true
   answeredAt?: true
   answer?: true
@@ -229,6 +235,7 @@ export type LiveQuestionGroupByOutputType = {
   emailMasked: string
   body: string
   status: $Enums.LiveQuestionStatus
+  isPinned: boolean
   upvoteCount: number
   answeredAt: Date | null
   answer: string | null
@@ -267,6 +274,7 @@ export type LiveQuestionWhereInput = {
   emailMasked?: Prisma.StringFilter<"LiveQuestion"> | string
   body?: Prisma.StringFilter<"LiveQuestion"> | string
   status?: Prisma.EnumLiveQuestionStatusFilter<"LiveQuestion"> | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFilter<"LiveQuestion"> | boolean
   upvoteCount?: Prisma.IntFilter<"LiveQuestion"> | number
   answeredAt?: Prisma.DateTimeNullableFilter<"LiveQuestion"> | Date | string | null
   answer?: Prisma.StringNullableFilter<"LiveQuestion"> | string | null
@@ -285,6 +293,7 @@ export type LiveQuestionOrderByWithRelationInput = {
   emailMasked?: Prisma.SortOrder
   body?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isPinned?: Prisma.SortOrder
   upvoteCount?: Prisma.SortOrder
   answeredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   answer?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -306,6 +315,7 @@ export type LiveQuestionWhereUniqueInput = Prisma.AtLeast<{
   emailMasked?: Prisma.StringFilter<"LiveQuestion"> | string
   body?: Prisma.StringFilter<"LiveQuestion"> | string
   status?: Prisma.EnumLiveQuestionStatusFilter<"LiveQuestion"> | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFilter<"LiveQuestion"> | boolean
   upvoteCount?: Prisma.IntFilter<"LiveQuestion"> | number
   answeredAt?: Prisma.DateTimeNullableFilter<"LiveQuestion"> | Date | string | null
   answer?: Prisma.StringNullableFilter<"LiveQuestion"> | string | null
@@ -324,6 +334,7 @@ export type LiveQuestionOrderByWithAggregationInput = {
   emailMasked?: Prisma.SortOrder
   body?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isPinned?: Prisma.SortOrder
   upvoteCount?: Prisma.SortOrder
   answeredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   answer?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -347,6 +358,7 @@ export type LiveQuestionScalarWhereWithAggregatesInput = {
   emailMasked?: Prisma.StringWithAggregatesFilter<"LiveQuestion"> | string
   body?: Prisma.StringWithAggregatesFilter<"LiveQuestion"> | string
   status?: Prisma.EnumLiveQuestionStatusWithAggregatesFilter<"LiveQuestion"> | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolWithAggregatesFilter<"LiveQuestion"> | boolean
   upvoteCount?: Prisma.IntWithAggregatesFilter<"LiveQuestion"> | number
   answeredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LiveQuestion"> | Date | string | null
   answer?: Prisma.StringNullableWithAggregatesFilter<"LiveQuestion"> | string | null
@@ -360,6 +372,7 @@ export type LiveQuestionCreateInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -378,6 +391,7 @@ export type LiveQuestionUncheckedCreateInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -392,6 +406,7 @@ export type LiveQuestionUpdateInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -410,6 +425,7 @@ export type LiveQuestionUncheckedUpdateInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -426,6 +442,7 @@ export type LiveQuestionCreateManyInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -439,6 +456,7 @@ export type LiveQuestionUpdateManyMutationInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -454,6 +472,7 @@ export type LiveQuestionUncheckedUpdateManyInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -479,6 +498,7 @@ export type LiveQuestionCountOrderByAggregateInput = {
   emailMasked?: Prisma.SortOrder
   body?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isPinned?: Prisma.SortOrder
   upvoteCount?: Prisma.SortOrder
   answeredAt?: Prisma.SortOrder
   answer?: Prisma.SortOrder
@@ -498,6 +518,7 @@ export type LiveQuestionMaxOrderByAggregateInput = {
   emailMasked?: Prisma.SortOrder
   body?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isPinned?: Prisma.SortOrder
   upvoteCount?: Prisma.SortOrder
   answeredAt?: Prisma.SortOrder
   answer?: Prisma.SortOrder
@@ -513,6 +534,7 @@ export type LiveQuestionMinOrderByAggregateInput = {
   emailMasked?: Prisma.SortOrder
   body?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isPinned?: Prisma.SortOrder
   upvoteCount?: Prisma.SortOrder
   answeredAt?: Prisma.SortOrder
   answer?: Prisma.SortOrder
@@ -637,6 +659,7 @@ export type LiveQuestionCreateWithoutCoursePurchaseInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -653,6 +676,7 @@ export type LiveQuestionUncheckedCreateWithoutCoursePurchaseInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -698,6 +722,7 @@ export type LiveQuestionScalarWhereInput = {
   emailMasked?: Prisma.StringFilter<"LiveQuestion"> | string
   body?: Prisma.StringFilter<"LiveQuestion"> | string
   status?: Prisma.EnumLiveQuestionStatusFilter<"LiveQuestion"> | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFilter<"LiveQuestion"> | boolean
   upvoteCount?: Prisma.IntFilter<"LiveQuestion"> | number
   answeredAt?: Prisma.DateTimeNullableFilter<"LiveQuestion"> | Date | string | null
   answer?: Prisma.StringNullableFilter<"LiveQuestion"> | string | null
@@ -711,6 +736,7 @@ export type LiveQuestionCreateWithoutLiveSessionInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -727,6 +753,7 @@ export type LiveQuestionUncheckedCreateWithoutLiveSessionInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -767,6 +794,7 @@ export type LiveQuestionCreateWithoutUpvotesInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -784,6 +812,7 @@ export type LiveQuestionUncheckedCreateWithoutUpvotesInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -813,6 +842,7 @@ export type LiveQuestionUpdateWithoutUpvotesInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -830,6 +860,7 @@ export type LiveQuestionUncheckedUpdateWithoutUpvotesInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -844,6 +875,7 @@ export type LiveQuestionCreateManyCoursePurchaseInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -857,6 +889,7 @@ export type LiveQuestionUpdateWithoutCoursePurchaseInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -873,6 +906,7 @@ export type LiveQuestionUncheckedUpdateWithoutCoursePurchaseInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -888,6 +922,7 @@ export type LiveQuestionUncheckedUpdateManyWithoutCoursePurchaseInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -902,6 +937,7 @@ export type LiveQuestionCreateManyLiveSessionInput = {
   emailMasked: string
   body: string
   status?: $Enums.LiveQuestionStatus
+  isPinned?: boolean
   upvoteCount?: number
   answeredAt?: Date | string | null
   answer?: string | null
@@ -915,6 +951,7 @@ export type LiveQuestionUpdateWithoutLiveSessionInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -931,6 +968,7 @@ export type LiveQuestionUncheckedUpdateWithoutLiveSessionInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -946,6 +984,7 @@ export type LiveQuestionUncheckedUpdateManyWithoutLiveSessionInput = {
   emailMasked?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumLiveQuestionStatusFieldUpdateOperationsInput | $Enums.LiveQuestionStatus
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   upvoteCount?: Prisma.IntFieldUpdateOperationsInput | number
   answeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -992,6 +1031,7 @@ export type LiveQuestionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   emailMasked?: boolean
   body?: boolean
   status?: boolean
+  isPinned?: boolean
   upvoteCount?: boolean
   answeredAt?: boolean
   answer?: boolean
@@ -1011,6 +1051,7 @@ export type LiveQuestionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   emailMasked?: boolean
   body?: boolean
   status?: boolean
+  isPinned?: boolean
   upvoteCount?: boolean
   answeredAt?: boolean
   answer?: boolean
@@ -1028,6 +1069,7 @@ export type LiveQuestionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   emailMasked?: boolean
   body?: boolean
   status?: boolean
+  isPinned?: boolean
   upvoteCount?: boolean
   answeredAt?: boolean
   answer?: boolean
@@ -1045,6 +1087,7 @@ export type LiveQuestionSelectScalar = {
   emailMasked?: boolean
   body?: boolean
   status?: boolean
+  isPinned?: boolean
   upvoteCount?: boolean
   answeredAt?: boolean
   answer?: boolean
@@ -1052,7 +1095,7 @@ export type LiveQuestionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LiveQuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "liveSessionId" | "coursePurchaseId" | "displayName" | "emailMasked" | "body" | "status" | "upvoteCount" | "answeredAt" | "answer" | "createdAt" | "updatedAt", ExtArgs["result"]["liveQuestion"]>
+export type LiveQuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "liveSessionId" | "coursePurchaseId" | "displayName" | "emailMasked" | "body" | "status" | "isPinned" | "upvoteCount" | "answeredAt" | "answer" | "createdAt" | "updatedAt", ExtArgs["result"]["liveQuestion"]>
 export type LiveQuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   liveSession?: boolean | Prisma.LiveSessionDefaultArgs<ExtArgs>
   coursePurchase?: boolean | Prisma.CoursePurchaseDefaultArgs<ExtArgs>
@@ -1083,6 +1126,7 @@ export type $LiveQuestionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     emailMasked: string
     body: string
     status: $Enums.LiveQuestionStatus
+    isPinned: boolean
     upvoteCount: number
     answeredAt: Date | null
     answer: string | null
@@ -1521,6 +1565,7 @@ export interface LiveQuestionFieldRefs {
   readonly emailMasked: Prisma.FieldRef<"LiveQuestion", 'String'>
   readonly body: Prisma.FieldRef<"LiveQuestion", 'String'>
   readonly status: Prisma.FieldRef<"LiveQuestion", 'LiveQuestionStatus'>
+  readonly isPinned: Prisma.FieldRef<"LiveQuestion", 'Boolean'>
   readonly upvoteCount: Prisma.FieldRef<"LiveQuestion", 'Int'>
   readonly answeredAt: Prisma.FieldRef<"LiveQuestion", 'DateTime'>
   readonly answer: Prisma.FieldRef<"LiveQuestion", 'String'>

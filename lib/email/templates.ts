@@ -35,7 +35,7 @@ type TemplateCoursePurchase = {
     title: string;
     slug: string;
     fullVideoUrl: string | null;
-    liveSession?: { isEnabled: boolean } | null;
+    liveSessions?: Array<{ isEnabled: boolean }>;
   };
 };
 
@@ -399,7 +399,7 @@ ${adminUrl}`,
     const subject = `您的課程已審核通過：${item.course.title}`;
     const courseUrl = `${siteUrl}/courses/${item.course.slug}`;
     const loginUrl = `${siteUrl}/login`;
-    const hasLive = Boolean(item.course.liveSession?.isEnabled);
+    const hasLive = Boolean(item.course.liveSessions?.some((session) => session.isEnabled));
     const accountText = memberSetPasswordUrl
       ? `\n設定網站密碼：${memberSetPasswordUrl}`
       : `\n會員登入：${loginUrl}`;
@@ -483,8 +483,10 @@ ${hasLive ? "\n課程若有直播，也會在學習教室中顯示。" : ""}`,
     const courseTitle = metadataText(metadata, "courseTitle") || coursePurchase?.course.title || "課程";
     const courseSlug = metadataText(metadata, "courseSlug") || coursePurchase?.course.slug || "";
     const startsAt = metadataDate(metadata, "startsAt");
-    const liveUrl = `${siteUrl}/courses/${encodeURIComponent(courseSlug)}/live`;
-    const subject = `明日直播提醒：${courseTitle}`;
+    const lessonId = metadataText(metadata, "lessonId");
+    const lessonTitle = metadataText(metadata, "lessonTitle");
+    const liveUrl = `${siteUrl}/courses/${encodeURIComponent(courseSlug)}/live${lessonId ? `?lesson=${encodeURIComponent(lessonId)}` : ""}`;
+    const subject = `明日直播提醒：${lessonTitle || courseTitle}`;
     return {
       subject,
       text: `${recipientName} 您好：\n\n「${courseTitle}」直播將於明日舉行。\n直播時間：${startsAt ? formatDateTime(startsAt) : "請至學習教室查看"}\n\n進入學習教室：\n${liveUrl}`,
@@ -504,8 +506,10 @@ ${hasLive ? "\n課程若有直播，也會在學習教室中顯示。" : ""}`,
     const courseTitle = metadataText(metadata, "courseTitle") || coursePurchase?.course.title || "課程";
     const courseSlug = metadataText(metadata, "courseSlug") || coursePurchase?.course.slug || "";
     const closesAt = metadataDate(metadata, "closesAt");
-    const watchUrl = `${siteUrl}/courses/${encodeURIComponent(courseSlug)}/watch`;
-    const subject = `回看即將截止：${courseTitle}`;
+    const lessonId = metadataText(metadata, "lessonId");
+    const lessonTitle = metadataText(metadata, "lessonTitle");
+    const watchUrl = `${siteUrl}/courses/${encodeURIComponent(courseSlug)}/watch${lessonId ? `?lesson=${encodeURIComponent(lessonId)}` : ""}`;
+    const subject = `回看即將截止：${lessonTitle || courseTitle}`;
     return {
       subject,
       text: `${recipientName} 您好：\n\n「${courseTitle}」的網站回看將於明日截止。\n截止時間：${closesAt ? formatDateTime(closesAt) : "請至課程頁查看"}\n\n前往回看：\n${watchUrl}`,
@@ -517,6 +521,22 @@ ${hasLive ? "\n課程若有直播，也會在學習教室中顯示。" : ""}`,
         ])}</table>
         ${button(watchUrl, "前往課程回看")}`,
       ),
+    };
+  }
+
+  if (type === EmailType.REPLAY_OPENED) {
+    const recipientName = application?.name || coursePurchase?.name || "學員";
+    const courseTitle = metadataText(metadata, "courseTitle") || coursePurchase?.course.title || "課程";
+    const courseSlug = metadataText(metadata, "courseSlug") || coursePurchase?.course.slug || "";
+    const lessonId = metadataText(metadata, "lessonId");
+    const lessonTitle = metadataText(metadata, "lessonTitle") || courseTitle;
+    const closesAt = metadataDate(metadata, "closesAt");
+    const watchUrl = `${siteUrl}/courses/${encodeURIComponent(courseSlug)}/watch?lesson=${encodeURIComponent(lessonId)}`;
+    const subject = `回看已開放：${lessonTitle}`;
+    return {
+      subject,
+      text: `${recipientName} 您好：\n\n「${lessonTitle}」的網站回看已開放。${closesAt ? `\n截止時間：${formatDateTime(closesAt)}` : ""}\n\n前往回看：\n${watchUrl}`,
+      html: emailShell(subject, `<p>${escapeHtml(recipientName)} 您好，「${escapeHtml(lessonTitle)}」的網站回看已開放。</p>${closesAt ? `<p>回看截止：${escapeHtml(formatDateTime(closesAt))}</p>` : ""}${button(watchUrl, "前往課程回看")}`),
     };
   }
 

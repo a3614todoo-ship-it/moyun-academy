@@ -21,9 +21,10 @@ export async function createLiveQuestion(
   formData: FormData,
 ): Promise<LiveQuestionActionState> {
   const slug = text(formData, "slug");
+  const liveSessionId = text(formData, "liveSessionId");
   const body = text(formData, "body");
 
-  if (!slug) return { message: "缺少課程資料。" };
+  if (!slug || !liveSessionId) return { message: "缺少課程資料。" };
   if (body.length < 2) return { message: "問題至少需要 2 個字。" };
   if (body.length > 500) return { message: "問題不可超過 500 個字。" };
 
@@ -36,7 +37,7 @@ export async function createLiveQuestion(
   if (!rateLimit.allowed) return { message: "送出問題過於頻繁，請稍後再試。" };
 
   const purchase = await getAuthorizedCoursePurchase(slug);
-  const liveSession = purchase?.course.liveSession;
+  const liveSession = purchase?.course.lessonUnits.map((lesson) => lesson.liveSession).find((session) => session?.id === liveSessionId);
   if (!purchase || !liveSession?.isEnabled || !liveSession.enableQuestions) {
     return { message: "目前無法使用課程問答。" };
   }
@@ -57,8 +58,9 @@ export async function createLiveQuestion(
 
 export async function upvoteLiveQuestion(formData: FormData) {
   const slug = text(formData, "slug");
+  const liveSessionId = text(formData, "liveSessionId");
   const questionId = text(formData, "questionId");
-  if (!slug || !questionId) return;
+  if (!slug || !questionId || !liveSessionId) return;
 
   const rateLimit = await checkRateLimit({
     scope: "live-question-upvote",
@@ -69,7 +71,7 @@ export async function upvoteLiveQuestion(formData: FormData) {
   if (!rateLimit.allowed) return;
 
   const purchase = await getAuthorizedCoursePurchase(slug);
-  const liveSession = purchase?.course.liveSession;
+  const liveSession = purchase?.course.lessonUnits.map((lesson) => lesson.liveSession).find((session) => session?.id === liveSessionId);
   if (!purchase || !liveSession?.isEnabled) return;
 
   const question = await prisma.liveQuestion.findFirst({

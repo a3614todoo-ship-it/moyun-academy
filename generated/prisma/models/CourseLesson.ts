@@ -27,10 +27,12 @@ export type AggregateCourseLesson = {
 }
 
 export type CourseLessonAvgAggregateOutputType = {
+  handoutSizeBytes: number | null
   sortOrder: number | null
 }
 
 export type CourseLessonSumAggregateOutputType = {
+  handoutSizeBytes: number | null
   sortOrder: number | null
 }
 
@@ -47,8 +49,16 @@ export type CourseLessonMinAggregateOutputType = {
   teacherNote: string | null
   reflectionPrompt: string | null
   handoutUrl: string | null
+  handoutStoragePath: string | null
+  handoutFileName: string | null
+  handoutContentType: string | null
+  handoutSizeBytes: number | null
   replayVideoUrl: string | null
   replayAudioUrl: string | null
+  replayEnabled: boolean | null
+  replayOpenAt: Date | null
+  replayCloseAt: Date | null
+  replayProductionStatus: $Enums.ReplayProductionStatus | null
   sortOrder: number | null
   isPublished: boolean | null
   createdAt: Date | null
@@ -68,8 +78,16 @@ export type CourseLessonMaxAggregateOutputType = {
   teacherNote: string | null
   reflectionPrompt: string | null
   handoutUrl: string | null
+  handoutStoragePath: string | null
+  handoutFileName: string | null
+  handoutContentType: string | null
+  handoutSizeBytes: number | null
   replayVideoUrl: string | null
   replayAudioUrl: string | null
+  replayEnabled: boolean | null
+  replayOpenAt: Date | null
+  replayCloseAt: Date | null
+  replayProductionStatus: $Enums.ReplayProductionStatus | null
   sortOrder: number | null
   isPublished: boolean | null
   createdAt: Date | null
@@ -89,8 +107,16 @@ export type CourseLessonCountAggregateOutputType = {
   teacherNote: number
   reflectionPrompt: number
   handoutUrl: number
+  handoutStoragePath: number
+  handoutFileName: number
+  handoutContentType: number
+  handoutSizeBytes: number
   replayVideoUrl: number
   replayAudioUrl: number
+  replayEnabled: number
+  replayOpenAt: number
+  replayCloseAt: number
+  replayProductionStatus: number
   sortOrder: number
   isPublished: number
   createdAt: number
@@ -100,10 +126,12 @@ export type CourseLessonCountAggregateOutputType = {
 
 
 export type CourseLessonAvgAggregateInputType = {
+  handoutSizeBytes?: true
   sortOrder?: true
 }
 
 export type CourseLessonSumAggregateInputType = {
+  handoutSizeBytes?: true
   sortOrder?: true
 }
 
@@ -120,8 +148,16 @@ export type CourseLessonMinAggregateInputType = {
   teacherNote?: true
   reflectionPrompt?: true
   handoutUrl?: true
+  handoutStoragePath?: true
+  handoutFileName?: true
+  handoutContentType?: true
+  handoutSizeBytes?: true
   replayVideoUrl?: true
   replayAudioUrl?: true
+  replayEnabled?: true
+  replayOpenAt?: true
+  replayCloseAt?: true
+  replayProductionStatus?: true
   sortOrder?: true
   isPublished?: true
   createdAt?: true
@@ -141,8 +177,16 @@ export type CourseLessonMaxAggregateInputType = {
   teacherNote?: true
   reflectionPrompt?: true
   handoutUrl?: true
+  handoutStoragePath?: true
+  handoutFileName?: true
+  handoutContentType?: true
+  handoutSizeBytes?: true
   replayVideoUrl?: true
   replayAudioUrl?: true
+  replayEnabled?: true
+  replayOpenAt?: true
+  replayCloseAt?: true
+  replayProductionStatus?: true
   sortOrder?: true
   isPublished?: true
   createdAt?: true
@@ -162,8 +206,16 @@ export type CourseLessonCountAggregateInputType = {
   teacherNote?: true
   reflectionPrompt?: true
   handoutUrl?: true
+  handoutStoragePath?: true
+  handoutFileName?: true
+  handoutContentType?: true
+  handoutSizeBytes?: true
   replayVideoUrl?: true
   replayAudioUrl?: true
+  replayEnabled?: true
+  replayOpenAt?: true
+  replayCloseAt?: true
+  replayProductionStatus?: true
   sortOrder?: true
   isPublished?: true
   createdAt?: true
@@ -270,8 +322,16 @@ export type CourseLessonGroupByOutputType = {
   teacherNote: string | null
   reflectionPrompt: string | null
   handoutUrl: string | null
+  handoutStoragePath: string | null
+  handoutFileName: string | null
+  handoutContentType: string | null
+  handoutSizeBytes: number | null
   replayVideoUrl: string | null
   replayAudioUrl: string | null
+  replayEnabled: boolean
+  replayOpenAt: Date | null
+  replayCloseAt: Date | null
+  replayProductionStatus: $Enums.ReplayProductionStatus
   sortOrder: number
   isPublished: boolean
   createdAt: Date
@@ -314,13 +374,22 @@ export type CourseLessonWhereInput = {
   teacherNote?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   reflectionPrompt?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   handoutUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutStoragePath?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutFileName?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutContentType?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutSizeBytes?: Prisma.IntNullableFilter<"CourseLesson"> | number | null
   replayVideoUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   replayAudioUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  replayEnabled?: Prisma.BoolFilter<"CourseLesson"> | boolean
+  replayOpenAt?: Prisma.DateTimeNullableFilter<"CourseLesson"> | Date | string | null
+  replayCloseAt?: Prisma.DateTimeNullableFilter<"CourseLesson"> | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFilter<"CourseLesson"> | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntFilter<"CourseLesson"> | number
   isPublished?: Prisma.BoolFilter<"CourseLesson"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseLesson"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CourseLesson"> | Date | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  liveSession?: Prisma.XOR<Prisma.LiveSessionNullableScalarRelationFilter, Prisma.LiveSessionWhereInput> | null
 }
 
 export type CourseLessonOrderByWithRelationInput = {
@@ -336,13 +405,22 @@ export type CourseLessonOrderByWithRelationInput = {
   teacherNote?: Prisma.SortOrderInput | Prisma.SortOrder
   reflectionPrompt?: Prisma.SortOrderInput | Prisma.SortOrder
   handoutUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  handoutStoragePath?: Prisma.SortOrderInput | Prisma.SortOrder
+  handoutFileName?: Prisma.SortOrderInput | Prisma.SortOrder
+  handoutContentType?: Prisma.SortOrderInput | Prisma.SortOrder
+  handoutSizeBytes?: Prisma.SortOrderInput | Prisma.SortOrder
   replayVideoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   replayAudioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayEnabled?: Prisma.SortOrder
+  replayOpenAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayCloseAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayProductionStatus?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
+  liveSession?: Prisma.LiveSessionOrderByWithRelationInput
 }
 
 export type CourseLessonWhereUniqueInput = Prisma.AtLeast<{
@@ -361,13 +439,22 @@ export type CourseLessonWhereUniqueInput = Prisma.AtLeast<{
   teacherNote?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   reflectionPrompt?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   handoutUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutStoragePath?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutFileName?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutContentType?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutSizeBytes?: Prisma.IntNullableFilter<"CourseLesson"> | number | null
   replayVideoUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   replayAudioUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  replayEnabled?: Prisma.BoolFilter<"CourseLesson"> | boolean
+  replayOpenAt?: Prisma.DateTimeNullableFilter<"CourseLesson"> | Date | string | null
+  replayCloseAt?: Prisma.DateTimeNullableFilter<"CourseLesson"> | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFilter<"CourseLesson"> | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntFilter<"CourseLesson"> | number
   isPublished?: Prisma.BoolFilter<"CourseLesson"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseLesson"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CourseLesson"> | Date | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  liveSession?: Prisma.XOR<Prisma.LiveSessionNullableScalarRelationFilter, Prisma.LiveSessionWhereInput> | null
 }, "id">
 
 export type CourseLessonOrderByWithAggregationInput = {
@@ -383,8 +470,16 @@ export type CourseLessonOrderByWithAggregationInput = {
   teacherNote?: Prisma.SortOrderInput | Prisma.SortOrder
   reflectionPrompt?: Prisma.SortOrderInput | Prisma.SortOrder
   handoutUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  handoutStoragePath?: Prisma.SortOrderInput | Prisma.SortOrder
+  handoutFileName?: Prisma.SortOrderInput | Prisma.SortOrder
+  handoutContentType?: Prisma.SortOrderInput | Prisma.SortOrder
+  handoutSizeBytes?: Prisma.SortOrderInput | Prisma.SortOrder
   replayVideoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   replayAudioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayEnabled?: Prisma.SortOrder
+  replayOpenAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayCloseAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  replayProductionStatus?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -412,8 +507,16 @@ export type CourseLessonScalarWhereWithAggregatesInput = {
   teacherNote?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
   reflectionPrompt?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
   handoutUrl?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
+  handoutStoragePath?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
+  handoutFileName?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
+  handoutContentType?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
+  handoutSizeBytes?: Prisma.IntNullableWithAggregatesFilter<"CourseLesson"> | number | null
   replayVideoUrl?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
   replayAudioUrl?: Prisma.StringNullableWithAggregatesFilter<"CourseLesson"> | string | null
+  replayEnabled?: Prisma.BoolWithAggregatesFilter<"CourseLesson"> | boolean
+  replayOpenAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CourseLesson"> | Date | string | null
+  replayCloseAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CourseLesson"> | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusWithAggregatesFilter<"CourseLesson"> | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntWithAggregatesFilter<"CourseLesson"> | number
   isPublished?: Prisma.BoolWithAggregatesFilter<"CourseLesson"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CourseLesson"> | Date | string
@@ -432,13 +535,22 @@ export type CourseLessonCreateInput = {
   teacherNote?: string | null
   reflectionPrompt?: string | null
   handoutUrl?: string | null
+  handoutStoragePath?: string | null
+  handoutFileName?: string | null
+  handoutContentType?: string | null
+  handoutSizeBytes?: number | null
   replayVideoUrl?: string | null
   replayAudioUrl?: string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
+  replayProductionStatus?: $Enums.ReplayProductionStatus
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   course: Prisma.CourseCreateNestedOneWithoutLessonUnitsInput
+  liveSession?: Prisma.LiveSessionCreateNestedOneWithoutLessonInput
 }
 
 export type CourseLessonUncheckedCreateInput = {
@@ -454,12 +566,21 @@ export type CourseLessonUncheckedCreateInput = {
   teacherNote?: string | null
   reflectionPrompt?: string | null
   handoutUrl?: string | null
+  handoutStoragePath?: string | null
+  handoutFileName?: string | null
+  handoutContentType?: string | null
+  handoutSizeBytes?: number | null
   replayVideoUrl?: string | null
   replayAudioUrl?: string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
+  replayProductionStatus?: $Enums.ReplayProductionStatus
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  liveSession?: Prisma.LiveSessionUncheckedCreateNestedOneWithoutLessonInput
 }
 
 export type CourseLessonUpdateInput = {
@@ -474,13 +595,22 @@ export type CourseLessonUpdateInput = {
   teacherNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutStoragePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutContentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFieldUpdateOperationsInput | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   course?: Prisma.CourseUpdateOneRequiredWithoutLessonUnitsNestedInput
+  liveSession?: Prisma.LiveSessionUpdateOneWithoutLessonNestedInput
 }
 
 export type CourseLessonUncheckedUpdateInput = {
@@ -496,12 +626,21 @@ export type CourseLessonUncheckedUpdateInput = {
   teacherNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutStoragePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutContentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFieldUpdateOperationsInput | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  liveSession?: Prisma.LiveSessionUncheckedUpdateOneWithoutLessonNestedInput
 }
 
 export type CourseLessonCreateManyInput = {
@@ -517,8 +656,16 @@ export type CourseLessonCreateManyInput = {
   teacherNote?: string | null
   reflectionPrompt?: string | null
   handoutUrl?: string | null
+  handoutStoragePath?: string | null
+  handoutFileName?: string | null
+  handoutContentType?: string | null
+  handoutSizeBytes?: number | null
   replayVideoUrl?: string | null
   replayAudioUrl?: string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
+  replayProductionStatus?: $Enums.ReplayProductionStatus
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
@@ -537,8 +684,16 @@ export type CourseLessonUpdateManyMutationInput = {
   teacherNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutStoragePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutContentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFieldUpdateOperationsInput | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -558,8 +713,16 @@ export type CourseLessonUncheckedUpdateManyInput = {
   teacherNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutStoragePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutContentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFieldUpdateOperationsInput | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -576,6 +739,11 @@ export type CourseLessonOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type CourseLessonNullableScalarRelationFilter = {
+  is?: Prisma.CourseLessonWhereInput | null
+  isNot?: Prisma.CourseLessonWhereInput | null
+}
+
 export type CourseLessonCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
@@ -589,8 +757,16 @@ export type CourseLessonCountOrderByAggregateInput = {
   teacherNote?: Prisma.SortOrder
   reflectionPrompt?: Prisma.SortOrder
   handoutUrl?: Prisma.SortOrder
+  handoutStoragePath?: Prisma.SortOrder
+  handoutFileName?: Prisma.SortOrder
+  handoutContentType?: Prisma.SortOrder
+  handoutSizeBytes?: Prisma.SortOrder
   replayVideoUrl?: Prisma.SortOrder
   replayAudioUrl?: Prisma.SortOrder
+  replayEnabled?: Prisma.SortOrder
+  replayOpenAt?: Prisma.SortOrder
+  replayCloseAt?: Prisma.SortOrder
+  replayProductionStatus?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -598,6 +774,7 @@ export type CourseLessonCountOrderByAggregateInput = {
 }
 
 export type CourseLessonAvgOrderByAggregateInput = {
+  handoutSizeBytes?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
 }
 
@@ -614,8 +791,16 @@ export type CourseLessonMaxOrderByAggregateInput = {
   teacherNote?: Prisma.SortOrder
   reflectionPrompt?: Prisma.SortOrder
   handoutUrl?: Prisma.SortOrder
+  handoutStoragePath?: Prisma.SortOrder
+  handoutFileName?: Prisma.SortOrder
+  handoutContentType?: Prisma.SortOrder
+  handoutSizeBytes?: Prisma.SortOrder
   replayVideoUrl?: Prisma.SortOrder
   replayAudioUrl?: Prisma.SortOrder
+  replayEnabled?: Prisma.SortOrder
+  replayOpenAt?: Prisma.SortOrder
+  replayCloseAt?: Prisma.SortOrder
+  replayProductionStatus?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -635,8 +820,16 @@ export type CourseLessonMinOrderByAggregateInput = {
   teacherNote?: Prisma.SortOrder
   reflectionPrompt?: Prisma.SortOrder
   handoutUrl?: Prisma.SortOrder
+  handoutStoragePath?: Prisma.SortOrder
+  handoutFileName?: Prisma.SortOrder
+  handoutContentType?: Prisma.SortOrder
+  handoutSizeBytes?: Prisma.SortOrder
   replayVideoUrl?: Prisma.SortOrder
   replayAudioUrl?: Prisma.SortOrder
+  replayEnabled?: Prisma.SortOrder
+  replayOpenAt?: Prisma.SortOrder
+  replayCloseAt?: Prisma.SortOrder
+  replayProductionStatus?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -644,6 +837,7 @@ export type CourseLessonMinOrderByAggregateInput = {
 }
 
 export type CourseLessonSumOrderByAggregateInput = {
+  handoutSizeBytes?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
 }
 
@@ -689,6 +883,34 @@ export type CourseLessonUncheckedUpdateManyWithoutCourseNestedInput = {
   deleteMany?: Prisma.CourseLessonScalarWhereInput | Prisma.CourseLessonScalarWhereInput[]
 }
 
+export type CourseLessonCreateNestedOneWithoutLiveSessionInput = {
+  create?: Prisma.XOR<Prisma.CourseLessonCreateWithoutLiveSessionInput, Prisma.CourseLessonUncheckedCreateWithoutLiveSessionInput>
+  connectOrCreate?: Prisma.CourseLessonCreateOrConnectWithoutLiveSessionInput
+  connect?: Prisma.CourseLessonWhereUniqueInput
+}
+
+export type CourseLessonUpdateOneWithoutLiveSessionNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseLessonCreateWithoutLiveSessionInput, Prisma.CourseLessonUncheckedCreateWithoutLiveSessionInput>
+  connectOrCreate?: Prisma.CourseLessonCreateOrConnectWithoutLiveSessionInput
+  upsert?: Prisma.CourseLessonUpsertWithoutLiveSessionInput
+  disconnect?: Prisma.CourseLessonWhereInput | boolean
+  delete?: Prisma.CourseLessonWhereInput | boolean
+  connect?: Prisma.CourseLessonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseLessonUpdateToOneWithWhereWithoutLiveSessionInput, Prisma.CourseLessonUpdateWithoutLiveSessionInput>, Prisma.CourseLessonUncheckedUpdateWithoutLiveSessionInput>
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type EnumReplayProductionStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ReplayProductionStatus
+}
+
 export type CourseLessonCreateWithoutCourseInput = {
   id?: string
   title: string
@@ -701,12 +923,21 @@ export type CourseLessonCreateWithoutCourseInput = {
   teacherNote?: string | null
   reflectionPrompt?: string | null
   handoutUrl?: string | null
+  handoutStoragePath?: string | null
+  handoutFileName?: string | null
+  handoutContentType?: string | null
+  handoutSizeBytes?: number | null
   replayVideoUrl?: string | null
   replayAudioUrl?: string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
+  replayProductionStatus?: $Enums.ReplayProductionStatus
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  liveSession?: Prisma.LiveSessionCreateNestedOneWithoutLessonInput
 }
 
 export type CourseLessonUncheckedCreateWithoutCourseInput = {
@@ -721,12 +952,21 @@ export type CourseLessonUncheckedCreateWithoutCourseInput = {
   teacherNote?: string | null
   reflectionPrompt?: string | null
   handoutUrl?: string | null
+  handoutStoragePath?: string | null
+  handoutFileName?: string | null
+  handoutContentType?: string | null
+  handoutSizeBytes?: number | null
   replayVideoUrl?: string | null
   replayAudioUrl?: string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
+  replayProductionStatus?: $Enums.ReplayProductionStatus
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  liveSession?: Prisma.LiveSessionUncheckedCreateNestedOneWithoutLessonInput
 }
 
 export type CourseLessonCreateOrConnectWithoutCourseInput = {
@@ -771,12 +1011,152 @@ export type CourseLessonScalarWhereInput = {
   teacherNote?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   reflectionPrompt?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   handoutUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutStoragePath?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutFileName?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutContentType?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  handoutSizeBytes?: Prisma.IntNullableFilter<"CourseLesson"> | number | null
   replayVideoUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
   replayAudioUrl?: Prisma.StringNullableFilter<"CourseLesson"> | string | null
+  replayEnabled?: Prisma.BoolFilter<"CourseLesson"> | boolean
+  replayOpenAt?: Prisma.DateTimeNullableFilter<"CourseLesson"> | Date | string | null
+  replayCloseAt?: Prisma.DateTimeNullableFilter<"CourseLesson"> | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFilter<"CourseLesson"> | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntFilter<"CourseLesson"> | number
   isPublished?: Prisma.BoolFilter<"CourseLesson"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CourseLesson"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CourseLesson"> | Date | string
+}
+
+export type CourseLessonCreateWithoutLiveSessionInput = {
+  id?: string
+  title: string
+  summary?: string | null
+  startsAt?: Date | string | null
+  durationText?: string | null
+  originalText?: string | null
+  translation?: string | null
+  annotation?: string | null
+  teacherNote?: string | null
+  reflectionPrompt?: string | null
+  handoutUrl?: string | null
+  handoutStoragePath?: string | null
+  handoutFileName?: string | null
+  handoutContentType?: string | null
+  handoutSizeBytes?: number | null
+  replayVideoUrl?: string | null
+  replayAudioUrl?: string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
+  replayProductionStatus?: $Enums.ReplayProductionStatus
+  sortOrder?: number
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  course: Prisma.CourseCreateNestedOneWithoutLessonUnitsInput
+}
+
+export type CourseLessonUncheckedCreateWithoutLiveSessionInput = {
+  id?: string
+  courseId: string
+  title: string
+  summary?: string | null
+  startsAt?: Date | string | null
+  durationText?: string | null
+  originalText?: string | null
+  translation?: string | null
+  annotation?: string | null
+  teacherNote?: string | null
+  reflectionPrompt?: string | null
+  handoutUrl?: string | null
+  handoutStoragePath?: string | null
+  handoutFileName?: string | null
+  handoutContentType?: string | null
+  handoutSizeBytes?: number | null
+  replayVideoUrl?: string | null
+  replayAudioUrl?: string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
+  replayProductionStatus?: $Enums.ReplayProductionStatus
+  sortOrder?: number
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CourseLessonCreateOrConnectWithoutLiveSessionInput = {
+  where: Prisma.CourseLessonWhereUniqueInput
+  create: Prisma.XOR<Prisma.CourseLessonCreateWithoutLiveSessionInput, Prisma.CourseLessonUncheckedCreateWithoutLiveSessionInput>
+}
+
+export type CourseLessonUpsertWithoutLiveSessionInput = {
+  update: Prisma.XOR<Prisma.CourseLessonUpdateWithoutLiveSessionInput, Prisma.CourseLessonUncheckedUpdateWithoutLiveSessionInput>
+  create: Prisma.XOR<Prisma.CourseLessonCreateWithoutLiveSessionInput, Prisma.CourseLessonUncheckedCreateWithoutLiveSessionInput>
+  where?: Prisma.CourseLessonWhereInput
+}
+
+export type CourseLessonUpdateToOneWithWhereWithoutLiveSessionInput = {
+  where?: Prisma.CourseLessonWhereInput
+  data: Prisma.XOR<Prisma.CourseLessonUpdateWithoutLiveSessionInput, Prisma.CourseLessonUncheckedUpdateWithoutLiveSessionInput>
+}
+
+export type CourseLessonUpdateWithoutLiveSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  durationText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annotation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teacherNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutStoragePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutContentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFieldUpdateOperationsInput | $Enums.ReplayProductionStatus
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  course?: Prisma.CourseUpdateOneRequiredWithoutLessonUnitsNestedInput
+}
+
+export type CourseLessonUncheckedUpdateWithoutLiveSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  durationText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  translation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annotation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teacherNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutStoragePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutContentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFieldUpdateOperationsInput | $Enums.ReplayProductionStatus
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CourseLessonCreateManyCourseInput = {
@@ -791,8 +1171,16 @@ export type CourseLessonCreateManyCourseInput = {
   teacherNote?: string | null
   reflectionPrompt?: string | null
   handoutUrl?: string | null
+  handoutStoragePath?: string | null
+  handoutFileName?: string | null
+  handoutContentType?: string | null
+  handoutSizeBytes?: number | null
   replayVideoUrl?: string | null
   replayAudioUrl?: string | null
+  replayEnabled?: boolean
+  replayOpenAt?: Date | string | null
+  replayCloseAt?: Date | string | null
+  replayProductionStatus?: $Enums.ReplayProductionStatus
   sortOrder?: number
   isPublished?: boolean
   createdAt?: Date | string
@@ -811,12 +1199,21 @@ export type CourseLessonUpdateWithoutCourseInput = {
   teacherNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutStoragePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutContentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFieldUpdateOperationsInput | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  liveSession?: Prisma.LiveSessionUpdateOneWithoutLessonNestedInput
 }
 
 export type CourseLessonUncheckedUpdateWithoutCourseInput = {
@@ -831,12 +1228,21 @@ export type CourseLessonUncheckedUpdateWithoutCourseInput = {
   teacherNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutStoragePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutContentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFieldUpdateOperationsInput | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  liveSession?: Prisma.LiveSessionUncheckedUpdateOneWithoutLessonNestedInput
 }
 
 export type CourseLessonUncheckedUpdateManyWithoutCourseInput = {
@@ -851,8 +1257,16 @@ export type CourseLessonUncheckedUpdateManyWithoutCourseInput = {
   teacherNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reflectionPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   handoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutStoragePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutContentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handoutSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   replayVideoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replayAudioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replayEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replayOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  replayProductionStatus?: Prisma.EnumReplayProductionStatusFieldUpdateOperationsInput | $Enums.ReplayProductionStatus
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -874,13 +1288,22 @@ export type CourseLessonSelect<ExtArgs extends runtime.Types.Extensions.Internal
   teacherNote?: boolean
   reflectionPrompt?: boolean
   handoutUrl?: boolean
+  handoutStoragePath?: boolean
+  handoutFileName?: boolean
+  handoutContentType?: boolean
+  handoutSizeBytes?: boolean
   replayVideoUrl?: boolean
   replayAudioUrl?: boolean
+  replayEnabled?: boolean
+  replayOpenAt?: boolean
+  replayCloseAt?: boolean
+  replayProductionStatus?: boolean
   sortOrder?: boolean
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  liveSession?: boolean | Prisma.CourseLesson$liveSessionArgs<ExtArgs>
 }, ExtArgs["result"]["courseLesson"]>
 
 export type CourseLessonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -896,8 +1319,16 @@ export type CourseLessonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   teacherNote?: boolean
   reflectionPrompt?: boolean
   handoutUrl?: boolean
+  handoutStoragePath?: boolean
+  handoutFileName?: boolean
+  handoutContentType?: boolean
+  handoutSizeBytes?: boolean
   replayVideoUrl?: boolean
   replayAudioUrl?: boolean
+  replayEnabled?: boolean
+  replayOpenAt?: boolean
+  replayCloseAt?: boolean
+  replayProductionStatus?: boolean
   sortOrder?: boolean
   isPublished?: boolean
   createdAt?: boolean
@@ -918,8 +1349,16 @@ export type CourseLessonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   teacherNote?: boolean
   reflectionPrompt?: boolean
   handoutUrl?: boolean
+  handoutStoragePath?: boolean
+  handoutFileName?: boolean
+  handoutContentType?: boolean
+  handoutSizeBytes?: boolean
   replayVideoUrl?: boolean
   replayAudioUrl?: boolean
+  replayEnabled?: boolean
+  replayOpenAt?: boolean
+  replayCloseAt?: boolean
+  replayProductionStatus?: boolean
   sortOrder?: boolean
   isPublished?: boolean
   createdAt?: boolean
@@ -940,17 +1379,26 @@ export type CourseLessonSelectScalar = {
   teacherNote?: boolean
   reflectionPrompt?: boolean
   handoutUrl?: boolean
+  handoutStoragePath?: boolean
+  handoutFileName?: boolean
+  handoutContentType?: boolean
+  handoutSizeBytes?: boolean
   replayVideoUrl?: boolean
   replayAudioUrl?: boolean
+  replayEnabled?: boolean
+  replayOpenAt?: boolean
+  replayCloseAt?: boolean
+  replayProductionStatus?: boolean
   sortOrder?: boolean
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CourseLessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "title" | "summary" | "startsAt" | "durationText" | "originalText" | "translation" | "annotation" | "teacherNote" | "reflectionPrompt" | "handoutUrl" | "replayVideoUrl" | "replayAudioUrl" | "sortOrder" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["courseLesson"]>
+export type CourseLessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "title" | "summary" | "startsAt" | "durationText" | "originalText" | "translation" | "annotation" | "teacherNote" | "reflectionPrompt" | "handoutUrl" | "handoutStoragePath" | "handoutFileName" | "handoutContentType" | "handoutSizeBytes" | "replayVideoUrl" | "replayAudioUrl" | "replayEnabled" | "replayOpenAt" | "replayCloseAt" | "replayProductionStatus" | "sortOrder" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["courseLesson"]>
 export type CourseLessonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  liveSession?: boolean | Prisma.CourseLesson$liveSessionArgs<ExtArgs>
 }
 export type CourseLessonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -963,6 +1411,7 @@ export type $CourseLessonPayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "CourseLesson"
   objects: {
     course: Prisma.$CoursePayload<ExtArgs>
+    liveSession: Prisma.$LiveSessionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -977,8 +1426,16 @@ export type $CourseLessonPayload<ExtArgs extends runtime.Types.Extensions.Intern
     teacherNote: string | null
     reflectionPrompt: string | null
     handoutUrl: string | null
+    handoutStoragePath: string | null
+    handoutFileName: string | null
+    handoutContentType: string | null
+    handoutSizeBytes: number | null
     replayVideoUrl: string | null
     replayAudioUrl: string | null
+    replayEnabled: boolean
+    replayOpenAt: Date | null
+    replayCloseAt: Date | null
+    replayProductionStatus: $Enums.ReplayProductionStatus
     sortOrder: number
     isPublished: boolean
     createdAt: Date
@@ -1378,6 +1835,7 @@ readonly fields: CourseLessonFieldRefs;
 export interface Prisma__CourseLessonClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  liveSession<T extends Prisma.CourseLesson$liveSessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseLesson$liveSessionArgs<ExtArgs>>): Prisma.Prisma__LiveSessionClient<runtime.Types.Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1419,8 +1877,16 @@ export interface CourseLessonFieldRefs {
   readonly teacherNote: Prisma.FieldRef<"CourseLesson", 'String'>
   readonly reflectionPrompt: Prisma.FieldRef<"CourseLesson", 'String'>
   readonly handoutUrl: Prisma.FieldRef<"CourseLesson", 'String'>
+  readonly handoutStoragePath: Prisma.FieldRef<"CourseLesson", 'String'>
+  readonly handoutFileName: Prisma.FieldRef<"CourseLesson", 'String'>
+  readonly handoutContentType: Prisma.FieldRef<"CourseLesson", 'String'>
+  readonly handoutSizeBytes: Prisma.FieldRef<"CourseLesson", 'Int'>
   readonly replayVideoUrl: Prisma.FieldRef<"CourseLesson", 'String'>
   readonly replayAudioUrl: Prisma.FieldRef<"CourseLesson", 'String'>
+  readonly replayEnabled: Prisma.FieldRef<"CourseLesson", 'Boolean'>
+  readonly replayOpenAt: Prisma.FieldRef<"CourseLesson", 'DateTime'>
+  readonly replayCloseAt: Prisma.FieldRef<"CourseLesson", 'DateTime'>
+  readonly replayProductionStatus: Prisma.FieldRef<"CourseLesson", 'ReplayProductionStatus'>
   readonly sortOrder: Prisma.FieldRef<"CourseLesson", 'Int'>
   readonly isPublished: Prisma.FieldRef<"CourseLesson", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"CourseLesson", 'DateTime'>
@@ -1823,6 +2289,25 @@ export type CourseLessonDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many CourseLessons to delete.
    */
   limit?: number
+}
+
+/**
+ * CourseLesson.liveSession
+ */
+export type CourseLesson$liveSessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LiveSession
+   */
+  select?: Prisma.LiveSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LiveSession
+   */
+  omit?: Prisma.LiveSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LiveSessionInclude<ExtArgs> | null
+  where?: Prisma.LiveSessionWhereInput
 }
 
 /**

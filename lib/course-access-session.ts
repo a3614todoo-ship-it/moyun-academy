@@ -74,13 +74,15 @@ export async function getAuthorizedCoursePurchase(slug: string) {
           lessonUnits: {
             where: { isPublished: true },
             orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
-          },
-          liveSession: {
             include: {
-              questions: {
-                where: { status: { not: LiveQuestionStatus.HIDDEN } },
-                orderBy: [{ upvoteCount: "desc" }, { createdAt: "desc" }],
-                take: 50,
+              liveSession: {
+                include: {
+                  questions: {
+                    where: { status: { not: LiveQuestionStatus.HIDDEN } },
+                    orderBy: [{ isPinned: "desc" }, { upvoteCount: "desc" }, { createdAt: "desc" }],
+                    take: 50,
+                  },
+                },
               },
             },
           },

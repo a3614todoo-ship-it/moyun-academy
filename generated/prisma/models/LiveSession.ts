@@ -27,6 +27,7 @@ export type AggregateLiveSession = {
 export type LiveSessionMinAggregateOutputType = {
   id: string | null
   courseId: string | null
+  lessonId: string | null
   title: string | null
   platform: $Enums.LivePlatform | null
   isEnabled: boolean | null
@@ -47,6 +48,7 @@ export type LiveSessionMinAggregateOutputType = {
 export type LiveSessionMaxAggregateOutputType = {
   id: string | null
   courseId: string | null
+  lessonId: string | null
   title: string | null
   platform: $Enums.LivePlatform | null
   isEnabled: boolean | null
@@ -67,6 +69,7 @@ export type LiveSessionMaxAggregateOutputType = {
 export type LiveSessionCountAggregateOutputType = {
   id: number
   courseId: number
+  lessonId: number
   title: number
   platform: number
   isEnabled: number
@@ -89,6 +92,7 @@ export type LiveSessionCountAggregateOutputType = {
 export type LiveSessionMinAggregateInputType = {
   id?: true
   courseId?: true
+  lessonId?: true
   title?: true
   platform?: true
   isEnabled?: true
@@ -109,6 +113,7 @@ export type LiveSessionMinAggregateInputType = {
 export type LiveSessionMaxAggregateInputType = {
   id?: true
   courseId?: true
+  lessonId?: true
   title?: true
   platform?: true
   isEnabled?: true
@@ -129,6 +134,7 @@ export type LiveSessionMaxAggregateInputType = {
 export type LiveSessionCountAggregateInputType = {
   id?: true
   courseId?: true
+  lessonId?: true
   title?: true
   platform?: true
   isEnabled?: true
@@ -222,6 +228,7 @@ export type LiveSessionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type LiveSessionGroupByOutputType = {
   id: string
   courseId: string
+  lessonId: string | null
   title: string
   platform: $Enums.LivePlatform
   isEnabled: boolean
@@ -263,6 +270,7 @@ export type LiveSessionWhereInput = {
   NOT?: Prisma.LiveSessionWhereInput | Prisma.LiveSessionWhereInput[]
   id?: Prisma.StringFilter<"LiveSession"> | string
   courseId?: Prisma.StringFilter<"LiveSession"> | string
+  lessonId?: Prisma.StringNullableFilter<"LiveSession"> | string | null
   title?: Prisma.StringFilter<"LiveSession"> | string
   platform?: Prisma.EnumLivePlatformFilter<"LiveSession"> | $Enums.LivePlatform
   isEnabled?: Prisma.BoolFilter<"LiveSession"> | boolean
@@ -279,12 +287,14 @@ export type LiveSessionWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"LiveSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LiveSession"> | Date | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  lesson?: Prisma.XOR<Prisma.CourseLessonNullableScalarRelationFilter, Prisma.CourseLessonWhereInput> | null
   questions?: Prisma.LiveQuestionListRelationFilter
 }
 
 export type LiveSessionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
+  lessonId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   platform?: Prisma.SortOrder
   isEnabled?: Prisma.SortOrder
@@ -301,15 +311,17 @@ export type LiveSessionOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
+  lesson?: Prisma.CourseLessonOrderByWithRelationInput
   questions?: Prisma.LiveQuestionOrderByRelationAggregateInput
 }
 
 export type LiveSessionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  courseId?: string
+  lessonId?: string
   AND?: Prisma.LiveSessionWhereInput | Prisma.LiveSessionWhereInput[]
   OR?: Prisma.LiveSessionWhereInput[]
   NOT?: Prisma.LiveSessionWhereInput | Prisma.LiveSessionWhereInput[]
+  courseId?: Prisma.StringFilter<"LiveSession"> | string
   title?: Prisma.StringFilter<"LiveSession"> | string
   platform?: Prisma.EnumLivePlatformFilter<"LiveSession"> | $Enums.LivePlatform
   isEnabled?: Prisma.BoolFilter<"LiveSession"> | boolean
@@ -326,12 +338,14 @@ export type LiveSessionWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"LiveSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LiveSession"> | Date | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  lesson?: Prisma.XOR<Prisma.CourseLessonNullableScalarRelationFilter, Prisma.CourseLessonWhereInput> | null
   questions?: Prisma.LiveQuestionListRelationFilter
-}, "id" | "courseId">
+}, "id" | "lessonId">
 
 export type LiveSessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
+  lessonId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   platform?: Prisma.SortOrder
   isEnabled?: Prisma.SortOrder
@@ -358,6 +372,7 @@ export type LiveSessionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.LiveSessionScalarWhereWithAggregatesInput | Prisma.LiveSessionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"LiveSession"> | string
   courseId?: Prisma.StringWithAggregatesFilter<"LiveSession"> | string
+  lessonId?: Prisma.StringNullableWithAggregatesFilter<"LiveSession"> | string | null
   title?: Prisma.StringWithAggregatesFilter<"LiveSession"> | string
   platform?: Prisma.EnumLivePlatformWithAggregatesFilter<"LiveSession"> | $Enums.LivePlatform
   isEnabled?: Prisma.BoolWithAggregatesFilter<"LiveSession"> | boolean
@@ -392,13 +407,15 @@ export type LiveSessionCreateInput = {
   externalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  course: Prisma.CourseCreateNestedOneWithoutLiveSessionInput
+  course: Prisma.CourseCreateNestedOneWithoutLiveSessionsInput
+  lesson?: Prisma.CourseLessonCreateNestedOneWithoutLiveSessionInput
   questions?: Prisma.LiveQuestionCreateNestedManyWithoutLiveSessionInput
 }
 
 export type LiveSessionUncheckedCreateInput = {
   id?: string
   courseId: string
+  lessonId?: string | null
   title: string
   platform?: $Enums.LivePlatform
   isEnabled?: boolean
@@ -434,13 +451,15 @@ export type LiveSessionUpdateInput = {
   externalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  course?: Prisma.CourseUpdateOneRequiredWithoutLiveSessionNestedInput
+  course?: Prisma.CourseUpdateOneRequiredWithoutLiveSessionsNestedInput
+  lesson?: Prisma.CourseLessonUpdateOneWithoutLiveSessionNestedInput
   questions?: Prisma.LiveQuestionUpdateManyWithoutLiveSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  lessonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   platform?: Prisma.EnumLivePlatformFieldUpdateOperationsInput | $Enums.LivePlatform
   isEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -462,6 +481,7 @@ export type LiveSessionUncheckedUpdateInput = {
 export type LiveSessionCreateManyInput = {
   id?: string
   courseId: string
+  lessonId?: string | null
   title: string
   platform?: $Enums.LivePlatform
   isEnabled?: boolean
@@ -501,6 +521,7 @@ export type LiveSessionUpdateManyMutationInput = {
 export type LiveSessionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  lessonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   platform?: Prisma.EnumLivePlatformFieldUpdateOperationsInput | $Enums.LivePlatform
   isEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -518,14 +539,20 @@ export type LiveSessionUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type LiveSessionNullableScalarRelationFilter = {
-  is?: Prisma.LiveSessionWhereInput | null
-  isNot?: Prisma.LiveSessionWhereInput | null
+export type LiveSessionListRelationFilter = {
+  every?: Prisma.LiveSessionWhereInput
+  some?: Prisma.LiveSessionWhereInput
+  none?: Prisma.LiveSessionWhereInput
+}
+
+export type LiveSessionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type LiveSessionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
+  lessonId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   platform?: Prisma.SortOrder
   isEnabled?: Prisma.SortOrder
@@ -546,6 +573,7 @@ export type LiveSessionCountOrderByAggregateInput = {
 export type LiveSessionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
+  lessonId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   platform?: Prisma.SortOrder
   isEnabled?: Prisma.SortOrder
@@ -566,6 +594,7 @@ export type LiveSessionMaxOrderByAggregateInput = {
 export type LiveSessionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
+  lessonId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   platform?: Prisma.SortOrder
   isEnabled?: Prisma.SortOrder
@@ -588,36 +617,51 @@ export type LiveSessionScalarRelationFilter = {
   isNot?: Prisma.LiveSessionWhereInput
 }
 
-export type LiveSessionCreateNestedOneWithoutCourseInput = {
-  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput>
-  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutCourseInput
-  connect?: Prisma.LiveSessionWhereUniqueInput
+export type LiveSessionNullableScalarRelationFilter = {
+  is?: Prisma.LiveSessionWhereInput | null
+  isNot?: Prisma.LiveSessionWhereInput | null
 }
 
-export type LiveSessionUncheckedCreateNestedOneWithoutCourseInput = {
-  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput>
-  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutCourseInput
-  connect?: Prisma.LiveSessionWhereUniqueInput
+export type LiveSessionCreateNestedManyWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput> | Prisma.LiveSessionCreateWithoutCourseInput[] | Prisma.LiveSessionUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutCourseInput | Prisma.LiveSessionCreateOrConnectWithoutCourseInput[]
+  createMany?: Prisma.LiveSessionCreateManyCourseInputEnvelope
+  connect?: Prisma.LiveSessionWhereUniqueInput | Prisma.LiveSessionWhereUniqueInput[]
 }
 
-export type LiveSessionUpdateOneWithoutCourseNestedInput = {
-  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput>
-  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutCourseInput
-  upsert?: Prisma.LiveSessionUpsertWithoutCourseInput
-  disconnect?: Prisma.LiveSessionWhereInput | boolean
-  delete?: Prisma.LiveSessionWhereInput | boolean
-  connect?: Prisma.LiveSessionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LiveSessionUpdateToOneWithWhereWithoutCourseInput, Prisma.LiveSessionUpdateWithoutCourseInput>, Prisma.LiveSessionUncheckedUpdateWithoutCourseInput>
+export type LiveSessionUncheckedCreateNestedManyWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput> | Prisma.LiveSessionCreateWithoutCourseInput[] | Prisma.LiveSessionUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutCourseInput | Prisma.LiveSessionCreateOrConnectWithoutCourseInput[]
+  createMany?: Prisma.LiveSessionCreateManyCourseInputEnvelope
+  connect?: Prisma.LiveSessionWhereUniqueInput | Prisma.LiveSessionWhereUniqueInput[]
 }
 
-export type LiveSessionUncheckedUpdateOneWithoutCourseNestedInput = {
-  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput>
-  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutCourseInput
-  upsert?: Prisma.LiveSessionUpsertWithoutCourseInput
-  disconnect?: Prisma.LiveSessionWhereInput | boolean
-  delete?: Prisma.LiveSessionWhereInput | boolean
-  connect?: Prisma.LiveSessionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LiveSessionUpdateToOneWithWhereWithoutCourseInput, Prisma.LiveSessionUpdateWithoutCourseInput>, Prisma.LiveSessionUncheckedUpdateWithoutCourseInput>
+export type LiveSessionUpdateManyWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput> | Prisma.LiveSessionCreateWithoutCourseInput[] | Prisma.LiveSessionUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutCourseInput | Prisma.LiveSessionCreateOrConnectWithoutCourseInput[]
+  upsert?: Prisma.LiveSessionUpsertWithWhereUniqueWithoutCourseInput | Prisma.LiveSessionUpsertWithWhereUniqueWithoutCourseInput[]
+  createMany?: Prisma.LiveSessionCreateManyCourseInputEnvelope
+  set?: Prisma.LiveSessionWhereUniqueInput | Prisma.LiveSessionWhereUniqueInput[]
+  disconnect?: Prisma.LiveSessionWhereUniqueInput | Prisma.LiveSessionWhereUniqueInput[]
+  delete?: Prisma.LiveSessionWhereUniqueInput | Prisma.LiveSessionWhereUniqueInput[]
+  connect?: Prisma.LiveSessionWhereUniqueInput | Prisma.LiveSessionWhereUniqueInput[]
+  update?: Prisma.LiveSessionUpdateWithWhereUniqueWithoutCourseInput | Prisma.LiveSessionUpdateWithWhereUniqueWithoutCourseInput[]
+  updateMany?: Prisma.LiveSessionUpdateManyWithWhereWithoutCourseInput | Prisma.LiveSessionUpdateManyWithWhereWithoutCourseInput[]
+  deleteMany?: Prisma.LiveSessionScalarWhereInput | Prisma.LiveSessionScalarWhereInput[]
+}
+
+export type LiveSessionUncheckedUpdateManyWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput> | Prisma.LiveSessionCreateWithoutCourseInput[] | Prisma.LiveSessionUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutCourseInput | Prisma.LiveSessionCreateOrConnectWithoutCourseInput[]
+  upsert?: Prisma.LiveSessionUpsertWithWhereUniqueWithoutCourseInput | Prisma.LiveSessionUpsertWithWhereUniqueWithoutCourseInput[]
+  createMany?: Prisma.LiveSessionCreateManyCourseInputEnvelope
+  set?: Prisma.LiveSessionWhereUniqueInput | Prisma.LiveSessionWhereUniqueInput[]
+  disconnect?: Prisma.LiveSessionWhereUniqueInput | Prisma.LiveSessionWhereUniqueInput[]
+  delete?: Prisma.LiveSessionWhereUniqueInput | Prisma.LiveSessionWhereUniqueInput[]
+  connect?: Prisma.LiveSessionWhereUniqueInput | Prisma.LiveSessionWhereUniqueInput[]
+  update?: Prisma.LiveSessionUpdateWithWhereUniqueWithoutCourseInput | Prisma.LiveSessionUpdateWithWhereUniqueWithoutCourseInput[]
+  updateMany?: Prisma.LiveSessionUpdateManyWithWhereWithoutCourseInput | Prisma.LiveSessionUpdateManyWithWhereWithoutCourseInput[]
+  deleteMany?: Prisma.LiveSessionScalarWhereInput | Prisma.LiveSessionScalarWhereInput[]
 }
 
 export type EnumLivePlatformFieldUpdateOperationsInput = {
@@ -638,6 +682,38 @@ export type LiveSessionUpdateOneRequiredWithoutQuestionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LiveSessionUpdateToOneWithWhereWithoutQuestionsInput, Prisma.LiveSessionUpdateWithoutQuestionsInput>, Prisma.LiveSessionUncheckedUpdateWithoutQuestionsInput>
 }
 
+export type LiveSessionCreateNestedOneWithoutLessonInput = {
+  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutLessonInput, Prisma.LiveSessionUncheckedCreateWithoutLessonInput>
+  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutLessonInput
+  connect?: Prisma.LiveSessionWhereUniqueInput
+}
+
+export type LiveSessionUncheckedCreateNestedOneWithoutLessonInput = {
+  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutLessonInput, Prisma.LiveSessionUncheckedCreateWithoutLessonInput>
+  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutLessonInput
+  connect?: Prisma.LiveSessionWhereUniqueInput
+}
+
+export type LiveSessionUpdateOneWithoutLessonNestedInput = {
+  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutLessonInput, Prisma.LiveSessionUncheckedCreateWithoutLessonInput>
+  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutLessonInput
+  upsert?: Prisma.LiveSessionUpsertWithoutLessonInput
+  disconnect?: Prisma.LiveSessionWhereInput | boolean
+  delete?: Prisma.LiveSessionWhereInput | boolean
+  connect?: Prisma.LiveSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LiveSessionUpdateToOneWithWhereWithoutLessonInput, Prisma.LiveSessionUpdateWithoutLessonInput>, Prisma.LiveSessionUncheckedUpdateWithoutLessonInput>
+}
+
+export type LiveSessionUncheckedUpdateOneWithoutLessonNestedInput = {
+  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutLessonInput, Prisma.LiveSessionUncheckedCreateWithoutLessonInput>
+  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutLessonInput
+  upsert?: Prisma.LiveSessionUpsertWithoutLessonInput
+  disconnect?: Prisma.LiveSessionWhereInput | boolean
+  delete?: Prisma.LiveSessionWhereInput | boolean
+  connect?: Prisma.LiveSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LiveSessionUpdateToOneWithWhereWithoutLessonInput, Prisma.LiveSessionUpdateWithoutLessonInput>, Prisma.LiveSessionUncheckedUpdateWithoutLessonInput>
+}
+
 export type LiveSessionCreateWithoutCourseInput = {
   id?: string
   title: string
@@ -655,11 +731,13 @@ export type LiveSessionCreateWithoutCourseInput = {
   externalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  lesson?: Prisma.CourseLessonCreateNestedOneWithoutLiveSessionInput
   questions?: Prisma.LiveQuestionCreateNestedManyWithoutLiveSessionInput
 }
 
 export type LiveSessionUncheckedCreateWithoutCourseInput = {
   id?: string
+  lessonId?: string | null
   title: string
   platform?: $Enums.LivePlatform
   isEnabled?: boolean
@@ -683,55 +761,49 @@ export type LiveSessionCreateOrConnectWithoutCourseInput = {
   create: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput>
 }
 
-export type LiveSessionUpsertWithoutCourseInput = {
-  update: Prisma.XOR<Prisma.LiveSessionUpdateWithoutCourseInput, Prisma.LiveSessionUncheckedUpdateWithoutCourseInput>
-  create: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput>
-  where?: Prisma.LiveSessionWhereInput
+export type LiveSessionCreateManyCourseInputEnvelope = {
+  data: Prisma.LiveSessionCreateManyCourseInput | Prisma.LiveSessionCreateManyCourseInput[]
+  skipDuplicates?: boolean
 }
 
-export type LiveSessionUpdateToOneWithWhereWithoutCourseInput = {
-  where?: Prisma.LiveSessionWhereInput
+export type LiveSessionUpsertWithWhereUniqueWithoutCourseInput = {
+  where: Prisma.LiveSessionWhereUniqueInput
+  update: Prisma.XOR<Prisma.LiveSessionUpdateWithoutCourseInput, Prisma.LiveSessionUncheckedUpdateWithoutCourseInput>
+  create: Prisma.XOR<Prisma.LiveSessionCreateWithoutCourseInput, Prisma.LiveSessionUncheckedCreateWithoutCourseInput>
+}
+
+export type LiveSessionUpdateWithWhereUniqueWithoutCourseInput = {
+  where: Prisma.LiveSessionWhereUniqueInput
   data: Prisma.XOR<Prisma.LiveSessionUpdateWithoutCourseInput, Prisma.LiveSessionUncheckedUpdateWithoutCourseInput>
 }
 
-export type LiveSessionUpdateWithoutCourseInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  platform?: Prisma.EnumLivePlatformFieldUpdateOperationsInput | $Enums.LivePlatform
-  isEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  playerOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  playerCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  youtubeVideoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  youtubeChatEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  enableYoutubeChat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  enableQuestions?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  showWatermark?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  externalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  questions?: Prisma.LiveQuestionUpdateManyWithoutLiveSessionNestedInput
+export type LiveSessionUpdateManyWithWhereWithoutCourseInput = {
+  where: Prisma.LiveSessionScalarWhereInput
+  data: Prisma.XOR<Prisma.LiveSessionUpdateManyMutationInput, Prisma.LiveSessionUncheckedUpdateManyWithoutCourseInput>
 }
 
-export type LiveSessionUncheckedUpdateWithoutCourseInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  platform?: Prisma.EnumLivePlatformFieldUpdateOperationsInput | $Enums.LivePlatform
-  isEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  playerOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  playerCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  youtubeVideoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  youtubeChatEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  enableYoutubeChat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  enableQuestions?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  showWatermark?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  externalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  questions?: Prisma.LiveQuestionUncheckedUpdateManyWithoutLiveSessionNestedInput
+export type LiveSessionScalarWhereInput = {
+  AND?: Prisma.LiveSessionScalarWhereInput | Prisma.LiveSessionScalarWhereInput[]
+  OR?: Prisma.LiveSessionScalarWhereInput[]
+  NOT?: Prisma.LiveSessionScalarWhereInput | Prisma.LiveSessionScalarWhereInput[]
+  id?: Prisma.StringFilter<"LiveSession"> | string
+  courseId?: Prisma.StringFilter<"LiveSession"> | string
+  lessonId?: Prisma.StringNullableFilter<"LiveSession"> | string | null
+  title?: Prisma.StringFilter<"LiveSession"> | string
+  platform?: Prisma.EnumLivePlatformFilter<"LiveSession"> | $Enums.LivePlatform
+  isEnabled?: Prisma.BoolFilter<"LiveSession"> | boolean
+  startsAt?: Prisma.DateTimeNullableFilter<"LiveSession"> | Date | string | null
+  endsAt?: Prisma.DateTimeNullableFilter<"LiveSession"> | Date | string | null
+  playerOpenAt?: Prisma.DateTimeNullableFilter<"LiveSession"> | Date | string | null
+  playerCloseAt?: Prisma.DateTimeNullableFilter<"LiveSession"> | Date | string | null
+  youtubeVideoId?: Prisma.StringNullableFilter<"LiveSession"> | string | null
+  youtubeChatEmbedUrl?: Prisma.StringNullableFilter<"LiveSession"> | string | null
+  enableYoutubeChat?: Prisma.BoolFilter<"LiveSession"> | boolean
+  enableQuestions?: Prisma.BoolFilter<"LiveSession"> | boolean
+  showWatermark?: Prisma.BoolFilter<"LiveSession"> | boolean
+  externalUrl?: Prisma.StringNullableFilter<"LiveSession"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"LiveSession"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"LiveSession"> | Date | string
 }
 
 export type LiveSessionCreateWithoutQuestionsInput = {
@@ -751,12 +823,14 @@ export type LiveSessionCreateWithoutQuestionsInput = {
   externalUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  course: Prisma.CourseCreateNestedOneWithoutLiveSessionInput
+  course: Prisma.CourseCreateNestedOneWithoutLiveSessionsInput
+  lesson?: Prisma.CourseLessonCreateNestedOneWithoutLiveSessionInput
 }
 
 export type LiveSessionUncheckedCreateWithoutQuestionsInput = {
   id?: string
   courseId: string
+  lessonId?: string | null
   title: string
   platform?: $Enums.LivePlatform
   isEnabled?: boolean
@@ -807,12 +881,196 @@ export type LiveSessionUpdateWithoutQuestionsInput = {
   externalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  course?: Prisma.CourseUpdateOneRequiredWithoutLiveSessionNestedInput
+  course?: Prisma.CourseUpdateOneRequiredWithoutLiveSessionsNestedInput
+  lesson?: Prisma.CourseLessonUpdateOneWithoutLiveSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateWithoutQuestionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  lessonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumLivePlatformFieldUpdateOperationsInput | $Enums.LivePlatform
+  isEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playerOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playerCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  youtubeVideoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeChatEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enableYoutubeChat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableQuestions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showWatermark?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  externalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LiveSessionCreateWithoutLessonInput = {
+  id?: string
+  title: string
+  platform?: $Enums.LivePlatform
+  isEnabled?: boolean
+  startsAt?: Date | string | null
+  endsAt?: Date | string | null
+  playerOpenAt?: Date | string | null
+  playerCloseAt?: Date | string | null
+  youtubeVideoId?: string | null
+  youtubeChatEmbedUrl?: string | null
+  enableYoutubeChat?: boolean
+  enableQuestions?: boolean
+  showWatermark?: boolean
+  externalUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  course: Prisma.CourseCreateNestedOneWithoutLiveSessionsInput
+  questions?: Prisma.LiveQuestionCreateNestedManyWithoutLiveSessionInput
+}
+
+export type LiveSessionUncheckedCreateWithoutLessonInput = {
+  id?: string
+  courseId: string
+  title: string
+  platform?: $Enums.LivePlatform
+  isEnabled?: boolean
+  startsAt?: Date | string | null
+  endsAt?: Date | string | null
+  playerOpenAt?: Date | string | null
+  playerCloseAt?: Date | string | null
+  youtubeVideoId?: string | null
+  youtubeChatEmbedUrl?: string | null
+  enableYoutubeChat?: boolean
+  enableQuestions?: boolean
+  showWatermark?: boolean
+  externalUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  questions?: Prisma.LiveQuestionUncheckedCreateNestedManyWithoutLiveSessionInput
+}
+
+export type LiveSessionCreateOrConnectWithoutLessonInput = {
+  where: Prisma.LiveSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.LiveSessionCreateWithoutLessonInput, Prisma.LiveSessionUncheckedCreateWithoutLessonInput>
+}
+
+export type LiveSessionUpsertWithoutLessonInput = {
+  update: Prisma.XOR<Prisma.LiveSessionUpdateWithoutLessonInput, Prisma.LiveSessionUncheckedUpdateWithoutLessonInput>
+  create: Prisma.XOR<Prisma.LiveSessionCreateWithoutLessonInput, Prisma.LiveSessionUncheckedCreateWithoutLessonInput>
+  where?: Prisma.LiveSessionWhereInput
+}
+
+export type LiveSessionUpdateToOneWithWhereWithoutLessonInput = {
+  where?: Prisma.LiveSessionWhereInput
+  data: Prisma.XOR<Prisma.LiveSessionUpdateWithoutLessonInput, Prisma.LiveSessionUncheckedUpdateWithoutLessonInput>
+}
+
+export type LiveSessionUpdateWithoutLessonInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumLivePlatformFieldUpdateOperationsInput | $Enums.LivePlatform
+  isEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playerOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playerCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  youtubeVideoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeChatEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enableYoutubeChat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableQuestions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showWatermark?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  externalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  course?: Prisma.CourseUpdateOneRequiredWithoutLiveSessionsNestedInput
+  questions?: Prisma.LiveQuestionUpdateManyWithoutLiveSessionNestedInput
+}
+
+export type LiveSessionUncheckedUpdateWithoutLessonInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumLivePlatformFieldUpdateOperationsInput | $Enums.LivePlatform
+  isEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playerOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playerCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  youtubeVideoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeChatEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enableYoutubeChat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableQuestions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showWatermark?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  externalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  questions?: Prisma.LiveQuestionUncheckedUpdateManyWithoutLiveSessionNestedInput
+}
+
+export type LiveSessionCreateManyCourseInput = {
+  id?: string
+  lessonId?: string | null
+  title: string
+  platform?: $Enums.LivePlatform
+  isEnabled?: boolean
+  startsAt?: Date | string | null
+  endsAt?: Date | string | null
+  playerOpenAt?: Date | string | null
+  playerCloseAt?: Date | string | null
+  youtubeVideoId?: string | null
+  youtubeChatEmbedUrl?: string | null
+  enableYoutubeChat?: boolean
+  enableQuestions?: boolean
+  showWatermark?: boolean
+  externalUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LiveSessionUpdateWithoutCourseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumLivePlatformFieldUpdateOperationsInput | $Enums.LivePlatform
+  isEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playerOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playerCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  youtubeVideoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeChatEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enableYoutubeChat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableQuestions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showWatermark?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  externalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lesson?: Prisma.CourseLessonUpdateOneWithoutLiveSessionNestedInput
+  questions?: Prisma.LiveQuestionUpdateManyWithoutLiveSessionNestedInput
+}
+
+export type LiveSessionUncheckedUpdateWithoutCourseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lessonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumLivePlatformFieldUpdateOperationsInput | $Enums.LivePlatform
+  isEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playerOpenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playerCloseAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  youtubeVideoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeChatEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enableYoutubeChat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableQuestions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showWatermark?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  externalUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  questions?: Prisma.LiveQuestionUncheckedUpdateManyWithoutLiveSessionNestedInput
+}
+
+export type LiveSessionUncheckedUpdateManyWithoutCourseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lessonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   platform?: Prisma.EnumLivePlatformFieldUpdateOperationsInput | $Enums.LivePlatform
   isEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -864,6 +1122,7 @@ export type LiveSessionCountOutputTypeCountQuestionsArgs<ExtArgs extends runtime
 export type LiveSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   courseId?: boolean
+  lessonId?: boolean
   title?: boolean
   platform?: boolean
   isEnabled?: boolean
@@ -880,6 +1139,7 @@ export type LiveSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   createdAt?: boolean
   updatedAt?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  lesson?: boolean | Prisma.LiveSession$lessonArgs<ExtArgs>
   questions?: boolean | Prisma.LiveSession$questionsArgs<ExtArgs>
   _count?: boolean | Prisma.LiveSessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["liveSession"]>
@@ -887,6 +1147,7 @@ export type LiveSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 export type LiveSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   courseId?: boolean
+  lessonId?: boolean
   title?: boolean
   platform?: boolean
   isEnabled?: boolean
@@ -903,11 +1164,13 @@ export type LiveSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   updatedAt?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  lesson?: boolean | Prisma.LiveSession$lessonArgs<ExtArgs>
 }, ExtArgs["result"]["liveSession"]>
 
 export type LiveSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   courseId?: boolean
+  lessonId?: boolean
   title?: boolean
   platform?: boolean
   isEnabled?: boolean
@@ -924,11 +1187,13 @@ export type LiveSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   updatedAt?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  lesson?: boolean | Prisma.LiveSession$lessonArgs<ExtArgs>
 }, ExtArgs["result"]["liveSession"]>
 
 export type LiveSessionSelectScalar = {
   id?: boolean
   courseId?: boolean
+  lessonId?: boolean
   title?: boolean
   platform?: boolean
   isEnabled?: boolean
@@ -946,28 +1211,33 @@ export type LiveSessionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LiveSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "title" | "platform" | "isEnabled" | "startsAt" | "endsAt" | "playerOpenAt" | "playerCloseAt" | "youtubeVideoId" | "youtubeChatEmbedUrl" | "enableYoutubeChat" | "enableQuestions" | "showWatermark" | "externalUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["liveSession"]>
+export type LiveSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "lessonId" | "title" | "platform" | "isEnabled" | "startsAt" | "endsAt" | "playerOpenAt" | "playerCloseAt" | "youtubeVideoId" | "youtubeChatEmbedUrl" | "enableYoutubeChat" | "enableQuestions" | "showWatermark" | "externalUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["liveSession"]>
 export type LiveSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  lesson?: boolean | Prisma.LiveSession$lessonArgs<ExtArgs>
   questions?: boolean | Prisma.LiveSession$questionsArgs<ExtArgs>
   _count?: boolean | Prisma.LiveSessionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LiveSessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  lesson?: boolean | Prisma.LiveSession$lessonArgs<ExtArgs>
 }
 export type LiveSessionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  lesson?: boolean | Prisma.LiveSession$lessonArgs<ExtArgs>
 }
 
 export type $LiveSessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LiveSession"
   objects: {
     course: Prisma.$CoursePayload<ExtArgs>
+    lesson: Prisma.$CourseLessonPayload<ExtArgs> | null
     questions: Prisma.$LiveQuestionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     courseId: string
+    lessonId: string | null
     title: string
     platform: $Enums.LivePlatform
     isEnabled: boolean
@@ -1378,6 +1648,7 @@ readonly fields: LiveSessionFieldRefs;
 export interface Prisma__LiveSessionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  lesson<T extends Prisma.LiveSession$lessonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LiveSession$lessonArgs<ExtArgs>>): Prisma.Prisma__CourseLessonClient<runtime.Types.Result.GetResult<Prisma.$CourseLessonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   questions<T extends Prisma.LiveSession$questionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LiveSession$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiveQuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1410,6 +1681,7 @@ export interface Prisma__LiveSessionClient<T, Null = never, ExtArgs extends runt
 export interface LiveSessionFieldRefs {
   readonly id: Prisma.FieldRef<"LiveSession", 'String'>
   readonly courseId: Prisma.FieldRef<"LiveSession", 'String'>
+  readonly lessonId: Prisma.FieldRef<"LiveSession", 'String'>
   readonly title: Prisma.FieldRef<"LiveSession", 'String'>
   readonly platform: Prisma.FieldRef<"LiveSession", 'LivePlatform'>
   readonly isEnabled: Prisma.FieldRef<"LiveSession", 'Boolean'>
@@ -1823,6 +2095,25 @@ export type LiveSessionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many LiveSessions to delete.
    */
   limit?: number
+}
+
+/**
+ * LiveSession.lesson
+ */
+export type LiveSession$lessonArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CourseLesson
+   */
+  select?: Prisma.CourseLessonSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CourseLesson
+   */
+  omit?: Prisma.CourseLessonOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseLessonInclude<ExtArgs> | null
+  where?: Prisma.CourseLessonWhereInput
 }
 
 /**

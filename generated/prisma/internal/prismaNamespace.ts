@@ -2384,6 +2384,7 @@ export type CoursePurchaseScalarFieldEnum = (typeof CoursePurchaseScalarFieldEnu
 export const LiveSessionScalarFieldEnum = {
   id: 'id',
   courseId: 'courseId',
+  lessonId: 'lessonId',
   title: 'title',
   platform: 'platform',
   isEnabled: 'isEnabled',
@@ -2412,6 +2413,7 @@ export const LiveQuestionScalarFieldEnum = {
   emailMasked: 'emailMasked',
   body: 'body',
   status: 'status',
+  isPinned: 'isPinned',
   upvoteCount: 'upvoteCount',
   answeredAt: 'answeredAt',
   answer: 'answer',
@@ -2445,8 +2447,16 @@ export const CourseLessonScalarFieldEnum = {
   teacherNote: 'teacherNote',
   reflectionPrompt: 'reflectionPrompt',
   handoutUrl: 'handoutUrl',
+  handoutStoragePath: 'handoutStoragePath',
+  handoutFileName: 'handoutFileName',
+  handoutContentType: 'handoutContentType',
+  handoutSizeBytes: 'handoutSizeBytes',
   replayVideoUrl: 'replayVideoUrl',
   replayAudioUrl: 'replayAudioUrl',
+  replayEnabled: 'replayEnabled',
+  replayOpenAt: 'replayOpenAt',
+  replayCloseAt: 'replayCloseAt',
+  replayProductionStatus: 'replayProductionStatus',
   sortOrder: 'sortOrder',
   isPublished: 'isPublished',
   createdAt: 'createdAt',
@@ -2717,6 +2727,20 @@ export type EnumLiveQuestionStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
  */
 export type ListEnumLiveQuestionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LiveQuestionStatus[]'>
     
+
+
+/**
+ * Reference to a field of type 'ReplayProductionStatus'
+ */
+export type EnumReplayProductionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReplayProductionStatus'>
+
+
+
+/**
+ * Reference to a field of type 'ReplayProductionStatus[]'
+ */
+export type ListEnumReplayProductionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReplayProductionStatus[]'>
+
 
 
 /**
@@ -2995,4 +3019,3 @@ export type PrismaAction =
  * `PrismaClient` proxy available in interactive transactions.
  */
 export type TransactionClient = Omit<DefaultPrismaClient, runtime.ITXClientDenyList>
-

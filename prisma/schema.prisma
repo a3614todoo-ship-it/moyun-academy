@@ -285,7 +285,7 @@ model Course {
   sortOrder                Int              @default(0)
   publishedAt              DateTime?
   purchases                CoursePurchase[]
-  liveSession              LiveSession?
+  liveSessions             LiveSession[]
   lessonUnits              CourseLesson[]
   createdAt                DateTime         @default(now())
   updatedAt                DateTime         @updatedAt
@@ -336,8 +336,10 @@ model CoursePurchase {
 
 model LiveSession {
   id                  String         @id @default(cuid())
-  courseId            String         @unique
+  courseId            String
   course              Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessonId            String?        @unique
+  lesson              CourseLesson?  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   title               String
   platform            LivePlatform   @default(YOUTUBE_LIVE)
   isEnabled           Boolean        @default(false)
@@ -357,6 +359,7 @@ model LiveSession {
 
   @@index([isEnabled, playerOpenAt, playerCloseAt])
   @@index([platform])
+  @@index([courseId, startsAt])
 }
 
 model LiveQuestion {
@@ -369,6 +372,7 @@ model LiveQuestion {
   emailMasked      String
   body             String
   status           LiveQuestionStatus   @default(OPEN)
+  isPinned         Boolean              @default(false)
   upvoteCount      Int                  @default(0)
   upvotes          LiveQuestionUpvote[]
   answeredAt       DateTime?
@@ -377,6 +381,7 @@ model LiveQuestion {
   updatedAt        DateTime             @updatedAt
 
   @@index([liveSessionId, status, createdAt])
+  @@index([liveSessionId, isPinned, status, createdAt])
   @@index([coursePurchaseId, createdAt])
 }
 
@@ -406,8 +411,17 @@ model CourseLesson {
   teacherNote      String?
   reflectionPrompt String?
   handoutUrl       String?
+  handoutStoragePath String?
+  handoutFileName  String?
+  handoutContentType String?
+  handoutSizeBytes Int?
   replayVideoUrl   String?
   replayAudioUrl   String?
+  replayEnabled    Boolean                @default(false)
+  replayOpenAt     DateTime?
+  replayCloseAt    DateTime?
+  replayProductionStatus ReplayProductionStatus @default(SCHEDULED)
+  liveSession      LiveSession?
   sortOrder        Int       @default(0)
   isPublished      Boolean   @default(true)
   createdAt        DateTime  @default(now())
@@ -415,6 +429,7 @@ model CourseLesson {
 
   @@index([courseId, sortOrder])
   @@index([isPublished, startsAt])
+  @@index([replayEnabled, replayOpenAt, replayCloseAt])
 }
 
 model ContactMessage {
@@ -466,6 +481,7 @@ enum EmailType {
   MEMBER_PRIORITY_OPEN
   LIVE_REMINDER
   REPLAY_CLOSING
+  REPLAY_OPENED
 }
 
 enum CourseAccessType {
@@ -509,6 +525,12 @@ enum LiveQuestionStatus {
   ANSWERED
   PINNED
   HIDDEN
+}
+
+enum ReplayProductionStatus {
+  SCHEDULED
+  PROCESSING
+  READY
 }
 
 enum EmailStatus {

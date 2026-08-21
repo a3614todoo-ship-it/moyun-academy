@@ -36,6 +36,7 @@ export const emailTypeLabels: Record<EmailType, string> = {
   MEMBER_PRIORITY_OPEN: "會員優先報名通知",
   LIVE_REMINDER: "直播前提醒",
   REPLAY_CLOSING: "回看截止提醒",
+  REPLAY_OPENED: "回看開放通知",
 };
 
 export const emailStatusLabels: Record<EmailStatus, string> = {

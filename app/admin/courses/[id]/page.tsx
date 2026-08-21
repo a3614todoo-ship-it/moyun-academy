@@ -39,10 +39,7 @@ export default async function EditCoursePage({ params, searchParams }: Props) {
   ]);
   const course = await prisma.course.findUnique({
     where: { id },
-    include: {
-      liveSession: true,
-      lessonUnits: { orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] },
-    },
+    include: { lessonUnits: { include: { liveSession: true }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] } },
   });
   if (!course) notFound();
 
@@ -62,7 +59,7 @@ export default async function EditCoursePage({ params, searchParams }: Props) {
               查看前台
             </Link>
           ) : null}
-          {course.liveSession?.isEnabled ? (
+          {course.lessonUnits.some((lesson) => lesson.liveSession?.isEnabled) ? (
             <Link className="admin-primary-link" href={`/courses/${course.slug}/live`} target="_blank">
               查看直播教室
             </Link>

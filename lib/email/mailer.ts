@@ -87,7 +87,7 @@ export async function sendEmailLog(emailLogId: string) {
               title: true,
               slug: true,
               fullVideoUrl: true,
-              liveSession: {
+              liveSessions: {
                 select: {
                   isEnabled: true,
                 },

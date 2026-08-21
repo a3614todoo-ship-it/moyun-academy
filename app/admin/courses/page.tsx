@@ -32,7 +32,7 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
   const [session, courses, params] = await Promise.all([
     requireAdmin(),
     prisma.course.findMany({
-      include: { liveSession: true },
+      include: { lessonUnits: { include: { liveSession: true } } },
       orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
     }),
     searchParams,
@@ -84,7 +84,7 @@ export default async function AdminCoursesPage({ searchParams }: Props) {
                   <td>{course.durationText || "未設定"}</td>
                   <td>{course.courseFormatText || "未設定"}</td>
                   <td>{course.viewingPolicyText || "未設定"}</td>
-                  <td>{course.liveSession?.isEnabled ? "已啟用" : "未啟用"}</td>
+                  <td>{course.lessonUnits.some((lesson) => lesson.liveSession?.isEnabled) ? "已啟用" : "未啟用"}</td>
                   <td>
                     <span className={`admin-publish-state ${course.isPublished ? "is-published" : ""}`}>
                       {course.isPublished ? "已上架" : "草稿"}
