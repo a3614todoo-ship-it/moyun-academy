@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "學員報名",
-  description: "填寫我輩學堂學員報名資料，取得專屬報名編號與匯款資訊。",
+  description: "填寫張曼娟大學堂學員報名資料，取得專屬報名編號與匯款資訊。",
 };
 
 export const dynamic = "force-dynamic";
@@ -46,7 +46,7 @@ export default async function ApplyPage({ searchParams }: Props) {
     <main>
       <section className="page-hero compact-page-hero">
         <div className="container">
-          <span className="eyebrow">加入我輩學堂</span>
+          <span className="eyebrow">加入張曼娟大學堂</span>
           <h1>學員報名</h1>
           <p>完成資料填寫後，系統將產生專屬報名編號與匯款說明。</p>
         </div>

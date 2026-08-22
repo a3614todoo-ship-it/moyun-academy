@@ -4,7 +4,7 @@ import Link from "next/link";
 import { EventStatus } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 
-export const metadata: Metadata = { title: "實體活動", description: "查看我輩學堂的學員聚會、文化走讀與實體講座。" };
+export const metadata: Metadata = { title: "實體活動", description: "查看張曼娟大學堂的學員聚會、文化走讀與實體講座。" };
 export const dynamic = "force-dynamic";
 
 function formatDate(value: Date) { return new Intl.DateTimeFormat("zh-TW", { timeZone: "Asia/Taipei", year: "numeric", month: "long", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).format(value); }

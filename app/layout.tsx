@@ -4,8 +4,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "我輩學堂｜張曼娟的古典文學學堂",
-    template: "%s｜我輩學堂",
+    default: "張曼娟大學堂｜古典文學線上學堂",
+    template: "%s｜張曼娟大學堂",
   },
   description: "跟隨張曼娟慢讀經典，從詩詞、古文與文學史中讀懂古人，也讀懂我們這一輩的生活。",
 };

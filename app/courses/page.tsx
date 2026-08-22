@@ -4,7 +4,7 @@ import { getPublishedCourses } from "@/lib/course-data";
 
 export const metadata: Metadata = {
   title: "古典文學課程",
-  description: "瀏覽我輩學堂的古典詩詞、古文選讀、文學史與寫作賞析課程。",
+  description: "瀏覽張曼娟大學堂的古典詩詞、古文選讀、文學史與寫作賞析課程。",
 };
 
 export const dynamic = "force-dynamic";

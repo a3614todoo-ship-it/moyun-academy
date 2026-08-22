@@ -19,10 +19,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     <>
       <header className="site-header">
         <div className="container header-inner">
-          <Link className="brand" href="/" aria-label="我輩學堂首頁">
-            <span className="brand-seal" aria-hidden="true">我</span>
+          <Link className="brand" href="/" aria-label="張曼娟大學堂首頁">
+            <span className="brand-seal" aria-hidden="true">張</span>
             <span>
-              <strong>我輩學堂</strong>
+              <strong>張曼娟大學堂</strong>
               <small>張曼娟線上文學學習平台</small>
             </span>
           </Link>
@@ -40,8 +40,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         <div className="container footer-grid">
           <div>
             <Link className="brand footer-brand" href="/">
-              <span className="brand-seal" aria-hidden="true">我</span>
-              <span><strong>我輩學堂</strong><small>張曼娟線上文學學習平台</small></span>
+              <span className="brand-seal" aria-hidden="true">張</span>
+              <span><strong>張曼娟大學堂</strong><small>張曼娟線上文學學習平台</small></span>
             </Link>
             <p>從閱讀經典到書寫生活，讓文學成為理解自己的一種方式。</p>
           </div>
@@ -49,7 +49,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           <div><strong>聯絡我們</strong><span>service@wobei-academy.tw</span><span>服務時間：週一至週五 10:00–18:00</span></div>
         </div>
         <div className="container copyright">
-          <span>© 2026 我輩學堂</span>
+          <span>© 2026 張曼娟大學堂</span>
           <Link className="footer-admin-login" href="/admin/login">管理者登入</Link>
         </div>
       </footer>

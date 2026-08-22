@@ -140,7 +140,7 @@ export async function createCoursePurchase(
           coursePurchaseId: purchase.id,
           type: EmailType.COURSE_PURCHASE_CREATED,
           recipient: purchase.email,
-          subject: `我輩學堂課程購買申請：${course.title}`,
+          subject: `張曼娟大學堂課程購買申請：${course.title}`,
           status: EmailStatus.PENDING,
         },
       });

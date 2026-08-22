@@ -12,7 +12,7 @@ export default async function AdminLoginPage() {
     <main className="admin-login-page">
       <section className="admin-login-card">
         <div className="admin-login-mark">墨</div>
-        <span className="eyebrow">我輩學堂</span>
+        <span className="eyebrow">張曼娟大學堂</span>
         <h1>管理員登入</h1>
         <p>登入後可查看會員報名、匯款回報與 Email 紀錄。</p>
         <AdminLoginForm />

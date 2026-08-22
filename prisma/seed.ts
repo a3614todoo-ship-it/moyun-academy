@@ -93,7 +93,7 @@ async function seedCourses() {
 async function seedAdmin() {
   const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
   const password = process.env.ADMIN_INITIAL_PASSWORD;
-  const name = process.env.ADMIN_NAME?.trim() || "我輩學堂管理員";
+  const name = process.env.ADMIN_NAME?.trim() || "張曼娟大學堂管理員";
 
   if (!email || !password) {
     console.info("未設定 ADMIN_EMAIL 或 ADMIN_INITIAL_PASSWORD，略過管理員初始化。");

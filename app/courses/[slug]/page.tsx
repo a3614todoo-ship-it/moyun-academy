@@ -251,7 +251,7 @@ export default async function CourseDetailPage({ params }: Props) {
               <>
                 <p>
                   {currentReplayState === "OPEN"
-                    ? "這堂課目前開放免費觀看，你可以先從這裡開始，慢慢熟悉我輩學堂的閱讀方式。"
+                    ? "這堂課目前開放免費觀看，你可以先從這裡開始，慢慢熟悉張曼娟大學堂的閱讀方式。"
                     : replayStateMessage(currentReplayState)}
                 </p>
                 <Link className="button button-gold button-block" href="/courses">

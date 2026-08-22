@@ -55,7 +55,10 @@ const navGroups: Array<{ id: string; label: string; items: NavItem[] }> = [
 export function AdminShell({ adminName, adminRole = "ADMIN", children }: Props) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const displayAdminName = adminName || "我輩學堂管理員";
+  // 相容資料庫中既有的舊預設名稱，前台一律顯示新品牌。
+  const displayAdminName = ["墨韻學堂管理員", "我輩學堂管理員"].includes(adminName)
+    ? "張曼娟大學堂管理員"
+    : adminName || "張曼娟大學堂管理員";
   const visibleGroups = useMemo(() => navGroups.map((group) => ({
     ...group,
     items: group.items.filter((item) => !item.ownerOnly || adminRole === "OWNER"),
@@ -86,9 +89,9 @@ export function AdminShell({ adminName, adminRole = "ADMIN", children }: Props) 
       <aside className={`admin-sidebar${menuOpen ? " is-open" : ""}`}>
         <button aria-label="關閉後台選單" className="admin-sidebar-close" onClick={closeMenu} type="button">×</button>
         <Link className="admin-brand" href="/admin">
-          <span>我</span>
+          <span>張</span>
           <div>
-            <strong>我輩學堂</strong>
+            <strong>張曼娟大學堂</strong>
             <small>管理後台</small>
           </div>
         </Link>
@@ -112,7 +115,7 @@ export function AdminShell({ adminName, adminRole = "ADMIN", children }: Props) 
       <div className="admin-workspace">
         <header className="admin-topbar">
           <button aria-expanded={menuOpen} aria-label="開啟後台選單" className="admin-mobile-menu-button" onClick={() => setMenuOpen(true)} type="button">選單</button>
-          <span>管理員：{displayAdminName === "墨韻學堂管理員" ? "我輩學堂管理員" : displayAdminName}</span>
+          <span>管理員：{displayAdminName}</span>
           <form action={logoutAdmin}>
             <button type="submit">登出</button>
           </form>

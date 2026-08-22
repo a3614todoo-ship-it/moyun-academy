@@ -27,7 +27,7 @@ export default async function SetPasswordPage({ searchParams }: Props) {
           <div className="member-auth-card">
             {member ? (
               <>
-                <h2>{member.name}，歡迎加入我輩學堂</h2>
+                <h2>{member.name}，歡迎加入張曼娟大學堂</h2>
                 <p>帳號 Email：{member.email}</p>
                 <SetPasswordForm token={token} />
               </>

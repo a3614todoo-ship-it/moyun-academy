@@ -69,7 +69,7 @@ export default async function AdminDashboardPage() {
     <AdminShell adminName={session.adminUser.name} adminRole={session.adminUser.role}>
       <div className="admin-page-heading">
         <div>
-          <span>我輩學堂管理中心</span>
+          <span>張曼娟大學堂管理中心</span>
           <h1>後台總覽</h1>
         </div>
         <Link className="admin-primary-link" href="/admin/course-purchases?status=PAYMENT_REPORTED">

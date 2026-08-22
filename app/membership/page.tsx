@@ -28,7 +28,7 @@ export default async function MembershipPage() {
       <section className="page-hero">
         <div className="container">
           <span className="eyebrow">深度閱讀，持續學習</span>
-          <h1>我輩學堂會員方案</h1>
+          <h1>張曼娟大學堂會員方案</h1>
           <p>一年一會，在會員有效期間不限次數觀看會員課程，並優先取得付費課程報名資格。</p>
         </div>
       </section>

@@ -140,11 +140,11 @@ function emailShell(title: string, content: string) {
   <body style="margin:0;background:#f4eee3;color:#202b27;font-family:Arial,'Microsoft JhengHei',sans-serif;">
     <div style="max-width:640px;margin:0 auto;padding:32px 18px;">
       <div style="padding:28px;border-top:5px solid #153f35;background:#fff;">
-        <div style="margin-bottom:22px;color:#153f35;font-size:22px;font-weight:700;">我輩學堂</div>
+        <div style="margin-bottom:22px;color:#153f35;font-size:22px;font-weight:700;">張曼娟大學堂</div>
         <h1 style="margin:0 0 20px;color:#0c2d27;font-size:26px;">${escapeHtml(title)}</h1>
         ${content}
         <p style="margin:28px 0 0;padding-top:20px;border-top:1px solid #ded6c8;color:#69726d;font-size:13px;">
-          這封信由我輩學堂系統寄出。如有疑問，請直接回覆此信與我們聯繫。
+          這封信由張曼娟大學堂系統寄出。如有疑問，請直接回覆此信與我們聯繫。
         </p>
       </div>
     </div>
@@ -229,7 +229,7 @@ export function buildEmailTemplate({
   }
   if (type === EmailType.APPLICATION_CREATED) {
     const item = requireApplication(application);
-    const subject = "您的我輩學堂會員申請已建立";
+    const subject = "您的張曼娟大學堂會員申請已建立";
     const successUrl = `${siteUrl}/apply/success?${publicReferenceQuery("application", item.applicationNo)}`;
     const paymentUrl = `${siteUrl}/payment-report?application_no=${item.applicationNo}`;
     return {
@@ -337,7 +337,7 @@ Email：${item.email}
       subject,
       text: `${item.name} 您好：
 
-您的我輩學堂會員申請已審核通過。
+您的張曼娟大學堂會員申請已審核通過。
 報名編號：${item.applicationNo}
 會員方案：${item.planName}
 會員期間：${period}
@@ -502,7 +502,7 @@ ${hasLive ? "\n課程若有直播，也會在學習教室中顯示。" : ""}`,
     const item = requireApplication(application);
     const daysRemaining = metadataNumber(metadata, "daysRemaining") || 0;
     const endsAt = metadataDate(metadata, "endsAt");
-    const subject = `您的我輩學堂會員資格將於 ${daysRemaining} 天後到期`;
+    const subject = `您的張曼娟大學堂會員資格將於 ${daysRemaining} 天後到期`;
     const accountUrl = `${siteUrl}/account`;
     return {
       subject,
@@ -608,7 +608,7 @@ ${hasLive ? "\n課程若有直播，也會在學習教室中顯示。" : ""}`,
   return {
     subject,
     text: `${item.name} 您好：
-您的我輩學堂會員社群加入紀錄已完成。`,
+您的張曼娟大學堂會員社群加入紀錄已完成。`,
     html: emailShell(
       subject,
       `<p>${escapeHtml(item.name)} 您好，您的會員社群加入紀錄已完成。</p>`,

@@ -53,7 +53,7 @@ export default async function AdminMembershipPlansPage({ searchParams }: Props) 
           </div>
           <label>
             方案說明
-            <textarea defaultValue={plan?.description || "一年內持續參與我輩學堂的會員課程與學習活動。"} name="description" rows={3} />
+            <textarea defaultValue={plan?.description || "一年內持續參與張曼娟大學堂的會員課程與學習活動。"} name="description" rows={3} />
           </label>
           <label>
             權益說明（一行一項）

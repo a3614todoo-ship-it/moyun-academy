@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "認識作家｜我輩學堂",
+  title: "認識作家｜張曼娟大學堂",
   description:
-    "認識張曼娟與我輩學堂的閱讀方法，從古典文學走回今日生活，慢讀、細讀，形成自己的眼光。",
+    "認識張曼娟與張曼娟大學堂的閱讀方法，從古典文學走回今日生活，慢讀、細讀，形成自己的眼光。",
 };
 
 const roles = [
@@ -42,7 +42,7 @@ export default function AuthorPage() {
             <h1>張曼娟</h1>
             <p className="lead">
               她把古典文學帶到今日生活裡，也把今日的心事放回經典中照看。
-              在我輩學堂，閱讀不是背誦答案，而是一場慢慢靠近自己的旅程。
+              在張曼娟大學堂，閱讀不是背誦答案，而是一場慢慢靠近自己的旅程。
             </p>
             <div className="button-row">
               <Link className="button button-forest" href="/courses">
@@ -72,7 +72,7 @@ export default function AuthorPage() {
               重新成為我們理解愛、離別、挫折、選擇與自我的方法。
             </p>
             <p>
-              我輩學堂延續這樣的閱讀精神：不急著得到結論，也不把文學當成考題。
+              張曼娟大學堂延續這樣的閱讀精神：不急著得到結論，也不把文學當成考題。
               我們在字句之間停下來，聽見古人的困惑，也看見自己的處境。
               讀古典，是為了在今日生活中多一點安定、多一點想像，也多一點自由。
             </p>
@@ -99,7 +99,7 @@ export default function AuthorPage() {
             <span className="eyebrow">閱讀方法</span>
             <h2>從一篇文章開始，練習自己的觀看方式</h2>
             <p>
-              我輩學堂想保存的，不只是知識本身，而是一種閱讀的姿態。
+              張曼娟大學堂想保存的，不只是知識本身，而是一種閱讀的姿態。
               在張曼娟老師的引路下，古典文學不再只是遙遠的文本，
               而會變成一面鏡子，照見我們如何感受、如何選擇、如何成為自己。
             </p>

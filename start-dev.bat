@@ -2,11 +2,11 @@
 setlocal
 
 cd /d "%~dp0"
-title Moyun Academy Development Server
+title Zhang Man-Chuan Academy Development Server
 
 echo.
 echo ========================================
-echo   Moyun Academy - Development Server
+echo   Zhang Man-Chuan Academy - Development Server
 echo ========================================
 echo.
 
