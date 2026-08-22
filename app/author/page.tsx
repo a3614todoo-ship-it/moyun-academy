@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "認識作家｜張曼娟大學堂",
+  title: "認識作家",
   description:
     "認識張曼娟與張曼娟大學堂的閱讀方法，從古典文學走回今日生活，慢讀、細讀，形成自己的眼光。",
 };
